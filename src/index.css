@@ -1,0 +1,98 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Fraunces", ui-serif, Georgia, serif;
+  --font-display: "Caveat", ui-sans-serif, system-ui, cursive;
+}
+
+/* Light theme (default) */
+:root, .light {
+  --color-ink: #0f0f0f;
+  --color-logo: #374151;
+  --color-paper: #fafaf9;
+  --color-muted: #737373;
+  --color-border: #e5e5e5;
+  --color-surface: #ffffff;
+  --color-hover: rgba(0, 0, 0, 0.05);
+  --color-active: rgba(0, 0, 0, 0.02);
+  --color-error: #dc2626;
+  --color-error-bg: #fef2f2;
+  --color-success: #16a34a;
+  --color-chart-active: rgba(234, 179, 8, 0.8);
+  --color-chart-rest: var(--color-border);
+}
+
+/* Dark theme */
+.dark {
+  --color-ink: #fafaf9;
+  --color-logo: #d1d5db;
+  --color-paper: #0f0f0f;
+  --color-muted: #a3a3a3;
+  --color-border: #262626;
+  --color-surface: #171717;
+  --color-hover: rgba(255, 255, 255, 0.08);
+  --color-active: rgba(255, 255, 255, 0.04);
+  --color-error: #ef4444;
+  --color-error-bg: rgba(185, 28, 28, 0.2);
+  --color-success: #22c55e;
+  --color-chart-active: rgba(234, 179, 8, 0.9);
+  --color-chart-rest: #404040;
+}
+
+.font-brand {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Logo icon: prominent gray in both themes */
+.youpeak-logo-icon {
+  stroke: var(--color-logo);
+  color: var(--color-logo);
+  transform-origin: center 90%;
+  animation: sisyphus-struggle 3s ease-in-out infinite;
+}
+
+@keyframes sisyphus-struggle {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(1px);
+  }
+}
+
+@layer base {
+  html {
+    @apply antialiased;
+    -webkit-tap-highlight-color: transparent;
+    scrollbar-gutter: stable;
+    overflow-x: hidden;
+    width: 100%;
+  }
+  body {
+    @apply bg-[var(--color-paper)] text-[var(--color-ink)] min-h-screen font-sans;
+    padding-top: env(safe-area-inset-top, 0);
+    padding-right: env(safe-area-inset-right, 0);
+    padding-bottom: env(safe-area-inset-bottom, 0);
+    padding-left: env(safe-area-inset-left, 0);
+    overflow-x: hidden;
+    width: 100%;
+  }
+  #root {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+/* Stats contribution grid: scale cells on narrow viewports */
+.contribution-grid {
+  --grid-cell: 16px;
+}
+@media (max-width: 380px) {
+  .contribution-grid {
+    --grid-cell: 12px;
+  }
+}
