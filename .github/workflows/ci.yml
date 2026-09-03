@@ -19,12 +19,7 @@ jobs:
       - run: npm run lint
       - run: npm run test
       - run: npm run build
-        env:
-          VITE_SUPABASE_URL: https://placeholder.supabase.co
-          VITE_SUPABASE_ANON_KEY: placeholder
       - run: npx playwright install --with-deps chromium
-      - run: npm run test:e2e
+      - run: npm run test:e2e -- e2e/smoke.spec.ts e2e/journal.spec.ts
         env:
           CI: true
-          VITE_SUPABASE_URL: https://placeholder.supabase.co
-          VITE_SUPABASE_ANON_KEY: placeholder

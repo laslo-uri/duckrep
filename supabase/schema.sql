@@ -274,11 +274,22 @@ CREATE POLICY "Users CRUD own workout_days" ON workout_days FOR ALL USING (auth.
 CREATE POLICY "Anyone can read public workout_days" ON workout_days FOR SELECT
   USING (is_public = TRUE AND deleted_at IS NULL);
 
--- exercise_definitions (FOR ALL covers SELECT too; no separate read policy needed)
+-- exercise_definitions: read own + global; write own only (never mutate global catalog via client)
 DROP POLICY IF EXISTS "Users CRUD own or global exercises" ON exercise_definitions;
 DROP POLICY IF EXISTS "Users can read global exercises" ON exercise_definitions;
-CREATE POLICY "Users CRUD own or global exercises" ON exercise_definitions FOR ALL
-  USING (auth.uid() = user_id OR is_global = TRUE);
+DROP POLICY IF EXISTS "Users read own or global exercises" ON exercise_definitions;
+DROP POLICY IF EXISTS "Users insert own exercises" ON exercise_definitions;
+DROP POLICY IF EXISTS "Users update own exercises" ON exercise_definitions;
+DROP POLICY IF EXISTS "Users delete own exercises" ON exercise_definitions;
+CREATE POLICY "Users read own or global exercises" ON exercise_definitions
+  FOR SELECT USING (auth.uid() = user_id OR is_global = TRUE);
+CREATE POLICY "Users insert own exercises" ON exercise_definitions
+  FOR INSERT WITH CHECK (auth.uid() = user_id AND is_global = FALSE);
+CREATE POLICY "Users update own exercises" ON exercise_definitions
+  FOR UPDATE USING (auth.uid() = user_id)
+  WITH CHECK (auth.uid() = user_id AND is_global = FALSE);
+CREATE POLICY "Users delete own exercises" ON exercise_definitions
+  FOR DELETE USING (auth.uid() = user_id);
 
 -- workout_exercises: access via parent workout_day
 DROP POLICY IF EXISTS "workout_exercises via day" ON workout_exercises;
@@ -440,3 +451,22 @@ DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
 CREATE TRIGGER on_auth_user_created
   AFTER INSERT ON auth.users
   FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
+
+-- =============================================================================
+-- 6. Upgrade snippet: exercise_definitions RLS (run on existing projects)
+-- =============================================================================
+DROP POLICY IF EXISTS "Users CRUD own or global exercises" ON exercise_definitions;
+DROP POLICY IF EXISTS "Users can read global exercises" ON exercise_definitions;
+DROP POLICY IF EXISTS "Users read own or global exercises" ON exercise_definitions;
+DROP POLICY IF EXISTS "Users insert own exercises" ON exercise_definitions;
+DROP POLICY IF EXISTS "Users update own exercises" ON exercise_definitions;
+DROP POLICY IF EXISTS "Users delete own exercises" ON exercise_definitions;
+CREATE POLICY "Users read own or global exercises" ON exercise_definitions
+  FOR SELECT USING (auth.uid() = user_id OR is_global = TRUE);
+CREATE POLICY "Users insert own exercises" ON exercise_definitions
+  FOR INSERT WITH CHECK (auth.uid() = user_id AND is_global = FALSE);
+CREATE POLICY "Users update own exercises" ON exercise_definitions
+  FOR UPDATE USING (auth.uid() = user_id)
+  WITH CHECK (auth.uid() = user_id AND is_global = FALSE);
+CREATE POLICY "Users delete own exercises" ON exercise_definitions
+  FOR DELETE USING (auth.uid() = user_id);

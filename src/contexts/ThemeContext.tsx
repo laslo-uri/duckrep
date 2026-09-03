@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
+import { getItemSync, setItem } from '../lib/app-user-store';
 
 type Theme = 'light' | 'dark';
 
@@ -14,7 +15,7 @@ const STORAGE_KEY = 'youpeak-theme';
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setTheme] = useState<Theme>(() => {
     if (typeof window === 'undefined') return 'light';
-    const stored = localStorage.getItem(STORAGE_KEY) as Theme | null;
+    const stored = getItemSync(STORAGE_KEY) as Theme | null;
     if (stored === 'light' || stored === 'dark') return stored;
     return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   });
@@ -28,7 +29,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const toggleTheme = () => {
     setTheme((prev) => {
       const next = prev === 'light' ? 'dark' : 'light';
-      localStorage.setItem(STORAGE_KEY, next);
+      void setItem(STORAGE_KEY, next);
       return next;
     });
   };

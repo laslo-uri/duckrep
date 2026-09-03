@@ -304,8 +304,19 @@ CREATE POLICY "Anyone can read public workout_days" ON workout_days FOR SELECT
 
 DROP POLICY IF EXISTS "Users CRUD own or global exercises" ON exercise_definitions;
 DROP POLICY IF EXISTS "Users can read global exercises" ON exercise_definitions;
-CREATE POLICY "Users CRUD own or global exercises" ON exercise_definitions FOR ALL
-  USING (auth.uid() = user_id OR is_global = TRUE);
+DROP POLICY IF EXISTS "Users read own or global exercises" ON exercise_definitions;
+DROP POLICY IF EXISTS "Users insert own exercises" ON exercise_definitions;
+DROP POLICY IF EXISTS "Users update own exercises" ON exercise_definitions;
+DROP POLICY IF EXISTS "Users delete own exercises" ON exercise_definitions;
+CREATE POLICY "Users read own or global exercises" ON exercise_definitions
+  FOR SELECT USING (auth.uid() = user_id OR is_global = TRUE);
+CREATE POLICY "Users insert own exercises" ON exercise_definitions
+  FOR INSERT WITH CHECK (auth.uid() = user_id AND is_global = FALSE);
+CREATE POLICY "Users update own exercises" ON exercise_definitions
+  FOR UPDATE USING (auth.uid() = user_id)
+  WITH CHECK (auth.uid() = user_id AND is_global = FALSE);
+CREATE POLICY "Users delete own exercises" ON exercise_definitions
+  FOR DELETE USING (auth.uid() = user_id);
 
 DROP POLICY IF EXISTS "workout_exercises via day" ON workout_exercises;
 DROP POLICY IF EXISTS "workout_exercises via template" ON workout_exercises;

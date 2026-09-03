@@ -83,9 +83,11 @@ export interface ExerciseDefinition {
   user_id: string | null;
   name: string;
   name_sr: string | null;
+  name_hu: string | null;
   description: string | null;
   image_url: string | null;
   muscle_group: string | null;
+  source_slug: string | null;
   is_global: boolean;
   default_sets: ExerciseSetDefault[] | null;
   created_at: string;

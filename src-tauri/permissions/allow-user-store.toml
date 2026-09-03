@@ -1,0 +1,4 @@
+[[permission]]
+identifier = "allow-user-store"
+description = "Read and write unified user preferences JSON store."
+commands.allow = ["user_store_load", "user_store_save"]

@@ -5,28 +5,40 @@ export function toUserFriendlyError(
   if (!message) return t('error');
   const lower = message.toLowerCase();
   if (
-    lower.includes('invalid login') ||
-    lower.includes('invalid_credentials') ||
-    lower.includes('invalid credentials')
+    lower.includes('failed to fetch') ||
+    lower.includes('networkerror') ||
+    lower.includes('load failed') ||
+    lower.includes('network request failed') ||
+    lower.includes('database') ||
+    lower.includes('sqlite')
   ) {
-    return t('authErrorInvalidCredentials');
+    return t('authErrorCannotReachServer');
   }
-  if (lower.includes('user already registered') || lower.includes('already been registered')) {
-    return t('authErrorUserAlreadyExists');
-  }
-  if (lower.includes('password') && (lower.includes('too short') || lower.includes('at least'))) {
-    return t('authErrorWeakPassword');
-  }
-  if (lower.includes('rate limit') || lower.includes('too many requests')) {
-    return t('authErrorRateLimited');
-  }
+  return message;
+}
+
+export function toQueryErrorMessage(
+  message: string | undefined,
+  t: (key: string) => string,
+): string {
+  if (!message) return t('error');
+  const lower = message.toLowerCase();
   if (
     lower.includes('failed to fetch') ||
     lower.includes('networkerror') ||
     lower.includes('load failed') ||
-    lower.includes('network request failed')
+    lower.includes('network request failed') ||
+    lower.includes('database') ||
+    lower.includes('sqlite')
   ) {
-    return t('authErrorCannotReachSupabase');
+    return t('authErrorCannotReachServer');
   }
-  return message;
+  if (
+    lower.includes('not found') ||
+    lower.includes('0 rows') ||
+    lower.includes('rows returned')
+  ) {
+    return t('notFound');
+  }
+  return toUserFriendlyError(message, t);
 }

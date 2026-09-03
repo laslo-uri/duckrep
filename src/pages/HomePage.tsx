@@ -1,36 +1,42 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { Plus, ChevronRight, Pencil, Trash2, Clock } from 'lucide-react';
+import { Plus, ChevronRight, Trash2, Clock } from 'lucide-react';
 import { WorkoutDayIcon } from '../components/WorkoutIconPicker';
 import { APP_VERSION } from '../lib/appVersion';
-import { supabase } from '../lib/supabase';
-import { useAuth } from '../contexts/AuthContext';
+import { listWorkoutDays, softDeleteWorkoutDay } from '../lib/db';
+import { useLocalUser } from '../contexts/LocalUserContext';
+import { useMutationError } from '../hooks/useMutationError';
+import { useConfirm } from '../hooks/useConfirm';
+import { QueryState } from '../components/QueryState';
+import { MutationAlert } from '../components/MutationAlert';
+import { ConfirmDialog } from '../components/ConfirmDialog';
+import { EmptyState } from '../components/EmptyState';
 import type { WorkoutDay } from '../types';
 
-function formatDuration(startedAt: string, endedAt: string): string {
+function formatDuration(
+  startedAt: string,
+  endedAt: string,
+  t: (key: string, opts?: Record<string, unknown>) => string,
+): string {
   const ms = new Date(endedAt).getTime() - new Date(startedAt).getTime();
   if (ms <= 0) return '';
   const mins = Math.round(ms / 60_000);
-  if (mins < 60) return `${mins}m`;
+  if (mins < 60) return t('durationMinutes', { n: mins });
   const h = Math.floor(mins / 60);
   const m = mins % 60;
-  return m > 0 ? `${h}h ${m}m` : `${h}h`;
+  return m > 0 ? t('durationHoursMinutes', { h, m }) : t('durationHours', { h });
 }
 
 export function HomePage() {
   const { t } = useTranslation();
-  const { user } = useAuth();
+  const { user } = useLocalUser();
   const queryClient = useQueryClient();
+  const { mutationError, clearError, onMutationError } = useMutationError();
+  const { confirm, confirmState, handleConfirm, handleCancel } = useConfirm();
 
   const deleteWorkoutMutation = useMutation({
-    mutationFn: async (workoutId: string) => {
-      const { error } = await supabase
-        .from('workout_days')
-        .update({ deleted_at: new Date().toISOString() })
-        .eq('id', workoutId);
-      if (error) throw error;
-    },
+    mutationFn: (workoutId: string) => softDeleteWorkoutDay(workoutId),
     onSuccess: (_data, workoutId) => {
       queryClient.invalidateQueries({ queryKey: ['workout-days'] });
       queryClient.invalidateQueries({ queryKey: ['workout-days-stats'] });
@@ -38,24 +44,12 @@ export function HomePage() {
       queryClient.invalidateQueries({ queryKey: ['trashed-activities'] });
       queryClient.removeQueries({ queryKey: ['workout', workoutId] });
     },
+    onError: onMutationError,
   });
 
-  const { data: days = [], isLoading } = useQuery({
-    queryKey: ['workout-days', user?.id],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from('workout_days')
-        .select('*')
-        .eq('user_id', user!.id)
-        .is('deleted_at', null)
-        .order('date', { ascending: false })
-        .order('started_at', { ascending: false, nullsFirst: false })
-        .order('created_at', { ascending: false })
-        .limit(100);
-      if (error) throw error;
-      return data as WorkoutDay[];
-    },
-    enabled: !!user?.id,
+  const { data: days = [], isLoading, isError, error, refetch } = useQuery({
+    queryKey: ['workout-days', user.id],
+    queryFn: () => listWorkoutDays(user.id),
   });
 
   const formatDateHeader = (d: string) => {
@@ -79,6 +73,17 @@ export function HomePage() {
     return acc;
   }, []);
 
+  async function handleDelete(dayId: string) {
+    const ok = await confirm({
+      title: t('confirmRemoveTitle'),
+      message: t('confirmRemoveLog'),
+      confirmLabel: t('removeLog'),
+      cancelLabel: t('cancel'),
+      variant: 'danger',
+    });
+    if (ok) deleteWorkoutMutation.mutate(dayId);
+  }
+
   return (
     <div>
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-6 sm:mb-8">
@@ -94,20 +99,29 @@ export function HomePage() {
         </Link>
       </div>
 
-      {isLoading ? (
-        <p className="text-[var(--color-muted)]">{t('loading')}</p>
-      ) : days.length === 0 ? (
-        <div className="text-center py-12 sm:py-16 px-4 border border-dashed border-[var(--color-border)] rounded-2xl">
-          <p className="text-[var(--color-muted)] mb-4">{t('noWorkouts')}</p>
-          <Link
-            to="/activity/new"
-            className="inline-flex items-center gap-2 px-5 py-3 min-h-[44px] rounded-lg bg-[var(--color-ink)] text-[var(--color-paper)] text-sm font-medium hover:opacity-90 touch-manipulation"
-          >
-            <Plus size={18} />
-            {t('newWorkout')}
-          </Link>
-        </div>
-      ) : (
+      <MutationAlert message={mutationError} onDismiss={clearError} />
+
+      <QueryState
+        isLoading={isLoading}
+        isError={isError}
+        error={error}
+        refetch={() => void refetch()}
+        isEmpty={!isLoading && !isError && days.length === 0}
+        empty={
+          <EmptyState
+            title={t('noWorkouts')}
+            action={
+              <Link
+                to="/activity/new"
+                className="inline-flex items-center gap-2 px-5 py-3 min-h-[44px] rounded-lg bg-[var(--color-ink)] text-[var(--color-paper)] text-sm font-medium hover:opacity-90 touch-manipulation"
+              >
+                <Plus size={18} />
+                {t('newWorkout')}
+              </Link>
+            }
+          />
+        }
+      >
         <div className="space-y-6">
           {grouped.map(({ date, activities }) => (
             <section key={date}>
@@ -117,8 +131,10 @@ export function HomePage() {
               <ul className="space-y-2">
                 {activities.map((day) => {
                   const duration = day.started_at && day.ended_at
-                    ? formatDuration(day.started_at, day.ended_at)
+                    ? formatDuration(day.started_at, day.ended_at, t)
                     : null;
+                  const isDeleting =
+                    deleteWorkoutMutation.isPending && deleteWorkoutMutation.variables === day.id;
 
                   return (
                     <li
@@ -150,21 +166,10 @@ export function HomePage() {
                         </div>
                         <ChevronRight size={20} className="text-[var(--color-muted)] group-hover:text-[var(--color-ink)] flex-shrink-0" aria-hidden />
                       </Link>
-                      <Link
-                        to={`/activity/${day.id}`}
-                        className="flex-shrink-0 flex items-center justify-center px-3 sm:px-4 border-l border-[var(--color-border)] text-[var(--color-muted)] hover:text-[var(--color-ink)] hover:bg-[var(--color-hover)] transition-colors touch-manipulation min-w-[52px]"
-                        aria-label={t('editWorkout')}
-                        title={t('editWorkout')}
-                      >
-                        <Pencil size={20} aria-hidden />
-                      </Link>
                       <button
                         type="button"
-                        onClick={() => {
-                          if (!window.confirm(t('confirmRemoveLog'))) return;
-                          deleteWorkoutMutation.mutate(day.id);
-                        }}
-                        disabled={deleteWorkoutMutation.isPending}
+                        onClick={() => void handleDelete(day.id)}
+                        disabled={isDeleting}
                         className="flex-shrink-0 flex items-center justify-center px-4 border-l border-[var(--color-border)] text-[var(--color-muted)] hover:text-[var(--color-error)] hover:bg-[var(--color-error-bg)] transition-colors touch-manipulation min-w-[52px] disabled:opacity-50"
                         aria-label={t('removeLog')}
                         title={t('removeLog')}
@@ -178,11 +183,24 @@ export function HomePage() {
             </section>
           ))}
         </div>
-      )}
+      </QueryState>
 
       <p className="mt-10 text-center text-xs text-[var(--color-muted)] tabular-nums">
         {t('appVersion', { version: APP_VERSION })}
       </p>
+
+      {confirmState && (
+        <ConfirmDialog
+          open={confirmState.open}
+          title={confirmState.title}
+          message={confirmState.message}
+          confirmLabel={confirmState.confirmLabel}
+          cancelLabel={confirmState.cancelLabel}
+          variant={confirmState.variant}
+          onConfirm={handleConfirm}
+          onCancel={handleCancel}
+        />
+      )}
     </div>
   );
 }

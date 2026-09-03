@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
+import { userStorePlugin } from './user-store/vite-plugin.js'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const pkg = JSON.parse(readFileSync(resolve(__dirname, 'package.json'), 'utf-8')) as { version: string }
@@ -15,14 +16,14 @@ const appVersionDefine = {
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [userStorePlugin({ appId: 'com.youpeak.app' }), react(), tailwindcss()],
   define: appVersionDefine,
   build: {
     rollupOptions: {
       output: {
         manualChunks(id) {
           if (!id.includes('node_modules')) return
-          if (id.includes('@supabase')) return 'supabase'
+          if (id.includes('sql.js')) return 'sql'
           if (id.includes('@tanstack/react-query')) return 'query'
           if (id.includes('i18next') || id.includes('react-i18next')) return 'i18n'
           if (id.includes('react-router') || id.includes('/react/') || id.includes('/react-dom/')) {

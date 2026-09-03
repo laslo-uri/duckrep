@@ -32,31 +32,57 @@ export function WorkoutIconPicker({
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const popoverRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!open) return;
-    const onClose = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        setOpen(false);
+        triggerRef.current?.focus();
+      }
+    }
+
+    function handlePointerDown(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown, true);
+    document.addEventListener('mousedown', handlePointerDown, true);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown, true);
+      document.removeEventListener('mousedown', handlePointerDown, true);
     };
-    document.addEventListener('click', onClose, true);
-    return () => document.removeEventListener('click', onClose, true);
   }, [open]);
 
   const handleSelect = (icon: string | null) => {
     onChange(icon);
     setOpen(false);
+    triggerRef.current?.focus();
   };
+
+  const iconLabel = (key: string) => t(`activityIcons.${key}`, { defaultValue: key });
 
   return (
     <div ref={ref} className="relative inline-block">
       <button
+        ref={triggerRef}
         type="button"
         onClick={(e) => {
           e.stopPropagation();
           setOpen((o) => !o);
         }}
         title={t('activityIcon')}
-        className="flex items-center justify-center w-10 h-10 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] hover:bg-[var(--color-hover)] text-[var(--color-ink)] transition-colors touch-manipulation"
+        aria-expanded={open}
+        aria-haspopup="listbox"
+        aria-controls="workout-icon-listbox"
+        className="flex items-center justify-center w-10 h-10 min-w-[44px] min-h-[44px] rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] hover:bg-[var(--color-hover)] text-[var(--color-ink)] transition-colors touch-manipulation"
       >
         {value ? (
           (() => {
@@ -70,6 +96,10 @@ export function WorkoutIconPicker({
 
       {open && (
         <div
+          ref={popoverRef}
+          id="workout-icon-listbox"
+          role="listbox"
+          aria-label={t('activityIcon')}
           className="absolute left-0 top-full mt-2 z-50 p-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-lg min-w-[200px] max-w-[calc(100vw-2rem)]"
           onClick={(e) => e.stopPropagation()}
         >
@@ -77,9 +107,11 @@ export function WorkoutIconPicker({
           <div className="flex flex-wrap gap-1.5">
             <button
               type="button"
+              role="option"
+              aria-selected={value === null}
               onClick={() => handleSelect(null)}
-              title={t('noIcon')}
-              className={`flex items-center justify-center w-8 h-8 rounded-lg border-2 transition-colors touch-manipulation ${
+              aria-label={t('noIcon')}
+              className={`flex items-center justify-center min-w-[44px] min-h-[44px] rounded-lg border-2 transition-colors touch-manipulation ${
                 value === null
                   ? 'border-[var(--color-ink)] bg-[var(--color-ink)]/10'
                   : 'border-[var(--color-border)] hover:border-[var(--color-ink)]/30'
@@ -94,9 +126,11 @@ export function WorkoutIconPicker({
                 <button
                   key={key}
                   type="button"
+                  role="option"
+                  aria-selected={isSelected}
                   onClick={() => handleSelect(key)}
-                  title={key}
-                  className={`flex items-center justify-center w-8 h-8 rounded-lg border-2 transition-colors touch-manipulation ${
+                  aria-label={iconLabel(key)}
+                  className={`flex items-center justify-center min-w-[44px] min-h-[44px] rounded-lg border-2 transition-colors touch-manipulation ${
                     isSelected
                       ? 'border-[var(--color-ink)] bg-[var(--color-ink)]/10 text-[var(--color-ink)]'
                       : 'border-[var(--color-border)] hover:border-[var(--color-ink)]/30 text-[var(--color-muted)] hover:text-[var(--color-ink)]'

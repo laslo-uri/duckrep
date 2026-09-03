@@ -3,18 +3,14 @@ import { render, screen } from '@testing-library/react'
 import { YouPeakLogo } from './YouPeakLogo'
 
 describe('YouPeakLogo', () => {
-  it('renders wordmark by default', () => {
+  it('renders wordmark', () => {
     render(<YouPeakLogo />)
     expect(screen.getByText('YouPeak')).toBeInTheDocument()
   })
 
-  it('hides wordmark when iconOnly', () => {
-    render(<YouPeakLogo iconOnly />)
-    expect(screen.queryByText('YouPeak')).not.toBeInTheDocument()
-  })
-
-  it('renders minimal variant without mask', () => {
-    const { container } = render(<YouPeakLogo variant="minimal" iconOnly />)
-    expect(container.querySelector('svg')).toBeInTheDocument()
+  it('does not render coin icon', () => {
+    const { container } = render(<YouPeakLogo />)
+    expect(container.querySelector('.brand-coin')).not.toBeInTheDocument()
+    expect(container.querySelector('img[src="/logo.svg"]')).not.toBeInTheDocument()
   })
 })

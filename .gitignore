@@ -4,12 +4,14 @@ node_modules/
 # Build output
 dist/
 dist-ssr/
+src-tauri/target/
 *.local
 
 # Environment and secrets
 .env
 .env.*
 !.env.example
+!.env.e2e.example
 
 # Logs
 logs/

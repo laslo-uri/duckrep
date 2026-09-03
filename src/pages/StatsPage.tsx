@@ -10,46 +10,27 @@ import {
   Moon,
   TrendingDown,
 } from 'lucide-react';
-import { supabase } from '../lib/supabase';
-import { useAuth } from '../contexts/AuthContext';
-import type { BodyWeightLog, UserStats, UserDailyTrainingStats } from '../types';
+import {
+  getUserStats,
+  upsertUserStats,
+  listBodyWeightLogs,
+  upsertBodyWeightLog,
+  listWorkoutDaysForStats,
+  getDailyTrainingStats,
+} from '../lib/db';
+import { useLocalUser } from '../contexts/LocalUserContext';
+import {
+  calculateBMI,
+  bmiCategory,
+  ageFromBirthDate,
+  formatBirthDateDisplay,
+} from '../lib/statsHelpers';
+import { parseOptionalFloat } from '../utils/numbers';
+import { useMutationError } from '../hooks/useMutationError';
+import { MutationAlert } from '../components/MutationAlert';
+import { QueryState } from '../components/QueryState';
+import type { BodyWeightLog } from '../types';
 import { WorkoutDayIcon } from '../components/WorkoutIconPicker';
-
-function calculateBMI(weightKg: number, heightCm: number): number {
-  if (!heightCm || heightCm <= 0) return 0;
-  const heightM = heightCm / 100;
-  return Math.round((weightKg / (heightM * heightM)) * 10) / 10;
-}
-
-function bmiCategory(bmi: number): string {
-  if (bmi < 18.5) return 'underweight';
-  if (bmi < 25) return 'normal';
-  if (bmi < 30) return 'overweight';
-  return 'obese';
-}
-
-/** ISO date YYYY-MM-DD → age in full years (local calendar). */
-function ageFromBirthDate(isoDate: string | null | undefined): number | null {
-  if (!isoDate || !/^\d{4}-\d{2}-\d{2}$/.test(isoDate)) return null;
-  const [y, m, d] = isoDate.split('-').map(Number);
-  const birth = new Date(y, m - 1, d);
-  if (Number.isNaN(birth.getTime())) return null;
-  const today = new Date();
-  let age = today.getFullYear() - birth.getFullYear();
-  const monthDiff = today.getMonth() - birth.getMonth();
-  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) age -= 1;
-  return age >= 0 ? age : null;
-}
-
-function formatBirthDateDisplay(isoDate: string): string {
-  const [y, m, d] = isoDate.split('-').map(Number);
-  if (!y || !m || !d) return isoDate;
-  return new Date(y, m - 1, d).toLocaleDateString(undefined, {
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric',
-  });
-}
 
 function getDaysInPastWeeks(weeks: number): Date[] {
   const days: Date[] = [];
@@ -65,26 +46,18 @@ function getDaysInPastWeeks(weeks: number): Date[] {
 
 export function StatsPage() {
   const { t } = useTranslation();
-  const { user } = useAuth();
+  const { user } = useLocalUser();
   const queryClient = useQueryClient();
+  const { mutationError, clearError, onMutationError } = useMutationError();
   const [editingStats, setEditingStats] = useState(false);
   const [birthDate, setBirthDate] = useState<string>('');
   const [heightCm, setHeightCm] = useState<string>('');
   const [goalKg, setGoalKg] = useState<string>('');
   const [todayWeight, setTodayWeight] = useState<string>('');
 
-  const { data: userStats } = useQuery({
-    queryKey: ['user-stats', user?.id],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from('user_stats')
-        .select('*')
-        .eq('user_id', user!.id)
-        .maybeSingle();
-      if (error) throw error;
-      return data as UserStats | null;
-    },
-    enabled: !!user?.id,
+  const userStatsQuery = useQuery({
+    queryKey: ['user-stats', user.id],
+    queryFn: () => getUserStats(user.id),
   });
 
   // Sync form state when entering edit mode (avoid setState in effect)
@@ -97,55 +70,59 @@ export function StatsPage() {
     setEditingStats(true);
   };
 
-  const { data: weightLogs = [] } = useQuery({
-    queryKey: ['body-weight-logs', user?.id],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from('body_weight_logs')
-        .select('*')
-        .eq('user_id', user!.id)
-        .order('date', { ascending: false })
-        .limit(90);
-      if (error) throw error;
-      return data as BodyWeightLog[];
-    },
-    enabled: !!user?.id,
+  const userStats = userStatsQuery.data;
+
+  const weightLogsQuery = useQuery({
+    queryKey: ['body-weight-logs', user.id],
+    queryFn: () => listBodyWeightLogs(user.id, 90),
   });
 
-  const { data: workoutDays = [] } = useQuery({
-    queryKey: ['workout-days-stats', user?.id],
+  const weightLogs = weightLogsQuery.data ?? [];
+
+  const workoutDaysQuery = useQuery({
+    queryKey: ['workout-days-stats', user.id],
     queryFn: async () => {
       const start = new Date();
       start.setDate(start.getDate() - 84);
-      const { data, error } = await supabase
-        .from('workout_days')
-        .select('date, icon')
-        .eq('user_id', user!.id)
-        .is('deleted_at', null)
-        .gte('date', start.toISOString().slice(0, 10));
-      if (error) throw error;
-      return data as { date: string; icon: string | null }[];
+      return listWorkoutDaysForStats(user.id, start.toISOString().slice(0, 10));
     },
-    enabled: !!user?.id,
   });
 
+  const workoutDays = workoutDaysQuery.data ?? [];
   const workoutDaysMap = new Map(workoutDays.map((d) => [d.date, d.icon]));
 
-  const { data: dailyStatsRows = [] } = useQuery({
-    queryKey: ['user-daily-training-stats', user?.id],
+  const dailyStatsQuery = useQuery({
+    queryKey: ['user-daily-training-stats', user.id],
     queryFn: async () => {
       const start = new Date();
       start.setDate(start.getDate() - 84);
-      const { data, error } = await supabase
-        .from('user_daily_training_stats')
-        .select('*')
-        .eq('user_id', user!.id)
-        .gte('date', start.toISOString().slice(0, 10));
-      if (error) throw error;
-      return data as UserDailyTrainingStats[];
+      return getDailyTrainingStats(user.id, start.toISOString().slice(0, 10));
     },
-    enabled: !!user?.id,
   });
+
+  const dailyStatsRows = dailyStatsQuery.data ?? [];
+
+  const statsLoading =
+    userStatsQuery.isLoading ||
+    weightLogsQuery.isLoading ||
+    workoutDaysQuery.isLoading ||
+    dailyStatsQuery.isLoading;
+  const statsError =
+    userStatsQuery.error ??
+    weightLogsQuery.error ??
+    workoutDaysQuery.error ??
+    dailyStatsQuery.error;
+  const statsIsError =
+    userStatsQuery.isError ||
+    weightLogsQuery.isError ||
+    workoutDaysQuery.isError ||
+    dailyStatsQuery.isError;
+  const refetchStats = () => {
+    void userStatsQuery.refetch();
+    void weightLogsQuery.refetch();
+    void workoutDaysQuery.refetch();
+    void dailyStatsQuery.refetch();
+  };
 
   const analyticsTotals = dailyStatsRows.reduce(
     (acc, r) => ({
@@ -158,36 +135,28 @@ export function StatsPage() {
   );
 
   const updateStatsMutation = useMutation({
-    mutationFn: async (updates: {
+    mutationFn: (updates: {
       birth_date?: string | null;
       height_cm?: number | null;
       goal_weight_kg?: number | null;
-    }) => {
-      const { error } = await supabase.from('user_stats').upsert(
-        { user_id: user!.id, ...updates },
-        { onConflict: 'user_id' }
-      );
-      if (error) throw error;
-    },
+    }) => upsertUserStats(user.id, updates),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['user-stats', user?.id] });
+      queryClient.invalidateQueries({ queryKey: ['user-stats', user.id] });
       setEditingStats(false);
     },
+    onError: onMutationError,
   });
 
   const addWeightMutation = useMutation({
-    mutationFn: async (weight: number) => {
+    mutationFn: (weight: number) => {
       const date = new Date().toISOString().slice(0, 10);
-      const { error } = await supabase.from('body_weight_logs').upsert(
-        { user_id: user!.id, date, weight_kg: weight },
-        { onConflict: 'user_id,date' }
-      );
-      if (error) throw error;
+      return upsertBodyWeightLog(user.id, date, weight);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['body-weight-logs', user?.id] });
+      queryClient.invalidateQueries({ queryKey: ['body-weight-logs', user.id] });
       setTodayWeight('');
     },
+    onError: onMutationError,
   });
 
   const currentWeight = weightLogs[0]?.weight_kg ?? null;
@@ -202,14 +171,14 @@ export function StatsPage() {
   const saveStats = () => {
     updateStatsMutation.mutate({
       birth_date: birthDate.trim() ? birthDate.trim() : null,
-      height_cm: heightCm.trim() ? parseFloat(heightCm) : null,
-      goal_weight_kg: goalKg.trim() ? parseFloat(goalKg) : null,
+      height_cm: parseOptionalFloat(heightCm),
+      goal_weight_kg: parseOptionalFloat(goalKg),
     });
   };
 
   const addTodayWeight = () => {
-    const w = parseFloat(todayWeight);
-    if (!isNaN(w) && w > 0) addWeightMutation.mutate(w);
+    const w = parseOptionalFloat(todayWeight);
+    if (w != null && w > 0) addWeightMutation.mutate(w);
   };
 
   return (
@@ -223,6 +192,14 @@ export function StatsPage() {
         </p>
       </div>
 
+      <MutationAlert message={mutationError} onDismiss={clearError} />
+
+      <QueryState
+        isLoading={statsLoading}
+        isError={statsIsError}
+        error={statsError as Error | null}
+        refetch={refetchStats}
+      >
       {/* Quick stats cards */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <StatCard
@@ -242,7 +219,7 @@ export function StatsPage() {
         />
         <StatCard
           icon={<TrendingDown size={20} />}
-          label="BMI"
+          label={t('bmiLabel')}
           value={
             bmi != null
               ? `${bmi} (${t(bmiCategory(bmi))})`
@@ -261,15 +238,16 @@ export function StatsPage() {
           <input
             type="number"
             step="0.1"
-            placeholder="kg"
+            placeholder={t('unitKg')}
             value={todayWeight}
             onChange={(e) => setTodayWeight(e.target.value)}
             className="w-24 px-3 py-2 text-sm rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] focus:outline-none focus:ring-1 focus:ring-[var(--color-ink)]"
           />
           <button
+            type="button"
             onClick={addTodayWeight}
             disabled={!todayWeight || addWeightMutation.isPending}
-            className="px-4 py-2 rounded-lg bg-[var(--color-ink)] text-[var(--color-paper)] text-sm font-medium hover:opacity-90 disabled:opacity-50"
+            className="px-4 py-2 min-h-[44px] rounded-lg bg-[var(--color-ink)] text-[var(--color-paper)] text-sm font-medium hover:opacity-90 disabled:opacity-50 touch-manipulation"
           >
             {t('save')}
           </button>
@@ -323,15 +301,17 @@ export function StatsPage() {
             </div>
             <div className="flex gap-2">
               <button
+                type="button"
                 onClick={saveStats}
                 disabled={updateStatsMutation.isPending}
-                className="px-4 py-2 rounded-lg bg-[var(--color-ink)] text-[var(--color-paper)] text-sm font-medium"
+                className="px-4 py-2 min-h-[44px] rounded-lg bg-[var(--color-ink)] text-[var(--color-paper)] text-sm font-medium touch-manipulation"
               >
                 {t('save')}
               </button>
               <button
+                type="button"
                 onClick={() => setEditingStats(false)}
-                className="px-4 py-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-ink)] text-sm hover:bg-[var(--color-hover)]"
+                className="px-4 py-2 min-h-[44px] rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-ink)] text-sm hover:bg-[var(--color-hover)] touch-manipulation"
               >
                 {t('cancel')}
               </button>
@@ -352,8 +332,9 @@ export function StatsPage() {
               {userStats?.goal_weight_kg ? `${userStats.goal_weight_kg} kg` : '—'}
             </p>
             <button
+              type="button"
               onClick={startEditingStats}
-              className="text-[var(--color-ink)] font-medium hover:underline mt-2"
+              className="text-[var(--color-ink)] font-medium hover:underline mt-2 min-h-[44px] touch-manipulation"
             >
               {t('edit')}
             </button>
@@ -416,6 +397,7 @@ export function StatsPage() {
           </div>
         </div>
       </section>
+      </QueryState>
     </div>
   );
 }
@@ -515,14 +497,30 @@ function WeightChart({ weights, goalKg }: { weights: BodyWeightLog[]; goalKg: nu
   const labelFill = 'var(--color-muted)';
   const gridStroke = 'var(--color-border)';
 
+  const chartSummary =
+    weights.length > 0
+      ? weights
+          .map((log) => `${formatChartDate(log.date)}: ${log.weight_kg} ${t('unitKg')}`)
+          .join('; ')
+      : '';
+
   return (
     <div className="space-y-3">
+      {chartSummary ? (
+        <p className="sr-only">
+          {t('weightChartSummary', { entries: chartSummary })}
+        </p>
+      ) : null}
       <div className="overflow-x-auto -mx-1 px-1">
         <svg
           viewBox={`0 0 ${W} ${H}`}
           className="w-full max-w-full h-auto min-h-[220px]"
           role="img"
-          aria-label={t('weightGoalGraph')}
+          aria-label={
+            chartSummary
+              ? `${t('weightGoalGraph')}. ${t('weightChartSummary', { entries: chartSummary })}`
+              : t('weightGoalGraph')
+          }
         >
           <defs>
             <linearGradient id={gradId} x1="0" y1="0" x2="0" y2="1">
@@ -672,9 +670,14 @@ function ContributionGrid({
   const rows = Math.ceil(days.length / cols);
   const totalCells = cols * rows;
   const paddedDays = [...Array(totalCells - days.length).fill(null), ...days];
+  const activeCount = days.filter((d) => workoutDaysMap.has(d.toISOString().slice(0, 10))).length;
 
   return (
-    <div className="contribution-grid overflow-x-auto">
+    <div
+      className="contribution-grid overflow-x-auto"
+      role="img"
+      aria-label={t('activityDaysCount', { count: activeCount })}
+    >
       <div
         className="inline-grid gap-[2px]"
         style={{

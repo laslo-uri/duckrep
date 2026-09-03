@@ -11,6 +11,7 @@ export default defineConfig([
     'coverage',
     '.vercel',
     'dist',
+    'src-tauri/target',
     'playwright-report',
     'test-results',
   ]),

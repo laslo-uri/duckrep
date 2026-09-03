@@ -1,6 +1,6 @@
 # YouPeak — Gym Journal
 
-A minimalist gym journal app built with React, Supabase, and Vercel. Track workouts, exercises, sets, and goals. Bilingual (English / Serbian Latin).
+A minimalist gym journal app built with React and local SQLite. Track workouts, exercises, sets, and goals. Trilingual (English / Serbian Latin / Hungarian). Optional Tauri desktop shell.
 
 **Repository:** [github.com/laslo-uri/you-peak](https://github.com/laslo-uri/you-peak) · **Version:** 0.1.0 (see `package.json`)
 
@@ -9,46 +9,27 @@ A minimalist gym journal app built with React, Supabase, and Vercel. Track worko
 - **Activities (journal)** — Multiple sessions per day, optional start/end time, grouped home view
 - **Exercises & sets** — Add from the library (with default sets) or custom lines; log reps × weight
 - **Exercise library** — Browse by muscle group (global + user presets)
-- **Public feed** — Share activities publicly; only you can edit your own
-- **i18n** — English and Serbian (Latin)
+- **Local-first** — All data stored in SQLite on this device (browser: sql.js persisted to IndexedDB, with localStorage migration/fallback; desktop: Tauri SQL plugin). Settings includes a browser SQLite backup export.
+- **i18n** — English, Serbian (Latin), and Hungarian
 
 ## Setup
 
-### 1. Supabase
-
-1. Create a project at [supabase.com](https://supabase.com)
-2. In **SQL Editor**, either run `supabase/full_sql_script.sql` once (reset + schema + seed for local dev), **or** run `reset.sql` → `schema.sql` → `seed.sql` in order
-3. In **Settings → API**, copy the Project URL and anon key
-
-### 2. Environment
-
-```bash
-cp .env.example .env
-# Edit .env and add:
-# VITE_SUPABASE_URL=https://xxx.supabase.co
-# VITE_SUPABASE_ANON_KEY=eyJ...
-```
-
-### 3. Run locally
+### Run locally (web)
 
 ```bash
 npm install
 npm run dev
 ```
 
-### 4. Deploy to Vercel
+No `.env` or cloud backend required. The database is created automatically on first load.
 
-**Required for the live site:** Vite bakes `VITE_*` variables in at **build** time. If they are missing, the app calls `placeholder.supabase.co` and sign-in shows “Failed to fetch”.
+### Deploy to Vercel
 
-1. [Vercel Dashboard](https://vercel.com) → your project → **Settings** → **Environment Variables**
-2. Add **`VITE_SUPABASE_URL`** = your Supabase **Project URL** (e.g. `https://abcdefgh.supabase.co`)
-3. Add **`VITE_SUPABASE_ANON_KEY`** = the **anon public** key (Supabase → **Project Settings** → **API**)
-4. Enable both for **Production** (and **Preview** if you use preview deploys)
-5. **Deployments** → open the latest deployment → **⋯** → **Redeploy** (or push a new commit). Editing env vars alone does not update an old bundle.
+Static SPA — connect the GitHub repo and deploy. No environment variables needed.
 
-CLI alternative: `npx vercel` then set the same names in the dashboard as above.
-
-Or connect the GitHub repo to Vercel, add the two variables, then trigger a deploy.
+```bash
+npm run build
+```
 
 ## Development
 
@@ -59,18 +40,39 @@ Requires **Node.js 20+** (see `.nvmrc`).
 | `npm run dev` | Local dev server |
 | `npm run lint` | ESLint |
 | `npm run test` | Vitest (unit/component) |
-| `npm run test:e2e` | Playwright smoke tests |
+| `npm run test:e2e` | Playwright smoke + journal tests |
 | `npm run build` | Production build (`dist/`) |
-| `npm run check` | lint + test + build (matches most of CI) |
+| `npm run check` | lint + test + build |
 
-**CI:** pushes and PRs to `main` run [`.github/workflows/ci.yml`](.github/workflows/ci.yml) (lint, tests, build, e2e).
+**CI:** pushes and PRs to `main` run [`.github/workflows/ci.yml`](.github/workflows/ci.yml) (lint, tests, build, Playwright e2e).
+
+## Desktop (Tauri)
+
+**Prerequisites:** [Rust](https://rustup.rs/), Node 20+, WebView2 (included on Windows 10/11).
+
+```powershell
+npm install
+npm run icon          # first time / after logo change
+npm run tauri:dev     # dev window
+npm run tauri:build   # release exe + NSIS installer
+powershell -ExecutionPolicy Bypass -File scripts/create-desktop-shortcut.ps1
+```
+
+**Outputs:**
+
+- `src-tauri/target/release/youpeak.exe`
+- `src-tauri/target/release/bundle/nsis/YouPeak_0.1.0_x64-setup.exe`
 
 ## Tech stack
 
 - React + TypeScript + Vite
 - Tailwind CSS v4
-- Supabase (Auth + Postgres)
+- SQLite (sql.js in browser, `@tauri-apps/plugin-sql` on desktop)
 - React Router, TanStack Query
-- i18next (en / sr)
+- i18next (en / sr / hu)
 - Vitest + Testing Library (unit/component tests)
 - Playwright (e2e; see `e2e/` and `playwright.config.ts`)
+
+## Legacy Supabase
+
+The `supabase/` folder contains SQL from an earlier cloud-backed version. The app no longer uses Supabase. See [`supabase/README.md`](supabase/README.md).

@@ -1,4 +1,25 @@
+import { readFileSync, existsSync } from 'node:fs'
+import { dirname, resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { defineConfig, devices } from '@playwright/test'
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
+
+function loadDotEnvE2e() {
+  const path = resolve(__dirname, '.env.e2e')
+  if (!existsSync(path)) return
+  for (const line of readFileSync(path, 'utf8').split(/\r?\n/)) {
+    const trimmed = line.trim()
+    if (!trimmed || trimmed.startsWith('#')) continue
+    const eq = trimmed.indexOf('=')
+    if (eq <= 0) continue
+    const key = trimmed.slice(0, eq).trim()
+    const val = trimmed.slice(eq + 1).trim()
+    if (!process.env[key]) process.env[key] = val
+  }
+}
+
+loadDotEnvE2e()
 
 const port = 4173
 const baseURL = `http://127.0.0.1:${port}`
@@ -21,10 +42,8 @@ export default defineConfig({
     reuseExistingServer: !process.env.CI,
     stdout: 'pipe',
     stderr: 'pipe',
-    env: {
-      ...process.env,
-      VITE_SUPABASE_URL: process.env.VITE_SUPABASE_URL ?? 'https://placeholder.supabase.co',
-      VITE_SUPABASE_ANON_KEY: process.env.VITE_SUPABASE_ANON_KEY ?? 'placeholder',
-    },
+    env: Object.fromEntries(
+      Object.entries(process.env).filter((entry): entry is [string, string] => entry[1] != null),
+    ),
   },
 })

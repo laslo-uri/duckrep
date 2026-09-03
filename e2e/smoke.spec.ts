@@ -1,21 +1,23 @@
-import { test, expect } from '@playwright/test'
+import { test, expect } from '@playwright/test';
 
-test.describe('public shell', () => {
-  test('auth page loads with sign-in affordance', async ({ page }) => {
-    await page.goto('/auth')
-    await expect(page).toHaveTitle(/YouPeak/i)
-    await expect(page.getByRole('button', { name: /sign in|prijavi se/i })).toBeVisible()
-  })
-
-  test('unauthenticated root redirects to auth', async ({ page }) => {
-    await page.goto('/')
-    await expect(page).toHaveURL(/\/auth$/)
-  })
-
-  test('public feed route renders feed heading', async ({ page }) => {
-    await page.goto('/feed')
-    await expect(page.getByRole('heading', { level: 1, name: /public feed|javni prikaz/i })).toBeVisible({
+test.describe('local app shell', () => {
+  test('journal loads without auth', async ({ page }) => {
+    await page.goto('/');
+    await expect(page).toHaveTitle(/YouPeak/i);
+    await expect(page.getByRole('heading', { level: 1, name: /my journal|moj dnevnik/i })).toBeVisible({
       timeout: 15_000,
-    })
-  })
-})
+    });
+  });
+
+  test('auth route redirects to journal', async ({ page }) => {
+    await page.goto('/auth');
+    await expect(page).toHaveURL(/\/$/, { timeout: 10_000 });
+  });
+
+  test('exercises library loads', async ({ page }) => {
+    await page.goto('/exercises');
+    await expect(page.getByRole('heading', { level: 1, name: /exercises|vežbe/i })).toBeVisible({
+      timeout: 15_000,
+    });
+  });
+});

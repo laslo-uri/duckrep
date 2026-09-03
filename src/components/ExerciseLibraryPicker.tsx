@@ -1,29 +1,19 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@tanstack/react-query';
+import { useVirtualizer } from '@tanstack/react-virtual';
 import { X } from 'lucide-react';
-import { supabase } from '../lib/supabase';
+import { listExercises } from '../lib/db';
+import { useDialogA11y } from '../hooks/useDialogA11y';
+import {
+  MUSCLE_GROUPS,
+  exerciseDisplayNames,
+  isSafeHttpsImageUrl,
+  resolveExerciseLocale,
+} from '../utils/exerciseDisplay';
 import type { ExerciseDefinition } from '../types';
 
-const MUSCLE_GROUPS = ['chest', 'shoulders', 'triceps', 'back', 'biceps', 'legs', 'abs', 'other'] as const;
-
-function parseDefaultSets(raw: unknown): ExerciseDefinition['default_sets'] {
-  if (!raw || !Array.isArray(raw)) return null;
-  return raw as ExerciseDefinition['default_sets'];
-}
-
-function exerciseDisplayNames(ex: ExerciseDefinition, localeIsSr: boolean) {
-  const en = ex.name.trim();
-  const sr = ex.name_sr?.trim() ?? '';
-  if (localeIsSr) {
-    const primary = sr || en;
-    const alt = primary && en && en !== primary ? en : '';
-    return { primary, alt };
-  }
-  const primary = en;
-  const alt = sr && sr !== primary ? sr : '';
-  return { primary, alt };
-}
+const ROW_HEIGHT = 64;
 
 export function ExerciseLibraryPicker({
   open,
@@ -38,53 +28,63 @@ export function ExerciseLibraryPicker({
 }) {
   const { t, i18n } = useTranslation();
   const [filter, setFilter] = useState('');
-  const localeIsSr = (i18n.resolvedLanguage ?? i18n.language ?? 'en').toLowerCase().startsWith('sr');
+  const [muscleGroup, setMuscleGroup] = useState<string>('');
+  const exerciseLocale = resolveExerciseLocale(i18n.resolvedLanguage ?? i18n.language);
+
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const searchRef = useRef<HTMLInputElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
+
+  useDialogA11y({
+    open,
+    onClose,
+    containerRef: dialogRef,
+    initialFocusRef: searchRef,
+  });
+
+  useEffect(() => {
+    if (!open) {
+      setFilter('');
+      setMuscleGroup('');
+    }
+  }, [open]);
 
   const { data: exercises = [], isLoading } = useQuery({
     queryKey: ['exercises', userId],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from('exercise_definitions')
-        .select('*')
-        .or(`user_id.eq.${userId},is_global.eq.true`);
-      if (error) throw error;
-      return (data ?? []).map((row) => ({
-        ...row,
-        default_sets: parseDefaultSets(row.default_sets),
-      })) as ExerciseDefinition[];
-    },
+    queryFn: () => listExercises(userId),
     enabled: open && !!userId,
   });
 
   const filtered = useMemo(() => {
     const q = filter.trim().toLowerCase();
-    if (!q) return exercises;
-    return exercises.filter((ex) => {
-      const { primary, alt } = exerciseDisplayNames(ex, localeIsSr);
-      return primary.toLowerCase().includes(q) || alt.toLowerCase().includes(q);
-    });
-  }, [exercises, filter, localeIsSr]);
+    return exercises
+      .filter((ex) => {
+        if (muscleGroup && (ex.muscle_group || 'other') !== muscleGroup) return false;
+        if (!q) return true;
+        const { primary, alt } = exerciseDisplayNames(ex, exerciseLocale);
+        return primary.toLowerCase().includes(q) || alt.toLowerCase().includes(q);
+      })
+      .sort((a, b) => a.name.localeCompare(b.name, 'en'));
+  }, [exercises, filter, muscleGroup, exerciseLocale]);
 
-  const byGroup = useMemo(() => {
-    return MUSCLE_GROUPS.reduce<Record<string, ExerciseDefinition[]>>((acc, g) => {
-      acc[g] = filtered.filter((e) => (e.muscle_group || 'other') === g);
-      return acc;
-    }, {});
-  }, [filtered]);
+  const virtualizer = useVirtualizer({
+    count: filtered.length,
+    getScrollElement: () => listRef.current,
+    estimateSize: () => ROW_HEIGHT,
+    overscan: 8,
+  });
 
   if (!open) return null;
 
   return (
-    <div
-      className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/40"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="library-picker-title"
-      onClick={onClose}
-    >
+    <div className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center p-0 sm:p-4">
+      <div className="absolute inset-0 bg-black/40" aria-hidden="true" />
       <div
-        className="w-full sm:max-w-lg max-h-[85dvh] sm:rounded-2xl bg-[var(--color-paper)] border-t sm:border border-[var(--color-border)] shadow-lg flex flex-col"
-        onClick={(e) => e.stopPropagation()}
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="library-picker-title"
+        className="relative w-full sm:max-w-lg max-h-[85dvh] sm:rounded-2xl bg-[var(--color-paper)] border-t sm:border border-[var(--color-border)] shadow-lg flex flex-col"
       >
         <div className="flex items-center justify-between gap-3 p-4 border-b border-[var(--color-border)]">
           <h2 id="library-picker-title" className="font-serif text-lg font-semibold text-[var(--color-ink)]">
@@ -99,58 +99,107 @@ export function ExerciseLibraryPicker({
             <X size={22} />
           </button>
         </div>
-        <div className="p-3 border-b border-[var(--color-border)]">
+        <div className="p-3 border-b border-[var(--color-border)] space-y-3">
           <input
+            ref={searchRef}
             type="search"
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
             placeholder={t('searchExercises')}
+            aria-label={t('searchExercises')}
             className="w-full px-3 py-2.5 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] text-sm focus:outline-none focus:ring-1 focus:ring-[var(--color-ink)]"
-            autoFocus
           />
+          <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1">
+            <button
+              type="button"
+              onClick={() => setMuscleGroup('')}
+              aria-pressed={muscleGroup === ''}
+              className={`shrink-0 px-3 py-2 min-h-[44px] rounded-full text-xs font-medium border transition-colors touch-manipulation ${
+                muscleGroup === ''
+                  ? 'bg-[var(--color-ink)] text-[var(--color-paper)] border-[var(--color-ink)]'
+                  : 'border-[var(--color-border)] text-[var(--color-muted)] hover:bg-[var(--color-hover)]'
+              }`}
+            >
+              {t('filterAllMuscleGroups')}
+            </button>
+            {MUSCLE_GROUPS.map((group) => (
+              <button
+                key={group}
+                type="button"
+                onClick={() => setMuscleGroup(group)}
+                aria-pressed={muscleGroup === group}
+                className={`shrink-0 px-3 py-2 min-h-[44px] rounded-full text-xs font-medium border transition-colors touch-manipulation ${
+                  muscleGroup === group
+                    ? 'bg-[var(--color-ink)] text-[var(--color-paper)] border-[var(--color-ink)]'
+                    : 'border-[var(--color-border)] text-[var(--color-muted)] hover:bg-[var(--color-hover)]'
+                }`}
+              >
+                {t(`muscleGroups.${group}`)}
+              </button>
+            ))}
+          </div>
         </div>
-        <div className="overflow-y-auto flex-1 p-3 pb-6">
+        <div ref={listRef} className="overflow-y-auto flex-1 p-3 pb-6">
           {isLoading ? (
-            <p className="text-sm text-[var(--color-muted)] px-1">{t('loading')}</p>
+            <p className="text-sm text-[var(--color-muted)] px-1" role="status" aria-live="polite">
+              {t('loading')}
+            </p>
           ) : filtered.length === 0 ? (
             <p className="text-sm text-[var(--color-muted)] px-1">{t('noExercisesLibrary')}</p>
           ) : (
-            <div className="space-y-6">
-              {MUSCLE_GROUPS.map((group) => {
-                const list = byGroup[group];
-                if (!list?.length) return null;
+            <ul
+              className="relative w-full"
+              style={{ height: `${virtualizer.getTotalSize()}px` }}
+            >
+              {virtualizer.getVirtualItems().map((item) => {
+                const ex = filtered[item.index];
+                const { primary, alt } = exerciseDisplayNames(ex, exerciseLocale);
+                const safeImage = isSafeHttpsImageUrl(ex.image_url) ? ex.image_url!.trim() : null;
+                const group = ex.muscle_group || 'other';
                 return (
-                  <div key={group}>
-                    <h3 className="text-xs font-medium text-[var(--color-muted)] uppercase tracking-wider mb-2 px-1">
-                      {t(`muscleGroups.${group}`)}
-                    </h3>
-                    <ul className="space-y-1">
-                      {list.map((ex) => {
-                        const { primary, alt } = exerciseDisplayNames(ex, localeIsSr);
-                        return (
-                          <li key={ex.id}>
-                            <button
-                              type="button"
-                              onClick={() => {
-                                onPick(ex);
-                                onClose();
-                                setFilter('');
-                              }}
-                              className="w-full text-left px-3 py-3 rounded-xl border border-transparent hover:border-[var(--color-border)] hover:bg-[var(--color-hover)] transition-colors touch-manipulation"
-                            >
-                              <span className="font-medium text-[var(--color-ink)]">{primary}</span>
-                              {alt ? (
-                                <span className="block text-xs text-[var(--color-muted)] mt-0.5">{alt}</span>
-                              ) : null}
-                            </button>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </div>
+                  <li
+                    key={ex.id}
+                    className="absolute left-0 top-0 w-full"
+                    style={{
+                      height: `${item.size}px`,
+                      transform: `translateY(${item.start}px)`,
+                    }}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => {
+                        onPick(ex);
+                        onClose();
+                        setFilter('');
+                        setMuscleGroup('');
+                      }}
+                      className="w-full h-full text-left px-3 py-2 rounded-xl border border-transparent hover:border-[var(--color-border)] hover:bg-[var(--color-hover)] transition-colors touch-manipulation flex items-center gap-3"
+                    >
+                      {safeImage ? (
+                        <img
+                          src={safeImage}
+                          alt=""
+                          className="w-10 h-10 rounded-lg object-cover bg-[var(--color-hover)] flex-shrink-0"
+                          loading="lazy"
+                        />
+                      ) : (
+                        <div className="w-10 h-10 rounded-lg bg-[var(--color-hover)] flex-shrink-0" aria-hidden />
+                      )}
+                      <span className="flex-1 min-w-0">
+                        <span className="block font-medium text-[var(--color-ink)] truncate">{primary}</span>
+                        {alt ? (
+                          <span className="block text-xs text-[var(--color-muted)] truncate mt-0.5">{alt}</span>
+                        ) : (
+                          <span className="block text-xs text-[var(--color-muted)] truncate mt-0.5">
+                            {t(`muscleGroups.${group}`)}
+                          </span>
+                        )}
+                      </span>
+                    </button>
+                  </li>
                 );
               })}
-            </div>
+            </ul>
           )}
         </div>
       </div>

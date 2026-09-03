@@ -42,3 +42,15 @@ Get these from Supabase Dashboard -> Project Settings -> API.
 |-------------------------------|----------|
 | laslo-uri@youpeak.app         | laslo    |
 | david-arsenijevic@youpeak.app | david    |
+
+## Production RLS checklist (exercise_definitions)
+
+After deploying app or SQL changes to a **live** Supabase project:
+
+1. Open **SQL Editor** and run [`verify_exercise_rls.sql`](verify_exercise_rls.sql).
+2. Confirm **Step A** lists four policies: `Users read own or global exercises`, `Users insert own exercises`, `Users update own exercises`, `Users delete own exercises`.
+3. Confirm **Step B** returns **no rows** (legacy `Users CRUD own or global exercises` must not exist).
+4. If Step B shows the legacy policy, run **section 6** at the end of [`schema.sql`](schema.sql) (idempotent), then re-run the verify script.
+5. Optionally run Playwright e2e: `npm run test:e2e` (local-only; see `e2e/`).
+
+Global exercises must be **read-only** for all authenticated users via the client API; only own rows (`is_global = false`) may be inserted, updated, or deleted.
