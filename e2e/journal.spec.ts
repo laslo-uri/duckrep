@@ -12,6 +12,8 @@ test.describe('journal flow (local)', () => {
     await page.getByRole('button', { name: /new activity|nova aktivnost/i }).click();
 
     await expect(page).toHaveURL(/\/activity\/[0-9a-f-]{36}$/i, { timeout: 20_000 });
-    await expect(page.getByRole('link', { name: /cancel|otkaži/i })).toBeVisible();
+    await expect(
+      page.getByRole('link', { name: /back to journal|nazad na dnevnik|vissza a naplóhoz/i }),
+    ).toBeVisible();
   });
 });
