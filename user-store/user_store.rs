@@ -1,10 +1,10 @@
-//! Shared Tauri user-store commands. Include from each app's lib.rs:
-//!
-//! ```rust
-//! mod user_store { include!("../../../user-store/user_store.rs"); }
-//! .manage(user_store::new_state("com.lectory.app", None))
-//! .invoke_handler(tauri::generate_handler![user_store::user_store_load, user_store::user_store_save, ...])
-//! ```
+// Shared Tauri user-store commands. Include from each app's lib.rs:
+//
+// ```rust
+// mod user_store { include!("../../../user-store/user_store.rs"); }
+// .manage(user_store::new_state("com.lectory.app", None))
+// .invoke_handler(tauri::generate_handler![user_store::user_store_load, user_store::user_store_save, ...])
+// ```
 
 use std::collections::HashMap;
 use std::fs;
