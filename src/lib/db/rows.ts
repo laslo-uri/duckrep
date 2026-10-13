@@ -5,6 +5,7 @@ import type {
   ExerciseDefinition,
   ExerciseSet,
   ExerciseSetDefault,
+  FoodEntry,
   UserDailyTrainingStats,
   UserStats,
   WorkoutDay,
@@ -117,8 +118,26 @@ export function mapUserStats(row: Row): UserStats {
     birth_date: str(row.birth_date),
     height_cm: num(row.height_cm),
     goal_weight_kg: num(row.goal_weight_kg),
+    calorie_goal: num(row.calorie_goal),
+    protein_goal_g: num(row.protein_goal_g),
+    carbs_goal_g: num(row.carbs_goal_g),
+    fat_goal_g: num(row.fat_goal_g),
     created_at: String(row.created_at ?? ''),
     updated_at: String(row.updated_at ?? ''),
+  };
+}
+
+export function mapFoodEntry(row: Row): FoodEntry {
+  return {
+    id: String(row.id),
+    user_id: String(row.user_id),
+    date: String(row.date ?? ''),
+    name: String(row.name ?? ''),
+    calories: num(row.calories) ?? 0,
+    protein_g: num(row.protein_g),
+    carbs_g: num(row.carbs_g),
+    fat_g: num(row.fat_g),
+    created_at: String(row.created_at ?? ''),
   };
 }
 

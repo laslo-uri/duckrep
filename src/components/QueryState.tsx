@@ -38,13 +38,13 @@ export function QueryState({
 
   if (isError) {
     return (
-      <div className="rounded-xl border border-[var(--color-error)]/30 bg-[var(--color-error-bg)] p-4" role="alert">
+      <div className="rounded-xl border border-[var(--color-error)]/30 bg-[var(--color-error-bg)] p-5" role="alert">
         <p className="text-sm text-[var(--color-error)]">{toQueryErrorMessage(error?.message, t)}</p>
         {refetch && (
           <button
             type="button"
             onClick={() => refetch()}
-            className="mt-3 text-sm font-medium text-[var(--color-ink)] underline touch-manipulation min-h-[44px]"
+            className="yp-press mt-3 px-4 py-1.5 text-sm font-semibold rounded-xl bg-[var(--color-accent)] text-[var(--color-on-accent)] touch-manipulation min-h-[44px]"
           >
             {t('retry')}
           </button>

@@ -1,6 +1,10 @@
 #[path = "../../user-store/user_store.rs"]
 mod user_store;
 
+use std::path::Path;
+
+use sqlx::Row;
+use tauri::Manager;
 use tauri_plugin_sql::{Migration, MigrationKind};
 
 const SCHEMA_MIGRATION: &str = r#"
@@ -103,6 +107,68 @@ CREATE UNIQUE INDEX IF NOT EXISTS idx_exercise_definitions_source_slug
   ON exercise_definitions(source_slug) WHERE source_slug IS NOT NULL;
 "#;
 
+// Food log. Nutrition goal columns are added in setup: SQLite has no
+// ADD COLUMN IF NOT EXISTS, and databases already opened by the webview may have them.
+const MIGRATION_V3: &str = r#"
+CREATE TABLE IF NOT EXISTS food_entries (
+  id TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL REFERENCES profiles(id) ON DELETE CASCADE,
+  date TEXT NOT NULL,
+  name TEXT NOT NULL,
+  calories REAL NOT NULL DEFAULT 0,
+  protein_g REAL,
+  carbs_g REAL,
+  fat_g REAL,
+  created_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+CREATE INDEX IF NOT EXISTS idx_food_entries_user_date ON food_entries(user_id, date);
+"#;
+
+const NUTRITION_GOAL_COLUMNS: &[&str] = &[
+    "calorie_goal",
+    "protein_goal_g",
+    "carbs_goal_g",
+    "fat_goal_g",
+];
+
+async fn ensure_nutrition_columns(db_path: &Path) -> Result<(), String> {
+    if !db_path.exists() {
+        return Ok(());
+    }
+
+    let url = format!("sqlite:{}", db_path.display());
+    let pool = sqlx::sqlite::SqlitePoolOptions::new()
+        .max_connections(1)
+        .connect(&url)
+        .await
+        .map_err(|err| err.to_string())?;
+
+    let rows = sqlx::query("SELECT name FROM pragma_table_info('user_stats')")
+        .fetch_all(&pool)
+        .await
+        .map_err(|err| err.to_string())?;
+    let present: std::collections::HashSet<String> = rows
+        .iter()
+        .map(|row| row.try_get::<String, usize>(0))
+        .collect::<Result<_, _>>()
+        .map_err(|err| err.to_string())?;
+
+    for column in NUTRITION_GOAL_COLUMNS {
+        if present.contains(*column) {
+            continue;
+        }
+        let sql = format!("ALTER TABLE user_stats ADD COLUMN {column} REAL");
+        sqlx::query(&sql)
+            .execute(&pool)
+            .await
+            .map_err(|err| err.to_string())?;
+    }
+
+    pool.close().await;
+    Ok(())
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     let migrations = vec![
@@ -118,6 +184,12 @@ pub fn run() {
             sql: MIGRATION_V2,
             kind: MigrationKind::Up,
         },
+        Migration {
+            version: 3,
+            description: "food log and nutrition goals",
+            sql: MIGRATION_V3,
+            kind: MigrationKind::Up,
+        },
     ];
 
     tauri::Builder::default()
@@ -131,6 +203,16 @@ pub fn run() {
             user_store::user_store_load,
             user_store::user_store_save,
         ])
+        .setup(|app| {
+            let dir = app
+                .path()
+                .app_config_dir()
+                .map_err(|err| std::io::Error::other(err.to_string()))?;
+            let db_path = dir.join("youpeak.db");
+            tauri::async_runtime::block_on(ensure_nutrition_columns(&db_path))
+                .map_err(std::io::Error::other)?;
+            Ok(())
+        })
         .run(tauri::generate_context!())
         .expect("error while running YouPeak");
 }

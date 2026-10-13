@@ -12,14 +12,16 @@
   "app": {
     "windows": [
       {
-        "title": "YouPeak — Gym Journal",
+        "title": "YouPeak",
         "width": 1280,
         "height": 800,
         "minWidth": 900,
         "minHeight": 600,
         "resizable": true,
         "decorations": true,
-        "shadow": true
+        "shadow": true,
+        "theme": "Dark",
+        "backgroundColor": "#121418"
       }
     ],
     "security": {

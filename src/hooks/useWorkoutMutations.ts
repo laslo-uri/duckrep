@@ -7,6 +7,7 @@ import {
   updateWorkoutExercise,
   deleteWorkoutExercise,
   updateExerciseSet,
+  deleteExerciseSet,
   updateWorkoutDay,
   addExerciseSet,
   softDeleteWorkoutDay,
@@ -17,6 +18,7 @@ import {
   applyPatchSetCompleted,
   applyPatchSetRepsWeight,
   applyPatchExerciseName,
+  applyPatchExerciseGoals,
   applyPatchExerciseCircuit,
   applyPatchWorkoutFields,
   invalidateDailyStats,
@@ -54,6 +56,7 @@ function useOptimisticWorkout(workoutId: string | undefined, userId: string) {
 
   const onSettledStats = () => {
     invalidateDailyStats(queryClient, userId);
+    queryClient.invalidateQueries({ queryKey: ['lifetime-training-totals'] });
   };
 
   return { snapshot, apply, rollback, onSettledStats };
@@ -77,7 +80,11 @@ export function useWorkoutMutations({
   const optimistic = useOptimisticWorkout(workoutId, userId);
 
   const createMutation = useMutation({
-    mutationFn: () => createWorkoutDay(userId),
+    mutationFn: async () => {
+      const day = await createWorkoutDay(userId);
+      await updateWorkoutDay(day.id, { started_at: new Date().toISOString() });
+      return day;
+    },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['workout-days'] });
       navigate(`/activity/${data.id}`);
@@ -149,6 +156,20 @@ export function useWorkoutMutations({
     onSettled: optimistic.onSettledStats,
   });
 
+  const updateExerciseGoalsMutation = useMutation({
+    mutationFn: ({ exId, goals }: { exId: string; goals: string | null }) =>
+      updateWorkoutExercise(exId, { goals }),
+    onMutate: async ({ exId, goals }) => {
+      const ctx = optimistic.snapshot();
+      optimistic.apply((w) => applyPatchExerciseGoals(w, exId, goals));
+      return ctx;
+    },
+    onError: (err, _vars, ctx) => {
+      optimistic.rollback(ctx);
+      onError(err);
+    },
+  });
+
   const updateExerciseMutation = useMutation({
     mutationFn: ({ exId, name }: { exId: string; name: string }) =>
       updateWorkoutExercise(exId, { name }),
@@ -166,9 +187,8 @@ export function useWorkoutMutations({
   const updateWorkoutMutation = useMutation({
     mutationFn: (updates: {
       title?: string;
-      notes?: string;
+      notes?: string | null;
       icon?: string | null;
-      is_public?: boolean;
       started_at?: string | null;
       ended_at?: string | null;
       activity_type?: ActivityType;
@@ -195,20 +215,31 @@ export function useWorkoutMutations({
       setId,
       reps,
       weight,
+      notes,
     }: {
       setId: string;
       reps: number | null;
       weight: number | null;
-    }) => updateExerciseSet(setId, { reps, weight }),
-    onMutate: async ({ setId, reps, weight }) => {
+      notes: string | null;
+    }) => updateExerciseSet(setId, { reps, weight, notes }),
+    onMutate: async ({ setId, reps, weight, notes }) => {
       const ctx = optimistic.snapshot();
-      optimistic.apply((w) => applyPatchSetRepsWeight(w, setId, reps, weight));
+      optimistic.apply((w) => applyPatchSetRepsWeight(w, setId, reps, weight, notes));
       return ctx;
     },
     onError: (err, _vars, ctx) => {
       optimistic.rollback(ctx);
       onError(err);
     },
+  });
+
+  const deleteSetMutation = useMutation({
+    mutationFn: (setId: string) => deleteExerciseSet(setId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['workout', workoutId] });
+      optimistic.onSettledStats();
+    },
+    onError,
   });
 
   const addSetMutation = useMutation({
@@ -232,7 +263,7 @@ export function useWorkoutMutations({
       optimistic.onSettledStats();
       queryClient.invalidateQueries({ queryKey: ['trashed-activities'] });
       queryClient.removeQueries({ queryKey: ['workout', workoutDayId] });
-      navigate('/');
+      navigate('/journal');
     },
     onError,
   });
@@ -244,9 +275,11 @@ export function useWorkoutMutations({
     deleteExerciseMutation,
     toggleSetMutation,
     updateExerciseMutation,
+    updateExerciseGoalsMutation,
     updateWorkoutMutation,
     updateSetMutation,
     addSetMutation,
+    deleteSetMutation,
     deleteWorkoutMutation,
   };
 }

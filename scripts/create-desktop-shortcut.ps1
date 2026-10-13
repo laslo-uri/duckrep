@@ -8,7 +8,7 @@ $Icon = Join-Path $YouPeakRoot "src-tauri\icons\icon.ico"
 
 Push-Location $YouPeakRoot
 try {
-    npm run icon:desktop | Out-Host
+    npm run icon | Out-Host
 } finally {
     Pop-Location
 }

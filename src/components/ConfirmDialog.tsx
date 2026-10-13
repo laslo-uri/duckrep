@@ -37,23 +37,23 @@ export function ConfirmDialog({
   const confirmClass =
     variant === 'danger'
       ? 'bg-[var(--color-error)] text-white hover:opacity-90'
-      : 'bg-[var(--color-ink)] text-[var(--color-paper)] hover:opacity-90';
+      : 'bg-[var(--color-accent)] text-[var(--color-on-accent)] hover:opacity-90';
 
   return (
-    <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-black/40" aria-hidden="true" />
+    <div className="fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4">
+      <div className="absolute inset-0 bg-black/50 backdrop-blur-[2px]" aria-hidden="true" />
       <div
         ref={dialogRef}
         role="dialog"
         aria-modal="true"
         aria-labelledby="confirm-dialog-title"
         aria-describedby="confirm-dialog-message"
-        className="relative w-full max-w-md rounded-2xl border border-[var(--color-border)] bg-[var(--color-paper)] p-6 shadow-lg"
+        className="yp-enter relative w-full sm:max-w-md rounded-t-2xl sm:rounded-2xl bg-[var(--color-surface)] p-6 shadow-[var(--shadow-card)]"
       >
         <h2 id="confirm-dialog-title" className="font-serif text-lg font-semibold text-[var(--color-ink)]">
           {title}
         </h2>
-        <p id="confirm-dialog-message" className="mt-2 text-sm text-[var(--color-muted)]">
+        <p id="confirm-dialog-message" className="mt-2 text-sm text-[var(--color-muted)] leading-relaxed">
           {message}
         </p>
         <div className="mt-6 flex flex-col-reverse sm:flex-row sm:justify-end gap-2">
@@ -61,14 +61,14 @@ export function ConfirmDialog({
             type="button"
             ref={cancelRef}
             onClick={onCancel}
-            className="px-4 py-3 min-h-[44px] rounded-lg border border-[var(--color-border)] text-sm font-medium hover:bg-[var(--color-hover)] touch-manipulation"
+            className="yp-press px-5 py-3 min-h-[48px] rounded-xl border border-[var(--color-border)] text-sm font-medium hover:bg-[var(--color-hover)] touch-manipulation"
           >
             {cancelLabel}
           </button>
           <button
             type="button"
             onClick={onConfirm}
-            className={`px-4 py-3 min-h-[44px] rounded-lg text-sm font-medium touch-manipulation ${confirmClass}`}
+            className={`yp-press px-5 py-3 min-h-[48px] rounded-xl text-sm font-semibold touch-manipulation ${confirmClass}`}
           >
             {confirmLabel}
           </button>

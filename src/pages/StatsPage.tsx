@@ -17,6 +17,8 @@ import {
   upsertBodyWeightLog,
   listWorkoutDaysForStats,
   getDailyTrainingStats,
+  localDateKey,
+  todayIso,
 } from '../lib/db';
 import { useLocalUser } from '../contexts/LocalUserContext';
 import {
@@ -27,10 +29,13 @@ import {
 } from '../lib/statsHelpers';
 import { parseOptionalFloat } from '../utils/numbers';
 import { useMutationError } from '../hooks/useMutationError';
+import { BirthCalendar } from '../components/BirthCalendar';
 import { MutationAlert } from '../components/MutationAlert';
 import { QueryState } from '../components/QueryState';
+import { UnitInput } from '../components/UnitInput';
 import type { BodyWeightLog } from '../types';
-import { WorkoutDayIcon } from '../components/WorkoutIconPicker';
+import { buildMondayWeeks } from '../lib/statsHelpers';
+import { appLocale } from '../lib/locale';
 
 function getDaysInPastWeeks(weeks: number): Date[] {
   const days: Date[] = [];
@@ -45,7 +50,8 @@ function getDaysInPastWeeks(weeks: number): Date[] {
 }
 
 export function StatsPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const locale = appLocale(i18n.language);
   const { user } = useLocalUser();
   const queryClient = useQueryClient();
   const { mutationError, clearError, onMutationError } = useMutationError();
@@ -54,6 +60,7 @@ export function StatsPage() {
   const [heightCm, setHeightCm] = useState<string>('');
   const [goalKg, setGoalKg] = useState<string>('');
   const [todayWeight, setTodayWeight] = useState<string>('');
+  const [weightError, setWeightError] = useState(false);
 
   const userStatsQuery = useQuery({
     queryKey: ['user-stats', user.id],
@@ -84,7 +91,7 @@ export function StatsPage() {
     queryFn: async () => {
       const start = new Date();
       start.setDate(start.getDate() - 84);
-      return listWorkoutDaysForStats(user.id, start.toISOString().slice(0, 10));
+      return listWorkoutDaysForStats(user.id, localDateKey(start));
     },
   });
 
@@ -96,7 +103,7 @@ export function StatsPage() {
     queryFn: async () => {
       const start = new Date();
       start.setDate(start.getDate() - 84);
-      return getDailyTrainingStats(user.id, start.toISOString().slice(0, 10));
+      return getDailyTrainingStats(user.id, localDateKey(start));
     },
   });
 
@@ -149,8 +156,7 @@ export function StatsPage() {
 
   const addWeightMutation = useMutation({
     mutationFn: (weight: number) => {
-      const date = new Date().toISOString().slice(0, 10);
-      return upsertBodyWeightLog(user.id, date, weight);
+      return upsertBodyWeightLog(user.id, todayIso(), weight);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['body-weight-logs', user.id] });
@@ -171,24 +177,29 @@ export function StatsPage() {
   const saveStats = () => {
     updateStatsMutation.mutate({
       birth_date: birthDate.trim() ? birthDate.trim() : null,
-      height_cm: parseOptionalFloat(heightCm),
-      goal_weight_kg: parseOptionalFloat(goalKg),
+      height_cm: parseOptionalFloat(heightCm.replace(',', '.')),
+      goal_weight_kg: parseOptionalFloat(goalKg.replace(',', '.')),
     });
   };
 
   const addTodayWeight = () => {
-    const w = parseOptionalFloat(todayWeight);
-    if (w != null && w > 0) addWeightMutation.mutate(w);
+    const w = parseOptionalFloat(todayWeight.replace(',', '.'));
+    if (w == null || w <= 0 || w > 500) {
+      setWeightError(true);
+      return;
+    }
+    setWeightError(false);
+    addWeightMutation.mutate(w);
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       <div>
-        <h1 className="font-serif text-xl sm:text-2xl font-semibold text-[var(--color-ink)] tracking-tight">
+        <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-semibold text-[var(--color-ink)] tracking-tight text-balance">
           {t('yourStats')}
         </h1>
         <p className="text-sm text-[var(--color-muted)] mt-1">
-          {t('statsSubtitle')} · {new Date().toLocaleDateString(undefined, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
+          {t('statsSubtitle')} · {new Date().toLocaleDateString(locale, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
         </p>
       </div>
 
@@ -229,33 +240,48 @@ export function StatsPage() {
       </div>
 
       {/* Add today's weight */}
-      <section className="p-4 sm:p-5 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)]">
+      <section className="yp-card p-5 sm:p-6">
         <h2 className="font-medium text-[var(--color-ink)] mb-3 flex items-center gap-2">
           <Scale size={18} />
           {t('logWeight')}
         </h2>
-        <div className="flex flex-wrap gap-2">
-          <input
-            type="number"
-            step="0.1"
-            placeholder={t('unitKg')}
-            value={todayWeight}
-            onChange={(e) => setTodayWeight(e.target.value)}
-            className="w-24 px-3 py-2 text-sm rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] focus:outline-none focus:ring-1 focus:ring-[var(--color-ink)]"
-          />
+        <form
+          className="flex flex-wrap items-start gap-2"
+          onSubmit={(event) => {
+            event.preventDefault();
+            addTodayWeight();
+          }}
+        >
+          <div className="min-w-0 max-w-xs flex-1">
+            <UnitInput
+              value={todayWeight}
+              onChange={(value) => {
+                setTodayWeight(value);
+                setWeightError(false);
+              }}
+              unit={t('unitKg')}
+              label={t('logWeight')}
+              placeholder="72.5"
+              invalid={weightError}
+            />
+            {weightError ? (
+              <p role="alert" className="mt-2 text-sm text-[var(--color-error)]">
+                {t('weightInvalid')}
+              </p>
+            ) : null}
+          </div>
           <button
-            type="button"
-            onClick={addTodayWeight}
-            disabled={!todayWeight || addWeightMutation.isPending}
-            className="px-4 py-2 min-h-[44px] rounded-lg bg-[var(--color-ink)] text-[var(--color-paper)] text-sm font-medium hover:opacity-90 disabled:opacity-50 touch-manipulation"
+            type="submit"
+            disabled={!todayWeight.trim() || addWeightMutation.isPending}
+            className="yp-press min-h-[48px] shrink-0 rounded-xl bg-[var(--color-accent)] px-5 text-sm font-semibold text-[var(--color-on-accent)] disabled:opacity-50 touch-manipulation"
           >
             {t('save')}
           </button>
-        </div>
+        </form>
       </section>
 
       {/* User stats: birth date, height, goal */}
-      <section className="p-4 sm:p-5 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)]">
+      <section className="yp-card p-5 sm:p-6">
         <h2 className="font-medium text-[var(--color-ink)] mb-3 flex items-center gap-2">
           <CalendarIcon size={18} />
           {t('profileSettings')}
@@ -263,88 +289,75 @@ export function StatsPage() {
         {editingStats ? (
           <div className="space-y-3">
             <div>
-              <label className="block text-sm text-[var(--color-muted)] mb-1">{t('birthDate')}</label>
-              <input
-                type="date"
-                min="1920-01-01"
-                max={new Date().toISOString().slice(0, 10)}
-                value={birthDate}
-                onChange={(e) => setBirthDate(e.target.value)}
-                className="w-full max-w-xs px-3 py-2 text-sm rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-ink)] focus:outline-none focus:ring-1 focus:ring-[var(--color-ink)] [color-scheme:light] dark:[color-scheme:dark]"
-              />
+              <p className="mb-1 text-sm text-[var(--color-muted)]">{t('birthDate')}</p>
+              <BirthCalendar value={birthDate} onChange={setBirthDate} />
             </div>
-            <div>
-              <label className="block text-sm text-[var(--color-muted)] mb-1">{t('heightCm')}</label>
-              <input
-                type="number"
-                step="0.1"
-                min="100"
-                max="250"
-                placeholder="175"
+            <label className="block max-w-xs">
+              <span className="mb-1 block text-sm text-[var(--color-muted)]">{t('heightCm')}</span>
+              <UnitInput
                 value={heightCm}
-                onChange={(e) => setHeightCm(e.target.value)}
-                className="w-full px-3 py-2 text-sm rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] focus:outline-none focus:ring-1 focus:ring-[var(--color-ink)]"
+                onChange={setHeightCm}
+                unit={t('unitCm')}
+                placeholder="175"
               />
-            </div>
-            <div>
-              <label className="block text-sm text-[var(--color-muted)] mb-1">{t('goalKg')}</label>
-              <input
-                type="number"
-                step="0.1"
-                min="30"
-                max="300"
-                placeholder="75"
+            </label>
+            <label className="block max-w-xs">
+              <span className="mb-1 block text-sm text-[var(--color-muted)]">{t('goalKg')}</span>
+              <UnitInput
                 value={goalKg}
-                onChange={(e) => setGoalKg(e.target.value)}
-                className="w-full px-3 py-2 text-sm rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] focus:outline-none focus:ring-1 focus:ring-[var(--color-ink)]"
+                onChange={setGoalKg}
+                unit={t('unitKg')}
+                placeholder="75"
               />
-            </div>
+            </label>
             <div className="flex gap-2">
               <button
                 type="button"
                 onClick={saveStats}
                 disabled={updateStatsMutation.isPending}
-                className="px-4 py-2 min-h-[44px] rounded-lg bg-[var(--color-ink)] text-[var(--color-paper)] text-sm font-medium touch-manipulation"
+                className="yp-press px-5 py-2 min-h-[44px] rounded-xl bg-[var(--color-accent)] text-[var(--color-on-accent)] text-sm font-semibold touch-manipulation"
               >
                 {t('save')}
               </button>
               <button
                 type="button"
                 onClick={() => setEditingStats(false)}
-                className="px-4 py-2 min-h-[44px] rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-ink)] text-sm hover:bg-[var(--color-hover)] touch-manipulation"
+                className="yp-press px-5 py-2 min-h-[44px] rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-ink)] text-sm hover:bg-[var(--color-hover)] touch-manipulation"
               >
                 {t('cancel')}
               </button>
             </div>
           </div>
         ) : (
-          <div className="space-y-2 text-sm">
-            <p>
-              <span className="text-[var(--color-muted)]">{t('birthDate')}:</span>{' '}
-              {userStats?.birth_date ? formatBirthDateDisplay(userStats.birth_date.slice(0, 10)) : '—'}
-            </p>
-            <p>
-              <span className="text-[var(--color-muted)]">{t('heightCm')}:</span>{' '}
-              {userStats?.height_cm ? `${userStats.height_cm} cm` : '—'}
-            </p>
-            <p>
-              <span className="text-[var(--color-muted)]">{t('goalKg')}:</span>{' '}
-              {userStats?.goal_weight_kg ? `${userStats.goal_weight_kg} kg` : '—'}
-            </p>
-            <button
-              type="button"
-              onClick={startEditingStats}
-              className="text-[var(--color-ink)] font-medium hover:underline mt-2 min-h-[44px] touch-manipulation"
-            >
-              {t('edit')}
-            </button>
+          <div>
+          <dl className="grid gap-2.5 text-sm">
+            <div className="flex items-baseline justify-between gap-4">
+              <dt className="text-[var(--color-muted)]">{t('birthDate')}</dt>
+              <dd className="tabular-nums text-right">{userStats?.birth_date ? formatBirthDateDisplay(userStats.birth_date.slice(0, 10), locale) : '—'}</dd>
+            </div>
+            <div className="flex items-baseline justify-between gap-4">
+              <dt className="text-[var(--color-muted)]">{t('heightCm')}</dt>
+              <dd className="tabular-nums text-right">{userStats?.height_cm ? `${userStats.height_cm} cm` : '—'}</dd>
+            </div>
+            <div className="flex items-baseline justify-between gap-4">
+              <dt className="text-[var(--color-muted)]">{t('goalKg')}</dt>
+              <dd className="tabular-nums text-right">{userStats?.goal_weight_kg ? `${userStats.goal_weight_kg} kg` : '—'}</dd>
+            </div>
+          </dl>
+          <button
+            type="button"
+            onClick={startEditingStats}
+            className="mt-3 inline-flex items-center min-h-[44px] text-[var(--color-ink)] font-medium hover:underline touch-manipulation"
+          >
+            {t('edit')}
+          </button>
           </div>
         )}
       </section>
 
       {/* Weight goal graph */}
       {(weightsForChart.length > 0 || goal != null) && (
-        <section className="p-4 sm:p-5 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)]">
+        <section className="yp-card p-5 sm:p-6">
           <h2 className="font-medium text-[var(--color-ink)] mb-4 flex items-center gap-2">
             <TrendingDown size={18} />
             {t('weightGoalGraph')}
@@ -354,7 +367,7 @@ export function StatsPage() {
       )}
 
       {/* Activity grid - GitHub style */}
-      <section className="p-4 sm:p-5 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)]">
+      <section className="yp-card p-5 sm:p-6">
         <h2 className="font-medium text-[var(--color-ink)] mb-3 flex items-center gap-2">
           <Activity size={18} />
           {t('activityDays')}
@@ -372,26 +385,26 @@ export function StatsPage() {
         <ContributionGrid days={days} workoutDaysMap={workoutDaysMap} />
       </section>
 
-      <section className="p-4 sm:p-5 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)]">
+      <section className="yp-card p-5 sm:p-6">
         <h2 className="font-medium text-[var(--color-ink)] mb-1 flex items-center gap-2">
           <Zap size={18} />
           {t('analyticsRollupTitle')}
         </h2>
         <p className="text-xs text-[var(--color-muted)] mb-4">{t('analyticsRollupSubtitle')}</p>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm">
-          <div className="p-3 rounded-lg bg-[var(--color-hover)]/60">
+          <div className="p-3 rounded-2xl bg-[var(--color-accent-soft)]">
             <p className="text-[var(--color-muted)] text-xs">{t('analyticsTotalActivities')}</p>
             <p className="font-semibold text-[var(--color-ink)] tabular-nums">{analyticsTotals.activities}</p>
           </div>
-          <div className="p-3 rounded-lg bg-[var(--color-hover)]/60">
+          <div className="p-3 rounded-2xl bg-[var(--color-accent-soft)]">
             <p className="text-[var(--color-muted)] text-xs">{t('analyticsStrengthSessions')}</p>
             <p className="font-semibold text-[var(--color-ink)] tabular-nums">{analyticsTotals.strength}</p>
           </div>
-          <div className="p-3 rounded-lg bg-[var(--color-hover)]/60">
+          <div className="p-3 rounded-2xl bg-[var(--color-accent-soft)]">
             <p className="text-[var(--color-muted)] text-xs">{t('analyticsCardioSessions')}</p>
             <p className="font-semibold text-[var(--color-ink)] tabular-nums">{analyticsTotals.cardio}</p>
           </div>
-          <div className="p-3 rounded-lg bg-[var(--color-hover)]/60">
+          <div className="p-3 rounded-2xl bg-[var(--color-accent-soft)]">
             <p className="text-[var(--color-muted)] text-xs">{t('analyticsCompletedSets')}</p>
             <p className="font-semibold text-[var(--color-ink)] tabular-nums">{analyticsTotals.sets}</p>
           </div>
@@ -412,18 +425,20 @@ function StatCard({
   value: string;
 }) {
   return (
-    <div className="p-4 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)]">
-      <div className="flex items-center gap-2 text-[var(--color-muted)] mb-1">{icon}</div>
-      <p className="text-xs text-[var(--color-muted)]">{label}</p>
-      <p className="font-semibold text-[var(--color-ink)]">{value}</p>
+    <div className="yp-card p-4 sm:p-5 min-w-0">
+      <div className="flex items-center gap-2 text-[var(--color-muted)]">
+        {icon}
+        <p className="yp-label">{label}</p>
+      </div>
+      <p className="font-serif text-xl text-[var(--color-ink)] mt-2 min-w-0 break-words">{value}</p>
     </div>
   );
 }
 
-function formatChartDate(iso: string): string {
+function formatChartDate(iso: string, locale: string): string {
   const [y, m, d] = iso.split('-').map(Number);
   if (!y || !m || !d) return iso;
-  return new Date(y, m - 1, d).toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+  return new Date(y, m - 1, d).toLocaleDateString(locale, { month: 'short', day: 'numeric' });
 }
 
 function niceYStep(range: number): number {
@@ -438,7 +453,8 @@ function niceYStep(range: number): number {
 }
 
 function WeightChart({ weights, goalKg }: { weights: BodyWeightLog[]; goalKg: number | null }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const locale = appLocale(i18n.language);
   const gradId = useId().replace(/:/g, '');
   if (weights.length === 0 && goalKg == null) return null;
 
@@ -500,7 +516,7 @@ function WeightChart({ weights, goalKg }: { weights: BodyWeightLog[]; goalKg: nu
   const chartSummary =
     weights.length > 0
       ? weights
-          .map((log) => `${formatChartDate(log.date)}: ${log.weight_kg} ${t('unitKg')}`)
+          .map((log) => `${formatChartDate(log.date, locale)}: ${log.weight_kg} ${t('unitKg')}`)
           .join('; ')
       : '';
 
@@ -600,14 +616,14 @@ function WeightChart({ weights, goalKg }: { weights: BodyWeightLog[]; goalKg: nu
               stroke="var(--color-ink)"
               strokeWidth={2}
             >
-              <title>{`${formatChartDate(log.date)} · ${log.weight_kg} kg`}</title>
+              <title>{`${formatChartDate(log.date, locale)} · ${log.weight_kg} kg`}</title>
             </circle>
           ))}
 
           {n > 0 ? (
             <g>
               <text x={toX(0)} y={H - 16} textAnchor="middle" fill={labelFill} style={{ fontSize: 11 }}>
-                {formatChartDate(weights[0].date)}
+                {formatChartDate(weights[0].date, locale)}
               </text>
               {n > 2 ? (
                 <text
@@ -617,7 +633,7 @@ function WeightChart({ weights, goalKg }: { weights: BodyWeightLog[]; goalKg: nu
                   fill={labelFill}
                   style={{ fontSize: 11 }}
                 >
-                  {formatChartDate(weights[Math.floor((n - 1) / 2)].date)}
+                  {formatChartDate(weights[Math.floor((n - 1) / 2)].date, locale)}
                 </text>
               ) : null}
               {n > 1 ? (
@@ -628,7 +644,7 @@ function WeightChart({ weights, goalKg }: { weights: BodyWeightLog[]; goalKg: nu
                   fill={labelFill}
                   style={{ fontSize: 11 }}
                 >
-                  {formatChartDate(weights[n - 1].date)}
+                  {formatChartDate(weights[n - 1].date, locale)}
                 </text>
               ) : null}
             </g>
@@ -665,59 +681,53 @@ function ContributionGrid({
   days: Date[];
   workoutDaysMap: Map<string, string | null>;
 }) {
-  const { t } = useTranslation();
-  const cols = 7;
-  const rows = Math.ceil(days.length / cols);
-  const totalCells = cols * rows;
-  const paddedDays = [...Array(totalCells - days.length).fill(null), ...days];
-  const activeCount = days.filter((d) => workoutDaysMap.has(d.toISOString().slice(0, 10))).length;
+  const { t, i18n } = useTranslation();
+  const keys = days.map((d) => localDateKey(d));
+  const cells = buildMondayWeeks(keys).flat();
+  const activeCount = keys.filter((key) => workoutDaysMap.has(key)).length;
+  const weekdayLabels = [1, 2, 3, 4, 5, 6, 7].map((day) =>
+    new Intl.DateTimeFormat(appLocale(i18n.language), { weekday: 'narrow', timeZone: 'UTC' }).format(
+      new Date(Date.UTC(2024, 0, day)),
+    ),
+  );
 
   return (
-    <div
-      className="contribution-grid overflow-x-auto"
-      role="img"
-      aria-label={t('activityDaysCount', { count: activeCount })}
-    >
-      <div
-        className="inline-grid gap-[2px]"
-        style={{
-          gridTemplateColumns: `repeat(${cols}, var(--grid-cell, 16px))`,
-          gridTemplateRows: `repeat(${rows}, var(--grid-cell, 16px))`,
-        }}
-      >
-        {paddedDays.map((d, i) => {
-          if (!d) return <div key={`empty-${i}`} />;
-          const dateStr = d.toISOString().slice(0, 10);
-          const icon = workoutDaysMap.get(dateStr);
-          const isActive = workoutDaysMap.has(dateStr);
-          return (
+    <div role="img" aria-label={t('activityDaysCount', { count: activeCount })}>
+      <div className="flex gap-1.5 overflow-x-auto">
+        <div className="grid grid-rows-7 gap-[3px] shrink-0">
+          {weekdayLabels.map((label, i) => (
             <div
-              key={dateStr}
-              title={dateStr}
-              className="rounded-sm flex items-center justify-center transition-colors"
-              style={{
-                width: 'var(--grid-cell, 16px)',
-                height: 'var(--grid-cell, 16px)',
-                backgroundColor: isActive
-                  ? 'var(--color-chart-active)'
-                  : 'var(--color-chart-rest)',
-              }}
+              key={`${label}-${i}`}
+              className="h-3.5 flex items-center text-[10px] leading-none text-[var(--color-muted)] pr-1"
             >
-              {isActive && (
-                <WorkoutDayIcon
-                  iconKey={icon ?? null}
-                  size={10}
-                  className="text-[var(--color-ink)] opacity-90"
-                  fallbackToFirst
-                />
-              )}
+              {i % 2 === 0 ? label : ''}
             </div>
-          );
-        })}
+          ))}
+        </div>
+        <div className="grid grid-flow-col grid-rows-7 gap-[3px] auto-cols-[0.875rem]">
+          {cells.map((dateStr, i) => {
+            if (!dateStr) return <div key={`empty-${i}`} className="w-3.5 h-3.5" />;
+            const isActive = workoutDaysMap.has(dateStr);
+            const label = new Date(`${dateStr}T00:00:00Z`).toLocaleDateString(appLocale(i18n.language), {
+              timeZone: 'UTC',
+              weekday: 'short',
+              month: 'short',
+              day: 'numeric',
+            });
+            return (
+              <div
+                key={dateStr}
+                title={label}
+                className="w-3.5 h-3.5 rounded-[3px]"
+                style={{
+                  backgroundColor: isActive ? 'var(--color-chart-active)' : 'var(--color-chart-rest)',
+                }}
+              />
+            );
+          })}
+        </div>
       </div>
-      <p className="text-xs text-[var(--color-muted)] mt-2">
-        {t('last12Weeks')}
-      </p>
+      <p className="text-xs text-[var(--color-muted)] mt-3">{t('last12Weeks')}</p>
     </div>
   );
 }

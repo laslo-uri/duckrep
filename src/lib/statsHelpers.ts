@@ -24,12 +24,61 @@ export function ageFromBirthDate(isoDate: string | null | undefined): number | n
   return age >= 0 ? age : null;
 }
 
-export function formatBirthDateDisplay(isoDate: string): string {
+export function formatBirthDateDisplay(isoDate: string, locale?: string): string {
   const [y, m, d] = isoDate.split('-').map(Number);
   if (!y || !m || !d) return isoDate;
-  return new Date(y, m - 1, d).toLocaleDateString(undefined, {
+  return new Date(y, m - 1, d).toLocaleDateString(locale, {
     day: 'numeric',
     month: 'short',
     year: 'numeric',
   });
+}
+
+function utcDateFromKey(key: string): Date {
+  const [y, m, d] = key.split('-').map(Number);
+  return new Date(Date.UTC(y, m - 1, d));
+}
+
+function utcKey(date: Date): string {
+  return date.toISOString().slice(0, 10);
+}
+
+/** Sessions whose date falls in the Monday–Sunday week of `todayKey` (UTC date keys). */
+export function countSessionsThisWeek(dateKeys: string[], todayKey: string): number {
+  const today = utcDateFromKey(todayKey);
+  const monday = new Date(today);
+  monday.setUTCDate(today.getUTCDate() - ((today.getUTCDay() + 6) % 7));
+  const start = utcKey(monday);
+  return dateKeys.filter((key) => key >= start && key <= todayKey).length;
+}
+
+/**
+ * Consecutive active days ending today, or yesterday if today has no session yet.
+ * Multiple sessions on one day count as a single day.
+ */
+export function activityStreak(dateKeys: string[], todayKey: string): number {
+  const days = new Set(dateKeys);
+  const cursor = utcDateFromKey(todayKey);
+  if (!days.has(utcKey(cursor))) {
+    cursor.setUTCDate(cursor.getUTCDate() - 1);
+    if (!days.has(utcKey(cursor))) return 0;
+  }
+  let streak = 0;
+  while (days.has(utcKey(cursor))) {
+    streak += 1;
+    cursor.setUTCDate(cursor.getUTCDate() - 1);
+  }
+  return streak;
+}
+
+/** Monday-first week columns. `dateKeys` must be chronological UTC dates. */
+export function buildMondayWeeks(dateKeys: string[]): (string | null)[][] {
+  if (dateKeys.length === 0) return [];
+  const first = utcDateFromKey(dateKeys[0]);
+  const lead = (first.getUTCDay() + 6) % 7;
+  const cells: (string | null)[] = [...Array.from({ length: lead }, () => null), ...dateKeys];
+  while (cells.length % 7 !== 0) cells.push(null);
+  const weeks: (string | null)[][] = [];
+  for (let i = 0; i < cells.length; i += 7) weeks.push(cells.slice(i, i + 7));
+  return weeks;
 }

@@ -21,7 +21,7 @@ export function LanguageSwitcher() {
       type="button"
       onClick={() => i18n.changeLanguage(nextLang)}
       aria-label={t('switchLanguage', { lang: LANG_LABEL[current] })}
-      className="text-sm font-medium text-[var(--color-muted)] hover:text-[var(--color-ink)] px-4 py-2.5 min-h-[44px] rounded-lg hover:bg-[var(--color-hover)] transition-colors uppercase tracking-wide touch-manipulation"
+      className="yp-press text-sm font-medium text-[var(--color-muted)] hover:text-[var(--color-ink)] px-2.5 py-2.5 min-h-[44px] min-w-[44px] rounded-lg hover:bg-[var(--color-hover)] uppercase tracking-wide touch-manipulation"
     >
       {LANG_LABEL[current]}
     </button>

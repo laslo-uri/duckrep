@@ -8,10 +8,10 @@ type EmptyStateProps = {
 
 export function EmptyState({ title, description, action }: EmptyStateProps) {
   return (
-    <div className="text-center py-12 sm:py-16 px-4 border border-dashed border-[var(--color-border)] rounded-2xl">
-      <h2 className="font-serif text-lg font-semibold text-[var(--color-ink)] mb-2">{title}</h2>
-      {description ? <p className="text-[var(--color-muted)] mb-4">{description}</p> : null}
-      {action}
+    <div className="yp-card flex flex-col items-center text-center py-12 sm:py-14 px-5 sm:px-8">
+      <h2 className="font-serif text-2xl font-semibold text-[var(--color-ink)] text-balance">{title}</h2>
+      {description ? <p className="mt-2 text-[var(--color-muted)] text-balance max-w-md">{description}</p> : null}
+      {action ? <div className="mt-5 flex w-full justify-center">{action}</div> : null}
     </div>
   );
 }

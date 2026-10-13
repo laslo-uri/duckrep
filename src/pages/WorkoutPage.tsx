@@ -48,8 +48,8 @@ export function WorkoutPage() {
     return (
       <div>
         <Link
-          to="/"
-          className="inline-flex items-center gap-2 text-[var(--color-muted)] hover:text-[var(--color-ink)] mb-6 sm:mb-8 min-h-[44px] items-center touch-manipulation"
+          to="/journal"
+          className="inline-flex items-center gap-2 text-[var(--color-muted)] hover:text-[var(--color-ink)] mb-5 min-h-[44px] touch-manipulation"
         >
           <ArrowLeft size={18} />
           {t('backToJournal')}
@@ -57,6 +57,7 @@ export function WorkoutPage() {
         <MutationAlert message={mutationError} onDismiss={clearError} />
         <EmptyState
           title={t('createWorkout')}
+          description={t('createWorkoutHint')}
           action={
             <button
               type="button"
@@ -65,7 +66,7 @@ export function WorkoutPage() {
                 mutations.createMutation.mutate();
               }}
               disabled={mutations.createMutation.isPending}
-              className="inline-flex items-center gap-2 px-5 py-3 min-h-[44px] rounded-lg bg-[var(--color-ink)] text-[var(--color-paper)] text-sm font-medium hover:opacity-90 disabled:opacity-50 touch-manipulation"
+              className="yp-press inline-flex items-center gap-2 px-6 py-3 min-h-[44px] rounded-xl bg-[var(--color-accent)] text-[var(--color-on-accent)] text-sm font-semibold disabled:opacity-50 touch-manipulation"
             >
               <Plus size={18} />
               {t('newWorkout')}
@@ -86,7 +87,7 @@ export function WorkoutPage() {
       empty={<EmptyState title={t('notFound')} />}
     >
       {workout && (
-        <>
+        <div className="space-y-5">
           <MutationAlert message={mutationError} onDismiss={clearError} />
           <WorkoutDetail
             key={workout.id}
@@ -95,7 +96,7 @@ export function WorkoutPage() {
             bodyWeight={bodyWeight ?? null}
             {...mutations}
           />
-        </>
+        </div>
       )}
     </QueryState>
   );

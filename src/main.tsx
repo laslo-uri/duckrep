@@ -1,6 +1,8 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import '@fontsource-variable/inter'
 import './index.css'
+import { configureNativeShell } from './lib/nativeShell'
 import App from './App.tsx'
 import { LocalUserProvider } from './contexts/LocalUserContext'
 import { ThemeProvider } from './contexts/ThemeContext'
@@ -24,6 +26,7 @@ function showBootError(err: unknown) {
 }
 
 async function boot() {
+  await configureNativeShell()
   await bootAppUserStore()
   await initDb()
   await import('./i18n')

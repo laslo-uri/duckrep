@@ -1,4 +1,4 @@
-import { createElement, useState, useRef, useEffect } from 'react';
+import { createElement, useState, useRef, useEffect, useLayoutEffect } from 'react';
 import { Settings2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { WORKOUT_DAY_ICONS } from '../types';
@@ -61,6 +61,17 @@ export function WorkoutIconPicker({
     };
   }, [open]);
 
+  useLayoutEffect(() => {
+    const pop = popoverRef.current;
+    if (!open || !pop) return;
+    pop.style.marginLeft = '0px';
+    const rect = pop.getBoundingClientRect();
+    const overflowRight = rect.right - (window.innerWidth - 8);
+    const overflowLeft = 8 - rect.left;
+    if (overflowRight > 0) pop.style.marginLeft = `${-overflowRight}px`;
+    else if (overflowLeft > 0) pop.style.marginLeft = `${overflowLeft}px`;
+  }, [open]);
+
   const handleSelect = (icon: string | null) => {
     onChange(icon);
     setOpen(false);
@@ -82,7 +93,7 @@ export function WorkoutIconPicker({
         aria-expanded={open}
         aria-haspopup="listbox"
         aria-controls="workout-icon-listbox"
-        className="flex items-center justify-center w-10 h-10 min-w-[44px] min-h-[44px] rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] hover:bg-[var(--color-hover)] text-[var(--color-ink)] transition-colors touch-manipulation"
+        className="yp-press flex items-center justify-center w-10 h-10 min-w-[44px] min-h-[44px] rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] hover:bg-[var(--color-hover)] text-[var(--color-ink)] transition-colors touch-manipulation"
       >
         {value ? (
           (() => {
@@ -100,10 +111,10 @@ export function WorkoutIconPicker({
           id="workout-icon-listbox"
           role="listbox"
           aria-label={t('activityIcon')}
-          className="absolute left-0 top-full mt-2 z-50 p-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-lg min-w-[200px] max-w-[calc(100vw-2rem)]"
+          className="yp-enter absolute left-0 top-full mt-2 z-50 p-4 rounded-xl bg-[var(--color-surface)] shadow-[var(--shadow-card)] w-[min(17.5rem,calc(100vw-1rem))] max-w-[calc(100vw-1rem)]"
           onClick={(e) => e.stopPropagation()}
         >
-          <p className="text-xs text-[var(--color-muted)] mb-2">{t('activityIcon')}</p>
+          <p className="yp-label mb-3">{t('activityIcon')}</p>
           <div className="flex flex-wrap gap-1.5">
             <button
               type="button"
@@ -111,10 +122,10 @@ export function WorkoutIconPicker({
               aria-selected={value === null}
               onClick={() => handleSelect(null)}
               aria-label={t('noIcon')}
-              className={`flex items-center justify-center min-w-[44px] min-h-[44px] rounded-lg border-2 transition-colors touch-manipulation ${
+              className={`flex items-center justify-center min-w-[44px] min-h-[44px] rounded-xl border-2 transition-colors touch-manipulation ${
                 value === null
-                  ? 'border-[var(--color-ink)] bg-[var(--color-ink)]/10'
-                  : 'border-[var(--color-border)] hover:border-[var(--color-ink)]/30'
+                  ? 'border-[var(--color-accent)] bg-[var(--color-accent-soft)]'
+                  : 'border-[var(--color-border)] hover:border-[var(--color-accent)]/40'
               }`}
             >
               <span className="text-[var(--color-muted)] text-xs">—</span>
@@ -130,10 +141,10 @@ export function WorkoutIconPicker({
                   aria-selected={isSelected}
                   onClick={() => handleSelect(key)}
                   aria-label={iconLabel(key)}
-                  className={`flex items-center justify-center min-w-[44px] min-h-[44px] rounded-lg border-2 transition-colors touch-manipulation ${
+                  className={`flex items-center justify-center min-w-[44px] min-h-[44px] rounded-xl border-2 transition-colors touch-manipulation ${
                     isSelected
-                      ? 'border-[var(--color-ink)] bg-[var(--color-ink)]/10 text-[var(--color-ink)]'
-                      : 'border-[var(--color-border)] hover:border-[var(--color-ink)]/30 text-[var(--color-muted)] hover:text-[var(--color-ink)]'
+                      ? 'border-[var(--color-accent)] bg-[var(--color-accent-soft)] text-[var(--color-accent)]'
+                      : 'border-[var(--color-border)] hover:border-[var(--color-accent)]/40 text-[var(--color-muted)] hover:text-[var(--color-ink)]'
                   }`}
                 >
                   <Icon size={16} />

@@ -35,7 +35,7 @@ async function seedIfEmpty(client: DbClient): Promise<void> {
 
   await client.execute('INSERT INTO profiles (id, display_name) VALUES (?, ?)', [
     LOCAL_USER_ID,
-    'You',
+    null,
   ]);
 
   await seedGlobalExercisesIfEmpty(client);
@@ -239,4 +239,4 @@ export async function createMemoryDb(): Promise<DbClient> {
   return memClient;
 }
 
-export { newId, nowIso, todayIso } from './utils';
+export { localDateKey, newId, nowIso, todayIso } from './utils';

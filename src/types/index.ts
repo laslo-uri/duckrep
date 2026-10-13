@@ -10,8 +10,24 @@ export interface UserStats {
   birth_date: string | null;
   height_cm: number | null;
   goal_weight_kg: number | null;
+  calorie_goal: number | null;
+  protein_goal_g: number | null;
+  carbs_goal_g: number | null;
+  fat_goal_g: number | null;
   created_at: string;
   updated_at: string;
+}
+
+export interface FoodEntry {
+  id: string;
+  user_id: string;
+  date: string;
+  name: string;
+  calories: number;
+  protein_g: number | null;
+  carbs_g: number | null;
+  fat_g: number | null;
+  created_at: string;
 }
 
 export interface BodyWeightLog {

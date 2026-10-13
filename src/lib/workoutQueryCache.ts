@@ -67,11 +67,14 @@ export function applyPatchSetRepsWeight(
   setId: string,
   reps: number | null,
   weight: number | null,
+  notes?: string | null,
 ): WorkoutDayWithExercises {
   return mapExercises(workout, (ex) =>
     withSets(
       ex,
-      getSets(ex).map((s) => (s.id === setId ? { ...s, reps, weight } : s)),
+      getSets(ex).map((s) =>
+        s.id === setId ? { ...s, reps, weight, ...(notes !== undefined ? { notes } : {}) } : s,
+      ),
     ),
   );
 }
@@ -82,6 +85,14 @@ export function applyPatchExerciseName(
   name: string,
 ): WorkoutDayWithExercises {
   return mapExercises(workout, (ex) => (ex.id === exId ? { ...ex, name } : ex));
+}
+
+export function applyPatchExerciseGoals(
+  workout: WorkoutDayWithExercises,
+  exId: string,
+  goals: string | null,
+): WorkoutDayWithExercises {
+  return mapExercises(workout, (ex) => (ex.id === exId ? { ...ex, goals } : ex));
 }
 
 export function applyPatchExerciseCircuit(
@@ -96,7 +107,7 @@ export function applyPatchExerciseCircuit(
 
 export type WorkoutFieldPatch = {
   title?: string;
-  notes?: string;
+  notes?: string | null;
   icon?: string | null;
   is_public?: boolean;
   started_at?: string | null;

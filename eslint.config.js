@@ -12,11 +12,13 @@ export default defineConfig([
     '.vercel',
     'dist',
     'src-tauri/target',
+    'android',
+    'ios',
     'playwright-report',
     'test-results',
   ]),
   {
-    files: ['playwright.config.ts', 'vite.config.ts'],
+    files: ['playwright.config.ts', 'vite.config.ts', 'capacitor.config.ts'],
     languageOptions: {
       globals: globals.node,
     },

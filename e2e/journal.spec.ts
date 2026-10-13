@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('journal flow (local)', () => {
   test('open journal and create an activity', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/journal');
 
     await expect(
       page.getByRole('heading', { level: 1, name: /my journal|moj dnevnik/i }),

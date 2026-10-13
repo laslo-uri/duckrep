@@ -23,4 +23,13 @@ export async function runMigrations(client: {
     `CREATE UNIQUE INDEX IF NOT EXISTS idx_exercise_definitions_source_slug
      ON exercise_definitions(source_slug) WHERE source_slug IS NOT NULL`,
   );
+
+  // v3: nutrition goals on user_stats (food tracking).
+  const statCols = await client.select<{ name: string }>('PRAGMA table_info(user_stats)');
+  const statNames = new Set(statCols.map((c) => c.name));
+  for (const col of ['calorie_goal', 'protein_goal_g', 'carbs_goal_g', 'fat_goal_g']) {
+    if (!statNames.has(col)) {
+      await client.execute(`ALTER TABLE user_stats ADD COLUMN ${col} REAL`);
+    }
+  }
 }

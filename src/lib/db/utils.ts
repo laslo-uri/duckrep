@@ -16,6 +16,13 @@ export function nowIso(): string {
   return new Date().toISOString();
 }
 
-export function todayIso(): string {
-  return new Date().toISOString().slice(0, 10);
+/** Local calendar day as `YYYY-MM-DD`. UTC `toISOString()` shifts the day near midnight. */
+export function localDateKey(date: Date = new Date()): string {
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${date.getFullYear()}-${month}-${day}`;
+}
+
+export function todayIso(now: Date = new Date()): string {
+  return localDateKey(now);
 }

@@ -1,52 +1,77 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-serif: "Fraunces", ui-serif, Georgia, serif;
-  --font-display: "Caveat", ui-sans-serif, system-ui, cursive;
+  --font-sans: "Inter Variable", Inter, ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Inter Variable", Inter, ui-sans-serif, system-ui, sans-serif;
 }
 
-/* Light theme (default) */
+/* ──────────────────────────────────────────
+   Light theme — "Frost" (ice white + deep arctic accent)
+   ────────────────────────────────────────── */
 :root, .light {
-  --color-ink: #0f0f0f;
-  --color-logo: #374151;
-  --color-paper: #fafaf9;
-  --color-muted: #737373;
-  --color-border: #e5e5e5;
+  --color-ink: #121418;
+  --color-logo: #121418;
+  --color-paper: #eef2f5;
+  --color-muted: #5c6977;
+  --color-border: rgba(18, 20, 24, 0.08);
   --color-surface: #ffffff;
-  --color-hover: rgba(0, 0, 0, 0.05);
-  --color-active: rgba(0, 0, 0, 0.02);
+  --color-hover: rgba(14, 116, 144, 0.1);
+  --color-active: rgba(14, 116, 144, 0.07);
   --color-error: #dc2626;
   --color-error-bg: #fef2f2;
-  --color-success: #16a34a;
-  --color-chart-active: rgba(234, 179, 8, 0.8);
-  --color-chart-rest: var(--color-border);
+  --color-success: #047857;
+  --color-accent: #0e7490;
+  --color-accent-soft: rgba(14, 116, 144, 0.13);
+  --color-on-accent: #ffffff;
+  --color-mint: #047857;
+  --color-mint-soft: rgba(4, 120, 87, 0.12);
+  --color-on-mint: #ffffff;
+  --color-chart-active: #0e7490;
+  --color-chart-rest: #dbe3e9;
+  --shadow-card: 0 2px 24px -8px rgba(18, 20, 24, 0.12);
+  --glow-accent: 0 0 14px rgba(14, 116, 144, 0.3);
+  --glow-mint: 0 0 12px rgba(4, 120, 87, 0.35);
+  --scrollbar-thumb: rgba(18, 20, 24, 0.28);
+  --aurora-a: #0e7490;
+  --aurora-b: #0f9d8a;
+  --aurora-text: #ffffff;
 }
 
-/* Dark theme */
+/* ──────────────────────────────────────────
+   Dark theme — "Arctic" (desaturated space + arctic blue)
+   ────────────────────────────────────────── */
 .dark {
-  --color-ink: #fafaf9;
-  --color-logo: #d1d5db;
-  --color-paper: #0f0f0f;
-  --color-muted: #a3a3a3;
-  --color-border: #262626;
-  --color-surface: #171717;
-  --color-hover: rgba(255, 255, 255, 0.08);
-  --color-active: rgba(255, 255, 255, 0.04);
-  --color-error: #ef4444;
-  --color-error-bg: rgba(185, 28, 28, 0.2);
-  --color-success: #22c55e;
-  --color-chart-active: rgba(234, 179, 8, 0.9);
-  --color-chart-rest: #404040;
+  --color-ink: #f3f6f8;
+  --color-logo: #f3f6f8;
+  --color-paper: #121418;
+  --color-muted: #9eb3c0;
+  --color-border: rgba(150, 196, 206, 0.16);
+  --color-surface: #1a242c;
+  --color-hover: rgba(72, 235, 244, 0.1);
+  --color-active: rgba(72, 235, 244, 0.07);
+  --color-error: #f87171;
+  --color-error-bg: rgba(185, 28, 28, 0.22);
+  --color-success: #00f0a0;
+  --color-accent: #48ebf4;
+  --color-accent-soft: rgba(72, 235, 244, 0.13);
+  --color-on-accent: #06282c;
+  --color-mint: #00f0a0;
+  --color-mint-soft: rgba(0, 240, 160, 0.13);
+  --color-on-mint: #042a1d;
+  --color-chart-active: #48ebf4;
+  --color-chart-rest: #1a242c;
+  --shadow-card: 0 4px 32px -12px rgba(0, 0, 0, 0.6);
+  --glow-accent: 0 0 18px rgba(72, 235, 244, 0.35);
+  --glow-mint: 0 0 16px rgba(0, 240, 160, 0.45);
+  --scrollbar-thumb: #2e4250;
+  --aurora-a: #48ebf4;
+  --aurora-b: #00f0a0;
+  --aurora-text: #06282c;
 }
 
-.font-brand {
-  font-family: var(--font-display);
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  -webkit-font-smoothing: antialiased;
-}
-
+/* ──────────────────────────────────────────
+   Base layer
+   ────────────────────────────────────────── */
 @layer base {
   html {
     @apply antialiased;
@@ -59,10 +84,10 @@
     @apply bg-[var(--color-paper)] text-[var(--color-ink)] min-h-screen font-sans;
     padding-top: env(safe-area-inset-top, 0);
     padding-right: env(safe-area-inset-right, 0);
-    padding-bottom: env(safe-area-inset-bottom, 0);
     padding-left: env(safe-area-inset-left, 0);
     overflow-x: hidden;
     width: 100%;
+    transition: background-color 280ms ease, color 280ms ease;
   }
   #root {
     width: 100%;
@@ -75,11 +100,43 @@
   input:focus-visible,
   select:focus-visible,
   textarea:focus-visible {
-    outline: 2px solid var(--color-ink);
+    outline: 2px solid var(--color-accent);
     outline-offset: 2px;
   }
 }
 
+/* ──────────────────────────────────────────
+   Scrollbars — thin, cold, frameless
+   (web, Tauri desktop, and mobile webview)
+   ────────────────────────────────────────── */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) transparent;
+}
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 999px;
+  border: 3px solid var(--color-paper);
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent);
+  border-width: 2px;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* ──────────────────────────────────────────
+   Accessibility helpers
+   ────────────────────────────────────────── */
 .skip-link {
   position: fixed;
   top: 0;
@@ -92,18 +149,17 @@
   overflow: hidden;
   clip-path: inset(50%);
   white-space: nowrap;
-  background: var(--color-ink);
-  color: var(--color-paper);
-  border-radius: 8px;
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  border-radius: 999px;
   text-decoration: none;
 }
-
 .skip-link:focus,
 .skip-link:focus-visible {
   width: auto;
   height: auto;
   margin: 0;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1.25rem;
   overflow: visible;
   clip-path: none;
   top: 0.5rem;
@@ -128,16 +184,384 @@
   height: 1rem;
   margin-right: 0.5rem;
   border: 2px solid var(--color-border);
-  border-top-color: var(--color-ink);
+  border-top-color: var(--color-accent);
   border-radius: 50%;
   animation: spin 0.7s linear infinite;
   vertical-align: -0.15em;
 }
 
+/* ──────────────────────────────────────────
+   Keyframes
+   ────────────────────────────────────────── */
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
 
+@keyframes yp-rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes yp-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-accent) 45%, transparent); }
+  50%      { box-shadow: 0 0 0 10px color-mix(in srgb, var(--color-accent) 0%, transparent); }
+}
+
+/* Aurora — slow drifting arctic gradient */
+@keyframes yp-aurora-drift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Mint pop — completed-set check flash */
+@keyframes yp-pop {
+  0%   { transform: scale(0.6); }
+  60%  { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+/* Summit shimmer — ice glint sweeping across the peak fill */
+@keyframes yp-shimmer {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(240%); }
+}
+
+/* Flag float at the summit */
+@keyframes yp-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-3px); }
+}
+
+/* Logo hover: ascent line redraws itself */
+@keyframes yp-logo-draw {
+  from { stroke-dashoffset: 30; }
+  to   { stroke-dashoffset: 0; }
+}
+
+/* Logo hover: summit dot pops with a mint flash */
+@keyframes yp-logo-dot {
+  0%   { transform: scale(0); }
+  70%  { transform: scale(1.5); }
+  100% { transform: scale(1); }
+}
+
+/* Logo hover: peaks lift slightly */
+@keyframes yp-logo-lift {
+  0%   { transform: translateY(0); }
+  40%  { transform: translateY(1.5px); }
+  100% { transform: translateY(0); }
+}
+
+/* Lobby: ice motes drift up the face */
+@keyframes yp-mote {
+  0%   { transform: translateY(12vh); opacity: 0; }
+  12%  { opacity: 0.75; }
+  100% { transform: translateY(-105vh); opacity: 0; }
+}
+
+/* Lobby: the range rises into frame */
+@keyframes yp-ridge {
+  from { transform: translateY(22%); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+
+/* Lobby: the ascent draws itself once */
+@keyframes yp-lobby-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes yp-tick {
+  0%, 100% { transform: scaleY(0.3); opacity: 0.15; }
+  50%      { transform: scaleY(1); opacity: 0.55; }
+}
+
+@keyframes yp-lobby-dot {
+  0%   { transform: scale(0); opacity: 0; }
+  70%  { transform: scale(1.35); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Lobby: a glint crosses the central face */
+@keyframes yp-lobby-glint {
+  0%   { transform: translateX(-30%); }
+  100% { transform: translateX(130%); }
+}
+
+/* ──────────────────────────────────────────
+   Shared motion classes
+   ────────────────────────────────────────── */
+.yp-enter {
+  animation: yp-rise 320ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.yp-stagger {
+  animation: yp-rise 380ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: min(calc(var(--i, 0) * 40ms), 200ms);
+}
+
+.yp-press {
+  transition: transform 140ms ease, background-color 160ms ease, opacity 160ms ease;
+}
+.yp-press:active {
+  transform: scale(0.98);
+}
+
+.yp-live {
+  animation: yp-pulse 2.2s ease-in-out infinite;
+}
+
+/* Aurora surface — for the live-session banner and hero accents */
+.yp-aurora {
+  background: linear-gradient(115deg, var(--aurora-a), var(--aurora-b), var(--aurora-a));
+  background-size: 220% 220%;
+  animation: yp-aurora-drift 7s ease-in-out infinite;
+  color: var(--aurora-text);
+}
+
+/* Mint glow — completed sets & summit states */
+.yp-glow-mint {
+  box-shadow: var(--glow-mint);
+}
+.yp-pop {
+  animation: yp-pop 320ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.yp-float {
+  animation: yp-float 3s ease-in-out infinite;
+}
+
+/* ── Logo hover motion ── */
+.yp-logo {
+  transition: text-shadow 0.35s ease;
+}
+.yp-logo-mark {
+  display: inline-flex;
+  transition:
+    transform 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+    filter 0.35s ease;
+}
+.yp-logo .yp-logo-line,
+.yp-lockup .yp-logo-line:not(.yp-mark-line) {
+  stroke-dasharray: 30;
+  stroke-dashoffset: 0;
+}
+.yp-logo .yp-logo-dot,
+.yp-lockup .yp-logo-dot {
+  transform-origin: center;
+  transform-box: fill-box;
+}
+.yp-logo .yp-logo-peaks,
+.yp-lockup .yp-logo-peaks {
+  transform-origin: center bottom;
+  transform-box: fill-box;
+}
+.yp-logo:hover .yp-logo-mark,
+.yp-logo:focus-visible .yp-logo-mark,
+a:hover .yp-logo .yp-logo-mark,
+a:focus-visible .yp-logo .yp-logo-mark,
+.yp-lockup:hover .yp-logo-mark {
+  transform: scale(1.08);
+  filter: drop-shadow(0 4px 14px color-mix(in srgb, var(--color-accent) 55%, transparent));
+}
+.yp-logo:hover,
+.yp-logo:focus-visible,
+a:hover .yp-logo,
+a:focus-visible .yp-logo,
+.yp-lockup:hover .yp-lobby-title {
+  text-shadow: 0 0 16px color-mix(in srgb, var(--color-accent) 50%, transparent);
+}
+.yp-logo:hover .yp-logo-line,
+.yp-logo:focus-visible .yp-logo-line,
+a:hover .yp-logo .yp-logo-line,
+a:focus-visible .yp-logo .yp-logo-line {
+  animation: yp-logo-draw 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.yp-logo:hover .yp-logo-dot,
+.yp-logo:focus-visible .yp-logo-dot,
+a:hover .yp-logo .yp-logo-dot,
+a:focus-visible .yp-logo .yp-logo-dot,
+.yp-lockup:hover .yp-logo-dot {
+  animation: yp-logo-dot 600ms cubic-bezier(0.34, 1.56, 0.64, 1) 350ms both;
+}
+.yp-logo:hover .yp-logo-peaks,
+.yp-logo:focus-visible .yp-logo-peaks,
+a:hover .yp-logo .yp-logo-peaks,
+a:focus-visible .yp-logo .yp-logo-peaks,
+.yp-lockup:hover .yp-logo-peaks {
+  animation: yp-logo-lift 500ms ease-out both;
+}
+
+/* ── Lobby ── */
+.yp-lobby-glow {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(48px);
+  pointer-events: none;
+}
+.yp-lobby-glow-a {
+  width: min(42vw, 460px);
+  height: min(18vw, 200px);
+  left: 8%;
+  bottom: 0;
+  background: var(--aurora-a);
+  opacity: 0.14;
+  animation: yp-float 8s ease-in-out infinite;
+}
+.yp-lobby-glow-b {
+  width: min(34vw, 380px);
+  height: min(16vw, 180px);
+  right: 6%;
+  bottom: 2%;
+  background: var(--aurora-b);
+  opacity: 0.1;
+  animation: yp-float 10s ease-in-out infinite reverse;
+}
+.yp-lobby-mote {
+  position: absolute;
+  bottom: 8%;
+  width: var(--s, 3px);
+  height: var(--s, 3px);
+  border-radius: 999px;
+  background: var(--color-accent);
+  box-shadow: 0 0 8px var(--color-accent);
+  animation: yp-mote var(--d, 12s) linear infinite;
+  animation-delay: var(--delay, 0s);
+}
+.yp-logo,
+.yp-lobby-title {
+  font-optical-sizing: auto;
+  font-weight: 600;
+}
+.yp-lobby-title {
+  font-size: clamp(2.75rem, 11vw, 6.75rem);
+  line-height: 0.95;
+}
+.yp-lobby-hello {
+  font-size: clamp(2rem, 8vw, 4.25rem);
+  max-width: 18ch;
+}
+.yp-door {
+  transition:
+    transform 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+    box-shadow 0.35s ease,
+    color 0.35s ease,
+    background-color 0.35s ease;
+}
+.yp-door:hover,
+.yp-door:focus-visible {
+  transform: translateY(-4px) scale(1.04);
+  box-shadow: 0 10px 28px color-mix(in srgb, var(--color-accent) 30%, transparent);
+  color: var(--color-ink);
+}
+.yp-door:active {
+  transform: scale(0.98);
+}
+@media (max-width: 379px) {
+  .yp-logo,
+  .yp-lobby-title {
+    letter-spacing: 0.01em;
+  }
+}
+.yp-lobby-tick {
+  position: absolute;
+  bottom: 12%;
+  width: 1px;
+  height: 22%;
+  background: linear-gradient(to top, transparent, var(--color-accent));
+  transform-origin: bottom center;
+  animation: yp-tick var(--d, 8s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+.yp-mark-line {
+  stroke-dasharray: 30;
+  stroke-dashoffset: 30;
+  animation: yp-lobby-draw 1.3s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
+}
+.yp-mark-dot {
+  transform-box: fill-box;
+  transform-origin: center;
+  opacity: 0;
+  animation: yp-lobby-dot 600ms cubic-bezier(0.34, 1.56, 0.64, 1) 1.1s forwards;
+}
+.yp-lobby-ridge {
+  transform-origin: center bottom;
+  animation: yp-ridge 1100ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.yp-lobby-line {
+  stroke-dasharray: 1600;
+  stroke-dashoffset: 1600;
+  animation: yp-lobby-draw 2.4s cubic-bezier(0.22, 1, 0.36, 1) 0.7s forwards;
+}
+.yp-lobby-dot {
+  transform-box: fill-box;
+  transform-origin: center;
+  opacity: 0;
+  animation: yp-lobby-dot 700ms cubic-bezier(0.34, 1.56, 0.64, 1) 1.5s forwards;
+}
+.yp-ridge-line {
+  fill: none;
+  stroke: var(--color-ink);
+  stroke-width: 7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: yp-lobby-draw 1.6s cubic-bezier(0.22, 1, 0.36, 1) 0.35s forwards;
+}
+.yp-summit {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: yp-summit 3.4s ease-in-out 2.2s infinite;
+}
+@keyframes yp-summit {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.82; }
+}
+:root {
+  --yp-ridge-h: min(34vh, calc(100vw * 400 / 1440));
+}
+@media (max-height: 700px) {
+  :root {
+    --yp-ridge-h: min(28vh, calc(100vw * 400 / 1440));
+  }
+}
+.yp-ridge-slot {
+  height: var(--yp-ridge-h);
+}
+.yp-lobby-glint {
+  animation: yp-lobby-glint 3.6s ease-in-out 1.4s infinite;
+}
+
+/* ──────────────────────────────────────────
+   Shared component classes
+   ────────────────────────────────────────── */
+.yp-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  overflow-wrap: anywhere;
+  line-height: 1.35;
+}
+
+.yp-card {
+  border-radius: 0.875rem;
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+}
+
+.yp-field {
+  border-radius: 1rem;
+  border: 1px solid var(--color-border);
+  background: color-mix(in srgb, var(--color-paper) 70%, var(--color-surface));
+  color: var(--color-ink);
+}
+
+/* ──────────────────────────────────────────
+   Reduced motion kill-switch
+   ────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -146,9 +570,23 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+  .yp-lobby-ridge {
+    transform: none !important;
+    opacity: 1 !important;
+  }
+  .yp-ridge-line,
+  .yp-lobby-line,
+  .yp-mark-line {
+    stroke-dashoffset: 0 !important;
+  }
+  .yp-lobby-dot,
+  .yp-summit {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
 
-/* Stats contribution grid: scale cells on narrow viewports */
+/* Stats contribution grid */
 .contribution-grid {
   --grid-cell: 16px;
 }

@@ -3,18 +3,21 @@ import type {
   ActivityType,
   BodyWeightLog,
   ExerciseDefinition,
+  FoodEntry,
   UserDailyTrainingStats,
   UserStats,
   WorkoutDay,
   WorkoutDayWithExercises,
   WorkoutExercise,
 } from '../../types';
+import { importJournalWorkouts, parseJournalImport } from '../journalImport';
 import { getDb, newId, nowIso, todayIso } from './client';
 import {
   assembleWorkout,
   mapBodyWeightLog,
   mapDailyStats,
   mapExerciseDefinition,
+  mapFoodEntry,
   mapUserStats,
   mapWorkoutDay,
 } from './rows';
@@ -28,6 +31,15 @@ export async function getProfileDisplayName(userId: string): Promise<string | nu
     [userId],
   );
   return rows[0]?.display_name ?? null;
+}
+
+export async function setProfileDisplayName(userId: string, displayName: string): Promise<void> {
+  const db = await getDb();
+  await db.execute('UPDATE profiles SET display_name = ?, updated_at = ? WHERE id = ?', [
+    displayName,
+    nowIso(),
+    userId,
+  ]);
 }
 
 // ── Workout days ─────────────────────────────────────────────────────────────
@@ -81,9 +93,8 @@ export async function updateWorkoutDay(
   id: string,
   updates: {
     title?: string;
-    notes?: string;
+    notes?: string | null;
     icon?: string | null;
-    is_public?: boolean;
     started_at?: string | null;
     ended_at?: string | null;
     activity_type?: ActivityType;
@@ -107,10 +118,7 @@ export async function updateWorkoutDay(
     fields.push('icon = ?');
     params.push(updates.icon);
   }
-  if (updates.is_public !== undefined) {
-    fields.push('is_public = ?');
-    params.push(updates.is_public ? 1 : 0);
-  }
+  // is_public is an unused column. Callers cannot change it.
   if (updates.started_at !== undefined) {
     fields.push('started_at = ?');
     params.push(updates.started_at);
@@ -201,7 +209,7 @@ export async function insertExerciseSets(
 
 export async function updateWorkoutExercise(
   id: string,
-  updates: { name?: string; circuit_group_id?: string | null },
+  updates: { name?: string; circuit_group_id?: string | null; goals?: string | null },
 ): Promise<void> {
   const db = await getDb();
   const fields: string[] = ['updated_at = ?'];
@@ -214,6 +222,10 @@ export async function updateWorkoutExercise(
     fields.push('circuit_group_id = ?');
     params.push(updates.circuit_group_id);
   }
+  if (updates.goals !== undefined) {
+    fields.push('goals = ?');
+    params.push(updates.goals);
+  }
   params.push(id);
   await db.execute(`UPDATE workout_exercises SET ${fields.join(', ')} WHERE id = ?`, params);
 }
@@ -225,7 +237,7 @@ export async function deleteWorkoutExercise(id: string): Promise<void> {
 
 export async function updateExerciseSet(
   id: string,
-  updates: { completed?: boolean; reps?: number | null; weight?: number | null },
+  updates: { completed?: boolean; reps?: number | null; weight?: number | null; notes?: string | null },
 ): Promise<void> {
   const db = await getDb();
   const fields: string[] = [];
@@ -242,9 +254,18 @@ export async function updateExerciseSet(
     fields.push('weight = ?');
     params.push(updates.weight);
   }
+  if (updates.notes !== undefined) {
+    fields.push('notes = ?');
+    params.push(updates.notes);
+  }
   if (fields.length === 0) return;
   params.push(id);
   await db.execute(`UPDATE exercise_sets SET ${fields.join(', ')} WHERE id = ?`, params);
+}
+
+export async function deleteExerciseSet(id: string): Promise<void> {
+  const db = await getDb();
+  await db.execute('DELETE FROM exercise_sets WHERE id = ?', [id]);
 }
 
 export async function addExerciseSet(workoutExerciseId: string, setNumber: number): Promise<void> {
@@ -266,6 +287,28 @@ export async function listExercises(userId: string): Promise<ExerciseDefinition[
   return rows.map(mapExerciseDefinition);
 }
 
+export async function exerciseSourceExists(sourceSlug: string): Promise<boolean> {
+  const db = await getDb();
+  const rows = await db.select<{ id: string }>('SELECT id FROM exercise_definitions WHERE source_slug = ?', [sourceSlug]);
+  return rows.length > 0;
+}
+
+export async function addLibraryExercise(
+  userId: string,
+  data: { name: string; muscleGroup: string; sourceSlug: string },
+): Promise<'added' | 'exists'> {
+  if (await exerciseSourceExists(data.sourceSlug)) return 'exists';
+  const db = await getDb();
+  const ts = nowIso();
+  await db.execute(
+    `INSERT INTO exercise_definitions
+      (id, user_id, name, muscle_group, source_slug, is_global, created_at, updated_at)
+     VALUES (?, ?, ?, ?, ?, 0, ?, ?)`,
+    [newId(), userId, data.name, data.muscleGroup, data.sourceSlug, ts, ts],
+  );
+  return 'added';
+}
+
 // ── Stats ────────────────────────────────────────────────────────────────────
 
 export async function getUserStats(userId: string): Promise<UserStats | null> {
@@ -276,42 +319,91 @@ export async function getUserStats(userId: string): Promise<UserStats | null> {
 
 export async function upsertUserStats(
   userId: string,
-  updates: { birth_date?: string | null; height_cm?: number | null; goal_weight_kg?: number | null },
+  updates: {
+    birth_date?: string | null;
+    height_cm?: number | null;
+    goal_weight_kg?: number | null;
+    calorie_goal?: number | null;
+    protein_goal_g?: number | null;
+    carbs_goal_g?: number | null;
+    fat_goal_g?: number | null;
+  },
 ): Promise<void> {
   const db = await getDb();
   const existing = await getUserStats(userId);
   const ts = nowIso();
+  const COLUMNS = [
+    'birth_date',
+    'height_cm',
+    'goal_weight_kg',
+    'calorie_goal',
+    'protein_goal_g',
+    'carbs_goal_g',
+    'fat_goal_g',
+  ] as const;
   if (existing) {
     const fields: string[] = ['updated_at = ?'];
     const params: unknown[] = [ts];
-    if (updates.birth_date !== undefined) {
-      fields.push('birth_date = ?');
-      params.push(updates.birth_date);
-    }
-    if (updates.height_cm !== undefined) {
-      fields.push('height_cm = ?');
-      params.push(updates.height_cm);
-    }
-    if (updates.goal_weight_kg !== undefined) {
-      fields.push('goal_weight_kg = ?');
-      params.push(updates.goal_weight_kg);
+    for (const col of COLUMNS) {
+      if (updates[col] !== undefined) {
+        fields.push(`${col} = ?`);
+        params.push(updates[col]);
+      }
     }
     params.push(userId);
     await db.execute(`UPDATE user_stats SET ${fields.join(', ')} WHERE user_id = ?`, params);
   } else {
     await db.execute(
-      `INSERT INTO user_stats (user_id, birth_date, height_cm, goal_weight_kg, created_at, updated_at)
-       VALUES (?, ?, ?, ?, ?, ?)`,
-      [
-        userId,
-        updates.birth_date ?? null,
-        updates.height_cm ?? null,
-        updates.goal_weight_kg ?? null,
-        ts,
-        ts,
-      ],
+      `INSERT INTO user_stats (user_id, ${COLUMNS.join(', ')}, created_at, updated_at)
+       VALUES (?, ${COLUMNS.map(() => '?').join(', ')}, ?, ?)`,
+      [userId, ...COLUMNS.map((col) => updates[col] ?? null), ts, ts],
     );
   }
+}
+
+// ── Food tracking ────────────────────────────────────────────────────────────
+
+export async function listFoodEntries(userId: string, date: string): Promise<FoodEntry[]> {
+  const db = await getDb();
+  const rows = await db.select(
+    'SELECT * FROM food_entries WHERE user_id = ? AND date = ? ORDER BY created_at',
+    [userId, date],
+  );
+  return rows.map(mapFoodEntry);
+}
+
+export async function addFoodEntry(
+  userId: string,
+  entry: {
+    date: string;
+    name: string;
+    calories: number;
+    protein_g?: number | null;
+    carbs_g?: number | null;
+    fat_g?: number | null;
+  },
+): Promise<void> {
+  const db = await getDb();
+  await db.execute(
+    `INSERT INTO food_entries (id, user_id, date, name, calories, protein_g, carbs_g, fat_g, created_at)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    [
+      newId(),
+      userId,
+      entry.date,
+      entry.name,
+      entry.calories,
+      entry.protein_g ?? null,
+      entry.carbs_g ?? null,
+      entry.fat_g ?? null,
+      nowIso(),
+    ],
+  );
+}
+
+export async function deleteFoodEntry(id: string): Promise<void> {
+  const db = await getDb();
+  await db.execute('DELETE FROM food_entries WHERE id = ?', [id]);
 }
 
 export async function listBodyWeightLogs(userId: string, limit = 90): Promise<BodyWeightLog[]> {
@@ -370,6 +462,40 @@ export async function exportWorkoutJournalJson(userId: string): Promise<{
     exported_at: nowIso(),
     user_id: userId,
     workouts,
+  };
+}
+
+/** Restores a journal JSON export. Activities already stored under the same id are skipped. */
+export async function importWorkoutJournalJson(
+  userId: string,
+  raw: unknown,
+): Promise<{ imported: number; skipped: number }> {
+  const file = parseJournalImport(raw);
+  if (!file) throw new Error('Invalid journal file');
+  const db = await getDb();
+  return importJournalWorkouts(db, userId, file);
+}
+
+/** Lifetime totals for the personal mark: all non-deleted sessions and completed sets. */
+export async function getLifetimeTrainingTotals(
+  userId: string,
+): Promise<{ sessions: number; completedSets: number }> {
+  const db = await getDb();
+  const sessionRows = await db.select<{ c: number }>(
+    'SELECT COUNT(*) AS c FROM workout_days WHERE user_id = ? AND deleted_at IS NULL',
+    [userId],
+  );
+  const setRows = await db.select<{ c: number }>(
+    `SELECT COUNT(*) AS c
+     FROM exercise_sets es
+     JOIN workout_exercises we ON es.workout_exercise_id = we.id
+     JOIN workout_days wd ON we.workout_day_id = wd.id
+     WHERE wd.user_id = ? AND wd.deleted_at IS NULL AND es.completed = 1`,
+    [userId],
+  );
+  return {
+    sessions: Number(sessionRows[0]?.c ?? 0),
+    completedSets: Number(setRows[0]?.c ?? 0),
   };
 }
 
