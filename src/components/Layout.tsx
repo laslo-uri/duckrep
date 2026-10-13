@@ -5,6 +5,7 @@ import { Calendar, Dumbbell, Activity, Apple, Sun, Moon, Settings } from 'lucide
 import { useLocalUser } from '../contexts/LocalUserContext';
 import { useTheme } from '../contexts/ThemeContext';
 import { LanguageSwitcher } from './LanguageSwitcher';
+import { Footer } from './Footer';
 import { YouPeakLogo } from './YouPeakLogo';
 import { getProfileDisplayName } from '../lib/db';
 
@@ -102,12 +103,14 @@ export function Layout() {
       {/* ── Main content with route animation ── */}
       <main
         id="main-content"
-        className="flex-1 w-full min-w-0 max-w-5xl mx-auto px-4 sm:px-8 pt-5 sm:pt-8 pb-[calc(6.75rem+env(safe-area-inset-bottom))] md:pb-10 overflow-x-clip"
+        className="flex-1 w-full min-w-0 max-w-5xl mx-auto px-4 sm:px-8 pt-5 sm:pt-8 pb-4 md:pb-8 overflow-x-clip"
       >
         <div key={location.pathname} className="yp-enter">
           <Outlet />
         </div>
       </main>
+
+      <Footer />
 
       {/* ── Mobile: floating pill tab bar ── */}
       <nav className="md:hidden fixed inset-x-0 bottom-0 z-50 flex justify-center px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pointer-events-none">

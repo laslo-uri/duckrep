@@ -274,6 +274,11 @@ const resources = {
         activity: 'Activity',
         'circle-user': 'Person',
       },
+      footer: {
+        madeBy: 'Made by',
+        navLabel: 'Footer',
+        copyright: '© {{year}} YouPeak',
+      },
     },
   },
   sr: {
@@ -549,6 +554,11 @@ const resources = {
         activity: 'Aktivnost',
         'circle-user': 'Osoba',
       },
+      footer: {
+        madeBy: 'Izradio',
+        navLabel: 'Podnožje',
+        copyright: '© {{year}} YouPeak',
+      },
     },
   },
   hu: {
@@ -821,6 +831,11 @@ const resources = {
         brain: 'Agy',
         activity: 'Aktivitás',
         'circle-user': 'Személy',
+      },
+      footer: {
+        madeBy: 'Készítette',
+        navLabel: 'Lábléc',
+        copyright: '© {{year}} YouPeak',
       },
     },
   },
