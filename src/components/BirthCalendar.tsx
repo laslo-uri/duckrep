@@ -104,11 +104,11 @@ export function BirthCalendar({
             type="button"
             aria-haspopup="listbox"
             aria-expanded={openMenu === 'month'}
-            aria-label={t('chooseMonth')}
             onClick={() => setOpenMenu((current) => (current === 'month' ? null : 'month'))}
             className={triggerClass(openMenu === 'month')}
           >
             <span className="truncate">{monthNames[cursor.month]}</span>
+            <span className="sr-only">, {t('chooseMonth')}</span>
             <ChevronDown
               size={16}
               className={`shrink-0 text-[var(--color-muted)] transition-transform ${openMenu === 'month' ? 'rotate-180' : ''}`}
@@ -147,11 +147,11 @@ export function BirthCalendar({
             type="button"
             aria-haspopup="listbox"
             aria-expanded={openMenu === 'year'}
-            aria-label={t('chooseYear')}
             onClick={() => setOpenMenu((current) => (current === 'year' ? null : 'year'))}
             className={triggerClass(openMenu === 'year')}
           >
             <span>{cursor.year}</span>
+            <span className="sr-only">, {t('chooseYear')}</span>
             <ChevronDown
               size={16}
               className={`shrink-0 text-[var(--color-muted)] transition-transform ${openMenu === 'year' ? 'rotate-180' : ''}`}

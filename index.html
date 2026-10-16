@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <script>
       (function(){
         var t = localStorage.getItem('youpeak-theme');
@@ -13,17 +15,42 @@
     <style>
       html, body { margin: 0; background: #eef2f5; }
       html.dark, html.dark body { background: #121418; }
+      /* Shown until the app has loaded its local database; React replaces it. */
+      .yp-boot { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; }
+      .yp-boot-spinner { width: 28px; height: 28px; border-radius: 50%; border: 3px solid rgba(92, 105, 119, 0.25); border-top-color: #0e7490; animation: yp-boot-spin 0.8s linear infinite; }
+      html.dark .yp-boot-spinner { border-color: rgba(158, 179, 192, 0.25); border-top-color: #48ebf4; }
+      @keyframes yp-boot-spin { to { transform: rotate(360deg); } }
+      @media (prefers-reduced-motion: reduce) { .yp-boot-spinner { animation: none; } }
     </style>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=8" />
-    <link rel="apple-touch-icon" href="/logo.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="description" content="YouPeak is a local gym journal for activities, exercises, food, and body stats." />
     <title>YouPeak</title>
+    <meta name="description" content="YouPeak is a local gym journal for activities, exercises, food, and body stats. Your data stays on your device." />
+    <link rel="canonical" href="https://you-peak.vercel.app/" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#eef2f5" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#121418" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="application-name" content="YouPeak" />
+    <meta name="apple-mobile-web-app-title" content="YouPeak" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="YouPeak" />
+    <meta property="og:title" content="YouPeak — local gym journal" />
+    <meta property="og:description" content="Track activities, exercises, food, and body stats. Local-first, no account needed." />
+    <meta property="og:url" content="https://you-peak.vercel.app/" />
+    <meta property="og:image" content="https://you-peak.vercel.app/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="YouPeak logo: a mountain peak with a rising line, next to the name YouPeak" />
+    <meta property="og:locale" content="en_US" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="YouPeak — local gym journal" />
+    <meta name="twitter:description" content="Track activities, exercises, food, and body stats. Local-first, no account needed." />
+    <meta name="twitter:image" content="https://you-peak.vercel.app/og-image.png" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=8" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
   </head>
   <body>
     <a href="#main-content" class="skip-link">Skip to content</a>
-    <div id="root"></div>
+    <div id="root"><div class="yp-boot" role="status" aria-label="Loading YouPeak"><div class="yp-boot-spinner"></div></div></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

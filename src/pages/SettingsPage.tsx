@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
+import { usePageTitle } from '../hooks/usePageTitle';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
@@ -53,6 +54,7 @@ function downloadBlob(blob: Blob, filename: string) {
 
 export function SettingsPage() {
   const { t } = useTranslation();
+  usePageTitle(t('settings'));
   const location = useLocation();
   const navigate = useNavigate();
   const { user } = useLocalUser();

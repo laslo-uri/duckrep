@@ -6,6 +6,7 @@ import { getLatestBodyWeight, getWorkoutWithExercises } from '../lib/db';
 import { useLocalUser } from '../contexts/LocalUserContext';
 import { useWorkoutMutations } from '../hooks/useWorkoutMutations';
 import { useMutationError } from '../hooks/useMutationError';
+import { usePageTitle } from '../hooks/usePageTitle';
 import { QueryState } from '../components/QueryState';
 import { MutationAlert } from '../components/MutationAlert';
 import { EmptyState } from '../components/EmptyState';
@@ -36,6 +37,8 @@ export function WorkoutPage() {
     enabled: !isNew && !!id,
   });
 
+  usePageTitle(isNew ? t('newWorkout') : workout?.title?.trim() || t('myJournal'));
+
   const mutations = useWorkoutMutations({
     workout: workout ?? undefined,
     userId: user.id,
@@ -56,6 +59,7 @@ export function WorkoutPage() {
         </Link>
         <MutationAlert message={mutationError} onDismiss={clearError} />
         <EmptyState
+          headingLevel="h1"
           title={t('createWorkout')}
           description={t('createWorkoutHint')}
           action={

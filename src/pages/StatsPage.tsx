@@ -1,4 +1,5 @@
 import { useId, useState } from 'react';
+import { usePageTitle } from '../hooks/usePageTitle';
 import { useTranslation } from 'react-i18next';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import {
@@ -51,6 +52,7 @@ function getDaysInPastWeeks(weeks: number): Date[] {
 
 export function StatsPage() {
   const { t, i18n } = useTranslation();
+  usePageTitle(t('yourStats'));
   const locale = appLocale(i18n.language);
   const { user } = useLocalUser();
   const queryClient = useQueryClient();

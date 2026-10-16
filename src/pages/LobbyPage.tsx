@@ -188,7 +188,10 @@ export function LobbyPage() {
         <LanguageSwitcher />
       </div>
 
-      <div className="relative z-10 flex-1 min-h-0 overflow-y-auto pb-[calc(var(--yp-ridge-h)+1.75rem+env(safe-area-inset-bottom,0px))]">
+      <main
+        id="main-content"
+        className="relative z-10 flex-1 min-h-0 overflow-y-auto pb-[calc(var(--yp-ridge-h)+1.75rem+env(safe-area-inset-bottom,0px))]"
+      >
         <div className="min-h-full flex flex-col items-center px-4 sm:px-8 py-8 text-center">
           <div className="my-auto flex w-full max-w-xl flex-col items-center">
           <div className="yp-lockup flex flex-col items-center">
@@ -367,7 +370,7 @@ export function LobbyPage() {
           )}
           </div>
         </div>
-      </div>
+      </main>
 
       <div className="pointer-events-none fixed inset-x-0 bottom-0 z-[5]">
         <div className="yp-ridge-slot">

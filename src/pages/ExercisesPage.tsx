@@ -1,4 +1,5 @@
 import { useMemo, useRef, useState } from 'react';
+import { usePageTitle } from '../hooks/usePageTitle';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@tanstack/react-query';
 import { useVirtualizer } from '@tanstack/react-virtual';
@@ -19,6 +20,7 @@ const ROW_HEIGHT = 76;
 
 export function ExercisesPage() {
   const { t, i18n } = useTranslation();
+  usePageTitle(t('exercises'));
   const exerciseLocale = resolveExerciseLocale(i18n.resolvedLanguage ?? i18n.language);
   const { user } = useLocalUser();
   const [mode, setMode] = useState<'library' | 'browse'>('library');

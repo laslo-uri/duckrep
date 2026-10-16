@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { usePageTitle } from '../hooks/usePageTitle';
 import { useTranslation } from 'react-i18next';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Plus, ChevronRight, Trash2, Clock } from 'lucide-react';
@@ -62,6 +63,7 @@ function formatClock(iso: string, locale: string): string {
 
 export function HomePage() {
   const { t, i18n } = useTranslation();
+  usePageTitle(t('myJournal'));
   const locale = appLocale(i18n.language);
   const { user } = useLocalUser();
   const queryClient = useQueryClient();

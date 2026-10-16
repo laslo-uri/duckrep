@@ -20,10 +20,11 @@ export function LanguageSwitcher() {
     <button
       type="button"
       onClick={() => i18n.changeLanguage(nextLang)}
-      aria-label={t('switchLanguage', { lang: LANG_LABEL[current] })}
+      title={t('switchLanguage', { lang: LANG_LABEL[nextLang] })}
       className="yp-press text-sm font-medium text-[var(--color-muted)] hover:text-[var(--color-ink)] px-2.5 py-2.5 min-h-[44px] min-w-[44px] rounded-lg hover:bg-[var(--color-hover)] uppercase tracking-wide touch-manipulation"
     >
       {LANG_LABEL[current]}
+      <span className="sr-only">, {t('switchLanguage', { lang: LANG_LABEL[nextLang] })}</span>
     </button>
   );
 }

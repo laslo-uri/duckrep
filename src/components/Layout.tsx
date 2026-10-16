@@ -37,7 +37,7 @@ export function Layout() {
       {/* ── Header: one thin row on all sizes ── */}
       <header className="sticky top-0 z-50 w-full min-w-0 border-b border-[var(--color-border)] bg-[var(--color-paper)]/90 backdrop-blur-md">
         <div className="max-w-5xl mx-auto px-4 sm:px-8 h-14 flex items-center gap-3 sm:gap-4">
-          <Link to="/" className="min-w-0 flex items-center yp-press">
+          <Link to="/" className="min-w-0 flex items-center min-h-[44px] yp-press">
             <YouPeakLogo size={30} />
           </Link>
 
@@ -68,7 +68,7 @@ export function Layout() {
           <div className="ml-auto flex items-center gap-0.5 sm:gap-1 flex-shrink-0 min-w-0">
             <Link
               to="/settings#profile"
-              className="hidden lg:inline truncate max-w-[140px] mr-1 text-sm text-[var(--color-muted)] hover:text-[var(--color-ink)]"
+              className="hidden lg:inline-block truncate max-w-[140px] mr-1 py-3 text-sm text-[var(--color-muted)] hover:text-[var(--color-ink)]"
               title={t('profileTitle')}
             >
               {displayName ?? user.displayName}

@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /activity/
+Disallow: /settings
+
+Sitemap: https://you-peak.vercel.app/sitemap.xml

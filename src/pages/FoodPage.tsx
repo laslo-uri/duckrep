@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { usePageTitle } from '../hooks/usePageTitle';
 import { useTranslation } from 'react-i18next';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ChevronLeft, ChevronRight, Plus, Trash2 } from 'lucide-react';
@@ -122,6 +123,7 @@ function MacroBar({
 
 export function FoodPage() {
   const { t, i18n } = useTranslation();
+  usePageTitle(t('food'));
   const locale = appLocale(i18n.language);
   const { user } = useLocalUser();
   const queryClient = useQueryClient();

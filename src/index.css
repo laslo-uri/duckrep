@@ -526,6 +526,15 @@ a:focus-visible .yp-logo .yp-logo-peaks,
     --yp-ridge-h: min(28vh, calc(100vw * 400 / 1440));
   }
 }
+/* Phones held sideways: the ridge would cover the intro form, so only the version line stays. */
+@media (max-height: 480px) {
+  :root {
+    --yp-ridge-h: 0px;
+  }
+  .yp-ridge-slot {
+    display: none;
+  }
+}
 .yp-ridge-slot {
   height: var(--yp-ridge-h);
 }
