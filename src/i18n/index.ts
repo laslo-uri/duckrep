@@ -279,6 +279,13 @@ const resources = {
         navLabel: 'Footer',
         copyright: '© {{year}} YouPeak',
       },
+      cookies: {
+        title: 'Cookies',
+        text: 'We use cookies for anonymous visit statistics. Analytics runs only if you accept.',
+        accept: 'Accept',
+        decline: 'Decline',
+        settings: 'Cookies',
+      },
     },
   },
   sr: {
@@ -559,6 +566,13 @@ const resources = {
         navLabel: 'Podnožje',
         copyright: '© {{year}} YouPeak',
       },
+      cookies: {
+        title: 'Kolačići',
+        text: 'Koristimo kolačiće za anonimnu statistiku posete. Analitika se uključuje samo ako prihvatite.',
+        accept: 'Prihvatam',
+        decline: 'Odbijam',
+        settings: 'Kolačići',
+      },
     },
   },
   hu: {
@@ -836,6 +850,13 @@ const resources = {
         madeBy: 'Készítette',
         navLabel: 'Lábléc',
         copyright: '© {{year}} YouPeak',
+      },
+      cookies: {
+        title: 'Sütik',
+        text: 'Sütiket használunk anonim látogatási statisztikához. Az analitika csak akkor kapcsol be, ha elfogadja.',
+        accept: 'Elfogadom',
+        decline: 'Elutasítom',
+        settings: 'Sütik',
       },
     },
   },

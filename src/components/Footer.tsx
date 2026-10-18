@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Activity, Apple, Calendar, Dumbbell } from 'lucide-react';
 import { YouPeakMark } from './YouPeakLogo';
+import { CookieSettingsLink } from './CookieConsent';
 
 const linkClass =
   'group inline-flex min-h-[44px] items-center gap-1.5 py-2 text-sm text-[var(--color-ink)] transition-colors hover:text-[var(--color-accent)]';
@@ -51,6 +52,7 @@ export function Footer() {
             <span className="mt-1 block text-[var(--color-muted)]">
               {t('footer.copyright', { year: new Date().getFullYear() })}
             </span>
+            <CookieSettingsLink className="mt-1 inline-flex min-h-[44px] items-center text-[var(--color-muted)] underline-offset-2 hover:text-[var(--color-ink)] hover:underline" />
           </p>
         </div>
       </div>

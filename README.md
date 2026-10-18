@@ -25,11 +25,24 @@ No `.env` or cloud backend required. The database is created automatically on fi
 
 ### Deploy to Vercel
 
-Static SPA — connect the GitHub repo and deploy. No environment variables needed.
+Static SPA — connect the GitHub repo and deploy. No environment variables are required.
 
 ```bash
 npm run build
 ```
+
+### Environment
+
+All variables are optional. Without them the app runs exactly as before (no cookie banner, no analytics script).
+
+| Variable | Description |
+|----------|-------------|
+| `VITE_GTM_ID` | Google Tag Manager container ID (`GTM-XXXXXXX`). Loads `gtm.js` only after the visitor accepts cookies. |
+| `VITE_GA_ID` | GA4 measurement ID (`G-XXXXXXXXXX`). Loads `gtag.js` only after the visitor accepts cookies. |
+
+Consent uses Google Consent Mode v2: every storage flag defaults to `denied`, the choice is kept in `localStorage` under `cookie-consent`, and the "Cookies" link in the footer reopens the banner. Logic in `src/lib/consent.ts`, banner in `src/components/CookieConsent.tsx`.
+
+GA4/GTM: set the ID in Vercel and redeploy.
 
 ## Development
 

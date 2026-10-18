@@ -9,6 +9,7 @@ import { Activity, Apple, Calendar, Dumbbell, Sun, Moon } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import { useLocalUser } from '../contexts/LocalUserContext';
 import { BirthCalendar } from '../components/BirthCalendar';
+import { CookieSettingsLink } from '../components/CookieConsent';
 import { LanguageSwitcher } from '../components/LanguageSwitcher';
 import { UnitInput } from '../components/UnitInput';
 import { YouPeakMark } from '../components/YouPeakLogo';
@@ -378,6 +379,7 @@ export function LobbyPage() {
         </div>
         <footer className="pointer-events-auto flex h-[calc(1.75rem+env(safe-area-inset-bottom,0px))] items-center justify-center bg-[var(--color-paper)] pb-[env(safe-area-inset-bottom,0px)] text-[11px] leading-none text-[var(--color-muted)]">
           {t('appVersion', { version: APP_VERSION })}
+          <CookieSettingsLink className="ml-3 inline-flex min-h-[28px] items-center underline-offset-2 hover:text-[var(--color-ink)] hover:underline" />
         </footer>
       </div>
     </div>
