@@ -185,10 +185,17 @@ async function createSqlJsClient(): Promise<DbClient> {
   return sqlJsClient;
 }
 
+let openGate: Promise<void> = Promise.resolve();
+
+/** Hold the database open until `gate` settles (main.tsx: until the first paint). */
+export function deferDbOpen(gate: Promise<void>): void {
+  openGate = gate;
+}
+
 export async function getDb(): Promise<DbClient> {
   if (client) return client;
   if (!initPromise) {
-    initPromise = (isTauri() ? createTauriClient() : createSqlJsClient()).then((c) => {
+    initPromise = openGate.then(() => (isTauri() ? createTauriClient() : createSqlJsClient())).then((c) => {
       client = c;
       return c;
     });

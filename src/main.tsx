@@ -1,13 +1,12 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import '@fontsource-variable/inter'
 import './index.css'
 import { configureNativeShell } from './lib/nativeShell'
 import App from './App.tsx'
 import { LocalUserProvider } from './contexts/LocalUserContext'
 import { ThemeProvider } from './contexts/ThemeContext'
 import { bootAppUserStore } from './lib/app-user-store'
-import { initDb } from './lib/db'
+import { deferDbOpen, initDb } from './lib/db'
 
 function showBootError(err: unknown) {
   const message = err instanceof Error ? err.message : String(err)
@@ -25,12 +24,40 @@ function showBootError(err: unknown) {
   `
 }
 
+/**
+ * Resolves once the page has painted its main content: on the first
+ * largest-contentful-paint entry where the browser reports it (capped at
+ * 500 ms), else after one frame.
+ */
+function afterFirstPaint(): Promise<void> {
+  return new Promise((resolve) => {
+    const nextFrame = () => requestAnimationFrame(() => setTimeout(resolve, 0))
+    if (
+      typeof PerformanceObserver === 'undefined' ||
+      !PerformanceObserver.supportedEntryTypes?.includes('largest-contentful-paint')
+    ) {
+      nextFrame()
+      return
+    }
+    const timer = setTimeout(resolve, 500)
+    const observer = new PerformanceObserver(() => {
+      observer.disconnect()
+      clearTimeout(timer)
+      setTimeout(resolve, 0)
+    })
+    observer.observe({ type: 'largest-contentful-paint', buffered: true })
+  })
+}
+
 async function boot() {
   await configureNativeShell()
   await bootAppUserStore()
-  await initDb()
   await import('./i18n')
-  createRoot(document.getElementById('root')!).render(
+  // Queries call getDb() on mount; let the lobby paint before the database
+  // (sql.js + wasm + exercise seed) starts loading.
+  deferDbOpen(afterFirstPaint())
+  const root = createRoot(document.getElementById('root')!)
+  root.render(
     <StrictMode>
       <ThemeProvider>
         <LocalUserProvider>
@@ -39,6 +66,10 @@ async function boot() {
       </ThemeProvider>
     </StrictMode>,
   )
+  await initDb().catch((err: unknown) => {
+    root.unmount()
+    throw err
+  })
 }
 
 void boot().catch((err) => {

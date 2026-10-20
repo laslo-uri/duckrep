@@ -1,6 +1,11 @@
 import type { DbClient } from './dbClient';
-import { GLOBAL_EXERCISES, type GlobalSeedExercise } from './seedExercises.generated';
+import type { GlobalSeedExercise } from './seedExercises.generated';
 import { newId } from './utils';
+
+/** The seed list is ~700 kB of source; load it as its own chunk instead of the main bundle. */
+async function loadGlobalExercises(): Promise<GlobalSeedExercise[]> {
+  return (await import('./seedExercises.generated')).GLOBAL_EXERCISES;
+}
 
 function normalizeName(name: string): string {
   return name
@@ -8,6 +13,31 @@ function normalizeName(name: string): string {
     .replace(/[^a-z0-9\s]/g, ' ')
     .replace(/\s+/g, ' ')
     .trim();
+}
+
+const YIELD_EVERY = 25;
+
+/** Let the browser paint and handle input between batches of writes. */
+function yieldToMain(): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, 0));
+}
+
+interface ExistingGlobalRow {
+  source_slug: string | null;
+  name_sr: string | null;
+  description: string | null;
+  image_url: string | null;
+  default_sets: string | null;
+}
+
+/** True when the seed has a value for a column that is still null on the row. */
+function canBackfill(row: ExistingGlobalRow, ex: GlobalSeedExercise): boolean {
+  return (
+    (row.name_sr == null && ex.name_sr != null) ||
+    (row.description == null && ex.description != null) ||
+    (row.image_url == null && ex.image_url != null) ||
+    (row.default_sets == null && ex.default_sets != null)
+  );
 }
 
 async function insertGlobalExercise(client: DbClient, ex: GlobalSeedExercise): Promise<void> {
@@ -29,7 +59,10 @@ async function insertGlobalExercise(client: DbClient, ex: GlobalSeedExercise): P
   );
 }
 
-async function backfillSourceSlugs(client: DbClient): Promise<void> {
+async function backfillSourceSlugs(
+  client: DbClient,
+  GLOBAL_EXERCISES: GlobalSeedExercise[],
+): Promise<void> {
   const byNorm = new Map(GLOBAL_EXERCISES.map((ex) => [normalizeName(ex.name), ex.source_slug]));
   const rows = await client.select<{ id: string; name: string }>(
     `SELECT id, name FROM exercise_definitions
@@ -65,34 +98,35 @@ async function backfillMetadata(client: DbClient, ex: GlobalSeedExercise): Promi
 
 /** Insert missing global exercises and backfill metadata on existing rows. */
 export async function syncGlobalExercises(client: DbClient): Promise<void> {
-  await backfillSourceSlugs(client);
+  const GLOBAL_EXERCISES = await loadGlobalExercises();
+  await backfillSourceSlugs(client, GLOBAL_EXERCISES);
 
-  const existing = await client.select<{ source_slug: string | null }>(
-    `SELECT source_slug FROM exercise_definitions WHERE is_global = 1 AND source_slug IS NOT NULL`,
+  const existing = await client.select<ExistingGlobalRow>(
+    `SELECT source_slug, name_sr, description, image_url, default_sets
+     FROM exercise_definitions WHERE is_global = 1 AND source_slug IS NOT NULL`,
   );
-  const knownSlugs = new Set(
-    existing.map((row) => row.source_slug).filter((slug): slug is string => !!slug),
-  );
-
-  const missing = GLOBAL_EXERCISES.filter((ex) => !knownSlugs.has(ex.source_slug));
-  if (missing.length === 0) {
-    const needsBackfill = await client.select<{ c: number }>(
-      `SELECT COUNT(*) as c FROM exercise_definitions
-       WHERE is_global = 1 AND (
-         source_slug IS NULL OR description IS NULL OR image_url IS NULL
-         OR name_sr IS NULL OR default_sets IS NULL
-       )`,
-    );
-    if ((needsBackfill[0]?.c ?? 0) === 0) return;
+  const knownSlugs = new Set<string>();
+  const fillableSlugs = new Set<string>();
+  const seedBySlug = new Map(GLOBAL_EXERCISES.map((ex) => [ex.source_slug, ex]));
+  for (const row of existing) {
+    if (!row.source_slug) continue;
+    knownSlugs.add(row.source_slug);
+    const ex = seedBySlug.get(row.source_slug);
+    if (ex && canBackfill(row, ex)) fillableSlugs.add(row.source_slug);
   }
 
+  // Only touch rows that change: most seed entries have null fields, so a blanket
+  // backfill would run ~900 UPDATEs on every start.
+  let writes = 0;
   for (const ex of GLOBAL_EXERCISES) {
     if (knownSlugs.has(ex.source_slug)) {
+      if (!fillableSlugs.has(ex.source_slug)) continue;
       await backfillMetadata(client, ex);
-      continue;
+    } else {
+      await insertGlobalExercise(client, ex);
+      knownSlugs.add(ex.source_slug);
     }
-    await insertGlobalExercise(client, ex);
-    knownSlugs.add(ex.source_slug);
+    if (++writes % YIELD_EVERY === 0) await yieldToMain();
   }
 }
 
@@ -102,7 +136,9 @@ export async function seedGlobalExercisesIfEmpty(client: DbClient): Promise<void
   );
   if ((globals[0]?.c ?? 0) > 0) return;
 
-  for (const ex of GLOBAL_EXERCISES) {
+  const GLOBAL_EXERCISES = await loadGlobalExercises();
+  for (const [i, ex] of GLOBAL_EXERCISES.entries()) {
     await insertGlobalExercise(client, ex);
+    if ((i + 1) % YIELD_EVERY === 0) await yieldToMain();
   }
 }

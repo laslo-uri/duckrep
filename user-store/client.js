@@ -75,6 +75,7 @@ async function loadFromBackend() {
   if (!config) return {};
 
   try {
+    if (!config.apiPath) throw new Error('no api');
     const res = await fetch(config.apiPath, { cache: 'no-store' });
     if (res.ok) {
       const data = await res.json();

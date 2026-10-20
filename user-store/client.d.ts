@@ -5,4 +5,6 @@ export function removeItem(key: string): Promise<void>;
 export function initUserStore(options: {
   appId: string;
   keyPrefixes?: string[];
+  /** Dev-server endpoint; an empty string skips it (deployed hosts). */
+  apiPath?: string;
 }): Promise<void>;

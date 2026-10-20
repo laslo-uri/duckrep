@@ -1,16 +1,22 @@
 import { Capacitor } from '@capacitor/core';
 import { BrowserRouter, HashRouter, Routes, Route, Navigate, useParams } from 'react-router-dom';
-import type { ReactNode } from 'react';
+import { lazy, Suspense, type ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Layout } from './components/Layout';
 import { CookieConsent } from './components/CookieConsent';
-import { HomePage } from './pages/HomePage';
-import { WorkoutPage } from './pages/WorkoutPage';
-import { ExercisesPage } from './pages/ExercisesPage';
-import { StatsPage } from './pages/StatsPage';
-import { FoodPage } from './pages/FoodPage';
-import { SettingsPage } from './pages/SettingsPage';
 import { LobbyPage } from './pages/LobbyPage';
+
+// The lobby is the entry page; the journal pages load as their own chunks.
+const HomePage = lazy(() => import('./pages/HomePage').then((m) => ({ default: m.HomePage })));
+const WorkoutPage = lazy(() => import('./pages/WorkoutPage').then((m) => ({ default: m.WorkoutPage })));
+const ExercisesPage = lazy(() => import('./pages/ExercisesPage').then((m) => ({ default: m.ExercisesPage })));
+const StatsPage = lazy(() => import('./pages/StatsPage').then((m) => ({ default: m.StatsPage })));
+const FoodPage = lazy(() => import('./pages/FoodPage').then((m) => ({ default: m.FoodPage })));
+const SettingsPage = lazy(() => import('./pages/SettingsPage').then((m) => ({ default: m.SettingsPage })));
+
+function Page({ children }: { children: ReactNode }) {
+  return <Suspense fallback={null}>{children}</Suspense>;
+}
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -32,13 +38,13 @@ function AppRoutes() {
       <Routes>
         <Route path="/" element={<LobbyPage />} />
         <Route element={<Layout />}>
-          <Route path="journal" element={<HomePage />} />
-          <Route path="activity/:id" element={<WorkoutPage />} />
+          <Route path="journal" element={<Page><HomePage /></Page>} />
+          <Route path="activity/:id" element={<Page><WorkoutPage /></Page>} />
           <Route path="workout/:id" element={<LegacyWorkoutRedirect />} />
-          <Route path="exercises" element={<ExercisesPage />} />
-          <Route path="stats" element={<StatsPage />} />
-          <Route path="food" element={<FoodPage />} />
-          <Route path="settings" element={<SettingsPage />} />
+          <Route path="exercises" element={<Page><ExercisesPage /></Page>} />
+          <Route path="stats" element={<Page><StatsPage /></Page>} />
+          <Route path="food" element={<Page><FoodPage /></Page>} />
+          <Route path="settings" element={<Page><SettingsPage /></Page>} />
         </Route>
         <Route path="/auth" element={<Navigate to="/" replace />} />
         <Route path="/feed" element={<Navigate to="/" replace />} />
