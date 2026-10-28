@@ -289,26 +289,61 @@ export async function listExercises(userId: string): Promise<ExerciseDefinition[
   return rows.map(mapExerciseDefinition);
 }
 
-export async function exerciseSourceExists(sourceSlug: string): Promise<boolean> {
-  const db = await getDb();
-  const rows = await db.select<{ id: string }>('SELECT id FROM exercise_definitions WHERE source_slug = ?', [sourceSlug]);
-  return rows.length > 0;
-}
-
-export async function addLibraryExercise(
+/** Id of the library exercise with this source slug, adding it first when it is not there yet. */
+export async function ensureLibraryExercise(
   userId: string,
   data: { name: string; muscleGroup: string; sourceSlug: string },
-): Promise<'added' | 'exists'> {
-  if (await exerciseSourceExists(data.sourceSlug)) return 'exists';
+): Promise<string> {
   const db = await getDb();
+  const rows = await db.select<{ id: string }>('SELECT id FROM exercise_definitions WHERE source_slug = ?', [data.sourceSlug]);
+  if (rows[0]) return rows[0].id;
+  const id = newId();
   const ts = nowIso();
   await db.execute(
     `INSERT INTO exercise_definitions
       (id, user_id, name, muscle_group, source_slug, is_global, created_at, updated_at)
      VALUES (?, ?, ?, ?, ?, 0, ?, ?)`,
-    [newId(), userId, data.name, data.muscleGroup, data.sourceSlug, ts, ts],
+    [id, userId, data.name, data.muscleGroup, data.sourceSlug, ts, ts],
   );
-  return 'added';
+  return id;
+}
+
+/**
+ * Adds an exercise to today's open activity (not ended, newest first) or starts a new one.
+ * Default sets come along, like picking it inside the activity.
+ */
+export async function addExerciseToToday(
+  userId: string,
+  def: Pick<ExerciseDefinition, 'id' | 'name' | 'default_sets'>,
+): Promise<{ workoutId: string; created: boolean }> {
+  const db = await getDb();
+  const open = await db.select<{ id: string }>(
+    `SELECT id FROM workout_days
+     WHERE user_id = ? AND date = ? AND deleted_at IS NULL AND ended_at IS NULL
+     ORDER BY COALESCE(started_at, created_at) DESC LIMIT 1`,
+    [userId, todayIso()],
+  );
+  const workoutId = open[0]?.id ?? (await createWorkoutDay(userId)).id;
+  const count = await db.select<{ n: number }>(
+    'SELECT COUNT(*) AS n FROM workout_exercises WHERE workout_day_id = ?',
+    [workoutId],
+  );
+  const exercise = await addWorkoutExercise(workoutId, {
+    name: def.name,
+    exercise_definition_id: def.id,
+    order_index: Number(count[0]?.n ?? 0),
+  });
+  if (def.default_sets?.length) {
+    await insertExerciseSets(
+      def.default_sets.map((s, i) => ({
+        workout_exercise_id: exercise.id,
+        set_number: i + 1,
+        reps: s.reps ?? null,
+        weight: s.weight ?? null,
+      })),
+    );
+  }
+  return { workoutId, created: !open[0] };
 }
 
 // ── Stats ────────────────────────────────────────────────────────────────────

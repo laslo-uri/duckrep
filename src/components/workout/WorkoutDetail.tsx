@@ -244,6 +244,9 @@ export function WorkoutDetail({
         <div className="min-w-0 flex-1 px-3 py-4 md:px-5 lg:px-8">
           <div className="mx-auto max-w-3xl">
             {editingTitle ? (
+              <>
+              {/* The page keeps its h1 while the title is being typed. */}
+              <h1 className="sr-only">{displayTitle}</h1>
               <input
                 value={titleInput}
                 onChange={(e) => setTitleInput(e.target.value)}
@@ -254,6 +257,7 @@ export function WorkoutDetail({
                 autoFocus
                 className="w-full border-b border-[var(--color-border)] bg-transparent py-0.5 text-[20px] font-semibold tracking-tight text-[var(--color-ink)] focus:border-[var(--color-accent)] focus:outline-none"
               />
+              </>
             ) : (
               <h1 className="min-w-0">
                 <button

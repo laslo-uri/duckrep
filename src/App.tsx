@@ -4,9 +4,8 @@ import { lazy, Suspense, type ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Layout } from './components/Layout';
 import { CookieConsent } from './components/CookieConsent';
-import { LobbyPage } from './pages/LobbyPage';
 
-// The lobby is the entry page; the journal pages load as their own chunks.
+// Unlocking lands on the journal, like Linear opens on the inbox; pages load as their own chunks.
 const HomePage = lazy(() => import('./pages/HomePage').then((m) => ({ default: m.HomePage })));
 const WorkoutPage = lazy(() => import('./pages/WorkoutPage').then((m) => ({ default: m.WorkoutPage })));
 const ExercisesPage = lazy(() => import('./pages/ExercisesPage').then((m) => ({ default: m.ExercisesPage })));
@@ -35,7 +34,7 @@ function AppRoutes() {
   return (
     <div className="min-h-[var(--app-dvh)] w-full min-w-0">
       <Routes>
-        <Route path="/" element={<LobbyPage />} />
+        <Route path="/" element={<Navigate to="/journal" replace />} />
         <Route element={<Layout />}>
           <Route path="journal" element={<Page><HomePage /></Page>} />
           <Route path="activity/:id" element={<Page><WorkoutPage /></Page>} />

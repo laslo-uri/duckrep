@@ -10,15 +10,15 @@ test.describe('local app shell', () => {
     });
   });
 
-  test('auth route redirects to the lobby', async ({ page }) => {
-    await openUnlocked(page, '/auth');
-    await expect(page).toHaveURL(/\/$/, { timeout: 10_000 });
-    await expect(
-      page.getByRole('heading', {
-        level: 1,
-        name: /what should we call you|kako da te zovemo|hogyan szólítsunk/i,
-      }),
-    ).toBeVisible({ timeout: 15_000 });
+  test('unlocking lands straight on the journal, no greeting page', async ({ page }) => {
+    for (const path of ['/', '/auth']) {
+      await openUnlocked(page, path);
+      await expect(page).toHaveURL(/\/journal$/, { timeout: 10_000 });
+      await expect(page.getByRole('heading', { level: 1, name: /my journal|moj dnevnik|naplóm/i })).toBeVisible({
+        timeout: 15_000,
+      });
+      await expect(page.getByText(/^(hello|zdravo|szia),/i)).toHaveCount(0);
+    }
   });
 
   test('the old food page now lands on the journal', async ({ page }) => {

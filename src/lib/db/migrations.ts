@@ -1,11 +1,3 @@
-/** SQL applied once when upgrading DBs created before the expanded exercise library. */
-export const MIGRATION_V2_SQL = `
-ALTER TABLE exercise_definitions ADD COLUMN source_slug TEXT;
-ALTER TABLE exercise_definitions ADD COLUMN name_hu TEXT;
-CREATE UNIQUE INDEX IF NOT EXISTS idx_exercise_definitions_source_slug
-  ON exercise_definitions(source_slug) WHERE source_slug IS NOT NULL;
-`;
-
 export async function runMigrations(client: {
   select<T>(sql: string, params?: unknown[]): Promise<T[]>;
   execute(sql: string, params?: unknown[]): Promise<void>;

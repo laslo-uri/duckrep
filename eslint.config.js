@@ -18,7 +18,7 @@ export default defineConfig([
     'test-results',
   ]),
   {
-    files: ['playwright.config.ts', 'vite.config.ts', 'capacitor.config.ts'],
+    files: ['playwright.config.ts', 'vite.config.ts', 'capacitor.config.ts', 'api/**/*.ts', 'test/**/*.ts'],
     languageOptions: {
       globals: globals.node,
     },

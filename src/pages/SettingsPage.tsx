@@ -418,7 +418,7 @@ export function SettingsPage() {
         <span className="tabular-nums">{t('appVersion', { version: APP_VERSION })}</span>
         <span>
           {t('footer.madeBy')}{' '}
-          <a href="https://laslouri.com" target="_blank" rel="noopener noreferrer" className="text-[var(--color-muted)] hover:text-[var(--color-ink)] hover:underline">
+          <a href="https://laslouri.com" target="_blank" rel="noopener noreferrer" className="text-[var(--color-muted)] underline underline-offset-2 hover:text-[var(--color-ink)]">
             laslouri.com
           </a>
         </span>

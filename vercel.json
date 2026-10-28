@@ -13,5 +13,5 @@
       "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800" }]
     }
   ],
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+  "rewrites": [{ "source": "/((?!api/).*)", "destination": "/index.html" }]
 }

@@ -1,7 +1,13 @@
-const BASE = 'https://api.musclewiki.com';
+/**
+ * MuscleWiki through Duckrep's own proxy (api/musclewiki.ts), which holds the key server-side.
+ * Web uses the same origin; the desktop and phone shells need VITE_MUSCLEWIKI_PROXY (a deployed
+ * Duckrep URL, not a secret). Without either, every call fails and the page stays on the library.
+ */
+const UPSTREAM = 'https://api.musclewiki.com';
 const META_STORAGE = 'duckrep.musclewiki.meta';
 const META_MAX_AGE_MS = 30 * 24 * 60 * 60 * 1000;
 
+/** status 0 = no proxy answered (offline, or a static host without the function). */
 export class MuscleWikiError extends Error {
   status: number;
 
@@ -35,15 +41,21 @@ export type MwExercise = {
 
 export type MwGender = 'male' | 'female';
 
+export type MuscleWikiMeta = MetaCache;
+
 type MetaCache = {
   savedAt: number;
   categories: MwFacet[];
   muscles: MwFacet[];
 };
 
-export function getMuscleWikiKey(): string {
-  const value = import.meta.env.VITE_MUSCLEWIKI_API_KEY;
-  return typeof value === 'string' ? value.trim() : '';
+function proxyBase(): string {
+  const value = import.meta.env.VITE_MUSCLEWIKI_PROXY;
+  return typeof value === 'string' ? value.trim().replace(/\/+$/, '') : '';
+}
+
+export function proxyUrl(path: string): string {
+  return `${proxyBase()}/api/musclewiki?path=${encodeURIComponent(path)}`;
 }
 
 export function readMetaCache(raw: string | null, now: number): MetaCache | null {
@@ -138,21 +150,20 @@ function normalizeVideos(value: unknown): { url: string; gender: string }[] {
     if (!item || typeof item !== 'object') continue;
     const row = item as Record<string, unknown>;
     const raw = stringField(row.url) || stringField(row.src);
-    const url = streamUrl(raw);
+    const url = streamPath(raw);
     if (!url) continue;
     videos.push({ url, gender: stringField(row.gender).toLowerCase() });
   }
   return videos;
 }
 
-export function streamUrl(raw: string): string | null {
+/** MuscleWiki stream path (`/stream/...`) of a video URL, or null for anything else. */
+export function streamPath(raw: string): string | null {
   if (!raw) return null;
-  if (raw.startsWith('/stream/')) return `${BASE}${raw}`;
   try {
-    const url = new URL(raw);
-    if (url.protocol !== 'https:' || url.hostname !== 'api.musclewiki.com') return null;
-    if (!url.pathname.startsWith('/stream/')) return null;
-    return url.toString();
+    const url = new URL(raw, UPSTREAM);
+    if (url.origin !== UPSTREAM || !url.pathname.startsWith('/stream/')) return null;
+    return url.pathname;
   } catch {
     return null;
   }
@@ -162,7 +173,7 @@ export function pickVideoUrl(videos: { url: string; gender: string }[], gender: 
   const match = videos.find((video) => video.gender === gender)
     ?? videos.find((video) => !video.gender)
     ?? videos[0];
-  return match ? streamUrl(match.url) : null;
+  return match ? proxyUrl(match.url) : null;
 }
 
 function stringField(value: unknown): string {
@@ -174,25 +185,25 @@ function stringList(value: unknown): string[] {
   return value.filter((item): item is string => typeof item === 'string' && item.trim().length > 0).map((item) => item.trim());
 }
 
-async function mwGet(key: string, path: string, signal?: AbortSignal): Promise<unknown> {
-  const response = await fetch(`${BASE}${path}`, {
-    signal,
-    headers: {
-      Accept: 'application/json',
-      'X-API-Key': key,
-    },
-  });
-  if (!response.ok) throw new MuscleWikiError(response.status);
+async function mwGet(path: string, signal?: AbortSignal): Promise<unknown> {
+  let response: Response;
+  try {
+    response = await fetch(proxyUrl(path), { signal, headers: { Accept: 'application/json' } });
+  } catch (error) {
+    if (signal?.aborted) throw error;
+    throw new MuscleWikiError(0);
+  }
+  // A static host answers the SPA's index.html instead of the function.
+  const json = (response.headers.get('content-type') ?? '').includes('json');
+  if (!response.ok) throw new MuscleWikiError(json ? response.status : 0);
+  if (!json) throw new MuscleWikiError(0);
   return response.json();
 }
 
-export async function getMuscleWikiMeta(key: string, signal?: AbortSignal): Promise<MetaCache> {
+export async function getMuscleWikiMeta(signal?: AbortSignal): Promise<MetaCache> {
   const cached = readMetaCache(safeGet(META_STORAGE), Date.now());
   if (cached) return cached;
-  const [categories, muscles] = await Promise.all([
-    mwGet(key, '/categories', signal),
-    mwGet(key, '/muscles', signal),
-  ]);
+  const [categories, muscles] = await Promise.all([mwGet('/categories', signal), mwGet('/muscles', signal)]);
   const meta: MetaCache = {
     savedAt: Date.now(),
     categories: normalizeFacets(categories),
@@ -207,7 +218,6 @@ export async function getMuscleWikiMeta(key: string, signal?: AbortSignal): Prom
 }
 
 export async function listMuscleWikiExercises(
-  key: string,
   params: { limit: number; offset: number; category?: string; muscles?: string; search?: string },
   signal?: AbortSignal,
 ): Promise<{ total: number; results: MwListItem[] }> {
@@ -217,29 +227,12 @@ export async function listMuscleWikiExercises(
   if (params.category) query.set('category', params.category);
   if (params.muscles) query.set('muscles', params.muscles);
   const term = params.search?.trim() ?? '';
-  const path = term.length >= 2 ? `/search?q=${encodeURIComponent(term)}&${query}` : `/exercises?${query}`;
-  return normalizeExercisePage(await mwGet(key, path, signal));
+  if (term.length >= 2) query.set('q', term);
+  return normalizeExercisePage(await mwGet(`${term.length >= 2 ? '/search' : '/exercises'}?${query}`, signal));
 }
 
-export async function getMuscleWikiExercise(
-  key: string,
-  id: number,
-  gender: MwGender,
-  signal?: AbortSignal,
-): Promise<MwExercise | null> {
-  return normalizeExercise(await mwGet(key, `/exercises/${id}?gender=${gender}`, signal));
-}
-
-export async function fetchMuscleWikiVideo(key: string, url: string, signal?: AbortSignal): Promise<string> {
-  const safe = streamUrl(url);
-  if (!safe) throw new MuscleWikiError(400);
-  const response = await fetch(safe, {
-    signal,
-    headers: { 'X-API-Key': key },
-  });
-  if (!response.ok) throw new MuscleWikiError(response.status);
-  const blob = await response.blob();
-  return URL.createObjectURL(blob);
+export async function getMuscleWikiExercise(id: number, gender: MwGender, signal?: AbortSignal): Promise<MwExercise | null> {
+  return normalizeExercise(await mwGet(`/exercises/${id}?gender=${gender}`, signal));
 }
 
 function safeGet(storageKey: string): string | null {

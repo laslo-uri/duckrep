@@ -5,7 +5,8 @@ import {
   normalizeFacets,
   pickVideoUrl,
   readMetaCache,
-  streamUrl,
+  proxyUrl,
+  streamPath,
 } from './musclewiki';
 
 describe('musclewiki parsing', () => {
@@ -38,8 +39,10 @@ describe('musclewiki parsing', () => {
       ],
     });
     expect(exercise?.videos).toHaveLength(2);
-    expect(pickVideoUrl(exercise?.videos ?? [], 'female')).toBe('https://api.musclewiki.com/stream/videos/branded/female.mp4');
-    expect(streamUrl('https://api.musclewiki.com/exercises/1')).toBeNull();
+    expect(pickVideoUrl(exercise?.videos ?? [], 'female')).toBe(proxyUrl('/stream/videos/branded/female.mp4'));
+    expect(proxyUrl('/stream/videos/branded/female.mp4')).toBe('/api/musclewiki?path=%2Fstream%2Fvideos%2Fbranded%2Ffemale.mp4');
+    expect(streamPath('https://api.musclewiki.com/exercises/1')).toBeNull();
+    expect(streamPath('https://evil.example/stream/videos/x.mp4')).toBeNull();
   });
 
   it('drops a category cache older than 30 days', () => {

@@ -10,7 +10,7 @@ A training journal: workouts, exercises, sets and body stats. Local-first (SQLit
 
 - **Activities (journal)** — Multiple sessions per day, optional start/end time, grouped home view
 - **Exercises & sets** — Add from the library (with default sets) or custom lines; log reps × weight
-- **Exercise library** — Browse by muscle group (global + user presets)
+- **Exercise search** — A body map (front and back, our own SVG) filters by muscle; text search and an equipment filter; one click adds the exercise to today's activity (or starts one). Works offline on the built-in library; MuscleWiki is an optional second source (below)
 - **Body stats** — Height, weight log, goal weight, training stats and streaks
 - **Lock and encryption** — See below
 - **Backups** — Settings → Data exports and imports a journal JSON, and downloads the full SQLite database
@@ -63,7 +63,7 @@ No `.env` or cloud backend required. The lock screen asks for a passphrase on fi
 
 ### Deploy to Vercel
 
-Static SPA — connect the GitHub repo and deploy. `vercel.json` pins the Vite build.
+Static SPA plus one function: `api/musclewiki.ts` (the MuscleWiki proxy). Connect the GitHub repo and deploy. `vercel.json` pins the Vite build and keeps `/api/*` out of the SPA rewrite.
 
 ### Environment
 
@@ -74,6 +74,20 @@ All variables are optional.
 | `VITE_DUCKREP_PASSWORD` | Passphrase used once, for first-time setup, instead of asking. Compiled into the bundle; never set it on a public deploy. |
 | `VITE_GTM_ID` | Google Tag Manager container ID (`GTM-XXXXXXX`). Loads `gtm.js` only after the visitor accepts cookies. |
 | `VITE_GA_ID` | GA4 measurement ID (`G-XXXXXXXXXX`). Loads `gtag.js` only after the visitor accepts cookies. |
+| `MUSCLEWIKI_API_KEY` | **Server-only** (no `VITE_` prefix): MuscleWiki API key, read by `api/musclewiki.ts` on Vercel and by the Vite dev/preview servers. Never in the bundle. |
+| `VITE_MUSCLEWIKI_PROXY` | Origin of a deployed Duckrep (e.g. `https://you-peak.vercel.app`) whose `/api/musclewiki` the desktop and phone builds call. Not a secret. Web builds use their own origin. |
+
+### MuscleWiki (optional)
+
+The Exercises page has a **MuscleWiki** source next to the offline library. What its API requires (checked 2026-10-28, [docs](https://api.musclewiki.com/documentation), [API terms](https://api.musclewiki.com/api-terms)):
+
+- A key from the MuscleWiki API dashboard (not RapidAPI). The free BASIC plan is playground-only; direct API access starts at TESTING ($10/month, English only); other languages need GROWTH.
+- A monthly call quota (`429` when used up). Every `/stream/` request, including each video range request, counts as a call.
+- The key must not ship in a client app, and the API sends no CORS headers. So the app calls Duckrep's own proxy, which adds the key server-side, forwards only read endpoints, and passes video through with MuscleWiki's `no-store` headers.
+- Caching: metadata up to 30 days (the app keeps `/categories` and `/muscles` 30 days in `localStorage`), thumbnails and body-map images 24 h, videos transient only. No offline storage or bundling of their media. Adding a MuscleWiki exercise to a workout files only its name and muscle group in your library (`musclewiki:<id>`).
+- Attribution: "Exercise data and videos provided by MuscleWiki.com" is shown under the results.
+
+Without a key (or offline, or on a static host) the tab says so and the library keeps working. The body map and the offline muscle and equipment data come from [free-exercise-db](https://github.com/yuhonas/free-exercise-db) (public domain): `npm run import-anatomy` regenerates `src/lib/db/exerciseAnatomy.generated.ts`.
 
 Consent uses Google Consent Mode v2: every storage flag defaults to `denied`, the choice is kept in `localStorage` under `cookie-consent`, and the "Cookies" link in the footer reopens the banner. Logic in `src/lib/consent.ts`, banner in `src/components/CookieConsent.tsx`.
 
@@ -86,9 +100,10 @@ Requires **Node.js 20+** (see `.nvmrc`). CI reads that file.
 | `npm run dev` | Local dev server |
 | `npm run lint` | ESLint |
 | `npm run test` | Vitest (unit/component) |
-| `npm run test:e2e` | Playwright smoke + journal + lock tests (`e2e/helpers/vault.ts` gets past the lock screen) |
+| `npm run test:e2e` | Playwright: smoke, journal, lock, exercise search (MuscleWiki mocked), axe at 375/768/1440 in light and dark with a console-error check (`e2e/helpers/vault.ts` gets past the lock screen) |
 | `npm run build` | Production build (`dist/`) |
 | `npm run check` | lint + test + build |
+| `npm run ci:local` | `check` plus the whole e2e suite: what GitHub Actions runs |
 
 **CI:** pushes and PRs to `main` run [`.github/workflows/ci.yml`](.github/workflows/ci.yml) (lint, tests, build, Playwright e2e).
 

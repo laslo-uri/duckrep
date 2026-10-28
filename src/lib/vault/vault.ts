@@ -52,10 +52,6 @@ export async function vaultState(): Promise<VaultState> {
   return (await store().read()) ? 'locked' : 'unset';
 }
 
-export function isUnlocked(): boolean {
-  return key !== null;
-}
-
 /** The passphrase baked in at build time (VITE_DUCKREP_PASSWORD in .env), used only for first-time setup. */
 export function builtInPassphrase(): string {
   const env = import.meta.env as Record<string, string | undefined>;

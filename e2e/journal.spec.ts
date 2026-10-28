@@ -10,7 +10,7 @@ test.describe('journal flow (local)', () => {
     ).toBeVisible({ timeout: 15_000 });
 
     await openUnlocked(page, '/activity/new');
-    await page.getByRole('button', { name: /new activity|nova aktivnost/i }).click();
+    await page.locator('#main-content').getByRole('button', { name: /new activity|nova aktivnost/i }).click();
 
     await expect(page).toHaveURL(/\/activity\/[0-9a-f-]{36}$/i, { timeout: 20_000 });
     await expect(
@@ -21,7 +21,7 @@ test.describe('journal flow (local)', () => {
   test('lock keeps the journal behind the passphrase', async ({ page }) => {
     test.setTimeout(90_000); // three unlocks, each a slow-on-purpose key derivation
     await openUnlocked(page, '/activity/new');
-    await page.getByRole('button', { name: /new activity|nova aktivnost/i }).click();
+    await page.locator('#main-content').getByRole('button', { name: /new activity|nova aktivnost/i }).click();
     await expect(page).toHaveURL(/\/activity\/[0-9a-f-]{36}$/i, { timeout: 20_000 });
     const activityUrl = page.url();
 

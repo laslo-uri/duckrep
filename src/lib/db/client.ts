@@ -143,31 +143,4 @@ export async function lockJournal(): Promise<void> {
   window.location.reload();
 }
 
-/** Test helper — in-memory db without persistence. */
-export async function createMemoryDb(): Promise<DbClient> {
-  const initSqlJs = (await import('sql.js')).default;
-  const wasmUrl = (await import('sql.js/dist/sql-wasm.wasm?url')).default;
-  const SQL = await initSqlJs({ locateFile: () => wasmUrl });
-  const db = new SQL.Database();
-
-  const memClient: DbClient = {
-    async select<T>(sql: string, params: unknown[] = []): Promise<T[]> {
-      const stmt = db.prepare(sql);
-      stmt.bind(params as import('sql.js').BindParams);
-      const rows: T[] = [];
-      while (stmt.step()) {
-        rows.push(stmt.getAsObject() as T);
-      }
-      stmt.free();
-      return rows;
-    },
-    async execute(sql: string, params: unknown[] = []): Promise<void> {
-      db.run(sql, params as import('sql.js').BindParams);
-    },
-  };
-
-  await initDbClient(memClient);
-  return memClient;
-}
-
 export { localDateKey, newId, nowIso, todayIso } from './utils';
