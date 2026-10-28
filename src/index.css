@@ -89,7 +89,7 @@
     width: 100%;
   }
   body {
-    @apply bg-[var(--color-paper)] text-[var(--color-ink)] min-h-screen font-sans;
+    @apply bg-[var(--color-paper)] text-[var(--color-ink)] min-h-[var(--app-dvh)] font-sans;
     font-size: 13px;
     line-height: 1.45;
     font-variant-numeric: tabular-nums;
@@ -821,4 +821,84 @@ a:focus-visible .dr-logo .dr-logo-img,
   .contribution-grid {
     --grid-cell: 12px;
   }
+}
+
+/* Desktop shell: the frameless window draws its own caption in the app colours, as Rootsware does
+   (components: DesktopTitlebar). The page sits below it; --app-dvh is the height that is left. */
+:root {
+  --app-dvh: 100dvh;
+}
+html.is-desktop {
+  --desktop-titlebar-h: 2.5rem;
+  --app-dvh: calc(100dvh - var(--desktop-titlebar-h));
+  box-sizing: border-box;
+  padding-top: var(--desktop-titlebar-h);
+  height: 100%;
+  overflow: hidden;
+  scrollbar-gutter: auto;
+}
+/* Duckrep scrolls the document; under the caption the body is the scroller, so sticky bars stick below it */
+html.is-desktop body {
+  height: 100%;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+}
+.desktop-titlebar {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 40;
+  display: flex;
+  align-items: stretch;
+  height: var(--desktop-titlebar-h);
+  background: var(--color-panel);
+  color: var(--color-ink);
+  border-bottom: 1px solid var(--color-border);
+  user-select: none;
+}
+.desktop-titlebar__drag {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  min-width: 0;
+  padding-left: 0.85rem;
+}
+.desktop-titlebar__name {
+  overflow: hidden;
+  color: var(--color-muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.desktop-titlebar__controls {
+  display: flex;
+  flex-shrink: 0;
+}
+.desktop-titlebar__controls button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 100%;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+.desktop-titlebar__controls svg {
+  width: 0.9rem;
+  height: 0.9rem;
+}
+.desktop-titlebar__controls button:hover,
+.desktop-titlebar__controls button:focus-visible {
+  background: var(--color-hover);
+  outline: none;
+}
+.desktop-titlebar__controls .desktop-titlebar__close:hover,
+.desktop-titlebar__controls .desktop-titlebar__close:focus-visible {
+  background: #e81123;
+  color: #fff;
 }

@@ -87,7 +87,7 @@ function Sidebar({ onNew, newPending }: { onNew: () => void; newPending: boolean
   const recent = days.slice(0, 6);
 
   return (
-    <aside className="sticky top-0 hidden h-[100dvh] w-14 shrink-0 flex-col border-r border-[var(--color-border)] bg-[var(--color-panel)] md:flex lg:w-56">
+    <aside className="sticky top-0 hidden h-[var(--app-dvh)] w-14 shrink-0 flex-col border-r border-[var(--color-border)] bg-[var(--color-panel)] md:flex lg:w-56">
       <div className="flex h-11 shrink-0 items-center gap-2 px-3.5 lg:px-3">
         <Link to="/" className="dr-logo flex min-w-0 items-center gap-2 text-[14px] text-[var(--color-logo)]" title="Duckrep">
           <DuckrepMark size={22} className="rounded-md" />
@@ -248,7 +248,7 @@ export function Layout() {
   useGlobalShortcuts(startNew);
 
   return (
-    <div className="flex min-h-[100dvh] w-full min-w-0">
+    <div className="flex min-h-[var(--app-dvh)] w-full min-w-0">
       <Sidebar onNew={startNew} newPending={isPending} />
       <main
         id="main-content"

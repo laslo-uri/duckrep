@@ -33,7 +33,7 @@ function LegacyWorkoutRedirect() {
 
 function AppRoutes() {
   return (
-    <div className="min-h-[100dvh] w-full min-w-0">
+    <div className="min-h-[var(--app-dvh)] w-full min-w-0">
       <Routes>
         <Route path="/" element={<LobbyPage />} />
         <Route element={<Layout />}>

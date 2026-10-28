@@ -132,7 +132,7 @@ export function ExercisesPage() {
         {filtered.length === 0 ? (
           <p className="text-sm text-[var(--color-muted)] py-8 text-center">{t('noExerciseMatches')}</p>
         ) : (
-          <div ref={listRef} className="mt-2 h-[calc(100dvh-16rem)] md:h-[calc(100dvh-10rem)] overflow-y-auto rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)]">
+          <div ref={listRef} className="mt-2 h-[calc(var(--app-dvh)-16rem)] md:h-[calc(var(--app-dvh)-10rem)] overflow-y-auto rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)]">
             <div className="relative w-full" style={{ height: `${virtualizer.getTotalSize()}px` }}>
             {virtualizer.getVirtualItems().map((item) => {
               const ex = filtered[item.index];

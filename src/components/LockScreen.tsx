@@ -52,7 +52,7 @@ export function LockScreen({ state, onUnlocked }: { state: Exclude<VaultState, '
     'dr-input mt-1 block w-full h-9 max-md:h-11';
 
   return (
-    <div className="relative flex min-h-[100dvh] flex-col bg-[var(--color-paper)] text-[var(--color-ink)]">
+    <div className="relative flex min-h-[var(--app-dvh)] flex-col bg-[var(--color-paper)] text-[var(--color-ink)]">
       <div className="absolute top-0 inset-x-0 z-20 flex justify-end items-center gap-1 px-4 sm:px-8 h-14">
         <button
           type="button"

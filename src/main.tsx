@@ -8,6 +8,8 @@ import { ThemeProvider } from './contexts/ThemeContext'
 import { bootAppUserStore } from './lib/app-user-store'
 import { deferDbOpen } from './lib/db'
 import { VaultGate } from './components/VaultGate'
+import { DesktopTitlebar } from './components/DesktopTitlebar'
+import { prepareDesktopShell } from './lib/desktopShell'
 
 function showBootError(err: unknown) {
   const message = err instanceof Error ? err.message : String(err)
@@ -57,9 +59,11 @@ async function boot() {
   // Queries call getDb() on mount; let the page paint before the database
   // (sql.js + wasm + exercise seed) starts loading.
   deferDbOpen(afterFirstPaint())
+  prepareDesktopShell()
   const root = createRoot(document.getElementById('root')!)
   root.render(
     <StrictMode>
+      <DesktopTitlebar title="Duckrep" />
       <ThemeProvider>
         <VaultGate>
           <LocalUserProvider>

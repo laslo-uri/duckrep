@@ -172,7 +172,7 @@ export function LobbyPage() {
   };
 
   return (
-    <div className="relative h-[100dvh] overflow-hidden bg-[var(--color-paper)] text-[var(--color-ink)] flex flex-col">
+    <div className="relative h-[var(--app-dvh)] overflow-hidden bg-[var(--color-paper)] text-[var(--color-ink)] flex flex-col">
       <div className="dr-lobby-glow dr-lobby-glow-a" />
       <div className="dr-lobby-glow dr-lobby-glow-b" />
 

@@ -447,7 +447,7 @@ export function WorkoutDetail({
         {/* ── Properties aside: stacks under the exercises on phones ── */}
         <aside
           aria-label={t('activityDetails')}
-          className="w-full shrink-0 border-t border-[var(--color-border)] bg-[var(--color-panel)] px-3 py-4 md:sticky md:top-[var(--dr-header-h)] md:h-[calc(100dvh-var(--dr-header-h))] md:w-72 md:overflow-y-auto md:border-l md:border-t-0 md:px-4"
+          className="w-full shrink-0 border-t border-[var(--color-border)] bg-[var(--color-panel)] px-3 py-4 md:sticky md:top-[var(--dr-header-h)] md:h-[calc(var(--app-dvh)-var(--dr-header-h))] md:w-72 md:overflow-y-auto md:border-l md:border-t-0 md:px-4"
         >
           <p className="dr-label mb-2">{t('activityDetails')}</p>
           <Prop label={t('activityTypeLabel')}>
