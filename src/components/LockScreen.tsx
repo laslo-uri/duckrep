@@ -57,8 +57,10 @@ export function LockScreen({ state, onUnlocked }: { state: Exclude<VaultState, '
         <div className="gate">
           <form onSubmit={(e) => void submit(e)} aria-labelledby="lock-title" className="gate-card fg-enter dr-card">
             <div className="gate-head">
-              <span className="fg-glide">
-                <DuckrepMark size={48} className="rounded-[11px]" />
+              <span className="family-mark">
+                <span className="family-mark__tile">
+                  <DuckrepMark size={48} />
+                </span>
               </span>
               <div className="fg-enter fg-1 min-w-0 text-left">
                 <h1 id="lock-title" className="gate-title">

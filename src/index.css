@@ -906,7 +906,7 @@ html.is-desktop body {
 /* ------------------------------------------------------------------------------------------------
  * Family intro, the same in all four bird apps (keep in sync with Hawkdone, Stashbird, Duckrep,
  * Dovediet): the sky behind the lock screen (FamilySky), the entrance choreography (.fg-enter with
- * --fg-i as the step, .fg-glide on the mark) and the "← Rootsware" link (BackToRootsware).
+ * --fg-i as the step), the mark (.family-mark) and the "← Rootsware" link (BackToRootsware).
  * Only the two colours below differ per app.
  * ------------------------------------------------------------------------------------------------ */
 :root {
@@ -964,11 +964,6 @@ html.is-desktop body {
   animation: fg-rise 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
   animation-delay: calc(var(--fg-i, 0) * 80ms + 120ms);
 }
-/* the mark settles, then glides like a bird on a thermal */
-.fg-glide {
-  display: inline-flex;
-  animation: fg-mark-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both, fg-glide 5.2s ease-in-out 0.9s infinite;
-}
 
 .rw-back {
   display: inline-flex;
@@ -1020,15 +1015,6 @@ html.is-desktop body {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: none; }
 }
-@keyframes fg-mark-in {
-  from { opacity: 0; transform: translateY(14px) scale(0.86) rotate(-6deg); }
-  to { opacity: 1; transform: none; }
-}
-@keyframes fg-glide {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  30% { transform: translateY(-3px) rotate(-2.5deg); }
-  70% { transform: translateY(2px) rotate(2deg); }
-}
 @keyframes fg-glow-in {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -1046,8 +1032,7 @@ html.is-desktop body {
 @media (prefers-reduced-motion: reduce) {
   .family-sky__glow,
   .family-sky__path,
-  .fg-enter,
-  .fg-glide {
+  .fg-enter {
     animation: none !important;
   }
 }
@@ -1167,5 +1152,81 @@ html.is-desktop body {
   }
   .gate-foot .rw-back {
     height: 2.75rem;
+  }
+}
+
+/* The family mark on the lock screen (and Duckrep's lobby): a still logo that does one "rep" when the page
+   opens, catches a shine every few seconds, and on hover lifts with a glow in the app colour and repeats the
+   rep (Duckrep's hover, Stashbird's gleam). The same in all four bird apps. */
+.family-mark {
+  display: inline-flex;
+  flex: none;
+  border-radius: 22.5%;
+  transition:
+    transform 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+    filter 0.35s ease;
+}
+.family-mark__tile {
+  position: relative;
+  display: inline-flex;
+  overflow: hidden;
+  border-radius: inherit;
+  animation: fm-rep 700ms cubic-bezier(0.34, 1.56, 0.64, 1) 250ms both;
+}
+.family-mark__tile::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 30%, rgb(255 255 255 / 0.38) 50%, transparent 70%);
+  transform: translateX(-130%);
+  animation: fm-shine 6s ease-in-out 1.2s infinite;
+  pointer-events: none;
+}
+.gate-head:hover .family-mark,
+.family-mark:hover {
+  transform: scale(1.08);
+  filter: drop-shadow(0 4px 14px color-mix(in srgb, var(--sky-accent) 55%, transparent));
+}
+.gate-head:hover .family-mark__tile,
+.family-mark:hover .family-mark__tile {
+  animation: fm-rep-again 700ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+.gate-title {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  transition: text-shadow 0.35s ease;
+}
+.gate-title * {
+  font-weight: inherit;
+  letter-spacing: inherit;
+}
+.gate-head:hover .gate-title {
+  text-shadow: 0 0 16px color-mix(in srgb, var(--sky-accent) 50%, transparent);
+}
+@keyframes fm-rep {
+  0% { opacity: 0; transform: translateY(8px) scale(0.9); }
+  40% { opacity: 1; transform: translateY(-6%) rotate(-4deg); }
+  75% { transform: translateY(2px); }
+  100% { opacity: 1; transform: none; }
+}
+@keyframes fm-rep-again {
+  0% { transform: none; }
+  35% { transform: translateY(-6%) rotate(-4deg); }
+  70% { transform: translateY(2px); }
+  100% { transform: none; }
+}
+@keyframes fm-shine {
+  0% { transform: translateX(-130%); }
+  22%, 100% { transform: translateX(130%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .family-mark,
+  .family-mark__tile,
+  .family-mark__tile::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .family-mark__tile::after {
+    display: none;
   }
 }

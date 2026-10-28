@@ -197,7 +197,11 @@ export function LobbyPage() {
         <div className="min-h-full flex flex-col items-center px-4 sm:px-8 py-8 text-center">
           <div className="my-auto flex w-full max-w-xl flex-col items-center">
           <div className="dr-lockup flex flex-col items-center">
-            <DuckrepMark size={!introduced && step > 0 ? 56 : 88} animateIn className="dr-enter" />
+            <span className="family-mark dr-enter">
+              <span className="family-mark__tile">
+                <DuckrepMark size={!introduced && step > 0 ? 56 : 88} />
+              </span>
+            </span>
             <p className="dr-enter dr-label mt-5">{t('lobbyEyebrow')}</p>
             {introduced && (
               <h1 className="dr-enter dr-lobby-title dr-lobby-hello mt-3 font-serif font-semibold tracking-tight text-balance">
