@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Lock, Moon, ShieldCheck, Sun } from 'lucide-react';
 import { builtInPassphrase, MIN_PASSPHRASE, setup, unlock, type VaultState } from '../lib/vault/vault';
 import { useTheme } from '../contexts/ThemeContext';
-import { DuckrepMark } from './DuckrepLogo';
+import { DuckrepMark, DuckrepWordmark } from './DuckrepLogo';
 import { LanguageSwitcher } from './LanguageSwitcher';
 
 /** Shown until the vault is unlocked. First run creates the passphrase (or takes the built-in one). */
@@ -75,8 +75,8 @@ export function LockScreen({ state, onUnlocked }: { state: Exclude<VaultState, '
           <div className="dr-lockup mb-6 flex items-center gap-4">
             <DuckrepMark size={60} animateIn className="rounded-2xl" />
             <div className="min-w-0 text-left">
-              <h1 id="lock-title" className="font-serif text-2xl font-semibold tracking-tight">
-                Duckrep
+              <h1 id="lock-title" className="font-serif text-2xl">
+                <DuckrepWordmark />
               </h1>
               <p className="text-sm text-[var(--color-muted)]">{creating ? t('lockCreateTitle') : t('lockLocked')}</p>
             </div>

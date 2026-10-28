@@ -94,12 +94,15 @@ Requires **Node.js 20+** (see `.nvmrc`). CI reads that file.
 
 ## Brand and icons
 
-The mark is a mallard on a navy tile with a dumbbell in its bill (Stashbird holds a coin, Hawkdone has a check for an eye). Teal wing stripes, cream body, amber bill. `public/logo.svg` (rounded tile) and `public/logo-fullbleed.svg` (square, for iOS/Android which round icons themselves) are the masters; the same shapes are inline in `src/components/DuckrepLogo.tsx`, where hovering the logo makes the duck do one rep.
+The mark is a dark duck with fire-orange wings biting a dumbbell, on a black tile; the wordmark is **Duck** in the text colour (white on dark, near-black on light) and **rep** in fire orange. Palette: `#09090B` `#18181B` `#2E2E33` `#45454D` (zinc/black), `#D63A08 → #E88818` (fire gradient), `#B83A0A` / `#C2410C` (orange on light), `#F06A20` (orange on dark), `#FAFAFA`. Themes in `src/index.css`: light "Chalk" and dark "Forge"; orange is the accent, button text is white on `#C2410C` (light) and black on `#F06A20` (dark), both WCAG AA.
+
+The approved sources live in `__draft/bird-apps-brand/duckrep/` (outside the repo) and are copied, never edited here: `public/logo.svg` (rounded tile, also `favicon.svg` and `src-tauri/icon-source.svg`), `public/logo-fullbleed.svg` (square, for maskable and Apple icons), `public/duckrep-mark.svg` (the duck alone, Android adaptive foreground). `src/components/DuckrepLogo.tsx` shows the tile as an image plus the two-tone wordmark; hovering the logo makes the duck do one rep.
 
 ```bash
 node scripts/build-web-icons.mjs   # apple-touch-icon, icon-192/512, maskable 512, og-image.png
-npm run icon                       # Tauri icons (ico, icns, png, Android, iOS) from src-tauri/icon-source.svg
+npx tauri icon <1024px png of src-tauri/icon-source.svg> -o src-tauri/icons
 npm run icon:desktop               # multi-size icon.ico for the Desktop shortcut
+npm run icon:android               # Capacitor launcher icons (legacy, round, adaptive foreground; background #09090B)
 ```
 
 ## Desktop (Tauri)

@@ -37,38 +37,38 @@ function Ridge() {
       <svg viewBox="0 0 1440 400" preserveAspectRatio="xMidYMax meet" className="absolute inset-0 h-full w-full" aria-hidden>
         <defs>
           <linearGradient id="ridgeLeft" x1="200" y1="175" x2="250" y2="400" gradientUnits="userSpaceOnUse">
-            <stop offset="0" stopColor="#7ff2f8" />
-            <stop offset="1" stopColor="#1596c9" />
+            <stop offset="0" stopColor="#71717a" />
+            <stop offset="1" stopColor="#3f3f46" />
           </linearGradient>
           <linearGradient id="ridgeMainL" x1="560" y1="48" x2="500" y2="400" gradientUnits="userSpaceOnUse">
-            <stop offset="0" stopColor="#bdf6fa" />
-            <stop offset="1" stopColor="#2cc4e8" />
+            <stop offset="0" stopColor="#a1a1aa" />
+            <stop offset="1" stopColor="#52525b" />
           </linearGradient>
           <linearGradient id="ridgeMainR" x1="860" y1="48" x2="980" y2="400" gradientUnits="userSpaceOnUse">
-            <stop offset="0" stopColor="#2cc4e8" />
-            <stop offset="1" stopColor="#0b5e74" />
+            <stop offset="0" stopColor="#52525b" />
+            <stop offset="1" stopColor="#27272a" />
           </linearGradient>
           <linearGradient id="ridgeRight" x1="1040" y1="145" x2="1140" y2="400" gradientUnits="userSpaceOnUse">
-            <stop offset="0" stopColor="#4defc9" />
-            <stop offset="1" stopColor="#0e9f86" />
+            <stop offset="0" stopColor="#e88818" />
+            <stop offset="1" stopColor="#d63a08" />
           </linearGradient>
         </defs>
         <g className="dr-lobby-ridge">
           <path fill="url(#ridgeLeft)" d="M340 175 L90 400 L340 400 Z" />
-          <path fill="#0b5e74" d="M340 175 L520 400 L340 400 Z" />
-          <path fill="#eafcfe" opacity="0.85" d="M340 175 L292 236 L352 220 Z" />
+          <path fill="#27272a" d="M340 175 L520 400 L340 400 Z" />
+          <path fill="#d4d4d8" opacity="0.85" d="M340 175 L292 236 L352 220 Z" />
           <path fill="url(#ridgeRight)" d="M1120 145 L940 400 L1120 400 Z" />
-          <path fill="#086655" d="M1120 145 L1360 400 L1120 400 Z" />
-          <path fill="#d8fff2" opacity="0.85" d="M1120 145 L1076 206 L1134 190 Z" />
+          <path fill="#9a2d06" d="M1120 145 L1360 400 L1120 400 Z" />
+          <path fill="#fdba74" opacity="0.85" d="M1120 145 L1076 206 L1134 190 Z" />
           <path fill="url(#ridgeMainL)" d="M720 48 L430 400 L720 400 Z" />
           <path fill="url(#ridgeMainR)" d="M720 48 L1040 400 L720 400 Z" />
-          <path fill="#9ef4f9" opacity="0.55" d="M720 48 L600 210 L720 268 Z" />
-          <path fill="#0b5e74" opacity="0.4" d="M720 48 L850 190 L720 268 Z" />
-          <path fill="#f3f6f8" d="M720 48 L650 140 L720 112 L800 132 Z" />
+          <path fill="#d4d4d8" opacity="0.35" d="M720 48 L600 210 L720 268 Z" />
+          <path fill="#18181b" opacity="0.45" d="M720 48 L850 190 L720 268 Z" />
+          <path fill="#fafafa" d="M720 48 L650 140 L720 112 L800 132 Z" />
           <path className="dr-ridge-line" pathLength="100" d="M250 310 L470 214 L640 262 L1120 145" />
           <g className="dr-lobby-dot">
-            <circle cx="1120" cy="145" r="26" fill="#00f0a0" opacity="0.22" />
-            <circle className="dr-summit" cx="1120" cy="145" r="10" fill="#00f0a0" />
+            <circle cx="1120" cy="145" r="26" fill="#f06a20" opacity="0.22" />
+            <circle className="dr-summit" cx="1120" cy="145" r="10" fill="#f06a20" />
           </g>
         </g>
       </svg>

@@ -1,7 +1,7 @@
 /**
- * The Duckrep mark: a mallard on a navy tile with a dumbbell in its bill. Same family as
- * Stashbird (bird + coin) and Hawkdone (hawk + check): flat shapes, two-tone shading,
- * the object the app is about held at the beak. Master copy: public/logo.svg.
+ * The Duckrep mark: a dark duck with fire-orange wings biting a dumbbell, on a black tile.
+ * Masters (from __draft/bird-apps-brand/duckrep): public/logo.svg (rounded tile),
+ * public/logo-fullbleed.svg (square), public/duckrep-mark.svg (the duck alone).
  */
 export function DuckrepMark({
   size,
@@ -10,41 +10,28 @@ export function DuckrepMark({
 }: {
   size: number;
   className?: string;
-  /** One rep of the dumbbell on mount, used on the lobby and lock screen lockups. */
+  /** One rep on mount, used on the lobby and lock screen lockups. */
   animateIn?: boolean;
 }) {
   return (
     <span className="dr-logo-mark">
-      <svg width={size} height={size} viewBox="0 0 256 256" className={`shrink-0 ${className}`} aria-hidden>
-        <defs>
-          <radialGradient id="drMarkBg" cx="0.3" cy="0.2" r="1">
-            <stop offset="0" stopColor="#18203A" />
-            <stop offset="1" stopColor="#0D1220" />
-          </radialGradient>
-        </defs>
-        <rect width="256" height="256" rx="56" fill="url(#drMarkBg)" />
-        <g transform="translate(-12 10)">
-          <g className="dr-logo-body">
-            <path fill="#F1E4C8" d="M42 116 L80 140 C94 132 112 130 132 131 L168 131 C196 134 212 152 210 174 C208 196 188 208 160 208 L104 208 C74 208 54 194 50 172 C48 160 51 150 57 143 Z" />
-            <path fill="#D9C39C" d="M51 177 C56 196 76 208 104 208 L160 208 C186 208 206 197 209.6 177 Z" />
-            <path fill="#2EC4B6" d="M76 150 L150 150 C162 150 170 158 170 168 C170 180 162 188 150 188 L92 188 L88 182 L148 182 L148 176 L84 176 L80 170 L148 170 L148 164 L80 164 Z" />
-          </g>
-          <g className={animateIn ? 'dr-logo-head dr-mark-rep' : 'dr-logo-head'}>
-            <path fill="#0E9F86" d="M144 136 L144 98 C144 80 157 66 174 66 C191 66 204 80 204 98 C204 112 198 122 192 130 L190 136 Z" />
-            <path fill="#0B7F6B" d="M144 112 C150 124 162 130 176 130 C186 130 194 126 199 119 C197 124 195 127 192 130 L190 136 L144 136 Z" />
-            <path fill="#F1E4C8" d="M144 125 L192 125 L191 133 L144 133 Z" />
-            <circle cx="182" cy="90" r="6.5" fill="#0D1220" />
-            <circle cx="184" cy="88" r="2" fill="#F1E4C8" />
-            <g className="dr-logo-bell">
-              <rect x="220.5" y="68" width="5" height="62" rx="2.5" fill="#94A3B8" />
-              <rect x="213" y="58" width="20" height="15" rx="4" fill="#E2E8F0" />
-              <rect x="213" y="125" width="20" height="15" rx="4" fill="#E2E8F0" />
-            </g>
-            <path fill="#F59E0B" d="M200 90 L228 94 C235 95 237 103 230 106 L201 112 Z" />
-            <path fill="#D97706" d="M201 104 L232 103.5 C232 104.8 231.4 105.6 230 106 L201 112 Z" />
-          </g>
-        </g>
-      </svg>
+      <img
+        src="/logo.svg"
+        alt=""
+        width={size}
+        height={size}
+        draggable={false}
+        className={`dr-logo-img shrink-0 ${animateIn ? 'dr-mark-rep' : ''} ${className}`}
+      />
+    </span>
+  );
+}
+
+/** "Duck" in the text colour, "rep" in the accent orange. */
+export function DuckrepWordmark({ className = '' }: { className?: string }) {
+  return (
+    <span className={`dr-wordmark font-extrabold tracking-tight ${className}`}>
+      Duck<span className="dr-wordmark-rep">rep</span>
     </span>
   );
 }
@@ -60,11 +47,11 @@ export function DuckrepLogo({ className = '', size = 36 }: DuckrepLogoProps) {
 
   return (
     <span
-      className={`dr-logo inline-flex items-center gap-2 font-serif font-semibold tracking-tight text-[var(--color-logo)] ${className}`}
+      className={`dr-logo inline-flex items-center gap-2 font-serif text-[var(--color-logo)] ${className}`}
       style={{ fontSize: textSize }}
     >
       <DuckrepMark size={mark} />
-      <span className="dr-wordmark max-[340px]:sr-only">Duckrep</span>
+      <DuckrepWordmark className="max-[340px]:sr-only" />
     </span>
   );
 }

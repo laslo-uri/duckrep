@@ -18,22 +18,23 @@
          Latin + Latin-1 in one file, the Serbian and Hungarian letters in the other. */
       @font-face { font-family: "Inter Variable"; font-style: normal; font-display: swap; font-weight: 100 900; src: url(/fonts/inter-latin.woff2) format("woff2-variations"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2190-2193, U+2212, U+2215, U+FEFF, U+FFFD; }
       @font-face { font-family: "Inter Variable"; font-style: normal; font-display: swap; font-weight: 100 900; src: url(/fonts/inter-ext.woff2) format("woff2-variations"); unicode-range: U+0106-0107, U+010C-010D, U+0110-0111, U+0150-0151, U+0160-0161, U+0170-0171, U+017D-017E; }
-      html, body { margin: 0; background: #eef2f5; }
-      html.dark, html.dark body { background: #121418; }
+      html, body { margin: 0; background: #f4f4f5; }
+      html.dark, html.dark body { background: #09090b; }
       /* Shown until the app has loaded its local database; React replaces it. */
       .dr-boot { position: fixed; inset: 0; display: flex; flex-direction: column; gap: 16px; align-items: center; justify-content: center; }
-      .dr-boot-name { margin: 0; font: 600 28px/1.2 "Inter Variable", ui-sans-serif, system-ui, sans-serif; letter-spacing: -0.02em; color: #121418; }
-      html.dark .dr-boot-name { color: #f3f6f8; }
-      .dr-boot-spinner { width: 28px; height: 28px; border-radius: 50%; border: 3px solid rgba(92, 105, 119, 0.25); border-top-color: #0e7490; animation: dr-boot-spin 0.8s linear infinite; }
-      html.dark .dr-boot-spinner { border-color: rgba(158, 179, 192, 0.25); border-top-color: #48ebf4; }
+      .dr-boot-name { margin: 0; font: 800 28px/1.2 "Inter Variable", ui-sans-serif, system-ui, sans-serif; letter-spacing: -0.02em; color: #09090b; }
+      html.dark .dr-boot-name { color: #fafafa; }
+      html.dark .dr-boot-name span { color: #f06a20 !important; }
+      .dr-boot-spinner { width: 28px; height: 28px; border-radius: 50%; border: 3px solid rgba(82, 82, 91, 0.25); border-top-color: #c2410c; animation: dr-boot-spin 0.8s linear infinite; }
+      html.dark .dr-boot-spinner { border-color: rgba(161, 161, 170, 0.25); border-top-color: #f06a20; }
       @keyframes dr-boot-spin { to { transform: rotate(360deg); } }
       @media (prefers-reduced-motion: reduce) { .dr-boot-spinner { animation: none; } }
     </style>
     <title>Duckrep</title>
     <meta name="description" content="Duckrep is a training journal for workouts, exercises, sets, and body stats. Locked with your passphrase; your data stays on your device." />
     <link rel="canonical" href="https://duckrep.vercel.app/" />
-    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#eef2f5" />
-    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#121418" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f4f4f5" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#09090b" />
     <meta name="color-scheme" content="light dark" />
     <meta name="application-name" content="Duckrep" />
     <meta name="apple-mobile-web-app-title" content="Duckrep" />
@@ -45,19 +46,19 @@
     <meta property="og:image" content="https://duckrep.vercel.app/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Duckrep logo: a mallard holding a dumbbell in its bill, next to the name Duckrep" />
+    <meta property="og:image:alt" content="Duckrep logo: a dark duck with orange wings biting a dumbbell, next to the name Duckrep" />
     <meta property="og:locale" content="en_US" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Duckrep — every rep, logged" />
     <meta name="twitter:description" content="Track workouts, exercises, sets, and body stats. Local-first and encrypted, no account needed." />
     <meta name="twitter:image" content="https://duckrep.vercel.app/og-image.png" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=9" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.webmanifest" />
   </head>
   <body>
     <a href="#main-content" class="skip-link">Skip to content</a>
-    <div id="root"><div class="dr-boot" role="status" aria-label="Loading Duckrep"><div class="dr-boot-spinner"></div><p class="dr-boot-name" aria-hidden="true">Duckrep</p></div></div>
+    <div id="root"><div class="dr-boot" role="status" aria-label="Loading Duckrep"><div class="dr-boot-spinner"></div><p class="dr-boot-name" aria-hidden="true">Duck<span style="color:#c2410c">rep</span></p></div></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

@@ -6,67 +6,67 @@
 }
 
 /* ──────────────────────────────────────────
-   Light theme — "Frost" (ice white + deep arctic accent)
+   Light theme — "Chalk" (zinc white + fire orange)
    ────────────────────────────────────────── */
 :root, .light {
-  --color-ink: #121418;
-  --color-logo: #121418;
-  --color-paper: #eef2f5;
-  --color-muted: #5c6977;
-  --color-border: rgba(18, 20, 24, 0.08);
+  --color-ink: #09090b;
+  --color-logo: #09090b;
+  --color-paper: #f4f4f5;
+  --color-muted: #52525b;
+  --color-border: rgba(9, 9, 11, 0.1);
   --color-surface: #ffffff;
-  --color-hover: rgba(14, 116, 144, 0.1);
-  --color-active: rgba(14, 116, 144, 0.07);
+  --color-hover: rgba(194, 65, 12, 0.08);
+  --color-active: rgba(194, 65, 12, 0.06);
   --color-error: #dc2626;
   --color-error-bg: #fef2f2;
-  --color-success: #047857;
-  --color-accent: #0e7490;
-  --color-accent-soft: rgba(14, 116, 144, 0.13);
+  --color-success: #15803d;
+  --color-accent: #c2410c;
+  --color-accent-soft: rgba(194, 65, 12, 0.12);
   --color-on-accent: #ffffff;
-  --color-mint: #047857;
-  --color-mint-soft: rgba(4, 120, 87, 0.12);
+  --color-mint: #15803d;
+  --color-mint-soft: rgba(21, 128, 61, 0.12);
   --color-on-mint: #ffffff;
-  --color-chart-active: #0e7490;
-  --color-chart-rest: #dbe3e9;
-  --shadow-card: 0 2px 24px -8px rgba(18, 20, 24, 0.12);
-  --glow-accent: 0 0 14px rgba(14, 116, 144, 0.3);
-  --glow-mint: 0 0 12px rgba(4, 120, 87, 0.35);
-  --scrollbar-thumb: rgba(18, 20, 24, 0.28);
-  --aurora-a: #0e7490;
-  --aurora-b: #0f9d8a;
+  --color-chart-active: #c2410c;
+  --color-chart-rest: #e4e4e7;
+  --shadow-card: 0 2px 24px -8px rgba(9, 9, 11, 0.14);
+  --glow-accent: 0 0 14px rgba(194, 65, 12, 0.3);
+  --glow-mint: 0 0 12px rgba(21, 128, 61, 0.35);
+  --scrollbar-thumb: rgba(9, 9, 11, 0.28);
+  --aurora-a: #d63a08;
+  --aurora-b: #e88818;
   --aurora-text: #ffffff;
 }
 
 /* ──────────────────────────────────────────
-   Dark theme — "Arctic" (desaturated space + arctic blue)
+   Dark theme — "Forge" (black and zinc + fire orange)
    ────────────────────────────────────────── */
 .dark {
-  --color-ink: #f3f6f8;
-  --color-logo: #f3f6f8;
-  --color-paper: #121418;
-  --color-muted: #9eb3c0;
-  --color-border: rgba(150, 196, 206, 0.16);
-  --color-surface: #1a242c;
-  --color-hover: rgba(72, 235, 244, 0.1);
-  --color-active: rgba(72, 235, 244, 0.07);
+  --color-ink: #fafafa;
+  --color-logo: #fafafa;
+  --color-paper: #09090b;
+  --color-muted: #a1a1aa;
+  --color-border: #27272a;
+  --color-surface: #18181b;
+  --color-hover: rgba(240, 106, 32, 0.1);
+  --color-active: rgba(240, 106, 32, 0.07);
   --color-error: #f87171;
   --color-error-bg: rgba(185, 28, 28, 0.22);
-  --color-success: #00f0a0;
-  --color-accent: #48ebf4;
-  --color-accent-soft: rgba(72, 235, 244, 0.13);
-  --color-on-accent: #06282c;
-  --color-mint: #00f0a0;
-  --color-mint-soft: rgba(0, 240, 160, 0.13);
-  --color-on-mint: #042a1d;
-  --color-chart-active: #48ebf4;
-  --color-chart-rest: #1a242c;
-  --shadow-card: 0 4px 32px -12px rgba(0, 0, 0, 0.6);
-  --glow-accent: 0 0 18px rgba(72, 235, 244, 0.35);
-  --glow-mint: 0 0 16px rgba(0, 240, 160, 0.45);
-  --scrollbar-thumb: #2e4250;
-  --aurora-a: #48ebf4;
-  --aurora-b: #00f0a0;
-  --aurora-text: #06282c;
+  --color-success: #4ade80;
+  --color-accent: #f06a20;
+  --color-accent-soft: rgba(240, 106, 32, 0.14);
+  --color-on-accent: #09090b;
+  --color-mint: #4ade80;
+  --color-mint-soft: rgba(74, 222, 128, 0.13);
+  --color-on-mint: #052e16;
+  --color-chart-active: #f06a20;
+  --color-chart-rest: #27272a;
+  --shadow-card: 0 4px 32px -12px rgba(0, 0, 0, 0.7);
+  --glow-accent: 0 0 18px rgba(240, 106, 32, 0.35);
+  --glow-mint: 0 0 16px rgba(74, 222, 128, 0.4);
+  --scrollbar-thumb: #3f3f46;
+  --aurora-a: #d63a08;
+  --aurora-b: #e88818;
+  --aurora-text: #09090b;
 }
 
 /* ──────────────────────────────────────────
@@ -236,7 +236,7 @@
 /* Logo: the duck lifts the dumbbell once (a rep) */
 @keyframes dr-logo-rep {
   0%   { transform: translateY(0); }
-  35%  { transform: translateY(-14px) rotate(-4deg); }
+  35%  { transform: translateY(-6%) rotate(-4deg); }
   70%  { transform: translateY(2px); }
   100% { transform: translateY(0); }
 }
@@ -329,9 +329,12 @@
     transform 0.35s cubic-bezier(0.23, 1, 0.32, 1),
     filter 0.35s ease;
 }
-.dr-logo-head {
-  transform-box: fill-box;
-  transform-origin: 30% 100%;
+.dr-logo-img {
+  display: block;
+  transform-origin: 50% 80%;
+}
+.dr-wordmark-rep {
+  color: var(--color-accent);
 }
 .dr-logo:hover .dr-logo-mark,
 .dr-logo:focus-visible .dr-logo-mark,
@@ -348,11 +351,11 @@ a:focus-visible .dr-logo,
 .dr-lockup:hover .dr-lobby-title {
   text-shadow: 0 0 16px color-mix(in srgb, var(--color-accent) 50%, transparent);
 }
-.dr-logo:hover .dr-logo-head,
-.dr-logo:focus-visible .dr-logo-head,
-a:hover .dr-logo .dr-logo-head,
-a:focus-visible .dr-logo .dr-logo-head,
-.dr-lockup:hover .dr-logo-head,
+.dr-logo:hover .dr-logo-img,
+.dr-logo:focus-visible .dr-logo-img,
+a:hover .dr-logo .dr-logo-img,
+a:focus-visible .dr-logo .dr-logo-img,
+.dr-lockup:hover .dr-logo-img,
 .dr-mark-rep {
   animation: dr-logo-rep 700ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }

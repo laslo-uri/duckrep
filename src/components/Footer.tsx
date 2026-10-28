@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Activity, Calendar, Dumbbell } from 'lucide-react';
-import { DuckrepMark } from './DuckrepLogo';
+import { DuckrepMark, DuckrepWordmark } from './DuckrepLogo';
 import { CookieSettingsLink } from './CookieConsent';
 
 const linkClass =
@@ -23,8 +23,8 @@ export function Footer() {
           <div className="flex items-start gap-3">
             <DuckrepMark size={40} className="mt-0.5" />
             <div>
-              <p className="font-serif text-sm font-semibold tracking-tight text-[var(--color-logo)]">
-                {t('appName')}
+              <p className="font-serif text-sm text-[var(--color-logo)]">
+                <DuckrepWordmark />
               </p>
               <nav className="mt-2 flex flex-wrap items-center gap-x-4" aria-label={t('footer.navLabel')}>
                 {nav.map(({ to, icon: Icon, label }) => (

@@ -19,7 +19,7 @@ await sharp(fullBleed).resize(512, 512).png().toFile(path.join(publicDir, 'icon-
 await sharp(rounded).resize(192, 192).png().toFile(path.join(publicDir, 'icon-192.png'))
 await sharp(rounded).resize(512, 512).png().toFile(path.join(publicDir, 'icon-512.png'))
 
-// Open Graph card: navy tile colour, the mark on the left, the name and tagline on the right.
+// Open Graph card: black tile colour, the mark on the left, the name and tagline on the right.
 const W = 1200
 const H = 630
 const mark = await sharp(rounded).resize(400, 400).png().toBuffer()
@@ -27,14 +27,14 @@ const text = Buffer.from(`
 <svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}">
   <defs>
     <radialGradient id="bg" cx="0.2" cy="0.1" r="1.1">
-      <stop offset="0" stop-color="#18203A"/>
-      <stop offset="1" stop-color="#0D1220"/>
+      <stop offset="0" stop-color="#18181B"/>
+      <stop offset="1" stop-color="#09090B"/>
     </radialGradient>
   </defs>
   <rect width="${W}" height="${H}" fill="url(#bg)"/>
-  <text x="560" y="300" font-family="Inter, 'Segoe UI', Arial, Helvetica, sans-serif" font-size="112" font-weight="700" fill="#F1E4C8" letter-spacing="-3">Duck<tspan fill="#2EC4B6">rep</tspan></text>
-  <text x="564" y="372" font-family="Inter, 'Segoe UI', Arial, Helvetica, sans-serif" font-size="36" fill="#9EB3C0">Every rep, logged.</text>
-  <text x="564" y="424" font-family="Inter, 'Segoe UI', Arial, Helvetica, sans-serif" font-size="32" fill="#9EB3C0">Training and body stats, on your device.</text>
+  <text x="560" y="300" font-family="Inter, 'Segoe UI', Arial, Helvetica, sans-serif" font-size="112" font-weight="800" fill="#FAFAFA" letter-spacing="-3">Duck<tspan fill="#E8590C">rep</tspan></text>
+  <text x="564" y="372" font-family="Inter, 'Segoe UI', Arial, Helvetica, sans-serif" font-size="36" fill="#A1A1AA">Every rep, logged.</text>
+  <text x="564" y="424" font-family="Inter, 'Segoe UI', Arial, Helvetica, sans-serif" font-size="32" fill="#A1A1AA">Training and body stats, on your device.</text>
 </svg>`)
 
 await sharp(text)

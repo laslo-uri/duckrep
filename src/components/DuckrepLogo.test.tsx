@@ -1,17 +1,19 @@
 import { describe, expect, it } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import { DuckrepLogo, DuckrepMark } from './DuckrepLogo'
 
 describe('DuckrepLogo', () => {
-  it('renders wordmark', () => {
-    render(<DuckrepLogo />)
-    expect(screen.getByText('Duckrep')).toBeInTheDocument()
+  it('renders the two-tone wordmark', () => {
+    const { container } = render(<DuckrepLogo />)
+    expect(container.querySelector('.dr-wordmark')).toHaveTextContent('Duckrep')
+    expect(container.querySelector('.dr-wordmark-rep')).toHaveTextContent(/^rep$/)
   })
 
-  it('draws the mark inline, with the dumbbell', () => {
+  it('uses the brand tile as a decorative image', () => {
     const { container } = render(<DuckrepLogo />)
-    expect(container.querySelector('svg .dr-logo-bell')).toBeInTheDocument()
-    expect(container.querySelector('img[src="/logo.svg"]')).not.toBeInTheDocument()
+    const img = container.querySelector('img')
+    expect(img).toHaveAttribute('src', '/logo.svg')
+    expect(img).toHaveAttribute('alt', '')
   })
 
   it('plays one rep only when asked', () => {
