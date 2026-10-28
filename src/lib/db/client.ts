@@ -1,20 +1,17 @@
 import { SCHEMA_SQL } from './schema';
 import { runMigrations } from './migrations';
 import { seedGlobalExercisesIfEmpty, syncGlobalExercises } from './seedSync';
-import { DB_NAME, LOCAL_USER_ID, SQLJS_STORAGE_KEY } from './constants';
-import { isTauri, toTauriParams } from './utils';
+import { LOCAL_USER_ID } from './constants';
 import type { DbClient } from './dbClient';
+import { loadJournal, lock, retireLegacyJournal, saveJournal } from '../vault/vault';
 
 export type { DbClient } from './dbClient';
 
-const IDB_NAME = 'youpeak-db';
-const IDB_STORE = 'sqlite';
-const IDB_KEY = 'dump';
-
 let client: DbClient | null = null;
 let initPromise: Promise<DbClient> | null = null;
-/** Live sql.js Database (browser only) — used for backup export. */
+/** Live sql.js Database — used for backup export and passphrase changes. */
 let sqlJsDb: import('sql.js').Database | null = null;
+let flushPending: () => Promise<void> = () => Promise.resolve();
 
 function runSchema(client: DbClient): Promise<void> {
   const statements = SCHEMA_SQL.split(';')
@@ -48,121 +45,34 @@ async function initDbClient(client: DbClient): Promise<void> {
   await syncGlobalExercises(client);
 }
 
-function openIdb(): Promise<IDBDatabase> {
-  return new Promise((resolve, reject) => {
-    const req = indexedDB.open(IDB_NAME, 1);
-    req.onupgradeneeded = () => {
-      const db = req.result;
-      if (!db.objectStoreNames.contains(IDB_STORE)) {
-        db.createObjectStore(IDB_STORE);
-      }
-    };
-    req.onsuccess = () => resolve(req.result);
-    req.onerror = () => reject(req.error ?? new Error('IndexedDB open failed'));
-  });
-}
-
-async function loadSqlJsBytes(): Promise<Uint8Array | null> {
-  try {
-    const db = await openIdb();
-    const bytes = await new Promise<Uint8Array | null>((resolve, reject) => {
-      const tx = db.transaction(IDB_STORE, 'readonly');
-      const store = tx.objectStore(IDB_STORE);
-      const req = store.get(IDB_KEY);
-      req.onsuccess = () => {
-        const v = req.result;
-        if (v instanceof ArrayBuffer) resolve(new Uint8Array(v));
-        else if (v instanceof Uint8Array) resolve(v);
-        else resolve(null);
-      };
-      req.onerror = () => reject(req.error ?? new Error('IndexedDB read failed'));
-    });
-    db.close();
-    if (bytes) return bytes;
-  } catch {
-    /* fall through to localStorage migration */
-  }
-
-  const saved = localStorage.getItem(SQLJS_STORAGE_KEY);
-  if (!saved) return null;
-  try {
-    const bytes = new Uint8Array(JSON.parse(saved) as number[]);
-    // Migrate to IndexedDB once; keep localStorage until next successful IDB write.
-    return bytes;
-  } catch {
-    return null;
-  }
-}
-
-async function saveSqlJsBytes(data: Uint8Array): Promise<void> {
-  const copy = data.buffer.slice(data.byteOffset, data.byteOffset + data.byteLength);
-  try {
-    const db = await openIdb();
-    await new Promise<void>((resolve, reject) => {
-      const tx = db.transaction(IDB_STORE, 'readwrite');
-      tx.oncomplete = () => resolve();
-      tx.onerror = () => reject(tx.error ?? new Error('IndexedDB write failed'));
-      tx.objectStore(IDB_STORE).put(copy, IDB_KEY);
-    });
-    db.close();
-    // Clear legacy localStorage dump after a successful IDB write.
-    try {
-      localStorage.removeItem(SQLJS_STORAGE_KEY);
-    } catch {
-      /* ignore */
-    }
-    return;
-  } catch (err) {
-    // Quota / private mode: fall back to localStorage (may fail for large DBs).
-    try {
-      localStorage.setItem(SQLJS_STORAGE_KEY, JSON.stringify(Array.from(data)));
-    } catch {
-      console.error('[you-peak] Failed to persist database (quota?). Export a backup from Settings.', err);
-    }
-  }
-}
-
-async function createTauriClient(): Promise<DbClient> {
-  const { default: Database } = await import('@tauri-apps/plugin-sql');
-  const db = await Database.load(DB_NAME);
-
-  const tauriClient: DbClient = {
-    async select<T>(sql: string, params: unknown[] = []): Promise<T[]> {
-      const rows = await db.select<T>(toTauriParams(sql), params);
-      return rows as unknown as T[];
-    },
-    async execute(sql: string, params: unknown[] = []): Promise<void> {
-      await db.execute(toTauriParams(sql), params);
-    },
-  };
-
-  await initDbClient(tauriClient);
-  return tauriClient;
-}
-
 async function createSqlJsClient(): Promise<DbClient> {
   const initSqlJs = (await import('sql.js')).default;
   const wasmUrl = (await import('sql.js/dist/sql-wasm.wasm?url')).default;
   const SQL = await initSqlJs({ locateFile: () => wasmUrl });
 
-  let db: import('sql.js').Database;
-  const saved = await loadSqlJsBytes();
-  if (saved) {
-    db = new SQL.Database(saved);
-  } else {
-    db = new SQL.Database();
-  }
+  // The sealed journal (or, on the first unlock, the plaintext YouPeak database it replaces).
+  const source = await loadJournal();
+  const db = source.bytes ? new SQL.Database(source.bytes) : new SQL.Database();
   sqlJsDb = db;
 
-  let persistTimer: ReturnType<typeof setTimeout> | null = null;
-  const persist = () => {
-    const data = db.export();
-    void saveSqlJsBytes(data);
-  };
+  // Save right after each change (a page closed a moment later must not lose it). Changes made
+  // while a save is running are coalesced into one more save when it finishes.
+  let saving: Promise<void> | null = null;
+  let dirty = false;
+  let inTransaction = false;
   const schedulePersist = () => {
-    if (persistTimer) clearTimeout(persistTimer);
-    persistTimer = setTimeout(persist, 100);
+    dirty = true;
+    saving ??= (async () => {
+      while (dirty && !inTransaction) {
+        dirty = false;
+        await saveJournal(db.export()).catch((err: unknown) => {
+          console.error('[duckrep] Failed to save the journal (storage full?). Export a backup from Settings.', err);
+        });
+      }
+      saving = null;
+    })();
   };
+  flushPending = () => saving ?? Promise.resolve();
 
   const sqlJsClient: DbClient = {
     async select<T>(sql: string, params: unknown[] = []): Promise<T[]> {
@@ -177,11 +87,19 @@ async function createSqlJsClient(): Promise<DbClient> {
     },
     async execute(sql: string, params: unknown[] = []): Promise<void> {
       db.run(sql, params as import('sql.js').BindParams);
-      schedulePersist();
+      // inside BEGIN … COMMIT (journal import) nothing is exported; one save follows the commit
+      if (/^\s*BEGIN\b/i.test(sql)) inTransaction = true;
+      else if (/^\s*(COMMIT|END|ROLLBACK)\b/i.test(sql)) inTransaction = false;
+      if (!inTransaction) schedulePersist();
     },
   };
 
   await initDbClient(sqlJsClient);
+  if (source.legacy) {
+    // Seal the YouPeak data right away, then drop the plaintext copy.
+    await saveJournal(db.export());
+    await retireLegacyJournal();
+  }
   return sqlJsClient;
 }
 
@@ -195,7 +113,7 @@ export function deferDbOpen(gate: Promise<void>): void {
 export async function getDb(): Promise<DbClient> {
   if (client) return client;
   if (!initPromise) {
-    initPromise = openGate.then(() => (isTauri() ? createTauriClient() : createSqlJsClient())).then((c) => {
+    initPromise = openGate.then(createSqlJsClient).then((c) => {
       client = c;
       return c;
     });
@@ -207,16 +125,22 @@ export async function initDb(): Promise<void> {
   await getDb();
 }
 
-/** Export raw sql.js bytes (browser) for backup download. */
+/** Raw SQLite bytes (unencrypted) for the backup download and for re-sealing on a passphrase change. */
 export async function exportSqlJsDump(): Promise<Uint8Array | null> {
-  if (isTauri()) return null;
   await getDb();
-  if (sqlJsDb) {
-    const data = sqlJsDb.export();
-    void saveSqlJsBytes(data);
-    return data;
-  }
-  return loadSqlJsBytes();
+  return sqlJsDb ? sqlJsDb.export() : null;
+}
+
+/** Writes any change still waiting for the save timer. */
+export function flushDb(): Promise<void> {
+  return flushPending();
+}
+
+/** Saves, forgets the key and reloads, which drops the open database and every cached query. */
+export async function lockJournal(): Promise<void> {
+  await flushDb();
+  lock();
+  window.location.reload();
 }
 
 /** Test helper — in-memory db without persistence. */

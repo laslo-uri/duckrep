@@ -66,14 +66,14 @@ export function BirthCalendar({
   }, [openMenu]);
 
   const triggerClass = (open: boolean) =>
-    `yp-press inline-flex min-h-[44px] w-full items-center justify-between gap-1 rounded-lg border px-2.5 text-sm font-medium text-[var(--color-ink)] ${
+    `dr-press inline-flex min-h-[44px] w-full items-center justify-between gap-1 rounded-lg border px-2.5 text-sm font-medium text-[var(--color-ink)] ${
       open
         ? 'border-transparent bg-[var(--color-paper)] ring-2 ring-[var(--color-accent)]'
         : 'border-[var(--color-border)] bg-[var(--color-paper)] hover:bg-[var(--color-hover)]'
     }`;
 
   const optionClass = (selected: boolean, disabled = false) =>
-    `yp-press min-h-[36px] rounded-lg px-2 text-sm ${
+    `dr-press min-h-[36px] rounded-lg px-2 text-sm ${
       disabled
         ? 'cursor-not-allowed text-[var(--color-muted)] opacity-35'
         : selected
@@ -86,7 +86,7 @@ export function BirthCalendar({
       <div ref={headerRef} className="flex items-center gap-2">
         <button
           type="button"
-          className="yp-press inline-flex min-h-[44px] min-w-[44px] shrink-0 items-center justify-center rounded-lg text-[var(--color-muted)] hover:bg-[var(--color-hover)] hover:text-[var(--color-ink)] disabled:opacity-30"
+          className="dr-press inline-flex min-h-[44px] min-w-[44px] shrink-0 items-center justify-center rounded-lg text-[var(--color-muted)] hover:bg-[var(--color-hover)] hover:text-[var(--color-ink)] disabled:opacity-30"
           onClick={() =>
             setCursor((current) =>
               current.month === 0
@@ -188,7 +188,7 @@ export function BirthCalendar({
         </div>
         <button
           type="button"
-          className="yp-press inline-flex min-h-[44px] min-w-[44px] shrink-0 items-center justify-center rounded-lg text-[var(--color-muted)] hover:bg-[var(--color-hover)] hover:text-[var(--color-ink)] disabled:opacity-30"
+          className="dr-press inline-flex min-h-[44px] min-w-[44px] shrink-0 items-center justify-center rounded-lg text-[var(--color-muted)] hover:bg-[var(--color-hover)] hover:text-[var(--color-ink)] disabled:opacity-30"
           onClick={() =>
             setCursor((current) =>
               current.month === 11
@@ -221,7 +221,7 @@ export function BirthCalendar({
               type="button"
               disabled={future}
               onClick={() => onChange(selected ? '' : iso)}
-              className={`yp-press min-h-[36px] rounded-lg text-sm disabled:opacity-30 ${
+              className={`dr-press min-h-[36px] rounded-lg text-sm disabled:opacity-30 ${
                 selected
                   ? 'bg-[var(--color-accent)] font-semibold text-[var(--color-on-accent)]'
                   : 'text-[var(--color-ink)] hover:bg-[var(--color-hover)]'

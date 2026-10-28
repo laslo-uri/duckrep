@@ -1,29 +1,34 @@
-# Creates YouPeak.lnk on the Windows desktop (Tauri release exe).
+# Creates Duckrep.lnk on the Windows desktop (Tauri release exe) and removes the old YouPeak.lnk.
 
 $ErrorActionPreference = "Stop"
 $Desktop = [Environment]::GetFolderPath("Desktop")
-$YouPeakRoot = Split-Path -Parent $PSScriptRoot
-$Exe = Join-Path $YouPeakRoot "src-tauri\target\release\youpeak.exe"
-$Icon = Join-Path $YouPeakRoot "src-tauri\icons\icon.ico"
+$AppRoot = Split-Path -Parent $PSScriptRoot
+$Exe = Join-Path $AppRoot "src-tauri\target\release\duckrep.exe"
+$Icon = Join-Path $AppRoot "src-tauri\icons\icon.ico"
 
-Push-Location $YouPeakRoot
+Push-Location $AppRoot
 try {
-    npm run icon | Out-Host
+    npm run icon:desktop | Out-Host
 } finally {
     Pop-Location
 }
 
 if (-not (Test-Path $Exe)) {
-    Write-Warning "YouPeak: executable not found at $Exe - run npm run tauri:build first."
+    Write-Warning "Duckrep: executable not found at $Exe - run npm run tauri:build first."
     exit 1
 }
 
 if (-not (Test-Path $Icon)) {
-    Write-Warning "YouPeak: icon not found at $Icon - run npm run icon:desktop first."
+    Write-Warning "Duckrep: icon not found at $Icon - run npm run icon:desktop first."
     exit 1
 }
 
-$ShortcutPath = Join-Path $Desktop "YouPeak.lnk"
+$LegacyShortcut = Join-Path $Desktop "YouPeak.lnk"
+if (Test-Path $LegacyShortcut) {
+    Remove-Item -Force $LegacyShortcut
+}
+
+$ShortcutPath = Join-Path $Desktop "Duckrep.lnk"
 if (Test-Path $ShortcutPath) {
     Remove-Item -Force $ShortcutPath
 }
@@ -31,9 +36,9 @@ if (Test-Path $ShortcutPath) {
 $Shell = New-Object -ComObject WScript.Shell
 $Shortcut = $Shell.CreateShortcut($ShortcutPath)
 $Shortcut.TargetPath = $Exe
-$Shortcut.WorkingDirectory = $YouPeakRoot
+$Shortcut.WorkingDirectory = $AppRoot
 $Shortcut.IconLocation = "$Icon,0"
-$Shortcut.Description = "YouPeak gym journal"
+$Shortcut.Description = "Duckrep - every rep, logged"
 $Shortcut.Save()
 
 Add-Type @"

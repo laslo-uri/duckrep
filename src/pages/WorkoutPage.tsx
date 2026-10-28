@@ -70,7 +70,7 @@ export function WorkoutPage() {
                 mutations.createMutation.mutate();
               }}
               disabled={mutations.createMutation.isPending}
-              className="yp-press inline-flex items-center gap-2 px-6 py-3 min-h-[44px] rounded-xl bg-[var(--color-accent)] text-[var(--color-on-accent)] text-sm font-semibold disabled:opacity-50 touch-manipulation"
+              className="dr-press inline-flex items-center gap-2 px-6 py-3 min-h-[44px] rounded-xl bg-[var(--color-accent)] text-[var(--color-on-accent)] text-sm font-semibold disabled:opacity-50 touch-manipulation"
             >
               <Plus size={18} />
               {t('newWorkout')}

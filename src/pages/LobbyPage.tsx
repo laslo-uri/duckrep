@@ -5,14 +5,14 @@ import { QueryState } from '../components/QueryState';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Activity, Apple, Calendar, Dumbbell, Sun, Moon } from 'lucide-react';
+import { Activity, Calendar, Dumbbell, Sun, Moon } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import { useLocalUser } from '../contexts/LocalUserContext';
 import { BirthCalendar } from '../components/BirthCalendar';
 import { CookieSettingsLink } from '../components/CookieConsent';
 import { LanguageSwitcher } from '../components/LanguageSwitcher';
 import { UnitInput } from '../components/UnitInput';
-import { YouPeakMark } from '../components/YouPeakLogo';
+import { DuckrepMark } from '../components/DuckrepLogo';
 import { getProfileDisplayName, setProfileDisplayName, todayIso, upsertBodyWeightLog, upsertUserStats } from '../lib/db';
 import { APP_VERSION } from '../lib/appVersion';
 import { dailyQuote } from '../lib/dailyQuote';
@@ -22,7 +22,6 @@ const DOORS = [
   { to: '/journal', key: 'myJournal', icon: Calendar },
   { to: '/stats', key: 'yourStats', icon: Activity },
   { to: '/exercises', key: 'exercises', icon: Dumbbell },
-  { to: '/food', key: 'food', icon: Apple },
 ] as const;
 
 const PLACEHOLDER_NAME = 'You';
@@ -34,7 +33,7 @@ function isIntroduced(name: string | null | undefined) {
 
 function Ridge() {
   return (
-    <div className="yp-ridge relative h-full w-full">
+    <div className="dr-ridge relative h-full w-full">
       <svg viewBox="0 0 1440 400" preserveAspectRatio="xMidYMax meet" className="absolute inset-0 h-full w-full" aria-hidden>
         <defs>
           <linearGradient id="ridgeLeft" x1="200" y1="175" x2="250" y2="400" gradientUnits="userSpaceOnUse">
@@ -54,7 +53,7 @@ function Ridge() {
             <stop offset="1" stopColor="#0e9f86" />
           </linearGradient>
         </defs>
-        <g className="yp-lobby-ridge">
+        <g className="dr-lobby-ridge">
           <path fill="url(#ridgeLeft)" d="M340 175 L90 400 L340 400 Z" />
           <path fill="#0b5e74" d="M340 175 L520 400 L340 400 Z" />
           <path fill="#eafcfe" opacity="0.85" d="M340 175 L292 236 L352 220 Z" />
@@ -66,10 +65,10 @@ function Ridge() {
           <path fill="#9ef4f9" opacity="0.55" d="M720 48 L600 210 L720 268 Z" />
           <path fill="#0b5e74" opacity="0.4" d="M720 48 L850 190 L720 268 Z" />
           <path fill="#f3f6f8" d="M720 48 L650 140 L720 112 L800 132 Z" />
-          <path className="yp-ridge-line" pathLength="100" d="M250 310 L470 214 L640 262 L1120 145" />
-          <g className="yp-lobby-dot">
+          <path className="dr-ridge-line" pathLength="100" d="M250 310 L470 214 L640 262 L1120 145" />
+          <g className="dr-lobby-dot">
             <circle cx="1120" cy="145" r="26" fill="#00f0a0" opacity="0.22" />
-            <circle className="yp-summit" cx="1120" cy="145" r="10" fill="#00f0a0" />
+            <circle className="dr-summit" cx="1120" cy="145" r="10" fill="#00f0a0" />
           </g>
         </g>
       </svg>
@@ -82,8 +81,8 @@ function DailyQuote() {
   const quote = dailyQuote();
 
   return (
-    <figure className="yp-enter mt-6 w-full max-w-sm text-left">
-      <p className="yp-label">{t('lobbyDailyQuote')}</p>
+    <figure className="dr-enter mt-6 w-full max-w-sm text-left">
+      <p className="dr-label">{t('lobbyDailyQuote')}</p>
       <blockquote className="mt-2 text-sm sm:text-base leading-relaxed text-[var(--color-ink)] text-balance">
         “{quote.text}”
       </blockquote>
@@ -174,14 +173,14 @@ export function LobbyPage() {
 
   return (
     <div className="relative h-[100dvh] overflow-hidden bg-[var(--color-paper)] text-[var(--color-ink)] flex flex-col">
-      <div className="yp-lobby-glow yp-lobby-glow-a" />
-      <div className="yp-lobby-glow yp-lobby-glow-b" />
+      <div className="dr-lobby-glow dr-lobby-glow-a" />
+      <div className="dr-lobby-glow dr-lobby-glow-b" />
 
       <div className="absolute top-0 inset-x-0 z-20 flex justify-end items-center gap-1 px-4 sm:px-8 h-14">
         <button
           type="button"
           onClick={toggleTheme}
-          className="yp-press p-2.5 min-w-[44px] min-h-[44px] rounded-lg hover:bg-[var(--color-hover)] text-[var(--color-muted)] hover:text-[var(--color-ink)]"
+          className="dr-press p-2.5 min-w-[44px] min-h-[44px] rounded-lg hover:bg-[var(--color-hover)] text-[var(--color-muted)] hover:text-[var(--color-ink)]"
           aria-label={theme === 'dark' ? t('lightMode') : t('darkMode')}
         >
           {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
@@ -191,15 +190,15 @@ export function LobbyPage() {
 
       <main
         id="main-content"
-        className="relative z-10 flex-1 min-h-0 overflow-y-auto pb-[calc(var(--yp-ridge-h)+1.75rem+env(safe-area-inset-bottom,0px))]"
+        className="relative z-10 flex-1 min-h-0 overflow-y-auto pb-[calc(var(--dr-ridge-h)+1.75rem+env(safe-area-inset-bottom,0px))]"
       >
         <div className="min-h-full flex flex-col items-center px-4 sm:px-8 py-8 text-center">
           <div className="my-auto flex w-full max-w-xl flex-col items-center">
-          <div className="yp-lockup flex flex-col items-center">
-            <YouPeakMark size={!introduced && step > 0 ? 56 : 88} animateIn className="yp-enter" />
-            <p className="yp-enter yp-label mt-5">{t('lobbyEyebrow')}</p>
+          <div className="dr-lockup flex flex-col items-center">
+            <DuckrepMark size={!introduced && step > 0 ? 56 : 88} animateIn className="dr-enter" />
+            <p className="dr-enter dr-label mt-5">{t('lobbyEyebrow')}</p>
             {introduced && (
-              <h1 className="yp-enter yp-lobby-title yp-lobby-hello mt-3 font-serif font-semibold tracking-tight text-balance">
+              <h1 className="dr-enter dr-lobby-title dr-lobby-hello mt-3 font-serif font-semibold tracking-tight text-balance">
                 {t('lobbyHello', { name: greetingName })}
               </h1>
             )}
@@ -220,18 +219,18 @@ export function LobbyPage() {
 
           {!isLoading && !isError && introduced && (
             <>
-              <p className="yp-enter mt-4 max-w-md text-base sm:text-lg text-[var(--color-muted)] text-balance">
+              <p className="dr-enter mt-4 max-w-md text-base sm:text-lg text-[var(--color-muted)] text-balance">
                 {t('lobbyTagline')}
               </p>
               <DailyQuote />
-              <nav className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-3 w-full max-w-xl">
+              <nav className="mt-8 grid grid-cols-3 gap-3 w-full max-w-xl">
                 {DOORS.map((door, i) => {
                   const Icon = door.icon;
                   return (
                     <Link
                       key={door.to}
                       to={door.to}
-                      className="yp-door yp-enter flex flex-col items-center justify-center gap-2 min-h-[96px] rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)]/80 px-3 py-4 text-[var(--color-muted)]"
+                      className="dr-door dr-enter flex flex-col items-center justify-center gap-2 min-h-[96px] rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)]/80 px-3 py-4 text-[var(--color-muted)]"
                       style={{ animationDelay: `${140 + i * 70}ms` }}
                     >
                       <Icon size={22} aria-hidden />
@@ -246,21 +245,21 @@ export function LobbyPage() {
           {!isLoading && !isError && !introduced && (
             <form
               key={step}
-              className="yp-enter mt-6 w-full max-w-sm text-left"
+              className="dr-enter mt-6 w-full max-w-sm text-left"
               onSubmit={(event) => {
                 event.preventDefault();
                 goNext();
               }}
             >
               <MutationAlert message={mutationError} onDismiss={clearError} />
-              <p className="yp-label text-center">{t('lobbyStepProgress', { current: step + 1, total: STEPS })}</p>
+              <p className="dr-label text-center">{t('lobbyStepProgress', { current: step + 1, total: STEPS })}</p>
               {step === 0 && (
                 <>
                   <h1 className="mt-3 text-center font-serif text-3xl font-semibold tracking-tight text-balance text-[var(--color-ink)]">
                     {t('lobbyStepNameTitle')}
                   </h1>
                   <label className="mt-6 block">
-                    <span className="yp-label">{t('lobbyName')}</span>
+                    <span className="dr-label">{t('lobbyName')}</span>
                     <input
                       type="text"
                       required
@@ -281,7 +280,7 @@ export function LobbyPage() {
                   </h1>
                   <p className="mt-2 text-center text-sm text-[var(--color-muted)] text-balance">{t('lobbyStepBodyHint')}</p>
                   <label className="mt-5 block">
-                    <span className="yp-label">{t('heightCm')}</span>
+                    <span className="dr-label">{t('heightCm')}</span>
                     <UnitInput
                       className="mt-1"
                       value={heightCm}
@@ -294,7 +293,7 @@ export function LobbyPage() {
                     />
                   </label>
                   <label className="mt-3 block">
-                    <span className="yp-label">{t('currentWeightKg')}</span>
+                    <span className="dr-label">{t('currentWeightKg')}</span>
                     <UnitInput
                       className="mt-1"
                       value={weightKg}
@@ -307,7 +306,7 @@ export function LobbyPage() {
                     />
                   </label>
                   <label className="mt-3 block">
-                    <span className="yp-label">{t('goalWeightKg')}</span>
+                    <span className="dr-label">{t('goalWeightKg')}</span>
                     <UnitInput
                       className="mt-1"
                       value={goalKg}
@@ -341,7 +340,7 @@ export function LobbyPage() {
                       setMeasureError(false);
                       setStep((current) => current - 1);
                     }}
-                    className="yp-press inline-flex min-h-[48px] items-center justify-center rounded-xl border border-[var(--color-border)] px-4 text-sm font-medium text-[var(--color-muted)]"
+                    className="dr-press inline-flex min-h-[48px] items-center justify-center rounded-xl border border-[var(--color-border)] px-4 text-sm font-medium text-[var(--color-muted)]"
                   >
                     {t('lobbyBack')}
                   </button>
@@ -354,7 +353,7 @@ export function LobbyPage() {
                       if (step === 1) setStep(2);
                       else goNext();
                     }}
-                    className="yp-press inline-flex min-h-[48px] items-center justify-center rounded-xl px-4 text-sm font-medium text-[var(--color-muted)]"
+                    className="dr-press inline-flex min-h-[48px] items-center justify-center rounded-xl px-4 text-sm font-medium text-[var(--color-muted)]"
                   >
                     {t('lobbySkip')}
                   </button>
@@ -362,7 +361,7 @@ export function LobbyPage() {
                 <button
                   type="submit"
                   disabled={saveIntro.isPending || (step === 0 && !name.trim())}
-                  className="yp-press inline-flex min-h-[48px] flex-1 items-center justify-center rounded-xl bg-[var(--color-accent)] px-6 font-semibold text-[var(--color-on-accent)] disabled:opacity-50"
+                  className="dr-press inline-flex min-h-[48px] flex-1 items-center justify-center rounded-xl bg-[var(--color-accent)] px-6 font-semibold text-[var(--color-on-accent)] disabled:opacity-50"
                 >
                   {step === STEPS - 1 ? t('lobbyDone') : t('lobbyContinue')}
                 </button>
@@ -374,7 +373,7 @@ export function LobbyPage() {
       </main>
 
       <div className="pointer-events-none fixed inset-x-0 bottom-0 z-[5]">
-        <div className="yp-ridge-slot">
+        <div className="dr-ridge-slot">
           <Ridge />
         </div>
         <footer className="pointer-events-auto flex h-[calc(1.75rem+env(safe-area-inset-bottom,0px))] items-center justify-center bg-[var(--color-paper)] pb-[env(safe-area-inset-bottom,0px)] text-[11px] leading-none text-[var(--color-muted)]">

@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 
-const APP_NAME = 'YouPeak';
+const APP_NAME = 'Duckrep';
 
-/** Sets `document.title` to "<title> · YouPeak" while the page is mounted (plain "YouPeak" when empty). */
+/** Sets `document.title` to "<title> · Duckrep" while the page is mounted (plain "Duckrep" when empty). */
 export function usePageTitle(title?: string | null) {
   useEffect(() => {
     const trimmed = title?.trim();

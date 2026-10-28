@@ -12,24 +12,8 @@ CREATE TABLE IF NOT EXISTS user_stats (
   birth_date TEXT,
   height_cm REAL,
   goal_weight_kg REAL,
-  calorie_goal REAL,
-  protein_goal_g REAL,
-  carbs_goal_g REAL,
-  fat_goal_g REAL,
   created_at TEXT NOT NULL DEFAULT (datetime('now')),
   updated_at TEXT NOT NULL DEFAULT (datetime('now'))
-);
-
-CREATE TABLE IF NOT EXISTS food_entries (
-  id TEXT PRIMARY KEY,
-  user_id TEXT NOT NULL REFERENCES profiles(id) ON DELETE CASCADE,
-  date TEXT NOT NULL,
-  name TEXT NOT NULL,
-  calories REAL NOT NULL DEFAULT 0,
-  protein_g REAL,
-  carbs_g REAL,
-  fat_g REAL,
-  created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
 
 CREATE TABLE IF NOT EXISTS body_weight_logs (
@@ -103,7 +87,6 @@ CREATE TABLE IF NOT EXISTS exercise_sets (
 );
 
 CREATE INDEX IF NOT EXISTS idx_workout_days_user_date ON workout_days(user_id, date);
-CREATE INDEX IF NOT EXISTS idx_food_entries_user_date ON food_entries(user_id, date);
 CREATE INDEX IF NOT EXISTS idx_body_weight_logs_user_date ON body_weight_logs(user_id, date);
 CREATE INDEX IF NOT EXISTS idx_exercise_definitions_global ON exercise_definitions(is_global);
 CREATE UNIQUE INDEX IF NOT EXISTS idx_exercise_definitions_source_slug

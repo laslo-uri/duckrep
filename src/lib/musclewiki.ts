@@ -1,5 +1,5 @@
 const BASE = 'https://api.musclewiki.com';
-const META_STORAGE = 'youpeak.musclewiki.meta';
+const META_STORAGE = 'duckrep.musclewiki.meta';
 const META_MAX_AGE_MS = 30 * 24 * 60 * 60 * 1000;
 
 export class MuscleWikiError extends Error {

@@ -1,4 +1,4 @@
-package com.youpeak.app;
+package com.duckrep.app;
 
 import com.getcapacitor.BridgeActivity;
 

@@ -3,7 +3,8 @@ import type {
   ActivityType,
   BodyWeightLog,
   ExerciseDefinition,
-  FoodEntry,
+  LegacyFoodEntry,
+  LegacyNutritionGoals,
   UserDailyTrainingStats,
   UserStats,
   WorkoutDay,
@@ -12,12 +13,13 @@ import type {
 } from '../../types';
 import { importJournalWorkouts, parseJournalImport } from '../journalImport';
 import { getDb, newId, nowIso, todayIso } from './client';
+import type { DbClient } from './dbClient';
 import {
   assembleWorkout,
   mapBodyWeightLog,
   mapDailyStats,
   mapExerciseDefinition,
-  mapFoodEntry,
+  mapLegacyFoodEntry,
   mapUserStats,
   mapWorkoutDay,
 } from './rows';
@@ -323,24 +325,12 @@ export async function upsertUserStats(
     birth_date?: string | null;
     height_cm?: number | null;
     goal_weight_kg?: number | null;
-    calorie_goal?: number | null;
-    protein_goal_g?: number | null;
-    carbs_goal_g?: number | null;
-    fat_goal_g?: number | null;
   },
 ): Promise<void> {
   const db = await getDb();
   const existing = await getUserStats(userId);
   const ts = nowIso();
-  const COLUMNS = [
-    'birth_date',
-    'height_cm',
-    'goal_weight_kg',
-    'calorie_goal',
-    'protein_goal_g',
-    'carbs_goal_g',
-    'fat_goal_g',
-  ] as const;
+  const COLUMNS = ['birth_date', 'height_cm', 'goal_weight_kg'] as const;
   if (existing) {
     const fields: string[] = ['updated_at = ?'];
     const params: unknown[] = [ts];
@@ -359,51 +349,6 @@ export async function upsertUserStats(
       [userId, ...COLUMNS.map((col) => updates[col] ?? null), ts, ts],
     );
   }
-}
-
-// ── Food tracking ────────────────────────────────────────────────────────────
-
-export async function listFoodEntries(userId: string, date: string): Promise<FoodEntry[]> {
-  const db = await getDb();
-  const rows = await db.select(
-    'SELECT * FROM food_entries WHERE user_id = ? AND date = ? ORDER BY created_at',
-    [userId, date],
-  );
-  return rows.map(mapFoodEntry);
-}
-
-export async function addFoodEntry(
-  userId: string,
-  entry: {
-    date: string;
-    name: string;
-    calories: number;
-    protein_g?: number | null;
-    carbs_g?: number | null;
-    fat_g?: number | null;
-  },
-): Promise<void> {
-  const db = await getDb();
-  await db.execute(
-    `INSERT INTO food_entries (id, user_id, date, name, calories, protein_g, carbs_g, fat_g, created_at)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-    [
-      newId(),
-      userId,
-      entry.date,
-      entry.name,
-      entry.calories,
-      entry.protein_g ?? null,
-      entry.carbs_g ?? null,
-      entry.fat_g ?? null,
-      nowIso(),
-    ],
-  );
-}
-
-export async function deleteFoodEntry(id: string): Promise<void> {
-  const db = await getDb();
-  await db.execute('DELETE FROM food_entries WHERE id = ?', [id]);
 }
 
 export async function listBodyWeightLogs(userId: string, limit = 90): Promise<BodyWeightLog[]> {
@@ -444,12 +389,40 @@ export async function upsertBodyWeightLog(userId: string, date: string, weightKg
   }
 }
 
-/** JSON backup of non-deleted workouts (with exercises + sets) for Settings export. */
+/**
+ * The food log moved to Dovediet. Journals started under YouPeak still hold its table
+ * (`food_entries`) and the goal columns on `user_stats`; nothing drops them, and the journal
+ * export carries them so Dovediet can import them. Fresh journals have neither: then null.
+ */
+export async function exportLegacyFood(
+  userId: string,
+  db: DbClient | null = null,
+): Promise<{ entries: LegacyFoodEntry[]; goals: LegacyNutritionGoals | null } | null> {
+  db ??= await getDb();
+  const tables = await db.select<{ name: string }>(
+    "SELECT name FROM sqlite_master WHERE type = 'table' AND name = 'food_entries'",
+  );
+  if (!tables[0]) return null;
+  const rows = await db.select('SELECT * FROM food_entries WHERE user_id = ? ORDER BY date, created_at', [userId]);
+  const statCols = await db.select<{ name: string }>('PRAGMA table_info(user_stats)');
+  let goals: LegacyNutritionGoals | null = null;
+  if (statCols.some((c) => c.name === 'calorie_goal')) {
+    const stats = await db.select<LegacyNutritionGoals>(
+      'SELECT calorie_goal, protein_goal_g, carbs_goal_g, fat_goal_g FROM user_stats WHERE user_id = ?',
+      [userId],
+    );
+    goals = stats[0] ?? null;
+  }
+  return { entries: rows.map(mapLegacyFoodEntry), goals };
+}
+
+/** JSON backup of non-deleted workouts (with exercises + sets) for Settings export, plus the old food log if any. */
 export async function exportWorkoutJournalJson(userId: string): Promise<{
   version: 1;
   exported_at: string;
   user_id: string;
   workouts: WorkoutDayWithExercises[];
+  food?: { entries: LegacyFoodEntry[]; goals: LegacyNutritionGoals | null };
 }> {
   const days = await listWorkoutDays(userId);
   const workouts: WorkoutDayWithExercises[] = [];
@@ -457,11 +430,13 @@ export async function exportWorkoutJournalJson(userId: string): Promise<{
     const full = await getWorkoutWithExercises(day.id);
     if (full) workouts.push(full);
   }
+  const food = await exportLegacyFood(userId);
   return {
     version: 1,
     exported_at: nowIso(),
     user_id: userId,
     workouts,
+    ...(food ? { food } : {}),
   };
 }
 

@@ -59,7 +59,7 @@ export function SetRow({
 
   return (
     <div
-      className={`yp-stagger rounded-xl px-2 py-1.5 transition-colors duration-300 ${
+      className={`dr-stagger rounded-xl px-2 py-1.5 transition-colors duration-300 ${
         completed ? 'bg-[var(--color-mint-soft)]' : ''
       }`}
       style={{ ['--i' as string]: Math.min(set.set_number, 5) }}
@@ -78,7 +78,7 @@ export function SetRow({
           <span
             className={`w-7 h-7 rounded-full flex items-center justify-center border-2 transition-colors ${
               completed
-                ? 'yp-pop yp-glow-mint bg-[var(--color-mint)] border-[var(--color-mint)] text-[var(--color-on-mint)]'
+                ? 'dr-pop dr-glow-mint bg-[var(--color-mint)] border-[var(--color-mint)] text-[var(--color-on-mint)]'
                 : 'border-[var(--color-border)] text-transparent'
             }`}
           >

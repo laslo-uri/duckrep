@@ -73,7 +73,7 @@ export function ExercisesPage() {
           type="button"
           aria-pressed={mode === 'library'}
           onClick={() => setMode('library')}
-          className={`yp-press min-h-[40px] rounded-lg px-3 text-sm font-medium ${
+          className={`dr-press min-h-[40px] rounded-lg px-3 text-sm font-medium ${
             mode === 'library'
               ? 'bg-[var(--color-accent)] text-[var(--color-on-accent)]'
               : 'border border-[var(--color-border)] text-[var(--color-muted)]'
@@ -85,7 +85,7 @@ export function ExercisesPage() {
           type="button"
           aria-pressed={mode === 'browse'}
           onClick={() => setMode('browse')}
-          className={`yp-press min-h-[40px] rounded-lg px-3 text-sm font-medium ${
+          className={`dr-press min-h-[40px] rounded-lg px-3 text-sm font-medium ${
             mode === 'browse'
               ? 'bg-[var(--color-accent)] text-[var(--color-on-accent)]'
               : 'border border-[var(--color-border)] text-[var(--color-muted)]'
@@ -157,7 +157,7 @@ export function ExercisesPage() {
                     type="button"
                     onClick={() => setSelectedId(active ? null : ex.id)}
                     aria-pressed={active}
-                    className={`yp-press w-full h-[68px] text-left px-4 rounded-xl bg-[var(--color-surface)] flex items-center gap-3 touch-manipulation shadow-[var(--shadow-card)] ${
+                    className={`dr-press w-full h-[68px] text-left px-4 rounded-xl bg-[var(--color-surface)] flex items-center gap-3 touch-manipulation shadow-[var(--shadow-card)] ${
                       active ? 'ring-2 ring-[var(--color-accent)]' : ''
                     }`}
                   >
@@ -227,7 +227,7 @@ function ExerciseDetail({
   const group = exercise.muscle_group || 'other';
 
   return (
-    <article className="mt-4 yp-card p-5 flex gap-4">
+    <article className="mt-4 dr-card p-5 flex gap-4">
       {safeImage ? (
         <img src={safeImage} alt="" className="w-20 h-20 rounded-xl object-cover bg-[var(--color-hover)] shrink-0" />
       ) : (

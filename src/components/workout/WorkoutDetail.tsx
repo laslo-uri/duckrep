@@ -174,7 +174,7 @@ export function WorkoutDetail({
     <div className="space-y-5">
       <Link
         to="/journal"
-        className="yp-press inline-flex items-center gap-2 text-[var(--color-muted)] hover:text-[var(--color-ink)] min-h-[44px] touch-manipulation"
+        className="dr-press inline-flex items-center gap-2 text-[var(--color-muted)] hover:text-[var(--color-ink)] min-h-[44px] touch-manipulation"
       >
         <ArrowLeft size={18} />
         {t('backToJournal')}
@@ -224,18 +224,18 @@ export function WorkoutDetail({
           }}
           disabled={deleteWorkoutMutation.isPending}
           aria-label={deleteWorkoutMutation.isPending ? t('removingLog') : t('removeLog')}
-          className="yp-press p-2.5 min-w-[44px] min-h-[44px] rounded-lg text-[var(--color-muted)] hover:text-[var(--color-error)] hover:bg-[var(--color-error-bg)] touch-manipulation flex items-center justify-center disabled:opacity-50"
+          className="dr-press p-2.5 min-w-[44px] min-h-[44px] rounded-lg text-[var(--color-muted)] hover:text-[var(--color-error)] hover:bg-[var(--color-error-bg)] touch-manipulation flex items-center justify-center disabled:opacity-50"
         >
           <Trash2 size={18} />
         </button>
       </div>
 
       {/* Session card */}
-      <section className="yp-card p-5 sm:p-6">
+      <section className="dr-card p-5 sm:p-6">
         {live && elapsed && (
           <div className="flex items-end justify-between gap-3 mb-4">
             <div>
-              <p className="yp-label !text-[var(--color-accent)]">{t('sessionLive')}</p>
+              <p className="dr-label !text-[var(--color-accent)]">{t('sessionLive')}</p>
               <p className="font-serif text-4xl tabular-nums leading-none mt-1 text-[var(--color-ink)]">{elapsed}</p>
               {workout.started_at && (
                 <p className="text-xs text-[var(--color-muted)] mt-1">
@@ -247,7 +247,7 @@ export function WorkoutDetail({
               type="button"
               onClick={() => updateWorkoutMutation.mutate({ ended_at: new Date().toISOString() })}
               disabled={updateWorkoutMutation.isPending}
-              className="yp-press px-5 min-h-[48px] rounded-xl bg-[var(--color-accent)] text-[var(--color-on-accent)] text-sm font-semibold touch-manipulation disabled:opacity-50 sticky bottom-24 md:static"
+              className="dr-press px-5 min-h-[48px] rounded-xl bg-[var(--color-accent)] text-[var(--color-on-accent)] text-sm font-semibold touch-manipulation disabled:opacity-50 sticky bottom-24 md:static"
             >
               {t('endSession')}
             </button>
@@ -259,7 +259,7 @@ export function WorkoutDetail({
             type="button"
             onClick={() => updateWorkoutMutation.mutate({ started_at: new Date().toISOString(), ended_at: null })}
             disabled={updateWorkoutMutation.isPending}
-            className="yp-press mb-4 w-full sm:w-auto px-5 min-h-[48px] rounded-xl bg-[var(--color-accent)] text-[var(--color-on-accent)] text-sm font-semibold touch-manipulation disabled:opacity-50"
+            className="dr-press mb-4 w-full sm:w-auto px-5 min-h-[48px] rounded-xl bg-[var(--color-accent)] text-[var(--color-on-accent)] text-sm font-semibold touch-manipulation disabled:opacity-50"
           >
             {t('startSession')}
           </button>
@@ -285,17 +285,17 @@ export function WorkoutDetail({
         {/* Stats row */}
         <dl className="grid grid-cols-3 gap-2">
           <div className="rounded-2xl bg-[var(--color-accent-soft)] px-3 py-3">
-            <dt className="yp-label">{t('statExercises')}</dt>
+            <dt className="dr-label">{t('statExercises')}</dt>
             <dd className="font-serif text-2xl tabular-nums text-[var(--color-ink)] mt-1">{exercises.length}</dd>
           </div>
           <div className="rounded-2xl bg-[var(--color-accent-soft)] px-3 py-3">
-            <dt className="yp-label">{t('statSets')}</dt>
+            <dt className="dr-label">{t('statSets')}</dt>
             <dd className="font-serif text-2xl tabular-nums text-[var(--color-ink)] mt-1">
               {completedSets}/{setCount}
             </dd>
           </div>
           <div className="rounded-2xl bg-[var(--color-accent-soft)] px-3 py-3">
-            <dt className="yp-label">{t('statVolume')}</dt>
+            <dt className="dr-label">{t('statVolume')}</dt>
             <dd className="font-serif text-2xl tabular-nums text-[var(--color-ink)] mt-1">{t('volumeKg', { n: volumeLabel })}</dd>
           </div>
         </dl>
@@ -325,7 +325,7 @@ export function WorkoutDetail({
           type="button"
           onClick={() => setLibraryOpen(true)}
           disabled={addExerciseMutation.isPending}
-          className="yp-press flex items-center justify-center gap-2 px-5 py-3 min-h-[48px] rounded-xl bg-[var(--color-accent)] text-[var(--color-on-accent)] text-sm font-semibold touch-manipulation disabled:opacity-50"
+          className="dr-press flex items-center justify-center gap-2 px-5 py-3 min-h-[48px] rounded-xl bg-[var(--color-accent)] text-[var(--color-on-accent)] text-sm font-semibold touch-manipulation disabled:opacity-50"
         >
           <BookOpen size={18} />
           {t('addFromLibrary')}
@@ -334,7 +334,7 @@ export function WorkoutDetail({
           type="button"
           onClick={() => addExerciseMutation.mutate()}
           disabled={addExerciseMutation.isPending}
-          className="yp-press flex items-center justify-center gap-2 px-5 py-3 min-h-[48px] rounded-xl border border-[var(--color-border)] hover:bg-[var(--color-hover)] text-sm font-medium touch-manipulation disabled:opacity-50"
+          className="dr-press flex items-center justify-center gap-2 px-5 py-3 min-h-[48px] rounded-xl border border-[var(--color-border)] hover:bg-[var(--color-hover)] text-sm font-medium touch-manipulation disabled:opacity-50"
         >
           <Plus size={18} />
           {t('addExercise')}
@@ -395,7 +395,7 @@ export function WorkoutDetail({
 
       {/* Notes & links */}
       <details
-        className="yp-card"
+        className="dr-card"
         open={detailsOpen}
         onToggle={(event) => setDetailsOpen(event.currentTarget.open)}
       >
@@ -449,7 +449,7 @@ export function WorkoutDetail({
                 setMediaUrlInput('');
                 setMediaCaptionInput('');
               }}
-              className="yp-press px-4 py-2 min-h-[44px] rounded-xl bg-[var(--color-accent)] text-[var(--color-on-accent)] text-sm font-semibold touch-manipulation"
+              className="dr-press px-4 py-2 min-h-[44px] rounded-xl bg-[var(--color-accent)] text-[var(--color-on-accent)] text-sm font-semibold touch-manipulation"
             >
               {t('mediaAdd')}
             </button>

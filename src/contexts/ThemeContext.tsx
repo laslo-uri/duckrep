@@ -10,12 +10,14 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-const STORAGE_KEY = 'youpeak-theme';
+const STORAGE_KEY = 'duckrep-theme';
+/** Key used before the YouPeak → Duckrep rename; read when the new key is missing. */
+const LEGACY_STORAGE_KEY = 'youpeak-theme';
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setTheme] = useState<Theme>(() => {
     if (typeof window === 'undefined') return 'light';
-    const stored = getItemSync(STORAGE_KEY) as Theme | null;
+    const stored = (getItemSync(STORAGE_KEY) ?? getItemSync(LEGACY_STORAGE_KEY)) as Theme | null;
     if (stored === 'light' || stored === 'dark') return stored;
     return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   });

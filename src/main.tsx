@@ -6,7 +6,8 @@ import App from './App.tsx'
 import { LocalUserProvider } from './contexts/LocalUserContext'
 import { ThemeProvider } from './contexts/ThemeContext'
 import { bootAppUserStore } from './lib/app-user-store'
-import { deferDbOpen, initDb } from './lib/db'
+import { deferDbOpen } from './lib/db'
+import { VaultGate } from './components/VaultGate'
 
 function showBootError(err: unknown) {
   const message = err instanceof Error ? err.message : String(err)
@@ -14,9 +15,9 @@ function showBootError(err: unknown) {
   if (!root) return
   root.innerHTML = `
     <div style="font-family: system-ui, sans-serif; max-width: 32rem; margin: 3rem auto; padding: 1.5rem; color: #1a1a1a;">
-      <h1 style="font-size: 1.25rem; margin: 0 0 0.75rem;">YouPeak failed to start</h1>
+      <h1 style="font-size: 1.25rem; margin: 0 0 0.75rem;">Duckrep failed to start</h1>
       <p style="margin: 0 0 1rem; color: #555; line-height: 1.5;">
-        The local database or app store could not be initialized. Try refreshing the page.
+        The app store could not be initialized. Try refreshing the page.
         If this keeps happening, clear site data for this origin or restore from a journal export.
       </p>
       <pre style="white-space: pre-wrap; word-break: break-word; background: #f4f4f4; padding: 0.75rem; border-radius: 0.5rem; font-size: 0.8rem;">${message.replace(/</g, '&lt;')}</pre>
@@ -53,26 +54,24 @@ async function boot() {
   await configureNativeShell()
   await bootAppUserStore()
   await import('./i18n')
-  // Queries call getDb() on mount; let the lobby paint before the database
+  // Queries call getDb() on mount; let the page paint before the database
   // (sql.js + wasm + exercise seed) starts loading.
   deferDbOpen(afterFirstPaint())
   const root = createRoot(document.getElementById('root')!)
   root.render(
     <StrictMode>
       <ThemeProvider>
-        <LocalUserProvider>
-          <App />
-        </LocalUserProvider>
+        <VaultGate>
+          <LocalUserProvider>
+            <App />
+          </LocalUserProvider>
+        </VaultGate>
       </ThemeProvider>
     </StrictMode>,
   )
-  await initDb().catch((err: unknown) => {
-    root.unmount()
-    throw err
-  })
 }
 
 void boot().catch((err) => {
-  console.error('[youpeak] boot failed', err)
+  console.error('[duckrep] boot failed', err)
   showBootError(err)
 })

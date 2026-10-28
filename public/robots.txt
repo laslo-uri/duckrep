@@ -3,4 +3,4 @@ Allow: /
 Disallow: /activity/
 Disallow: /settings
 
-Sitemap: https://you-peak.vercel.app/sitemap.xml
+Sitemap: https://duckrep.vercel.app/sitemap.xml

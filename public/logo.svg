@@ -1,39 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-label="YouPeak">
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 256 256" role="img" aria-label="Duckrep">
   <defs>
-    <linearGradient id="ypMarkBg" x1="512" y1="0" x2="512" y2="1024" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#1b1f26"/>
-      <stop offset="1" stop-color="#121418"/>
-    </linearGradient>
-    <linearGradient id="ypMarkPeakL" x1="184" y1="430" x2="287" y2="799" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#7ff2f8"/>
-      <stop offset="1" stop-color="#1596c9"/>
-    </linearGradient>
-    <linearGradient id="ypMarkPeakR" x1="717" y1="389" x2="819" y2="799" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#4defc9"/>
-      <stop offset="1" stop-color="#0e9f86"/>
-    </linearGradient>
-    <linearGradient id="ypMarkMainL" x1="410" y1="246" x2="348" y2="799" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#bdf6fa"/>
-      <stop offset="1" stop-color="#2cc4e8"/>
-    </linearGradient>
-    <linearGradient id="ypMarkMainR" x1="614" y1="246" x2="717" y2="799" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#2cc4e8"/>
-      <stop offset="1" stop-color="#0b5e74"/>
-    </linearGradient>
+    <radialGradient id="drMarkBg" cx="0.3" cy="0.2" r="1">
+      <stop offset="0" stop-color="#18203A"/>
+      <stop offset="1" stop-color="#0D1220"/>
+    </radialGradient>
   </defs>
-  <rect width="1024" height="1024" rx="225" fill="url(#ypMarkBg)"/>
-  <path fill="url(#ypMarkPeakL)" d="M287 430 L82 799 L287 799 Z"/>
-  <path fill="#0b5e74" d="M287 430 L471 799 L287 799 Z"/>
-  <path fill="#eafcfe" opacity="0.85" d="M287 430 L246 522 L297 502 Z"/>
-  <path fill="url(#ypMarkPeakR)" d="M717 389 L553 799 L717 799 Z"/>
-  <path fill="#086655" d="M717 389 L942 799 L717 799 Z"/>
-  <path fill="#d8fff2" opacity="0.85" d="M717 389 L676 492 L727 471 Z"/>
-  <path fill="url(#ypMarkMainL)" d="M512 205 L266 799 L512 799 Z"/>
-  <path fill="url(#ypMarkMainR)" d="M512 205 L778 799 L512 799 Z"/>
-  <path fill="#9ef4f9" opacity="0.7" d="M512 205 L420 451 L512 553 Z"/>
-  <path fill="#0b5e74" opacity="0.6" d="M512 205 L604 430 L512 553 Z"/>
-  <path fill="#f3f6f8" d="M512 205 L451 338 L512 307 L573 328 Z"/>
-  <path fill="none" stroke="#f3f6f8" stroke-width="31" stroke-linecap="round" stroke-linejoin="round" d="M307 635 L451 492 L573 553 L737 307"/>
-  <circle cx="737" cy="307" r="82" fill="#00f0a0" opacity="0.25"/>
-  <circle cx="737" cy="307" r="46" fill="#00f0a0"/>
+  <rect width="256" height="256" rx="56" fill="url(#drMarkBg)"/>
+  <g transform="translate(-12 10)">
+    <path fill="#F1E4C8" d="M42 116 L80 140 C94 132 112 130 132 131 L168 131 C196 134 212 152 210 174 C208 196 188 208 160 208 L104 208 C74 208 54 194 50 172 C48 160 51 150 57 143 Z"/>
+    <path fill="#D9C39C" d="M51 177 C56 196 76 208 104 208 L160 208 C186 208 206 197 209.6 177 Z"/>
+    <path fill="#2EC4B6" d="M76 150 L150 150 C162 150 170 158 170 168 C170 180 162 188 150 188 L92 188 L88 182 L148 182 L148 176 L84 176 L80 170 L148 170 L148 164 L80 164 Z"/>
+    <path fill="#0E9F86" d="M144 136 L144 98 C144 80 157 66 174 66 C191 66 204 80 204 98 C204 112 198 122 192 130 L190 136 Z"/>
+    <path fill="#0B7F6B" d="M144 112 C150 124 162 130 176 130 C186 130 194 126 199 119 C197 124 195 127 192 130 L190 136 L144 136 Z"/>
+    <path fill="#F1E4C8" d="M144 125 L192 125 L191 133 L144 133 Z"/>
+    <circle cx="182" cy="90" r="6.5" fill="#0D1220"/>
+    <circle cx="184" cy="88" r="2" fill="#F1E4C8"/>
+    <rect x="220.5" y="68" width="5" height="62" rx="2.5" fill="#94A3B8"/>
+    <rect x="213" y="58" width="20" height="15" rx="4" fill="#E2E8F0"/>
+    <rect x="213" y="125" width="20" height="15" rx="4" fill="#E2E8F0"/>
+    <path fill="#F59E0B" d="M200 90 L228 94 C235 95 237 103 230 106 L201 112 Z"/>
+    <path fill="#D97706" d="M201 104 L232 103.5 C232 104.8 231.4 105.6 230 106 L201 112 Z"/>
+  </g>
 </svg>

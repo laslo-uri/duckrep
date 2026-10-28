@@ -16,7 +16,7 @@ const appVersionDefine = {
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [userStorePlugin({ appId: 'com.youpeak.app' }), react(), tailwindcss()],
+  plugins: [userStorePlugin({ appId: 'com.duckrep.app' }), react(), tailwindcss()],
   define: appVersionDefine,
   build: {
     rollupOptions: {

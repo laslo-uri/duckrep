@@ -24,12 +24,7 @@ export async function runMigrations(client: {
      ON exercise_definitions(source_slug) WHERE source_slug IS NOT NULL`,
   );
 
-  // v3: nutrition goals on user_stats (food tracking).
-  const statCols = await client.select<{ name: string }>('PRAGMA table_info(user_stats)');
-  const statNames = new Set(statCols.map((c) => c.name));
-  for (const col of ['calorie_goal', 'protein_goal_g', 'carbs_goal_g', 'fat_goal_g']) {
-    if (!statNames.has(col)) {
-      await client.execute(`ALTER TABLE user_stats ADD COLUMN ${col} REAL`);
-    }
-  }
+  // v4 (Duckrep): the food log moved to Dovediet. Journals from YouPeak keep `food_entries` and the
+  // nutrition goal columns on `user_stats` untouched (no DROP), so no data is lost; the app no longer
+  // reads or writes them except for the journal export. New journals do not create them.
 }

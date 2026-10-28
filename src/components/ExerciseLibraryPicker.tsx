@@ -85,7 +85,7 @@ export function ExerciseLibraryPicker({
         role="dialog"
         aria-modal="true"
         aria-labelledby="library-picker-title"
-        className="yp-enter relative w-full sm:max-w-lg max-h-[85dvh] rounded-t-2xl sm:rounded-2xl bg-[var(--color-paper)] shadow-[var(--shadow-card)] flex flex-col"
+        className="dr-enter relative w-full sm:max-w-lg max-h-[85dvh] rounded-t-2xl sm:rounded-2xl bg-[var(--color-paper)] shadow-[var(--shadow-card)] flex flex-col"
       >
         <div className="flex items-center justify-between gap-3 p-4 border-b border-[var(--color-border)]">
           <h2 id="library-picker-title" className="font-serif text-lg font-semibold text-[var(--color-ink)]">
@@ -94,7 +94,7 @@ export function ExerciseLibraryPicker({
           <button
             type="button"
             onClick={onClose}
-            className="yp-press p-2.5 rounded-lg hover:bg-[var(--color-hover)] text-[var(--color-muted)] touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center"
+            className="dr-press p-2.5 rounded-lg hover:bg-[var(--color-hover)] text-[var(--color-muted)] touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center"
             aria-label={t('cancel')}
           >
             <X size={22} />

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Activity, Apple, Calendar, Dumbbell } from 'lucide-react';
-import { YouPeakMark } from './YouPeakLogo';
+import { Activity, Calendar, Dumbbell } from 'lucide-react';
+import { DuckrepMark } from './DuckrepLogo';
 import { CookieSettingsLink } from './CookieConsent';
 
 const linkClass =
@@ -14,7 +14,6 @@ export function Footer() {
     { to: '/journal', icon: Calendar, label: t('myJournal') },
     { to: '/exercises', icon: Dumbbell, label: t('exercises') },
     { to: '/stats', icon: Activity, label: t('yourStats') },
-    { to: '/food', icon: Apple, label: t('food') },
   ];
 
   return (
@@ -22,7 +21,7 @@ export function Footer() {
       <div className="max-w-5xl mx-auto px-4 sm:px-8 py-8 pb-[calc(6.75rem+env(safe-area-inset-bottom))] md:pb-8">
         <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
           <div className="flex items-start gap-3">
-            <YouPeakMark size={40} className="mt-0.5" />
+            <DuckrepMark size={40} className="mt-0.5" />
             <div>
               <p className="font-serif text-sm font-semibold tracking-tight text-[var(--color-logo)]">
                 {t('appName')}

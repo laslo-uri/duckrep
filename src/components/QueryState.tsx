@@ -44,7 +44,7 @@ export function QueryState({
           <button
             type="button"
             onClick={() => refetch()}
-            className="yp-press mt-3 px-4 py-1.5 text-sm font-semibold rounded-xl bg-[var(--color-accent)] text-[var(--color-on-accent)] touch-manipulation min-h-[44px]"
+            className="dr-press mt-3 px-4 py-1.5 text-sm font-semibold rounded-xl bg-[var(--color-accent)] text-[var(--color-on-accent)] touch-manipulation min-h-[44px]"
           >
             {t('retry')}
           </button>

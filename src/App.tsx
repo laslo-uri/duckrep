@@ -11,7 +11,6 @@ const HomePage = lazy(() => import('./pages/HomePage').then((m) => ({ default: m
 const WorkoutPage = lazy(() => import('./pages/WorkoutPage').then((m) => ({ default: m.WorkoutPage })));
 const ExercisesPage = lazy(() => import('./pages/ExercisesPage').then((m) => ({ default: m.ExercisesPage })));
 const StatsPage = lazy(() => import('./pages/StatsPage').then((m) => ({ default: m.StatsPage })));
-const FoodPage = lazy(() => import('./pages/FoodPage').then((m) => ({ default: m.FoodPage })));
 const SettingsPage = lazy(() => import('./pages/SettingsPage').then((m) => ({ default: m.SettingsPage })));
 
 function Page({ children }: { children: ReactNode }) {
@@ -43,7 +42,8 @@ function AppRoutes() {
           <Route path="workout/:id" element={<LegacyWorkoutRedirect />} />
           <Route path="exercises" element={<Page><ExercisesPage /></Page>} />
           <Route path="stats" element={<Page><StatsPage /></Page>} />
-          <Route path="food" element={<Page><FoodPage /></Page>} />
+          {/* Food moved to Dovediet; old links land on the journal. */}
+          <Route path="food" element={<Navigate to="/journal" replace />} />
           <Route path="settings" element={<Page><SettingsPage /></Page>} />
         </Route>
         <Route path="/auth" element={<Navigate to="/" replace />} />

@@ -107,7 +107,7 @@ export function ExerciseBrowse() {
 
   if (!key) {
     return (
-      <section className="yp-card p-5 sm:p-6">
+      <section className="dr-card p-5 sm:p-6">
         <p className="text-sm text-[var(--color-ink)]">{t('musclewikiKeyMissing')}</p>
         <Link
           to="/settings"
@@ -168,7 +168,7 @@ export function ExerciseBrowse() {
       ) : null}
 
       {detail.data ? (
-        <article className="yp-card p-5">
+        <article className="dr-card p-5">
           <h2 className="font-medium text-[var(--color-ink)]">{detail.data.name}</h2>
           <p className="mt-1 text-sm text-[var(--color-muted)]">
             {[detail.data.primaryMuscles.join(', '), detail.data.difficulty, detail.data.category]
@@ -182,7 +182,7 @@ export function ExerciseBrowse() {
                 type="button"
                 aria-pressed={gender === option}
                 onClick={() => setGender(option)}
-                className={`yp-press min-h-[40px] rounded-lg px-3 text-xs font-medium ${
+                className={`dr-press min-h-[40px] rounded-lg px-3 text-xs font-medium ${
                   gender === option
                     ? 'bg-[var(--color-accent)] text-[var(--color-on-accent)]'
                     : 'border border-[var(--color-border)] text-[var(--color-muted)]'
@@ -207,7 +207,7 @@ export function ExerciseBrowse() {
             type="button"
             disabled={saved.data || addToLibrary.isPending}
             onClick={() => addToLibrary.mutate()}
-            className="yp-press mt-4 min-h-[44px] rounded-xl bg-[var(--color-accent)] px-4 text-sm font-semibold text-[var(--color-on-accent)] disabled:opacity-50"
+            className="dr-press mt-4 min-h-[44px] rounded-xl bg-[var(--color-accent)] px-4 text-sm font-semibold text-[var(--color-on-accent)] disabled:opacity-50"
           >
             {saved.data || addToLibrary.data === 'exists' || addToLibrary.data === 'added'
               ? t('addedToLibrary')
@@ -225,7 +225,7 @@ export function ExerciseBrowse() {
                 type="button"
                 aria-pressed={active}
                 onClick={() => setSelectedId(active ? null : exercise.id)}
-                className={`yp-press w-full min-h-[52px] rounded-xl bg-[var(--color-surface)] px-4 text-left text-sm font-medium text-[var(--color-ink)] shadow-[var(--shadow-card)] ${
+                className={`dr-press w-full min-h-[52px] rounded-xl bg-[var(--color-surface)] px-4 text-left text-sm font-medium text-[var(--color-ink)] shadow-[var(--shadow-card)] ${
                   active ? 'ring-2 ring-[var(--color-accent)]' : ''
                 }`}
               >
@@ -247,7 +247,7 @@ export function ExerciseBrowse() {
           type="button"
           onClick={() => setPageCount((count) => count + 1)}
           disabled={listLoading}
-          className="yp-press min-h-[44px] rounded-xl border border-[var(--color-border)] px-4 text-sm font-medium disabled:opacity-50"
+          className="dr-press min-h-[44px] rounded-xl border border-[var(--color-border)] px-4 text-sm font-medium disabled:opacity-50"
         >
           {t('showMore')}
         </button>
@@ -288,7 +288,7 @@ function Chip({ label, pressed, onClick }: { label: string; pressed: boolean; on
       type="button"
       onClick={onClick}
       aria-pressed={pressed}
-      className={`yp-press inline-flex min-h-[40px] shrink-0 items-center rounded-lg border px-3 text-xs font-medium ${
+      className={`dr-press inline-flex min-h-[40px] shrink-0 items-center rounded-lg border px-3 text-xs font-medium ${
         pressed
           ? 'border-transparent bg-[var(--color-accent)] text-[var(--color-on-accent)]'
           : 'border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-muted)]'
@@ -332,7 +332,7 @@ function PlayVideo({ apiKey, url }: { apiKey: string; url: string }) {
               .catch((reason: unknown) => setError(musclewikiMessage(reason, t)))
               .finally(() => setPending(false));
           }}
-          className="yp-press min-h-[44px] rounded-xl border border-[var(--color-border)] px-4 text-sm font-medium"
+          className="dr-press min-h-[44px] rounded-xl border border-[var(--color-border)] px-4 text-sm font-medium"
         >
           {t('musclewikiPlay')}
         </button>

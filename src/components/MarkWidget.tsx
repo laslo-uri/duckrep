@@ -48,9 +48,9 @@ function Sparkline({ counts }: { counts: number[] }) {
         strokeWidth="2.25"
         strokeLinecap="round"
         strokeLinejoin="round"
-        className="yp-mark-line"
+        className="dr-mark-line"
       />
-      <circle className="yp-mark-dot" cx={last[0]} cy={last[1]} r="3.2" fill="var(--color-mint)" />
+      <circle className="dr-mark-dot" cx={last[0]} cy={last[1]} r="3.2" fill="var(--color-mint)" />
     </svg>
   );
 }
@@ -77,13 +77,13 @@ export function MarkWidget({
   const gainLabel = gain.toLocaleString(locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
   return (
-    <div className="yp-card p-5 sm:p-6">
+    <div className="dr-card p-5 sm:p-6">
       <div className="flex flex-col gap-4 min-[480px]:flex-row min-[480px]:items-center">
         <div className="min-[480px]:w-44 shrink-0">
           <Sparkline counts={weeklyCounts(dateKeys, todayKey)} />
         </div>
         <div className="min-w-0 flex-1">
-          <p className="yp-label">{t('markLabel')}</p>
+          <p className="dr-label">{t('markLabel')}</p>
           <p className="mt-1 font-serif text-3xl sm:text-4xl font-semibold tabular-nums tracking-tight">
             {price}
           </p>

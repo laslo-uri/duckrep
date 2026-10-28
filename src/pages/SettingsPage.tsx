@@ -14,17 +14,17 @@ import {
   importWorkoutJournalJson,
   exportSqlJsDump,
 } from '../lib/db';
-import { isTauri } from '../lib/db/utils';
 import { useMutationError } from '../hooks/useMutationError';
 import { useConfirm } from '../hooks/useConfirm';
 import { QueryState } from '../components/QueryState';
 import { MutationAlert } from '../components/MutationAlert';
 import { ConfirmDialog } from '../components/ConfirmDialog';
+import { SecuritySettings } from '../components/SecuritySettings';
 
-type SettingsTab = 'profile' | 'data' | 'trash';
+type SettingsTab = 'profile' | 'security' | 'data' | 'trash';
 
-const TABS: SettingsTab[] = ['profile', 'data', 'trash'];
-const TAB_STORAGE = 'youpeak.settings.tab';
+const TABS: SettingsTab[] = ['profile', 'security', 'data', 'trash'];
+const TAB_STORAGE = 'duckrep.settings.tab';
 
 function tabFromHash(hash: string): SettingsTab | null {
   const id = hash.replace('#', '');
@@ -145,7 +145,7 @@ export function SettingsPage() {
       const stamp = new Date().toISOString().slice(0, 10);
       downloadBlob(
         new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' }),
-        `youpeak-journal-${stamp}.json`,
+        `duckrep-journal-${stamp}.json`,
       );
     } catch {
       setExportError(t('exportFailed'));
@@ -185,7 +185,7 @@ export function SettingsPage() {
       const stamp = new Date().toISOString().slice(0, 10);
       const copy = new Uint8Array(bytes.byteLength);
       copy.set(bytes);
-      downloadBlob(new Blob([copy], { type: 'application/octet-stream' }), `youpeak-${stamp}.sqlite`);
+      downloadBlob(new Blob([copy], { type: 'application/octet-stream' }), `duckrep-${stamp}.sqlite`);
     } catch {
       setExportError(t('exportFailed'));
     } finally {
@@ -214,6 +214,7 @@ export function SettingsPage() {
           {(
             [
               ['profile', t('profileTitle'), 0],
+              ['security', t('securityTab'), 0],
               ['data', t('settingsData'), 0],
               ['trash', t('trashTitle'), trashLoading ? 0 : trashed.length],
             ] as const
@@ -229,7 +230,7 @@ export function SettingsPage() {
                 aria-controls={`settings-panel-${id}`}
                 tabIndex={selected ? 0 : -1}
                 onClick={() => selectTab(id)}
-                className={`yp-press inline-flex min-h-[40px] flex-1 items-center justify-center gap-1.5 rounded-lg px-3 text-sm font-medium sm:flex-none sm:px-4 ${
+                className={`dr-press inline-flex min-h-[40px] flex-1 items-center justify-center gap-1.5 rounded-lg px-3 text-sm font-medium sm:flex-none sm:px-4 ${
                   selected
                     ? 'bg-[var(--color-accent)] text-[var(--color-on-accent)]'
                     : 'text-[var(--color-muted)] hover:bg-[var(--color-hover)] hover:text-[var(--color-ink)]'
@@ -252,10 +253,20 @@ export function SettingsPage() {
         role="tabpanel"
         aria-labelledby="settings-tab-profile"
         hidden={tab !== 'profile'}
-        className="yp-card p-5 sm:p-6"
+        className="dr-card p-5 sm:p-6"
       >
         <p className="mb-5 max-w-md text-sm text-[var(--color-muted)]">{t('profileHint')}</p>
         <ProfileEditor />
+      </section>
+
+      <section
+        id="settings-panel-security"
+        role="tabpanel"
+        aria-labelledby="settings-tab-security"
+        hidden={tab !== 'security'}
+        className="dr-card p-5 sm:p-6"
+      >
+        <SecuritySettings />
       </section>
 
       <section
@@ -263,7 +274,7 @@ export function SettingsPage() {
         role="tabpanel"
         aria-labelledby="settings-tab-data"
         hidden={tab !== 'data'}
-        className="yp-card p-5 sm:p-6"
+        className="dr-card p-5 sm:p-6"
       >
         <h2 className="font-medium text-[var(--color-ink)]">{t('dataExportTitle')}</h2>
         <p className="mb-2 max-w-md text-sm text-[var(--color-muted)]">{t('dataExportHint')}</p>
@@ -274,7 +285,7 @@ export function SettingsPage() {
             type="button"
             onClick={() => void handleExportJson()}
             disabled={exporting}
-            className="yp-press flex w-full items-center gap-3 py-3 text-left disabled:opacity-50"
+            className="dr-press flex w-full items-center gap-3 py-3 text-left disabled:opacity-50"
           >
             <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--color-hover)] text-[var(--color-ink)]">
               <Download size={16} aria-hidden />
@@ -288,7 +299,7 @@ export function SettingsPage() {
             type="button"
             onClick={() => importInputRef.current?.click()}
             disabled={exporting}
-            className="yp-press flex w-full items-center gap-3 py-3 text-left disabled:opacity-50"
+            className="dr-press flex w-full items-center gap-3 py-3 text-left disabled:opacity-50"
           >
             <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--color-hover)] text-[var(--color-ink)]">
               <Upload size={16} aria-hidden />
@@ -309,22 +320,20 @@ export function SettingsPage() {
               if (file) void handleImportFile(file);
             }}
           />
-          {!isTauri() && (
-            <button
-              type="button"
-              onClick={() => void handleExportSqlite()}
-              disabled={exporting}
-              className="yp-press flex w-full items-center gap-3 py-3 text-left disabled:opacity-50"
-            >
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--color-hover)] text-[var(--color-ink)]">
-                <Download size={16} aria-hidden />
-              </span>
-              <span className="min-w-0">
-                <span className="block text-sm font-medium text-[var(--color-ink)]">{t('exportSqliteDump')}</span>
-                <span className="block text-xs text-[var(--color-muted)]">{t('exportSqliteHint')}</span>
-              </span>
-            </button>
-          )}
+          <button
+            type="button"
+            onClick={() => void handleExportSqlite()}
+            disabled={exporting}
+            className="dr-press flex w-full items-center gap-3 py-3 text-left disabled:opacity-50"
+          >
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--color-hover)] text-[var(--color-ink)]">
+              <Download size={16} aria-hidden />
+            </span>
+            <span className="min-w-0">
+              <span className="block text-sm font-medium text-[var(--color-ink)]">{t('exportSqliteDump')}</span>
+              <span className="block text-xs text-[var(--color-muted)]">{t('exportSqliteHint')}</span>
+            </span>
+          </button>
         </div>
       </section>
 
@@ -333,7 +342,7 @@ export function SettingsPage() {
         role="tabpanel"
         aria-labelledby="settings-tab-trash"
         hidden={tab !== 'trash'}
-        className="yp-card p-5 sm:p-6"
+        className="dr-card p-5 sm:p-6"
       >
         <MutationAlert message={trashMutationError} onDismiss={clearError} />
         <QueryState
@@ -373,7 +382,7 @@ export function SettingsPage() {
                       type="button"
                       onClick={() => restoreMutation.mutate(row.id)}
                       disabled={isRestoring || isDeleting}
-                      className="yp-press inline-flex items-center justify-center gap-1.5 px-4 py-2 min-h-[44px] w-full sm:w-auto rounded-xl border border-[var(--color-border)] text-sm font-medium hover:bg-[var(--color-hover)] disabled:opacity-50 touch-manipulation"
+                      className="dr-press inline-flex items-center justify-center gap-1.5 px-4 py-2 min-h-[44px] w-full sm:w-auto rounded-xl border border-[var(--color-border)] text-sm font-medium hover:bg-[var(--color-hover)] disabled:opacity-50 touch-manipulation"
                     >
                       <RotateCcw size={16} aria-hidden />
                       {t('restoreActivity')}
@@ -382,7 +391,7 @@ export function SettingsPage() {
                       type="button"
                       onClick={() => void handleDeleteForever(row.id)}
                       disabled={isRestoring || isDeleting}
-                      className="yp-press inline-flex items-center gap-1.5 px-4 py-2 min-h-[44px] rounded-xl text-sm font-medium text-[var(--color-error)] hover:bg-[var(--color-error-bg)] disabled:opacity-50 touch-manipulation"
+                      className="dr-press inline-flex items-center gap-1.5 px-4 py-2 min-h-[44px] rounded-xl text-sm font-medium text-[var(--color-error)] hover:bg-[var(--color-error-bg)] disabled:opacity-50 touch-manipulation"
                     >
                       <Trash2 size={16} aria-hidden />
                       {t('deleteForever')}

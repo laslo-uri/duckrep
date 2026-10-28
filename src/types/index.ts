@@ -10,15 +10,12 @@ export interface UserStats {
   birth_date: string | null;
   height_cm: number | null;
   goal_weight_kg: number | null;
-  calorie_goal: number | null;
-  protein_goal_g: number | null;
-  carbs_goal_g: number | null;
-  fat_goal_g: number | null;
   created_at: string;
   updated_at: string;
 }
 
-export interface FoodEntry {
+/** A row of the old food log (moved to Dovediet); only read for the journal export. */
+export interface LegacyFoodEntry {
   id: string;
   user_id: string;
   date: string;
@@ -28,6 +25,14 @@ export interface FoodEntry {
   carbs_g: number | null;
   fat_g: number | null;
   created_at: string;
+}
+
+/** Nutrition goals from the old food log, exported with the food rows. */
+export interface LegacyNutritionGoals {
+  calorie_goal: number | null;
+  protein_goal_g: number | null;
+  carbs_goal_g: number | null;
+  fat_goal_g: number | null;
 }
 
 export interface BodyWeightLog {

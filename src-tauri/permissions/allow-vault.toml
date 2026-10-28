@@ -1,0 +1,4 @@
+[[permission]]
+identifier = "allow-vault"
+description = "Read and write the sealed journal and its vault metadata in the app config folder."
+commands.allow = ["vault_read", "vault_write", "vault_remove"]

@@ -15,8 +15,9 @@ function isLocalHost(): boolean {
 
 export async function bootAppUserStore(): Promise<void> {
   await initUserStore({
-    appId: 'com.youpeak.app',
-    keyPrefixes: ['youpeak-', 'i18next', 'theme'],
+    appId: 'com.duckrep.app',
+    // youpeak-* keys come from before the rename; ThemeContext falls back to youpeak-theme.
+    keyPrefixes: ['duckrep-', 'youpeak-', 'i18next', 'theme'],
     // The /api/user-store middleware only exists in `vite dev` / `vite preview`.
     // On a deployed host the request would just return index.html.
     apiPath: isLocalHost() ? '/api/user-store' : '',

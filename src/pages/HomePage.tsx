@@ -35,7 +35,7 @@ function StartSessionButton({
       type="button"
       onClick={onClick}
       disabled={pending}
-      className={`yp-press flex items-center justify-center gap-2 px-5 py-3 min-h-[48px] rounded-xl bg-[var(--color-accent)] text-[var(--color-on-accent)] text-sm font-semibold touch-manipulation disabled:opacity-50 ${className ?? ''}`}
+      className={`dr-press flex items-center justify-center gap-2 px-5 py-3 min-h-[48px] rounded-xl bg-[var(--color-accent)] text-[var(--color-on-accent)] text-sm font-semibold touch-manipulation disabled:opacity-50 ${className ?? ''}`}
     >
       <Plus size={18} />
       {label}
@@ -196,10 +196,10 @@ export function HomePage() {
         {openSession && (
           <Link
             to={`/activity/${openSession.id}`}
-            className="yp-press yp-live yp-aurora flex items-center justify-between gap-3 rounded-xl px-5 py-4 min-h-[64px] touch-manipulation"
+            className="dr-press dr-live dr-aurora flex items-center justify-between gap-3 rounded-xl px-5 py-4 min-h-[64px] touch-manipulation"
           >
             <div className="min-w-0">
-              <p className="yp-label !text-[var(--aurora-text)] opacity-80">{t('sessionLive')}</p>
+              <p className="dr-label !text-[var(--aurora-text)] opacity-80">{t('sessionLive')}</p>
               <p className="font-medium truncate">{openSession.title || formatDateHeader(openSession.date)}</p>
             </div>
             <span className="text-sm font-semibold shrink-0">{t('continueSession')}</span>
@@ -210,7 +210,7 @@ export function HomePage() {
         <div className="space-y-6">
           {grouped.map(({ date, activities }) => (
             <section key={date}>
-              <h2 className="sticky top-14 z-10 yp-label bg-[var(--color-paper)]/95 backdrop-blur-sm py-2 -mx-4 px-4 sm:-mx-8 sm:px-8 mb-2">
+              <h2 className="sticky top-14 z-10 dr-label bg-[var(--color-paper)]/95 backdrop-blur-sm py-2 -mx-4 px-4 sm:-mx-8 sm:px-8 mb-2">
                 {formatDateHeader(date)}
               </h2>
               <ul className="space-y-3">
@@ -225,7 +225,7 @@ export function HomePage() {
                   return (
                     <li
                       key={day.id}
-                      className={`yp-stagger yp-press flex items-stretch yp-card overflow-hidden min-h-[64px] ${
+                      className={`dr-stagger dr-press flex items-stretch dr-card overflow-hidden min-h-[64px] ${
                         live ? 'ring-2 ring-[var(--color-accent)]' : ''
                       }`}
                       style={{ ['--i' as string]: Math.min(index, 5) }}

@@ -1,218 +1,161 @@
 #[path = "../../user-store/user_store.rs"]
 mod user_store;
 
-use std::path::Path;
+use std::{fs, io, path::Path, path::PathBuf};
 
-use sqlx::Row;
+use tauri::ipc::{InvokeBody, Request, Response};
 use tauri::Manager;
-use tauri_plugin_sql::{Migration, MigrationKind};
 
-const SCHEMA_MIGRATION: &str = r#"
-CREATE TABLE IF NOT EXISTS profiles (
-  id TEXT PRIMARY KEY,
-  display_name TEXT,
-  created_at TEXT NOT NULL DEFAULT (datetime('now')),
-  updated_at TEXT NOT NULL DEFAULT (datetime('now'))
-);
-
-CREATE TABLE IF NOT EXISTS user_stats (
-  user_id TEXT PRIMARY KEY REFERENCES profiles(id) ON DELETE CASCADE,
-  birth_date TEXT,
-  height_cm REAL,
-  goal_weight_kg REAL,
-  created_at TEXT NOT NULL DEFAULT (datetime('now')),
-  updated_at TEXT NOT NULL DEFAULT (datetime('now'))
-);
-
-CREATE TABLE IF NOT EXISTS body_weight_logs (
-  id TEXT PRIMARY KEY,
-  user_id TEXT NOT NULL REFERENCES profiles(id) ON DELETE CASCADE,
-  date TEXT NOT NULL,
-  weight_kg REAL NOT NULL,
-  created_at TEXT NOT NULL DEFAULT (datetime('now')),
-  UNIQUE(user_id, date)
-);
-
-CREATE TABLE IF NOT EXISTS workout_days (
-  id TEXT PRIMARY KEY,
-  user_id TEXT NOT NULL REFERENCES profiles(id) ON DELETE CASCADE,
-  date TEXT NOT NULL,
-  title TEXT,
-  notes TEXT,
-  icon TEXT,
-  is_public INTEGER NOT NULL DEFAULT 0,
-  started_at TEXT,
-  ended_at TEXT,
-  activity_type TEXT NOT NULL DEFAULT 'strength'
-    CHECK (activity_type IN ('strength', 'cardio', 'mobility', 'other')),
-  deleted_at TEXT,
-  media TEXT NOT NULL DEFAULT '[]',
-  created_at TEXT NOT NULL DEFAULT (datetime('now')),
-  updated_at TEXT NOT NULL DEFAULT (datetime('now'))
-);
-
-CREATE TABLE IF NOT EXISTS exercise_definitions (
-  id TEXT PRIMARY KEY,
-  user_id TEXT REFERENCES profiles(id) ON DELETE CASCADE,
-  name TEXT NOT NULL,
-  name_sr TEXT,
-  name_hu TEXT,
-  description TEXT,
-  image_url TEXT,
-  muscle_group TEXT,
-  source_slug TEXT,
-  is_global INTEGER NOT NULL DEFAULT 0,
-  default_sets TEXT,
-  created_at TEXT NOT NULL DEFAULT (datetime('now')),
-  updated_at TEXT NOT NULL DEFAULT (datetime('now'))
-);
-
-CREATE TABLE IF NOT EXISTS workout_exercises (
-  id TEXT PRIMARY KEY,
-  workout_day_id TEXT NOT NULL REFERENCES workout_days(id) ON DELETE CASCADE,
-  exercise_definition_id TEXT REFERENCES exercise_definitions(id) ON DELETE SET NULL,
-  circuit_group_id TEXT,
-  name TEXT NOT NULL,
-  order_index INTEGER NOT NULL DEFAULT 0,
-  goals TEXT,
-  notes TEXT,
-  completed INTEGER NOT NULL DEFAULT 0,
-  created_at TEXT NOT NULL DEFAULT (datetime('now')),
-  updated_at TEXT NOT NULL DEFAULT (datetime('now'))
-);
-
-CREATE TABLE IF NOT EXISTS exercise_sets (
-  id TEXT PRIMARY KEY,
-  workout_exercise_id TEXT NOT NULL REFERENCES workout_exercises(id) ON DELETE CASCADE,
-  set_number INTEGER NOT NULL,
-  reps INTEGER,
-  weight REAL,
-  completed INTEGER NOT NULL DEFAULT 0,
-  notes TEXT,
-  created_at TEXT NOT NULL DEFAULT (datetime('now')),
-  UNIQUE(workout_exercise_id, set_number)
-);
-
-CREATE INDEX IF NOT EXISTS idx_workout_days_user_date ON workout_days(user_id, date);
-CREATE INDEX IF NOT EXISTS idx_body_weight_logs_user_date ON body_weight_logs(user_id, date);
-CREATE INDEX IF NOT EXISTS idx_exercise_definitions_global ON exercise_definitions(is_global);
-CREATE UNIQUE INDEX IF NOT EXISTS idx_exercise_definitions_source_slug
-  ON exercise_definitions(source_slug) WHERE source_slug IS NOT NULL;
-"#;
-
-// v1 SCHEMA_MIGRATION already creates source_slug / name_hu.
-// Keep v2 as a no-op so fresh installs that applied v1 do not fail on ADD COLUMN.
-const MIGRATION_V2: &str = r#"
-CREATE UNIQUE INDEX IF NOT EXISTS idx_exercise_definitions_source_slug
-  ON exercise_definitions(source_slug) WHERE source_slug IS NOT NULL;
-"#;
-
-// Food log. Nutrition goal columns are added in setup: SQLite has no
-// ADD COLUMN IF NOT EXISTS, and databases already opened by the webview may have them.
-const MIGRATION_V3: &str = r#"
-CREATE TABLE IF NOT EXISTS food_entries (
-  id TEXT PRIMARY KEY,
-  user_id TEXT NOT NULL REFERENCES profiles(id) ON DELETE CASCADE,
-  date TEXT NOT NULL,
-  name TEXT NOT NULL,
-  calories REAL NOT NULL DEFAULT 0,
-  protein_g REAL,
-  carbs_g REAL,
-  fat_g REAL,
-  created_at TEXT NOT NULL DEFAULT (datetime('now'))
-);
-
-CREATE INDEX IF NOT EXISTS idx_food_entries_user_date ON food_entries(user_id, date);
-"#;
-
-const NUTRITION_GOAL_COLUMNS: &[&str] = &[
-    "calorie_goal",
-    "protein_goal_g",
-    "carbs_goal_g",
-    "fat_goal_g",
-];
-
-async fn ensure_nutrition_columns(db_path: &Path) -> Result<(), String> {
-    if !db_path.exists() {
-        return Ok(());
-    }
-
-    let url = format!("sqlite:{}", db_path.display());
-    let pool = sqlx::sqlite::SqlitePoolOptions::new()
-        .max_connections(1)
-        .connect(&url)
-        .await
-        .map_err(|err| err.to_string())?;
-
-    let rows = sqlx::query("SELECT name FROM pragma_table_info('user_stats')")
-        .fetch_all(&pool)
-        .await
-        .map_err(|err| err.to_string())?;
-    let present: std::collections::HashSet<String> = rows
-        .iter()
-        .map(|row| row.try_get::<String, usize>(0))
-        .collect::<Result<_, _>>()
-        .map_err(|err| err.to_string())?;
-
-    for column in NUTRITION_GOAL_COLUMNS {
-        if present.contains(*column) {
+/// The app was called YouPeak and its identifier was com.youpeak.app. Tauri keeps app data in
+/// folders named after the identifier (config: the journal database and user-store.json; local:
+/// the WebView2 profile). On the first start under the new identifier (com.duckrep.app), copy the
+/// old folders over so nothing is lost. The old folders are left in place as a fallback; they can
+/// be deleted by hand once the new start works.
+///
+/// A marker file records that the copy ran, so the plaintext database (sealed and removed on the
+/// first unlock) is not copied again. When the new folder already exists (a dev server writes
+/// user-store.json there), only the missing top-level files are copied, never into a live WebView
+/// profile, and never the old database once a sealed journal is in place.
+fn migrate_legacy_data(identifier: &str) {
+    for (old, new) in legacy_dirs(identifier) {
+        let marker = new.join(MIGRATION_MARKER);
+        if !old.is_dir() || marker.exists() {
             continue;
         }
-        let sql = format!("ALTER TABLE user_stats ADD COLUMN {column} REAL");
-        sqlx::query(&sql)
-            .execute(&pool)
-            .await
-            .map_err(|err| err.to_string())?;
+        let result = if new.exists() {
+            copy_missing_files(&old, &new)
+        } else {
+            copy_dir(&old, &new).inspect_err(|_| {
+                let _ = fs::remove_dir_all(&new); // a half copy would hide the old data on the next start
+            })
+        };
+        match result.and_then(|()| fs::write(&marker, b"copied from com.youpeak.app\n")) {
+            Ok(()) => {}
+            Err(e) => eprintln!("could not copy {} to {}: {e}", old.display(), new.display()),
+        }
     }
+}
 
-    pool.close().await;
+const MIGRATION_MARKER: &str = ".migrated-from-youpeak";
+
+fn copy_missing_files(from: &Path, to: &Path) -> io::Result<()> {
+    let sealed = to.join("journal.vault").exists();
+    for entry in fs::read_dir(from)? {
+        let entry = entry?;
+        let target = to.join(entry.file_name());
+        let is_old_db = entry.file_name() == "youpeak.db";
+        if entry.file_type()?.is_file() && !target.exists() && !(is_old_db && sealed) {
+            fs::copy(entry.path(), target)?;
+        }
+    }
     Ok(())
+}
+
+fn legacy_dirs(identifier: &str) -> Vec<(PathBuf, PathBuf)> {
+    let pair = |base: PathBuf| (base.join("com.youpeak.app"), base.join(identifier));
+    let mut dirs = Vec::new();
+    if cfg!(windows) {
+        for var in ["APPDATA", "LOCALAPPDATA"] {
+            if let Some(base) = std::env::var_os(var) {
+                dirs.push(pair(base.into()));
+            }
+        }
+    } else if let Some(home) = std::env::var_os("HOME").map(PathBuf::from) {
+        if cfg!(target_os = "macos") {
+            dirs.push(pair(home.join("Library/WebKit")));
+            dirs.push(pair(home.join("Library/Application Support")));
+        } else {
+            let config = std::env::var_os("XDG_CONFIG_HOME").map(PathBuf::from).unwrap_or_else(|| home.join(".config"));
+            let data = std::env::var_os("XDG_DATA_HOME").map(PathBuf::from).unwrap_or_else(|| home.join(".local/share"));
+            dirs.push(pair(config));
+            dirs.push(pair(data));
+        }
+    }
+    dirs
+}
+
+fn copy_dir(from: &Path, to: &Path) -> io::Result<()> {
+    fs::create_dir_all(to)?;
+    for entry in fs::read_dir(from)? {
+        let entry = entry?;
+        let target = to.join(entry.file_name());
+        if entry.file_type()?.is_dir() {
+            copy_dir(&entry.path(), &target)?;
+        } else {
+            fs::copy(entry.path(), target)?;
+        }
+    }
+    Ok(())
+}
+
+/// Files the web layer may read and write in the app config folder (src/lib/vault/storage.ts).
+/// `youpeak.db` is the plaintext database from before the vault; it is read once, sealed, and removed.
+const VAULT_FILES: &[&str] = &["journal.vault", "youpeak.db"];
+
+fn vault_path(app: &tauri::AppHandle, name: &str) -> Result<PathBuf, String> {
+    if !VAULT_FILES.contains(&name) {
+        return Err(format!("unknown vault file {name}"));
+    }
+    let dir = app.path().app_config_dir().map_err(|e| e.to_string())?;
+    Ok(dir.join(name))
+}
+
+/// Raw bytes of a vault file; empty when it does not exist.
+#[tauri::command]
+fn vault_read(app: tauri::AppHandle, name: String) -> Result<Response, String> {
+    let path = vault_path(&app, &name)?;
+    match fs::read(&path) {
+        Ok(bytes) => Ok(Response::new(bytes)),
+        Err(e) if e.kind() == io::ErrorKind::NotFound => Ok(Response::new(Vec::new())),
+        Err(e) => Err(e.to_string()),
+    }
+}
+
+/// Writes the raw request body to a vault file (name in the `x-vault-file` header). Written to a
+/// temporary file first and renamed over the old one, so a crash never leaves half a vault.
+#[tauri::command]
+fn vault_write(app: tauri::AppHandle, request: Request<'_>) -> Result<(), String> {
+    let name = request
+        .headers()
+        .get("x-vault-file")
+        .and_then(|v| v.to_str().ok())
+        .ok_or("missing x-vault-file header")?;
+    let path = vault_path(&app, name)?;
+    let InvokeBody::Raw(bytes) = request.body() else {
+        return Err("expected raw bytes".into());
+    };
+    if let Some(dir) = path.parent() {
+        fs::create_dir_all(dir).map_err(|e| e.to_string())?;
+    }
+    let tmp = path.with_extension("tmp");
+    fs::write(&tmp, bytes).map_err(|e| e.to_string())?;
+    fs::rename(&tmp, &path).map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+fn vault_remove(app: tauri::AppHandle, name: String) -> Result<(), String> {
+    let path = vault_path(&app, &name)?;
+    match fs::remove_file(&path) {
+        Ok(()) => Ok(()),
+        Err(e) if e.kind() == io::ErrorKind::NotFound => Ok(()),
+        Err(e) => Err(e.to_string()),
+    }
 }
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
-    let migrations = vec![
-        Migration {
-            version: 1,
-            description: "initial youpeak schema",
-            sql: SCHEMA_MIGRATION,
-            kind: MigrationKind::Up,
-        },
-        Migration {
-            version: 2,
-            description: "exercise library source_slug and name_hu",
-            sql: MIGRATION_V2,
-            kind: MigrationKind::Up,
-        },
-        Migration {
-            version: 3,
-            description: "food log and nutrition goals",
-            sql: MIGRATION_V3,
-            kind: MigrationKind::Up,
-        },
-    ];
-
+    let context = tauri::generate_context!();
+    let identifier = context.config().identifier.clone();
+    migrate_legacy_data(&identifier);
     tauri::Builder::default()
-        .plugin(
-            tauri_plugin_sql::Builder::default()
-                .add_migrations("sqlite:youpeak.db", migrations)
-                .build(),
-        )
-        .manage(user_store::new_state("com.youpeak.app", None))
+        .manage(user_store::new_state(&identifier, None))
         .invoke_handler(tauri::generate_handler![
             user_store::user_store_load,
             user_store::user_store_save,
+            vault_read,
+            vault_write,
+            vault_remove,
         ])
-        .setup(|app| {
-            let dir = app
-                .path()
-                .app_config_dir()
-                .map_err(|err| std::io::Error::other(err.to_string()))?;
-            let db_path = dir.join("youpeak.db");
-            tauri::async_runtime::block_on(ensure_nutrition_columns(&db_path))
-                .map_err(std::io::Error::other)?;
-            Ok(())
-        })
-        .run(tauri::generate_context!())
-        .expect("error while running YouPeak");
+        .run(context)
+        .expect("error while running Duckrep");
 }

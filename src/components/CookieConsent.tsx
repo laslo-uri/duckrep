@@ -85,7 +85,7 @@ export function CookieConsent() {
 }
 
 const buttonBase =
-  'yp-press inline-flex min-h-[44px] items-center justify-center rounded-lg px-4 text-sm font-medium transition-colors touch-manipulation';
+  'dr-press inline-flex min-h-[44px] items-center justify-center rounded-lg px-4 text-sm font-medium transition-colors touch-manipulation';
 
 function ConsentBanner({ ids }: { ids: AnalyticsIds }) {
   const { t } = useTranslation();

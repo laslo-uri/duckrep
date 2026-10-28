@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">YouPeak</string>
-    <string name="title_activity_main">YouPeak</string>
-    <string name="package_name">com.youpeak.app</string>
-    <string name="custom_url_scheme">com.youpeak.app</string>
+    <string name="app_name">Duckrep</string>
+    <string name="title_activity_main">Duckrep</string>
+    <string name="package_name">com.duckrep.app</string>
+    <string name="custom_url_scheme">com.duckrep.app</string>
 </resources>

@@ -183,7 +183,7 @@ function ProfileForm({
             <button
               type="submit"
               disabled={pending}
-              className="yp-press min-h-[48px] rounded-xl bg-[var(--color-accent)] px-5 text-sm font-semibold text-[var(--color-on-accent)] disabled:opacity-50"
+              className="dr-press min-h-[48px] rounded-xl bg-[var(--color-accent)] px-5 text-sm font-semibold text-[var(--color-on-accent)] disabled:opacity-50"
             >
               {t('save')}
             </button>

@@ -39,24 +39,24 @@ export function RestTimer({
       aria-live="polite"
       aria-atomic="true"
     >
-      <div className="yp-live rounded-xl bg-[var(--color-accent)] text-[var(--color-on-accent)] shadow-[var(--shadow-card)] px-5 py-4">
+      <div className="dr-live rounded-xl bg-[var(--color-accent)] text-[var(--color-on-accent)] shadow-[var(--shadow-card)] px-5 py-4">
         <div className="flex items-center justify-between gap-3">
           <div>
-            <p className="yp-label !text-[var(--color-on-accent)] opacity-70">{t('restTitle')}</p>
+            <p className="dr-label !text-[var(--color-on-accent)] opacity-70">{t('restTitle')}</p>
             <p className="font-serif text-4xl tabular-nums leading-none mt-1">{label}</p>
           </div>
           <div className="flex items-center gap-2">
             <button
               type="button"
               onClick={onAdd}
-              className="yp-press px-3 min-h-[44px] rounded-lg bg-black/10 text-sm font-medium touch-manipulation"
+              className="dr-press px-3 min-h-[44px] rounded-lg bg-black/10 text-sm font-medium touch-manipulation"
             >
               {t('restAdd15')}
             </button>
             <button
               type="button"
               onClick={onExpire}
-              className="yp-press px-3 min-h-[44px] rounded-lg bg-[var(--color-on-accent)] text-[var(--color-accent)] text-sm font-semibold touch-manipulation"
+              className="dr-press px-3 min-h-[44px] rounded-lg bg-[var(--color-on-accent)] text-[var(--color-accent)] text-sm font-semibold touch-manipulation"
             >
               {t('restSkip')}
             </button>

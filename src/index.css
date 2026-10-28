@@ -197,93 +197,81 @@
   to { transform: rotate(360deg); }
 }
 
-@keyframes yp-rise {
+@keyframes dr-rise {
   from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes yp-pulse {
+@keyframes dr-pulse {
   0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-accent) 45%, transparent); }
   50%      { box-shadow: 0 0 0 10px color-mix(in srgb, var(--color-accent) 0%, transparent); }
 }
 
 /* Aurora — slow drifting arctic gradient */
-@keyframes yp-aurora-drift {
+@keyframes dr-aurora-drift {
   0%   { background-position: 0% 50%; }
   50%  { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
 
 /* Mint pop — completed-set check flash */
-@keyframes yp-pop {
+@keyframes dr-pop {
   0%   { transform: scale(0.6); }
   60%  { transform: scale(1.15); }
   100% { transform: scale(1); }
 }
 
 /* Summit shimmer — ice glint sweeping across the peak fill */
-@keyframes yp-shimmer {
+@keyframes dr-shimmer {
   0%   { transform: translateX(-100%); }
   100% { transform: translateX(240%); }
 }
 
 /* Flag float at the summit */
-@keyframes yp-float {
+@keyframes dr-float {
   0%, 100% { transform: translateY(0); }
   50%      { transform: translateY(-3px); }
 }
 
-/* Logo hover: ascent line redraws itself */
-@keyframes yp-logo-draw {
-  from { stroke-dashoffset: 30; }
-  to   { stroke-dashoffset: 0; }
-}
-
-/* Logo hover: summit dot pops with a mint flash */
-@keyframes yp-logo-dot {
-  0%   { transform: scale(0); }
-  70%  { transform: scale(1.5); }
-  100% { transform: scale(1); }
-}
-
-/* Logo hover: peaks lift slightly */
-@keyframes yp-logo-lift {
+/* Logo: the duck lifts the dumbbell once (a rep) */
+@keyframes dr-logo-rep {
   0%   { transform: translateY(0); }
-  40%  { transform: translateY(1.5px); }
+  35%  { transform: translateY(-14px) rotate(-4deg); }
+  70%  { transform: translateY(2px); }
   100% { transform: translateY(0); }
 }
 
 /* Lobby: ice motes drift up the face */
-@keyframes yp-mote {
+@keyframes dr-mote {
   0%   { transform: translateY(12vh); opacity: 0; }
   12%  { opacity: 0.75; }
   100% { transform: translateY(-105vh); opacity: 0; }
 }
 
 /* Lobby: the range rises into frame */
-@keyframes yp-ridge {
+@keyframes dr-ridge {
   from { transform: translateY(22%); opacity: 0; }
   to   { transform: translateY(0); opacity: 1; }
 }
 
 /* Lobby: the ascent draws itself once */
-@keyframes yp-lobby-draw {
+@keyframes dr-lobby-draw {
   to { stroke-dashoffset: 0; }
 }
 
-@keyframes yp-tick {
+@keyframes dr-tick {
   0%, 100% { transform: scaleY(0.3); opacity: 0.15; }
   50%      { transform: scaleY(1); opacity: 0.55; }
 }
 
-@keyframes yp-lobby-dot {
+@keyframes dr-lobby-dot {
   0%   { transform: scale(0); opacity: 0; }
   70%  { transform: scale(1.35); opacity: 1; }
   100% { transform: scale(1); opacity: 1; }
 }
 
 /* Lobby: a glint crosses the central face */
-@keyframes yp-lobby-glint {
+@keyframes dr-lobby-glint {
   0%   { transform: translateX(-30%); }
   100% { transform: translateX(130%); }
 }
@@ -291,133 +279,113 @@
 /* ──────────────────────────────────────────
    Shared motion classes
    ────────────────────────────────────────── */
-.yp-enter {
-  animation: yp-rise 320ms cubic-bezier(0.22, 1, 0.36, 1) both;
+.dr-enter {
+  animation: dr-rise 320ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.yp-stagger {
-  animation: yp-rise 380ms cubic-bezier(0.22, 1, 0.36, 1) both;
+.dr-stagger {
+  animation: dr-rise 380ms cubic-bezier(0.22, 1, 0.36, 1) both;
   animation-delay: min(calc(var(--i, 0) * 40ms), 200ms);
 }
 
-.yp-press {
+.dr-press {
   transition: transform 140ms ease, background-color 160ms ease, opacity 160ms ease;
 }
-.yp-press:active {
+.dr-press:active {
   transform: scale(0.98);
 }
 
-.yp-live {
-  animation: yp-pulse 2.2s ease-in-out infinite;
+.dr-live {
+  animation: dr-pulse 2.2s ease-in-out infinite;
 }
 
 /* Aurora surface — for the live-session banner and hero accents */
-.yp-aurora {
+.dr-aurora {
   background: linear-gradient(115deg, var(--aurora-a), var(--aurora-b), var(--aurora-a));
   background-size: 220% 220%;
-  animation: yp-aurora-drift 7s ease-in-out infinite;
+  animation: dr-aurora-drift 7s ease-in-out infinite;
   color: var(--aurora-text);
 }
 
 /* Mint glow — completed sets & summit states */
-.yp-glow-mint {
+.dr-glow-mint {
   box-shadow: var(--glow-mint);
 }
-.yp-pop {
-  animation: yp-pop 320ms cubic-bezier(0.22, 1, 0.36, 1) both;
+.dr-pop {
+  animation: dr-pop 320ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.yp-float {
-  animation: yp-float 3s ease-in-out infinite;
+.dr-float {
+  animation: dr-float 3s ease-in-out infinite;
 }
 
 /* ── Logo hover motion ── */
-.yp-logo {
+.dr-logo {
   transition: text-shadow 0.35s ease;
 }
-.yp-logo-mark {
+.dr-logo-mark {
   display: inline-flex;
   transition:
     transform 0.35s cubic-bezier(0.23, 1, 0.32, 1),
     filter 0.35s ease;
 }
-.yp-logo .yp-logo-line,
-.yp-lockup .yp-logo-line:not(.yp-mark-line) {
-  stroke-dasharray: 30;
-  stroke-dashoffset: 0;
-}
-.yp-logo .yp-logo-dot,
-.yp-lockup .yp-logo-dot {
-  transform-origin: center;
+.dr-logo-head {
   transform-box: fill-box;
+  transform-origin: 30% 100%;
 }
-.yp-logo .yp-logo-peaks,
-.yp-lockup .yp-logo-peaks {
-  transform-origin: center bottom;
-  transform-box: fill-box;
-}
-.yp-logo:hover .yp-logo-mark,
-.yp-logo:focus-visible .yp-logo-mark,
-a:hover .yp-logo .yp-logo-mark,
-a:focus-visible .yp-logo .yp-logo-mark,
-.yp-lockup:hover .yp-logo-mark {
+.dr-logo:hover .dr-logo-mark,
+.dr-logo:focus-visible .dr-logo-mark,
+a:hover .dr-logo .dr-logo-mark,
+a:focus-visible .dr-logo .dr-logo-mark,
+.dr-lockup:hover .dr-logo-mark {
   transform: scale(1.08);
   filter: drop-shadow(0 4px 14px color-mix(in srgb, var(--color-accent) 55%, transparent));
 }
-.yp-logo:hover,
-.yp-logo:focus-visible,
-a:hover .yp-logo,
-a:focus-visible .yp-logo,
-.yp-lockup:hover .yp-lobby-title {
+.dr-logo:hover,
+.dr-logo:focus-visible,
+a:hover .dr-logo,
+a:focus-visible .dr-logo,
+.dr-lockup:hover .dr-lobby-title {
   text-shadow: 0 0 16px color-mix(in srgb, var(--color-accent) 50%, transparent);
 }
-.yp-logo:hover .yp-logo-line,
-.yp-logo:focus-visible .yp-logo-line,
-a:hover .yp-logo .yp-logo-line,
-a:focus-visible .yp-logo .yp-logo-line {
-  animation: yp-logo-draw 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+.dr-logo:hover .dr-logo-head,
+.dr-logo:focus-visible .dr-logo-head,
+a:hover .dr-logo .dr-logo-head,
+a:focus-visible .dr-logo .dr-logo-head,
+.dr-lockup:hover .dr-logo-head,
+.dr-mark-rep {
+  animation: dr-logo-rep 700ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
-.yp-logo:hover .yp-logo-dot,
-.yp-logo:focus-visible .yp-logo-dot,
-a:hover .yp-logo .yp-logo-dot,
-a:focus-visible .yp-logo .yp-logo-dot,
-.yp-lockup:hover .yp-logo-dot {
-  animation: yp-logo-dot 600ms cubic-bezier(0.34, 1.56, 0.64, 1) 350ms both;
-}
-.yp-logo:hover .yp-logo-peaks,
-.yp-logo:focus-visible .yp-logo-peaks,
-a:hover .yp-logo .yp-logo-peaks,
-a:focus-visible .yp-logo .yp-logo-peaks,
-.yp-lockup:hover .yp-logo-peaks {
-  animation: yp-logo-lift 500ms ease-out both;
+.dr-mark-rep {
+  animation-delay: 250ms;
 }
 
 /* ── Lobby ── */
-.yp-lobby-glow {
+.dr-lobby-glow {
   position: absolute;
   border-radius: 999px;
   filter: blur(48px);
   pointer-events: none;
 }
-.yp-lobby-glow-a {
+.dr-lobby-glow-a {
   width: min(42vw, 460px);
   height: min(18vw, 200px);
   left: 8%;
   bottom: 0;
   background: var(--aurora-a);
   opacity: 0.14;
-  animation: yp-float 8s ease-in-out infinite;
+  animation: dr-float 8s ease-in-out infinite;
 }
-.yp-lobby-glow-b {
+.dr-lobby-glow-b {
   width: min(34vw, 380px);
   height: min(16vw, 180px);
   right: 6%;
   bottom: 2%;
   background: var(--aurora-b);
   opacity: 0.1;
-  animation: yp-float 10s ease-in-out infinite reverse;
+  animation: dr-float 10s ease-in-out infinite reverse;
 }
-.yp-lobby-mote {
+.dr-lobby-mote {
   position: absolute;
   bottom: 8%;
   width: var(--s, 3px);
@@ -425,81 +393,81 @@ a:focus-visible .yp-logo .yp-logo-peaks,
   border-radius: 999px;
   background: var(--color-accent);
   box-shadow: 0 0 8px var(--color-accent);
-  animation: yp-mote var(--d, 12s) linear infinite;
+  animation: dr-mote var(--d, 12s) linear infinite;
   animation-delay: var(--delay, 0s);
 }
-.yp-logo,
-.yp-lobby-title {
+.dr-logo,
+.dr-lobby-title {
   font-optical-sizing: auto;
   font-weight: 600;
 }
-.yp-lobby-title {
+.dr-lobby-title {
   font-size: clamp(2.75rem, 11vw, 6.75rem);
   line-height: 0.95;
 }
-.yp-lobby-hello {
+.dr-lobby-hello {
   font-size: clamp(2rem, 8vw, 4.25rem);
   max-width: 18ch;
 }
-.yp-door {
+.dr-door {
   transition:
     transform 0.35s cubic-bezier(0.23, 1, 0.32, 1),
     box-shadow 0.35s ease,
     color 0.35s ease,
     background-color 0.35s ease;
 }
-.yp-door:hover,
-.yp-door:focus-visible {
+.dr-door:hover,
+.dr-door:focus-visible {
   transform: translateY(-4px) scale(1.04);
   box-shadow: 0 10px 28px color-mix(in srgb, var(--color-accent) 30%, transparent);
   color: var(--color-ink);
 }
-.yp-door:active {
+.dr-door:active {
   transform: scale(0.98);
 }
 @media (max-width: 379px) {
-  .yp-logo,
-  .yp-lobby-title {
+  .dr-logo,
+  .dr-lobby-title {
     letter-spacing: 0.01em;
   }
 }
-.yp-lobby-tick {
+.dr-lobby-tick {
   position: absolute;
   bottom: 12%;
   width: 1px;
   height: 22%;
   background: linear-gradient(to top, transparent, var(--color-accent));
   transform-origin: bottom center;
-  animation: yp-tick var(--d, 8s) ease-in-out infinite;
+  animation: dr-tick var(--d, 8s) ease-in-out infinite;
   animation-delay: var(--delay, 0s);
 }
-.yp-mark-line {
+.dr-mark-line {
   stroke-dasharray: 30;
   stroke-dashoffset: 30;
-  animation: yp-lobby-draw 1.3s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
+  animation: dr-lobby-draw 1.3s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
 }
-.yp-mark-dot {
+.dr-mark-dot {
   transform-box: fill-box;
   transform-origin: center;
   opacity: 0;
-  animation: yp-lobby-dot 600ms cubic-bezier(0.34, 1.56, 0.64, 1) 1.1s forwards;
+  animation: dr-lobby-dot 600ms cubic-bezier(0.34, 1.56, 0.64, 1) 1.1s forwards;
 }
-.yp-lobby-ridge {
+.dr-lobby-ridge {
   transform-origin: center bottom;
-  animation: yp-ridge 1100ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: dr-ridge 1100ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
-.yp-lobby-line {
+.dr-lobby-line {
   stroke-dasharray: 1600;
   stroke-dashoffset: 1600;
-  animation: yp-lobby-draw 2.4s cubic-bezier(0.22, 1, 0.36, 1) 0.7s forwards;
+  animation: dr-lobby-draw 2.4s cubic-bezier(0.22, 1, 0.36, 1) 0.7s forwards;
 }
-.yp-lobby-dot {
+.dr-lobby-dot {
   transform-box: fill-box;
   transform-origin: center;
   opacity: 0;
-  animation: yp-lobby-dot 700ms cubic-bezier(0.34, 1.56, 0.64, 1) 1.5s forwards;
+  animation: dr-lobby-dot 700ms cubic-bezier(0.34, 1.56, 0.64, 1) 1.5s forwards;
 }
-.yp-ridge-line {
+.dr-ridge-line {
   fill: none;
   stroke: var(--color-ink);
   stroke-width: 7;
@@ -507,45 +475,45 @@ a:focus-visible .yp-logo .yp-logo-peaks,
   stroke-linejoin: round;
   stroke-dasharray: 100;
   stroke-dashoffset: 100;
-  animation: yp-lobby-draw 1.6s cubic-bezier(0.22, 1, 0.36, 1) 0.35s forwards;
+  animation: dr-lobby-draw 1.6s cubic-bezier(0.22, 1, 0.36, 1) 0.35s forwards;
 }
-.yp-summit {
+.dr-summit {
   transform-box: fill-box;
   transform-origin: center;
-  animation: yp-summit 3.4s ease-in-out 2.2s infinite;
+  animation: dr-summit 3.4s ease-in-out 2.2s infinite;
 }
-@keyframes yp-summit {
+@keyframes dr-summit {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.82; }
 }
 :root {
-  --yp-ridge-h: min(34vh, calc(100vw * 400 / 1440));
+  --dr-ridge-h: min(34vh, calc(100vw * 400 / 1440));
 }
 @media (max-height: 700px) {
   :root {
-    --yp-ridge-h: min(28vh, calc(100vw * 400 / 1440));
+    --dr-ridge-h: min(28vh, calc(100vw * 400 / 1440));
   }
 }
 /* Phones held sideways: the ridge would cover the intro form, so only the version line stays. */
 @media (max-height: 480px) {
   :root {
-    --yp-ridge-h: 0px;
+    --dr-ridge-h: 0px;
   }
-  .yp-ridge-slot {
+  .dr-ridge-slot {
     display: none;
   }
 }
-.yp-ridge-slot {
-  height: var(--yp-ridge-h);
+.dr-ridge-slot {
+  height: var(--dr-ridge-h);
 }
-.yp-lobby-glint {
-  animation: yp-lobby-glint 3.6s ease-in-out 1.4s infinite;
+.dr-lobby-glint {
+  animation: dr-lobby-glint 3.6s ease-in-out 1.4s infinite;
 }
 
 /* ──────────────────────────────────────────
    Shared component classes
    ────────────────────────────────────────── */
-.yp-label {
+.dr-label {
   font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 0.16em;
@@ -555,13 +523,13 @@ a:focus-visible .yp-logo .yp-logo-peaks,
   line-height: 1.35;
 }
 
-.yp-card {
+.dr-card {
   border-radius: 0.875rem;
   background: var(--color-surface);
   box-shadow: var(--shadow-card);
 }
 
-.yp-field {
+.dr-field {
   border-radius: 1rem;
   border: 1px solid var(--color-border);
   background: color-mix(in srgb, var(--color-paper) 70%, var(--color-surface));
@@ -579,17 +547,17 @@ a:focus-visible .yp-logo .yp-logo-peaks,
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  .yp-lobby-ridge {
+  .dr-lobby-ridge {
     transform: none !important;
     opacity: 1 !important;
   }
-  .yp-ridge-line,
-  .yp-lobby-line,
-  .yp-mark-line {
+  .dr-ridge-line,
+  .dr-lobby-line,
+  .dr-mark-line {
     stroke-dashoffset: 0 !important;
   }
-  .yp-lobby-dot,
-  .yp-summit {
+  .dr-lobby-dot,
+  .dr-summit {
     opacity: 1 !important;
     transform: none !important;
   }

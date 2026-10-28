@@ -93,7 +93,7 @@ export function WorkoutIconPicker({
         aria-expanded={open}
         aria-haspopup="listbox"
         aria-controls="workout-icon-listbox"
-        className="yp-press flex items-center justify-center w-10 h-10 min-w-[44px] min-h-[44px] rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] hover:bg-[var(--color-hover)] text-[var(--color-ink)] transition-colors touch-manipulation"
+        className="dr-press flex items-center justify-center w-10 h-10 min-w-[44px] min-h-[44px] rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] hover:bg-[var(--color-hover)] text-[var(--color-ink)] transition-colors touch-manipulation"
       >
         {value ? (
           (() => {
@@ -111,10 +111,10 @@ export function WorkoutIconPicker({
           id="workout-icon-listbox"
           role="listbox"
           aria-label={t('activityIcon')}
-          className="yp-enter absolute left-0 top-full mt-2 z-50 p-4 rounded-xl bg-[var(--color-surface)] shadow-[var(--shadow-card)] w-[min(17.5rem,calc(100vw-1rem))] max-w-[calc(100vw-1rem)]"
+          className="dr-enter absolute left-0 top-full mt-2 z-50 p-4 rounded-xl bg-[var(--color-surface)] shadow-[var(--shadow-card)] w-[min(17.5rem,calc(100vw-1rem))] max-w-[calc(100vw-1rem)]"
           onClick={(e) => e.stopPropagation()}
         >
-          <p className="yp-label mb-3">{t('activityIcon')}</p>
+          <p className="dr-label mb-3">{t('activityIcon')}</p>
           <div className="flex flex-wrap gap-1.5">
             <button
               type="button"

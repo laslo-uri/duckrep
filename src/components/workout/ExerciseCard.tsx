@@ -74,7 +74,7 @@ export function ExerciseCard({
 
   return (
     <div
-      className="yp-card p-5 sm:p-6"
+      className="dr-card p-5 sm:p-6"
       style={accent ? { borderLeft: accent } : undefined}
     >
       <div className="flex items-center justify-between gap-3 mb-3">
@@ -108,7 +108,7 @@ export function ExerciseCard({
           type="button"
           onClick={onDelete}
           aria-label={t('delete')}
-          className="yp-press p-2.5 min-w-[44px] min-h-[44px] rounded-lg text-[var(--color-muted)] hover:text-[var(--color-error)] hover:bg-[var(--color-error-bg)] touch-manipulation flex items-center justify-center"
+          className="dr-press p-2.5 min-w-[44px] min-h-[44px] rounded-lg text-[var(--color-muted)] hover:text-[var(--color-error)] hover:bg-[var(--color-error-bg)] touch-manipulation flex items-center justify-center"
         >
           <Trash2 size={16} />
         </button>
@@ -165,7 +165,7 @@ export function ExerciseCard({
           type="button"
           onClick={onAddSet}
           disabled={isAddingSet}
-          className="yp-press flex items-center gap-2 py-3 min-h-[44px] text-sm text-[var(--color-muted)] hover:text-[var(--color-ink)] disabled:opacity-50 touch-manipulation"
+          className="dr-press flex items-center gap-2 py-3 min-h-[44px] text-sm text-[var(--color-muted)] hover:text-[var(--color-ink)] disabled:opacity-50 touch-manipulation"
         >
           <Plus size={16} />
           {t('addSet')}

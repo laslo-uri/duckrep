@@ -242,7 +242,7 @@ export function StatsPage() {
       </div>
 
       {/* Add today's weight */}
-      <section className="yp-card p-5 sm:p-6">
+      <section className="dr-card p-5 sm:p-6">
         <h2 className="font-medium text-[var(--color-ink)] mb-3 flex items-center gap-2">
           <Scale size={18} />
           {t('logWeight')}
@@ -275,7 +275,7 @@ export function StatsPage() {
           <button
             type="submit"
             disabled={!todayWeight.trim() || addWeightMutation.isPending}
-            className="yp-press min-h-[48px] shrink-0 rounded-xl bg-[var(--color-accent)] px-5 text-sm font-semibold text-[var(--color-on-accent)] disabled:opacity-50 touch-manipulation"
+            className="dr-press min-h-[48px] shrink-0 rounded-xl bg-[var(--color-accent)] px-5 text-sm font-semibold text-[var(--color-on-accent)] disabled:opacity-50 touch-manipulation"
           >
             {t('save')}
           </button>
@@ -283,7 +283,7 @@ export function StatsPage() {
       </section>
 
       {/* User stats: birth date, height, goal */}
-      <section className="yp-card p-5 sm:p-6">
+      <section className="dr-card p-5 sm:p-6">
         <h2 className="font-medium text-[var(--color-ink)] mb-3 flex items-center gap-2">
           <CalendarIcon size={18} />
           {t('profileSettings')}
@@ -317,14 +317,14 @@ export function StatsPage() {
                 type="button"
                 onClick={saveStats}
                 disabled={updateStatsMutation.isPending}
-                className="yp-press px-5 py-2 min-h-[44px] rounded-xl bg-[var(--color-accent)] text-[var(--color-on-accent)] text-sm font-semibold touch-manipulation"
+                className="dr-press px-5 py-2 min-h-[44px] rounded-xl bg-[var(--color-accent)] text-[var(--color-on-accent)] text-sm font-semibold touch-manipulation"
               >
                 {t('save')}
               </button>
               <button
                 type="button"
                 onClick={() => setEditingStats(false)}
-                className="yp-press px-5 py-2 min-h-[44px] rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-ink)] text-sm hover:bg-[var(--color-hover)] touch-manipulation"
+                className="dr-press px-5 py-2 min-h-[44px] rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-ink)] text-sm hover:bg-[var(--color-hover)] touch-manipulation"
               >
                 {t('cancel')}
               </button>
@@ -359,7 +359,7 @@ export function StatsPage() {
 
       {/* Weight goal graph */}
       {(weightsForChart.length > 0 || goal != null) && (
-        <section className="yp-card p-5 sm:p-6">
+        <section className="dr-card p-5 sm:p-6">
           <h2 className="font-medium text-[var(--color-ink)] mb-4 flex items-center gap-2">
             <TrendingDown size={18} />
             {t('weightGoalGraph')}
@@ -369,7 +369,7 @@ export function StatsPage() {
       )}
 
       {/* Activity grid - GitHub style */}
-      <section className="yp-card p-5 sm:p-6">
+      <section className="dr-card p-5 sm:p-6">
         <h2 className="font-medium text-[var(--color-ink)] mb-3 flex items-center gap-2">
           <Activity size={18} />
           {t('activityDays')}
@@ -387,7 +387,7 @@ export function StatsPage() {
         <ContributionGrid days={days} workoutDaysMap={workoutDaysMap} />
       </section>
 
-      <section className="yp-card p-5 sm:p-6">
+      <section className="dr-card p-5 sm:p-6">
         <h2 className="font-medium text-[var(--color-ink)] mb-1 flex items-center gap-2">
           <Zap size={18} />
           {t('analyticsRollupTitle')}
@@ -427,10 +427,10 @@ function StatCard({
   value: string;
 }) {
   return (
-    <div className="yp-card p-4 sm:p-5 min-w-0">
+    <div className="dr-card p-4 sm:p-5 min-w-0">
       <div className="flex items-center gap-2 text-[var(--color-muted)]">
         {icon}
-        <p className="yp-label">{label}</p>
+        <p className="dr-label">{label}</p>
       </div>
       <p className="font-serif text-xl text-[var(--color-ink)] mt-2 min-w-0 break-words">{value}</p>
     </div>

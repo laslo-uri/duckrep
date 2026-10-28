@@ -22,7 +22,7 @@ const SOURCE_MUSCLE_MAP: Record<string, MuscleGroup> = {
   abdominals: 'abs',
 };
 
-/** Map free-exercise-db primary muscle label to YouPeak muscle_group. */
+/** Map free-exercise-db primary muscle label to Duckrep muscle_group. */
 export function mapSourceMuscleToGroup(primaryMuscle: string | undefined | null): MuscleGroup {
   if (!primaryMuscle) return 'other';
   const key = primaryMuscle.trim().toLowerCase();

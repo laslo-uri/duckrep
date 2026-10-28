@@ -47,7 +47,7 @@ export function SelectMenu({
         aria-expanded={open}
         aria-label={current ? `${label}: ${current.label}` : label}
         onClick={() => setOpen((currentOpen) => !currentOpen)}
-        className={`yp-press inline-flex min-h-[44px] w-full items-center justify-between gap-2 rounded-xl border px-3 text-sm disabled:opacity-50 ${
+        className={`dr-press inline-flex min-h-[44px] w-full items-center justify-between gap-2 rounded-xl border px-3 text-sm disabled:opacity-50 ${
           open
             ? 'border-transparent bg-[var(--color-paper)] text-[var(--color-ink)] ring-2 ring-[var(--color-accent)]'
             : 'border-[var(--color-border)] bg-[var(--color-paper)] text-[var(--color-ink)] hover:bg-[var(--color-hover)]'
@@ -77,7 +77,7 @@ export function SelectMenu({
                   onChange(option.value);
                   setOpen(false);
                 }}
-                className={`yp-press block min-h-[40px] w-full whitespace-nowrap rounded-lg px-3 text-left text-sm ${
+                className={`dr-press block min-h-[40px] w-full whitespace-nowrap rounded-lg px-3 text-left text-sm ${
                   selected
                     ? 'bg-[var(--color-accent)] font-semibold text-[var(--color-on-accent)]'
                     : 'text-[var(--color-ink)] hover:bg-[var(--color-hover)]'

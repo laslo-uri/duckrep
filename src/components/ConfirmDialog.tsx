@@ -48,7 +48,7 @@ export function ConfirmDialog({
         aria-modal="true"
         aria-labelledby="confirm-dialog-title"
         aria-describedby="confirm-dialog-message"
-        className="yp-enter relative w-full sm:max-w-md rounded-t-2xl sm:rounded-2xl bg-[var(--color-surface)] p-6 shadow-[var(--shadow-card)]"
+        className="dr-enter relative w-full sm:max-w-md rounded-t-2xl sm:rounded-2xl bg-[var(--color-surface)] p-6 shadow-[var(--shadow-card)]"
       >
         <h2 id="confirm-dialog-title" className="font-serif text-lg font-semibold text-[var(--color-ink)]">
           {title}
@@ -61,14 +61,14 @@ export function ConfirmDialog({
             type="button"
             ref={cancelRef}
             onClick={onCancel}
-            className="yp-press px-5 py-3 min-h-[48px] rounded-xl border border-[var(--color-border)] text-sm font-medium hover:bg-[var(--color-hover)] touch-manipulation"
+            className="dr-press px-5 py-3 min-h-[48px] rounded-xl border border-[var(--color-border)] text-sm font-medium hover:bg-[var(--color-hover)] touch-manipulation"
           >
             {cancelLabel}
           </button>
           <button
             type="button"
             onClick={onConfirm}
-            className={`yp-press px-5 py-3 min-h-[48px] rounded-xl text-sm font-semibold touch-manipulation ${confirmClass}`}
+            className={`dr-press px-5 py-3 min-h-[48px] rounded-xl text-sm font-semibold touch-manipulation ${confirmClass}`}
           >
             {confirmLabel}
           </button>

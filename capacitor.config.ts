@@ -1,8 +1,8 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.youpeak.app',
-  appName: 'YouPeak',
+  appId: 'com.duckrep.app',
+  appName: 'Duckrep',
   webDir: 'dist',
 };
 

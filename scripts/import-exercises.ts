@@ -1,5 +1,5 @@
 /**
- * Build-time import: fetches yuhonas/free-exercise-db, merges curated YouPeak
+ * Build-time import: fetches yuhonas/free-exercise-db, merges curated Duckrep
  * exercises, writes src/lib/db/seedExercises.generated.ts
  *
  * Run: npm run import-exercises

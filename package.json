@@ -1,8 +1,8 @@
 {
-  "name": "youpeak",
+  "name": "duckrep",
   "private": true,
   "version": "0.1.0",
-  "description": "Minimalist gym journal — local SQLite, trilingual (en / sr / hu)",
+  "description": "Training and body stats journal — local SQLite, passphrase lock, trilingual (en / sr / hu)",
   "license": "MIT",
   "type": "module",
   "engines": {
@@ -10,12 +10,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/laslo-uri/you-peak.git"
+    "url": "git+https://github.com/laslo-uri/duckrep.git"
   },
   "bugs": {
-    "url": "https://github.com/laslo-uri/you-peak/issues"
+    "url": "https://github.com/laslo-uri/duckrep/issues"
   },
-  "homepage": "https://github.com/laslo-uri/you-peak#readme",
+  "homepage": "https://github.com/laslo-uri/duckrep#readme",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -43,7 +43,7 @@
     "@tailwindcss/vite": "^4.2.1",
     "@tanstack/react-query": "^5.90.21",
     "@tanstack/react-virtual": "^3.13.26",
-    "@tauri-apps/plugin-sql": "^2.3.2",
+    "@tauri-apps/api": "~2.11.0",
     "i18next": "^25.8.18",
     "i18next-browser-languagedetector": "^8.2.1",
     "lucide-react": "^0.577.0",
@@ -51,7 +51,8 @@
     "react-dom": "^19.2.0",
     "react-i18next": "^16.5.8",
     "react-router-dom": "^7.13.1",
-    "sql.js": "^1.13.0"
+    "sql.js": "^1.13.0",
+    "tweetnacl": "^1.0.3"
   },
   "devDependencies": {
     "@capacitor/android": "^8.5.3",
