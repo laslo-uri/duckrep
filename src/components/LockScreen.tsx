@@ -5,6 +5,8 @@ import { builtInPassphrase, MIN_PASSPHRASE, setup, unlock, type VaultState } fro
 import { useTheme } from '../contexts/ThemeContext';
 import { DuckrepMark, DuckrepWordmark } from './DuckrepLogo';
 import { LanguageSwitcher } from './LanguageSwitcher';
+import { FamilySky } from './FamilySky';
+import { BackToRootsware } from './BackToRootsware';
 
 /** Shown until the vault is unlocked. First run creates the passphrase (or takes the built-in one). */
 export function LockScreen({ state, onUnlocked }: { state: Exclude<VaultState, 'unlocked'>; onUnlocked: () => void }) {
@@ -64,17 +66,18 @@ export function LockScreen({ state, onUnlocked }: { state: Exclude<VaultState, '
         </button>
         <LanguageSwitcher />
       </div>
-      <div className="dr-lobby-glow dr-lobby-glow-a" aria-hidden />
-      <div className="dr-lobby-glow dr-lobby-glow-b" aria-hidden />
-      <main id="main-content" className="relative z-10 flex flex-1 items-center justify-center px-4 py-16">
+      <FamilySky />
+      <main id="main-content" className="relative z-10 flex flex-1 flex-col items-center justify-center gap-4 px-4 py-16">
         <form
           onSubmit={(e) => void submit(e)}
           aria-labelledby="lock-title"
-          className="dr-card dr-enter w-full max-w-sm p-5 shadow-[var(--shadow-pop)]"
+          className="dr-card fg-enter w-full max-w-sm p-5 shadow-[var(--shadow-pop)]"
         >
           <div className="dr-lockup mb-5 flex items-center gap-3">
-            <DuckrepMark size={48} animateIn className="rounded-xl" />
-            <div className="min-w-0 text-left">
+            <span className="fg-glide">
+              <DuckrepMark size={48} className="rounded-xl" />
+            </span>
+            <div className="fg-enter fg-1 min-w-0 text-left">
               <h1 id="lock-title" className="text-[22px]">
                 <DuckrepWordmark />
               </h1>
@@ -135,6 +138,7 @@ export function LockScreen({ state, onUnlocked }: { state: Exclude<VaultState, '
             </>
           )}
         </form>
+        <BackToRootsware className="fg-enter fg-3 text-[var(--color-muted)]" />
       </main>
     </div>
   );

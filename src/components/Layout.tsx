@@ -8,6 +8,7 @@ import { useTheme } from '../contexts/ThemeContext';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { DuckrepMark, DuckrepWordmark } from './DuckrepLogo';
 import { CookieSettingsLink } from './CookieConsent';
+import { BackToRootsware } from './BackToRootsware';
 import { MutationAlert } from './MutationAlert';
 import { WorkoutDayIcon } from './WorkoutIconPicker';
 import { getProfileDisplayName, listWorkoutDays } from '../lib/db';
@@ -162,6 +163,7 @@ function Sidebar({ onNew, newPending }: { onNew: () => void; newPending: boolean
       </nav>
 
       <div className="border-t border-[var(--color-border)] p-2">
+        <BackToRootsware variant="sidebar" className="mb-1 hidden text-[var(--color-muted)] lg:inline-flex" />
         <Link
           to="/settings"
           aria-current={location.pathname === '/settings' ? 'page' : undefined}

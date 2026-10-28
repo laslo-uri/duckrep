@@ -10,6 +10,8 @@ import { useTheme } from '../contexts/ThemeContext';
 import { useLocalUser } from '../contexts/LocalUserContext';
 import { BirthCalendar } from '../components/BirthCalendar';
 import { CookieSettingsLink } from '../components/CookieConsent';
+import { FamilySky } from '../components/FamilySky';
+import { BackToRootsware } from '../components/BackToRootsware';
 import { LanguageSwitcher } from '../components/LanguageSwitcher';
 import { UnitInput } from '../components/UnitInput';
 import { DuckrepMark } from '../components/DuckrepLogo';
@@ -173,10 +175,10 @@ export function LobbyPage() {
 
   return (
     <div className="relative h-[var(--app-dvh)] overflow-hidden bg-[var(--color-paper)] text-[var(--color-ink)] flex flex-col">
-      <div className="dr-lobby-glow dr-lobby-glow-a" />
-      <div className="dr-lobby-glow dr-lobby-glow-b" />
+      <FamilySky />
 
       <div className="absolute top-0 inset-x-0 z-20 flex justify-end items-center gap-1 px-4 sm:px-8 h-14">
+        <BackToRootsware className="mr-auto text-[var(--color-muted)]" />
         <button
           type="button"
           onClick={toggleTheme}

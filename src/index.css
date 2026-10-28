@@ -902,3 +902,156 @@ html.is-desktop body {
   background: #e81123;
   color: #fff;
 }
+
+/* ------------------------------------------------------------------------------------------------
+ * Family intro, the same in all four bird apps (keep in sync with Hawkdone, Stashbird, Duckrep,
+ * Dovediet): the sky behind the lock screen (FamilySky), the entrance choreography (.fg-enter with
+ * --fg-i as the step, .fg-glide on the mark) and the "← Rootsware" link (BackToRootsware).
+ * Only the two colours below differ per app.
+ * ------------------------------------------------------------------------------------------------ */
+:root {
+  --sky-accent: var(--color-accent);
+  --sky-line: var(--color-accent);
+}
+.family-sky {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.family-sky__glow {
+  position: absolute;
+  left: 50%;
+  top: 44%;
+  width: 34rem;
+  height: 34rem;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, color-mix(in srgb, var(--sky-accent) 22%, transparent), transparent 68%);
+  animation: fg-glow-in 1.2s ease-out both, fg-drift 18s ease-in-out 1.2s infinite;
+}
+.family-sky__paths {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-mask-image: radial-gradient(circle at 50% 46%, transparent 0 13rem, #000 26rem);
+  mask-image: radial-gradient(circle at 50% 46%, transparent 0 13rem, #000 26rem);
+}
+.family-sky__path {
+  fill: none;
+  stroke: var(--sky-line);
+  stroke-opacity: 0.5;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-dasharray: 10 16;
+  animation: fg-path-in 1.6s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both, fg-flow 24s linear infinite;
+}
+.family-sky__path--far {
+  stroke-opacity: 0.26;
+  stroke-width: 1.5;
+  animation-delay: 0.35s, 0s;
+  animation-duration: 1.6s, 36s;
+  animation-direction: normal, reverse;
+}
+.family-sky__path--near {
+  stroke-opacity: 0.68;
+  animation-delay: 0.05s, 0s;
+}
+
+/* entrance: mark, name, status line, form, link — 80ms apart */
+.fg-enter {
+  animation: fg-rise 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--fg-i, 0) * 80ms + 120ms);
+}
+/* the mark settles, then glides like a bird on a thermal */
+.fg-glide {
+  display: inline-flex;
+  animation: fg-mark-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both, fg-glide 5.2s ease-in-out 0.9s infinite;
+}
+
+.rw-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  height: 1.875rem;
+  padding: 0 0.7rem 0 0.5rem;
+  border: 1px solid var(--sky-line-border, color-mix(in srgb, var(--sky-line) 30%, transparent));
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1;
+  opacity: 0.8;
+  cursor: pointer;
+  transition: opacity 120ms ease, background-color 120ms ease, border-color 120ms ease;
+}
+.rw-back:hover {
+  opacity: 1;
+  border-color: color-mix(in srgb, var(--sky-accent) 55%, transparent);
+  background: color-mix(in srgb, var(--sky-accent) 10%, transparent);
+}
+.rw-back:focus-visible {
+  opacity: 1;
+  outline: 2px solid var(--sky-accent);
+  outline-offset: 2px;
+}
+.rw-back__chevron {
+  width: 0.85rem;
+  height: 0.85rem;
+  flex: none;
+}
+.rw-back__mark {
+  width: 0.95rem;
+  height: 0.95rem;
+  flex: none;
+  color: #d58c5c;
+}
+.rw-back--sidebar {
+  width: 100%;
+  height: 1.75rem;
+  border-radius: 0.375rem;
+  justify-content: flex-start;
+}
+
+@keyframes fg-rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes fg-mark-in {
+  from { opacity: 0; transform: translateY(14px) scale(0.86) rotate(-6deg); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes fg-glide {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  30% { transform: translateY(-3px) rotate(-2.5deg); }
+  70% { transform: translateY(2px) rotate(2deg); }
+}
+@keyframes fg-glow-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes fg-drift {
+  50% { transform: translate(-46%, -54%) scale(1.06); }
+}
+@keyframes fg-path-in {
+  from { opacity: 0; stroke-dashoffset: 260; }
+  to { opacity: 1; stroke-dashoffset: 0; }
+}
+@keyframes fg-flow {
+  to { stroke-dashoffset: -208; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .family-sky__glow,
+  .family-sky__path,
+  .fg-enter,
+  .fg-glide {
+    animation: none !important;
+  }
+}
+.fg-1 { --fg-i: 1; }
+.fg-2 { --fg-i: 2; }
+.fg-3 { --fg-i: 3; }
+.fg-4 { --fg-i: 4; }
