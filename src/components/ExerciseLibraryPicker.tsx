@@ -14,7 +14,7 @@ import {
 } from '../utils/exerciseDisplay';
 import type { ExerciseDefinition } from '../types';
 
-const ROW_HEIGHT = 64;
+const ROW_HEIGHT = 44;
 
 export function ExerciseLibraryPicker({
   open,
@@ -85,22 +85,22 @@ export function ExerciseLibraryPicker({
         role="dialog"
         aria-modal="true"
         aria-labelledby="library-picker-title"
-        className="dr-enter relative w-full sm:max-w-lg max-h-[85dvh] rounded-t-2xl sm:rounded-2xl bg-[var(--color-paper)] shadow-[var(--shadow-card)] flex flex-col"
+        className="dr-enter relative w-full sm:max-w-lg max-h-[85dvh] rounded-t-xl sm:rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-pop)] flex flex-col"
       >
-        <div className="flex items-center justify-between gap-3 p-4 border-b border-[var(--color-border)]">
-          <h2 id="library-picker-title" className="font-serif text-lg font-semibold text-[var(--color-ink)]">
+        <div className="flex h-11 items-center justify-between gap-3 px-3 border-b border-[var(--color-border)] max-md:h-12">
+          <h2 id="library-picker-title" className="text-[13px] font-semibold text-[var(--color-ink)]">
             {t('addFromLibrary')}
           </h2>
           <button
             type="button"
             onClick={onClose}
-            className="dr-press p-2.5 rounded-lg hover:bg-[var(--color-hover)] text-[var(--color-muted)] touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center"
+            className="dr-btn dr-btn-ghost dr-icon-btn"
             aria-label={t('cancel')}
           >
-            <X size={22} />
+            <X size={15} />
           </button>
         </div>
-        <div className="p-3 border-b border-[var(--color-border)] space-y-3">
+        <div className="p-2 border-b border-[var(--color-border)] space-y-2">
           <input
             ref={searchRef}
             type="search"
@@ -108,18 +108,14 @@ export function ExerciseLibraryPicker({
             onChange={(e) => setFilter(e.target.value)}
             placeholder={t('searchExercises')}
             aria-label={t('searchExercises')}
-            className="w-full px-4 py-2.5 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]"
+            className="dr-input w-full"
           />
-          <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1">
+          <div className="flex gap-1.5 overflow-x-auto pb-0.5 [scrollbar-width:none]">
             <button
               type="button"
               onClick={() => setMuscleGroup('')}
               aria-pressed={muscleGroup === ''}
-              className={`shrink-0 px-3 py-2 min-h-[44px] rounded-lg text-xs font-medium border transition-colors touch-manipulation ${
-                muscleGroup === ''
-                  ? 'bg-[var(--color-accent)] text-[var(--color-on-accent)] border-transparent'
-                  : 'border-[var(--color-border)] text-[var(--color-muted)] hover:bg-[var(--color-hover)]'
-              }`}
+              className="dr-chip dr-chip-tap shrink-0"
             >
               {t('filterAllMuscleGroups')}
             </button>
@@ -129,18 +125,14 @@ export function ExerciseLibraryPicker({
                 type="button"
                 onClick={() => setMuscleGroup(group)}
                 aria-pressed={muscleGroup === group}
-                className={`shrink-0 px-3 py-2 min-h-[44px] rounded-lg text-xs font-medium border transition-colors touch-manipulation ${
-                  muscleGroup === group
-                    ? 'bg-[var(--color-accent)] text-[var(--color-on-accent)] border-transparent'
-                    : 'border-[var(--color-border)] text-[var(--color-muted)] hover:bg-[var(--color-hover)]'
-                }`}
+                className="dr-chip dr-chip-tap shrink-0"
               >
                 {t(`muscleGroups.${group}`)}
               </button>
             ))}
           </div>
         </div>
-        <div ref={listRef} className="overflow-y-auto flex-1 p-3 pb-6">
+        <div ref={listRef} className="overflow-y-auto flex-1 p-1 pb-4">
           <QueryState
             isLoading={isLoading}
             isError={isError}
@@ -148,7 +140,7 @@ export function ExerciseLibraryPicker({
             refetch={() => void refetch()}
           >
           {filtered.length === 0 ? (
-            <p className="text-sm text-[var(--color-muted)] px-1">{t('noExercisesLibrary')}</p>
+            <p className="text-[12px] text-[var(--color-muted)] px-2 py-2">{t('noExercisesLibrary')}</p>
           ) : (
             <ul
               className="relative w-full"
@@ -176,24 +168,24 @@ export function ExerciseLibraryPicker({
                         setFilter('');
                         setMuscleGroup('');
                       }}
-                      className="w-full h-full text-left px-3 py-2 rounded-xl border border-transparent hover:border-[var(--color-border)] hover:bg-[var(--color-hover)] transition-colors touch-manipulation flex items-center gap-3"
+                      className="w-full h-full text-left px-2 rounded-md hover:bg-[var(--color-hover)] transition-colors touch-manipulation flex items-center gap-2.5"
                     >
                       {safeImage ? (
                         <img
                           src={safeImage}
                           alt=""
-                          className="w-10 h-10 rounded-xl object-cover bg-[var(--color-hover)] flex-shrink-0"
+                          className="w-7 h-7 rounded-md object-cover bg-[var(--color-hover)] flex-shrink-0"
                           loading="lazy"
                         />
                       ) : (
-                        <div className="w-10 h-10 rounded-xl bg-[var(--color-hover)] flex-shrink-0" aria-hidden />
+                        <div className="w-7 h-7 rounded-md bg-[var(--color-hover)] flex-shrink-0" aria-hidden />
                       )}
                       <span className="flex-1 min-w-0">
                         <span className="block font-medium text-[var(--color-ink)] truncate">{primary}</span>
                         {alt ? (
-                          <span className="block text-xs text-[var(--color-muted)] truncate mt-0.5">{alt}</span>
+                          <span className="block text-[11px] text-[var(--color-faint)] truncate">{alt}</span>
                         ) : (
-                          <span className="block text-xs text-[var(--color-muted)] truncate mt-0.5">
+                          <span className="block text-[11px] text-[var(--color-faint)] truncate">
                             {t(`muscleGroups.${group}`)}
                           </span>
                         )}

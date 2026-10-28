@@ -36,8 +36,8 @@ export function ConfirmDialog({
 
   const confirmClass =
     variant === 'danger'
-      ? 'bg-[var(--color-error)] text-white hover:opacity-90'
-      : 'bg-[var(--color-accent)] text-[var(--color-on-accent)] hover:opacity-90';
+      ? '!bg-[var(--color-error)] !text-white border-transparent hover:opacity-90'
+      : 'dr-btn-primary';
 
   return (
     <div className="fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4">
@@ -48,27 +48,27 @@ export function ConfirmDialog({
         aria-modal="true"
         aria-labelledby="confirm-dialog-title"
         aria-describedby="confirm-dialog-message"
-        className="dr-enter relative w-full sm:max-w-md rounded-t-2xl sm:rounded-2xl bg-[var(--color-surface)] p-6 shadow-[var(--shadow-card)]"
+        className="dr-enter relative w-full sm:max-w-sm rounded-t-xl sm:rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-4 pb-[max(1rem,env(safe-area-inset-bottom))] shadow-[var(--shadow-pop)]"
       >
-        <h2 id="confirm-dialog-title" className="font-serif text-lg font-semibold text-[var(--color-ink)]">
+        <h2 id="confirm-dialog-title" className="text-[15px] font-semibold text-[var(--color-ink)]">
           {title}
         </h2>
-        <p id="confirm-dialog-message" className="mt-2 text-sm text-[var(--color-muted)] leading-relaxed">
+        <p id="confirm-dialog-message" className="mt-1 text-[13px] text-[var(--color-muted)] leading-relaxed">
           {message}
         </p>
-        <div className="mt-6 flex flex-col-reverse sm:flex-row sm:justify-end gap-2">
+        <div className="mt-4 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
           <button
             type="button"
             ref={cancelRef}
             onClick={onCancel}
-            className="dr-press px-5 py-3 min-h-[48px] rounded-xl border border-[var(--color-border)] text-sm font-medium hover:bg-[var(--color-hover)] touch-manipulation"
+            className="dr-btn"
           >
             {cancelLabel}
           </button>
           <button
             type="button"
             onClick={onConfirm}
-            className={`dr-press px-5 py-3 min-h-[48px] rounded-xl text-sm font-semibold touch-manipulation ${confirmClass}`}
+            className={`dr-btn ${confirmClass}`}
           >
             {confirmLabel}
           </button>

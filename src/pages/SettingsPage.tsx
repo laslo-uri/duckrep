@@ -3,7 +3,7 @@ import { usePageTitle } from '../hooks/usePageTitle';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { Trash2, RotateCcw, Download, Upload } from 'lucide-react';
+import { Trash2, RotateCcw, Download, Upload, Sun, Moon } from 'lucide-react';
 import { ProfileEditor } from '../components/ProfileEditor';
 import { useLocalUser } from '../contexts/LocalUserContext';
 import {
@@ -20,6 +20,11 @@ import { QueryState } from '../components/QueryState';
 import { MutationAlert } from '../components/MutationAlert';
 import { ConfirmDialog } from '../components/ConfirmDialog';
 import { SecuritySettings } from '../components/SecuritySettings';
+import { PageHeader } from '../components/Layout';
+import { LanguageSwitcher } from '../components/LanguageSwitcher';
+import { CookieSettingsLink } from '../components/CookieConsent';
+import { useTheme } from '../contexts/ThemeContext';
+import { APP_VERSION } from '../lib/appVersion';
 
 type SettingsTab = 'profile' | 'security' | 'data' | 'trash';
 
@@ -58,6 +63,7 @@ export function SettingsPage() {
   const location = useLocation();
   const navigate = useNavigate();
   const { user } = useLocalUser();
+  const { theme, toggleTheme } = useTheme();
   const queryClient = useQueryClient();
   const { mutationError: trashMutationError, clearError, onMutationError: onTrashMutationError } = useMutationError();
   const { confirm, confirmState, handleConfirm, handleCancel } = useConfirm();
@@ -194,22 +200,14 @@ export function SettingsPage() {
   }
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-semibold text-[var(--color-ink)] tracking-tight text-balance">
-          {t('settings')}
-        </h1>
-        <p className="text-sm text-[var(--color-muted)] mt-1 max-w-md">
-          {t('localAppHint')}
-        </p>
-      </div>
-
-      <div className="sticky top-14 z-20 -mx-4 px-4 sm:-mx-8 sm:px-8 py-2 bg-[var(--color-paper)]/95 backdrop-blur-sm">
+    <>
+      <PageHeader title={t('settings')} meta={<span className="hidden sm:inline">{t('localAppHint')}</span>} />
+      <div className="sticky top-[var(--dr-header-h)] z-20 border-b border-[var(--color-border)] bg-[var(--color-paper)]/95 px-3 backdrop-blur-sm md:px-4">
         <div
           role="tablist"
           aria-label={t('settings')}
           onKeyDown={onTabKey}
-          className="flex w-full gap-1 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-1 sm:w-fit"
+          className="flex h-10 w-full items-center gap-1 overflow-x-auto max-md:h-12 [scrollbar-width:none]"
         >
           {(
             [
@@ -230,15 +228,13 @@ export function SettingsPage() {
                 aria-controls={`settings-panel-${id}`}
                 tabIndex={selected ? 0 : -1}
                 onClick={() => selectTab(id)}
-                className={`dr-press inline-flex min-h-[40px] flex-1 items-center justify-center gap-1.5 rounded-lg px-3 text-sm font-medium sm:flex-none sm:px-4 ${
-                  selected
-                    ? 'bg-[var(--color-accent)] text-[var(--color-on-accent)]'
-                    : 'text-[var(--color-muted)] hover:bg-[var(--color-hover)] hover:text-[var(--color-ink)]'
+                className={`dr-btn dr-btn-ghost h-7 shrink-0 px-3 text-[12px] max-md:h-9 ${
+                  selected ? '!bg-[var(--color-active)] !text-[var(--color-ink)]' : ''
                 }`}
               >
                 {label}
                 {count > 0 ? (
-                  <span className={`tabular-nums text-xs ${selected ? 'opacity-80' : 'text-[var(--color-accent)]'}`}>
+                  <span className="tabular-nums text-[11px] text-[var(--color-accent)]">
                     {count}
                   </span>
                 ) : null}
@@ -248,15 +244,29 @@ export function SettingsPage() {
         </div>
       </div>
 
+      <div className="mx-auto w-full max-w-3xl space-y-4 px-3 py-5 md:px-6">
       <section
         id="settings-panel-profile"
         role="tabpanel"
         aria-labelledby="settings-tab-profile"
         hidden={tab !== 'profile'}
-        className="dr-card p-5 sm:p-6"
+        className="space-y-4"
       >
-        <p className="mb-5 max-w-md text-sm text-[var(--color-muted)]">{t('profileHint')}</p>
-        <ProfileEditor />
+        <div className="dr-card p-3 sm:p-4">
+          <h2 className="text-[13px] font-semibold text-[var(--color-ink)]">{t('appearance')}</h2>
+          <div className="mt-2 flex items-center gap-2">
+            <button type="button" onClick={toggleTheme} className="dr-btn">
+              {theme === 'dark' ? <Sun size={14} aria-hidden /> : <Moon size={14} aria-hidden />}
+              {theme === 'dark' ? t('lightMode') : t('darkMode')}
+            </button>
+            <span className="text-[12px] text-[var(--color-muted)]">{t('language')}</span>
+            <LanguageSwitcher className="!w-auto border-[var(--color-border)] px-2.5" />
+          </div>
+        </div>
+        <div className="dr-card p-3 sm:p-4">
+          <p className="mb-4 max-w-md text-[12px] text-[var(--color-muted)]">{t('profileHint')}</p>
+          <ProfileEditor />
+        </div>
       </section>
 
       <section
@@ -264,7 +274,7 @@ export function SettingsPage() {
         role="tabpanel"
         aria-labelledby="settings-tab-security"
         hidden={tab !== 'security'}
-        className="dr-card p-5 sm:p-6"
+        className="dr-card p-3 sm:p-4"
       >
         <SecuritySettings />
       </section>
@@ -274,39 +284,39 @@ export function SettingsPage() {
         role="tabpanel"
         aria-labelledby="settings-tab-data"
         hidden={tab !== 'data'}
-        className="dr-card p-5 sm:p-6"
+        className="dr-card p-3 sm:p-4"
       >
-        <h2 className="font-medium text-[var(--color-ink)]">{t('dataExportTitle')}</h2>
-        <p className="mb-2 max-w-md text-sm text-[var(--color-muted)]">{t('dataExportHint')}</p>
+        <h2 className="text-[13px] font-semibold text-[var(--color-ink)]">{t('dataExportTitle')}</h2>
+        <p className="mb-2 max-w-md text-[12px] text-[var(--color-muted)]">{t('dataExportHint')}</p>
         <MutationAlert message={exportError} onDismiss={() => setExportError(null)} />
-        {importMessage ? <p className="mb-2 text-sm text-[var(--color-ink)]">{importMessage}</p> : null}
-        <div className="divide-y divide-[var(--color-border)]">
+        {importMessage ? <p className="mb-2 text-[12px] text-[var(--color-ink)]" role="status">{importMessage}</p> : null}
+        <div className="-mx-3 divide-y divide-[var(--color-border)] border-t border-[var(--color-border)] sm:-mx-4">
           <button
             type="button"
             onClick={() => void handleExportJson()}
             disabled={exporting}
-            className="dr-press flex w-full items-center gap-3 py-3 text-left disabled:opacity-50"
+            className="dr-tap flex w-full items-center gap-3 px-3 py-2 text-left transition-colors hover:bg-[var(--color-hover)] disabled:opacity-50 sm:px-4"
           >
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--color-hover)] text-[var(--color-ink)]">
-              <Download size={16} aria-hidden />
+            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-[var(--color-border)] text-[var(--color-muted)]">
+              <Download size={14} aria-hidden />
             </span>
             <span className="min-w-0">
-              <span className="block text-sm font-medium text-[var(--color-ink)]">{t('exportJournalJson')}</span>
-              <span className="block text-xs text-[var(--color-muted)]">{t('exportJournalHint')}</span>
+              <span className="block text-[13px] font-medium text-[var(--color-ink)]">{t('exportJournalJson')}</span>
+              <span className="block text-[12px] text-[var(--color-muted)]">{t('exportJournalHint')}</span>
             </span>
           </button>
           <button
             type="button"
             onClick={() => importInputRef.current?.click()}
             disabled={exporting}
-            className="dr-press flex w-full items-center gap-3 py-3 text-left disabled:opacity-50"
+            className="dr-tap flex w-full items-center gap-3 px-3 py-2 text-left transition-colors hover:bg-[var(--color-hover)] disabled:opacity-50 sm:px-4"
           >
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--color-hover)] text-[var(--color-ink)]">
-              <Upload size={16} aria-hidden />
+            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-[var(--color-border)] text-[var(--color-muted)]">
+              <Upload size={14} aria-hidden />
             </span>
             <span className="min-w-0">
-              <span className="block text-sm font-medium text-[var(--color-ink)]">{t('importJournalJson')}</span>
-              <span className="block text-xs text-[var(--color-muted)]">{t('importJournalHint')}</span>
+              <span className="block text-[13px] font-medium text-[var(--color-ink)]">{t('importJournalJson')}</span>
+              <span className="block text-[12px] text-[var(--color-muted)]">{t('importJournalHint')}</span>
             </span>
           </button>
           <input
@@ -324,14 +334,14 @@ export function SettingsPage() {
             type="button"
             onClick={() => void handleExportSqlite()}
             disabled={exporting}
-            className="dr-press flex w-full items-center gap-3 py-3 text-left disabled:opacity-50"
+            className="dr-tap flex w-full items-center gap-3 px-3 py-2 text-left transition-colors hover:bg-[var(--color-hover)] disabled:opacity-50 sm:px-4"
           >
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--color-hover)] text-[var(--color-ink)]">
-              <Download size={16} aria-hidden />
+            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-[var(--color-border)] text-[var(--color-muted)]">
+              <Download size={14} aria-hidden />
             </span>
             <span className="min-w-0">
-              <span className="block text-sm font-medium text-[var(--color-ink)]">{t('exportSqliteDump')}</span>
-              <span className="block text-xs text-[var(--color-muted)]">{t('exportSqliteHint')}</span>
+              <span className="block text-[13px] font-medium text-[var(--color-ink)]">{t('exportSqliteDump')}</span>
+              <span className="block text-[12px] text-[var(--color-muted)]">{t('exportSqliteHint')}</span>
             </span>
           </button>
         </div>
@@ -342,7 +352,7 @@ export function SettingsPage() {
         role="tabpanel"
         aria-labelledby="settings-tab-trash"
         hidden={tab !== 'trash'}
-        className="dr-card p-5 sm:p-6"
+        className="dr-card p-3 sm:p-4"
       >
         <MutationAlert message={trashMutationError} onDismiss={clearError} />
         <QueryState
@@ -351,9 +361,9 @@ export function SettingsPage() {
           error={trashError}
           refetch={() => void refetchTrash()}
           isEmpty={!trashLoading && !trashIsError && trashed.length === 0}
-          empty={<p className="text-sm text-[var(--color-muted)]">{t('trashEmpty')}</p>}
+          empty={<p className="text-[12px] text-[var(--color-muted)]">{t('trashEmpty')}</p>}
         >
-          <ul className="space-y-3">
+          <ul className="-mx-3 -my-3 sm:-mx-4 sm:-my-4">
             {trashed.map((row) => {
               const isRestoring =
                 restoreMutation.isPending && restoreMutation.variables === row.id;
@@ -363,18 +373,18 @@ export function SettingsPage() {
               return (
                 <li
                   key={row.id}
-                  className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between py-3 border-b border-[var(--color-border)] last:border-0 last:pb-0"
+                  className="dr-row flex-wrap gap-y-1 py-1.5 last:border-b-0 sm:flex-nowrap"
                 >
-                  <div className="min-w-0">
+                  <div className="min-w-0 flex-1">
                     <p className="font-medium text-[var(--color-ink)] truncate">
                       {row.title || row.date}
                     </p>
-                    <p className="text-xs text-[var(--color-muted)]">{row.date}</p>
+                    <p className="text-[11px] text-[var(--color-faint)] tabular-nums">{row.date}</p>
                   </div>
-                  <div className="flex flex-wrap items-center gap-2 shrink-0">
+                  <div className="flex items-center gap-1 shrink-0">
                     <Link
                       to={`/activity/${row.id}`}
-                      className="text-sm text-[var(--color-ink)] underline px-2 py-2 min-h-[44px] flex items-center"
+                      className="dr-btn dr-btn-ghost"
                     >
                       {t('edit')}
                     </Link>
@@ -382,18 +392,18 @@ export function SettingsPage() {
                       type="button"
                       onClick={() => restoreMutation.mutate(row.id)}
                       disabled={isRestoring || isDeleting}
-                      className="dr-press inline-flex items-center justify-center gap-1.5 px-4 py-2 min-h-[44px] w-full sm:w-auto rounded-xl border border-[var(--color-border)] text-sm font-medium hover:bg-[var(--color-hover)] disabled:opacity-50 touch-manipulation"
+                      className="dr-btn"
                     >
-                      <RotateCcw size={16} aria-hidden />
+                      <RotateCcw size={13} aria-hidden />
                       {t('restoreActivity')}
                     </button>
                     <button
                       type="button"
                       onClick={() => void handleDeleteForever(row.id)}
                       disabled={isRestoring || isDeleting}
-                      className="dr-press inline-flex items-center gap-1.5 px-4 py-2 min-h-[44px] rounded-xl text-sm font-medium text-[var(--color-error)] hover:bg-[var(--color-error-bg)] disabled:opacity-50 touch-manipulation"
+                      className="dr-btn dr-btn-ghost dr-btn-danger"
                     >
-                      <Trash2 size={16} aria-hidden />
+                      <Trash2 size={13} aria-hidden />
                       {t('deleteForever')}
                     </button>
                   </div>
@@ -403,6 +413,18 @@ export function SettingsPage() {
           </ul>
         </QueryState>
       </section>
+
+      <p className="flex flex-wrap items-center justify-center gap-x-3 text-center text-[11px] text-[var(--color-faint)]">
+        <span className="tabular-nums">{t('appVersion', { version: APP_VERSION })}</span>
+        <span>
+          {t('footer.madeBy')}{' '}
+          <a href="https://laslouri.com" target="_blank" rel="noopener noreferrer" className="text-[var(--color-muted)] hover:text-[var(--color-ink)] hover:underline">
+            laslouri.com
+          </a>
+        </span>
+        <CookieSettingsLink className="dr-tap hover:text-[var(--color-ink)] hover:underline" />
+      </p>
+      </div>
 
       {confirmState && (
         <ConfirmDialog
@@ -416,6 +438,6 @@ export function SettingsPage() {
           onCancel={handleCancel}
         />
       )}
-    </div>
+    </>
   );
 }

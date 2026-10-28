@@ -1,47 +1,32 @@
-import { Link } from 'react-router-dom';
+import { Link, useOutletContext } from 'react-router-dom';
 import { usePageTitle } from '../hooks/usePageTitle';
 import { useTranslation } from 'react-i18next';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Plus, ChevronRight, Trash2, Clock } from 'lucide-react';
+import { Plus, Trash2 } from 'lucide-react';
 import { WorkoutDayIcon } from '../components/WorkoutIconPicker';
 import { APP_VERSION } from '../lib/appVersion';
-import { getLifetimeTrainingTotals, listWorkoutDays, softDeleteWorkoutDay, todayIso } from '../lib/db';
+import {
+  getLifetimeTrainingTotals,
+  listWorkoutDays,
+  listWorkoutSummaries,
+  softDeleteWorkoutDay,
+  todayIso,
+  type WorkoutSummary,
+} from '../lib/db';
 import { useLocalUser } from '../contexts/LocalUserContext';
 import { useMutationError } from '../hooks/useMutationError';
-import { useWorkoutMutations } from '../hooks/useWorkoutMutations';
 import { useConfirm } from '../hooks/useConfirm';
 import { QueryState } from '../components/QueryState';
 import { MutationAlert } from '../components/MutationAlert';
 import { ConfirmDialog } from '../components/ConfirmDialog';
 import { EmptyState } from '../components/EmptyState';
 import { MarkWidget } from '../components/MarkWidget';
+import { PageBody, PageHeader } from '../components/Layout';
 import { activityStreak } from '../lib/statsHelpers';
 import { appLocale } from '../lib/locale';
 import type { WorkoutDay } from '../types';
 
-function StartSessionButton({
-  pending,
-  label,
-  className,
-  onClick,
-}: {
-  pending: boolean;
-  label: string;
-  className?: string;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      disabled={pending}
-      className={`dr-press flex items-center justify-center gap-2 px-5 py-3 min-h-[48px] rounded-xl bg-[var(--color-accent)] text-[var(--color-on-accent)] text-sm font-semibold touch-manipulation disabled:opacity-50 ${className ?? ''}`}
-    >
-      <Plus size={18} />
-      {label}
-    </button>
-  );
-}
+type ShellContext = { startNew: () => void; newPending: boolean };
 
 function formatDuration(
   startedAt: string,
@@ -66,16 +51,10 @@ export function HomePage() {
   usePageTitle(t('myJournal'));
   const locale = appLocale(i18n.language);
   const { user } = useLocalUser();
+  const { startNew, newPending } = useOutletContext<ShellContext>();
   const queryClient = useQueryClient();
   const { mutationError, clearError, onMutationError } = useMutationError();
   const { confirm, confirmState, handleConfirm, handleCancel } = useConfirm();
-  const { createMutation } = useWorkoutMutations({
-    workout: null,
-    userId: user.id,
-    workoutId: undefined,
-    defaultExerciseName: t('addExercise'),
-    onError: onMutationError,
-  });
 
   const deleteWorkoutMutation = useMutation({
     mutationFn: (workoutId: string) => softDeleteWorkoutDay(workoutId),
@@ -93,6 +72,13 @@ export function HomePage() {
   const { data: days = [], isLoading, isError, error, refetch } = useQuery({
     queryKey: ['workout-days', user.id],
     queryFn: () => listWorkoutDays(user.id),
+  });
+
+  // Set edits on the activity page patch only that activity's cache, so refetch on every visit.
+  const { data: summaries = {} } = useQuery({
+    queryKey: ['workout-days', user.id, 'summaries'],
+    queryFn: () => listWorkoutSummaries(user.id),
+    staleTime: 0,
   });
 
   const { data: lifetime } = useQuery({
@@ -136,54 +122,41 @@ export function HomePage() {
     if (ok) deleteWorkoutMutation.mutate(dayId);
   }
 
-  const startSession = () => {
-    clearError();
-    createMutation.mutate();
-  };
+  const newButton = (
+    <button
+      type="button"
+      onClick={() => {
+        clearError();
+        startNew();
+      }}
+      disabled={newPending}
+      className="dr-btn dr-btn-primary"
+    >
+      <Plus size={14} aria-hidden />
+      <span className="max-[479px]:hidden">{t('newWorkout')}</span>
+      <span className="min-[480px]:hidden">{t('newShort')}</span>
+    </button>
+  );
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-semibold text-[var(--color-ink)] tracking-tight text-balance">
-            {t('myJournal')}
-          </h1>
-          <p className="text-sm text-[var(--color-muted)] mt-1">{t('tagline')}</p>
-        </div>
-        {(isLoading || isError || days.length > 0) && (
-          <StartSessionButton
-            pending={createMutation.isPending}
-            label={t('newWorkout')}
-            className="w-full sm:w-auto"
-            onClick={startSession}
-          />
-        )}
-      </div>
+    <>
+      <PageHeader
+        title={t('myJournal')}
+        meta={days.length > 0 ? t('activityCount', { count: days.length }) : t('tagline')}
+        actions={newButton}
+      />
 
-      <MutationAlert message={mutationError} onDismiss={clearError} />
+      <PageBody className="space-y-4">
+        <MutationAlert message={mutationError} onDismiss={clearError} />
 
-      <QueryState
-        isLoading={isLoading}
-        isError={isError}
-        error={error}
-        refetch={() => void refetch()}
-        isEmpty={!isLoading && !isError && days.length === 0}
-        empty={
-          <EmptyState
-            title={t('noWorkouts')}
-            description={t('noWorkoutsHint')}
-            action={
-              <StartSessionButton
-                pending={createMutation.isPending}
-                label={t('newWorkout')}
-                className="w-full sm:w-auto"
-                onClick={startSession}
-              />
-            }
-          />
-        }
-      >
-        <div className="space-y-6">
+        <QueryState
+          isLoading={isLoading}
+          isError={isError}
+          error={error}
+          refetch={() => void refetch()}
+          isEmpty={!isLoading && !isError && days.length === 0}
+          empty={<EmptyState title={t('noWorkouts')} description={t('noWorkoutsHint')} action={newButton} />}
+        >
           <MarkWidget
             sessions={lifetime?.sessions ?? days.length}
             completedSets={lifetime?.completedSets ?? 0}
@@ -192,98 +165,60 @@ export function HomePage() {
             todayKey={todayKey}
           />
 
-        {/* Live session pill */}
-        {openSession && (
-          <Link
-            to={`/activity/${openSession.id}`}
-            className="dr-press dr-live dr-aurora flex items-center justify-between gap-3 rounded-xl px-5 py-4 min-h-[64px] touch-manipulation"
-          >
-            <div className="min-w-0">
-              <p className="dr-label !text-[var(--aurora-text)] opacity-80">{t('sessionLive')}</p>
-              <p className="font-medium truncate">{openSession.title || formatDateHeader(openSession.date)}</p>
+          {openSession && (
+            <Link
+              to={`/activity/${openSession.id}`}
+              className="flex items-center gap-3 rounded-lg border border-[var(--color-accent)]/40 bg-[var(--color-accent-soft)] px-3 py-2 dr-tap touch-manipulation hover:border-[var(--color-accent)]"
+            >
+              <span className="dr-live-dot shrink-0" aria-hidden />
+              <span className="text-[11px] font-semibold uppercase tracking-wide text-[var(--color-accent)]">
+                {t('sessionLive')}
+              </span>
+              <span className="min-w-0 flex-1 truncate font-medium">
+                {openSession.title || formatDateHeader(openSession.date)}
+              </span>
+              <span className="shrink-0 text-[12px] font-semibold text-[var(--color-ink)]">{t('continueSession')} →</span>
+            </Link>
+          )}
+
+          <div className="-mx-3 border-t border-[var(--color-border)] md:mx-0 md:rounded-lg md:border md:bg-[var(--color-surface)]">
+            <div className="hidden h-8 items-center gap-2 rounded-t-lg border-b border-[var(--color-border)] px-3 text-[11px] font-medium uppercase tracking-wide text-[var(--color-faint)] md:flex">
+              <span className="w-4" aria-hidden />
+              <span className="flex-1" />
+              <span className="hidden w-16 text-right lg:block">{t('statExercises')}</span>
+              <span className="w-14 text-right">{t('statSets')}</span>
+              <span className="hidden w-20 text-right lg:block">{t('statVolume')}</span>
+              <span className="w-32 text-right">{t('sessionTime')}</span>
+              <span className="w-7" aria-hidden />
             </div>
-            <span className="text-sm font-semibold shrink-0">{t('continueSession')}</span>
-          </Link>
-        )}
-
-        {/* Activity list */}
-        <div className="space-y-6">
-          {grouped.map(({ date, activities }) => (
-            <section key={date}>
-              <h2 className="sticky top-14 z-10 dr-label bg-[var(--color-paper)]/95 backdrop-blur-sm py-2 -mx-4 px-4 sm:-mx-8 sm:px-8 mb-2">
-                {formatDateHeader(date)}
-              </h2>
-              <ul className="space-y-3">
-                {activities.map((day, index) => {
-                  const live = Boolean(day.started_at && !day.ended_at);
-                  const duration = day.started_at && day.ended_at
-                    ? formatDuration(day.started_at, day.ended_at, t)
-                    : null;
-                  const isDeleting =
-                    deleteWorkoutMutation.isPending && deleteWorkoutMutation.variables === day.id;
-
-                  return (
-                    <li
+            {grouped.map(({ date, activities }) => (
+              <section key={date} aria-label={formatDateHeader(date)}>
+                <h2 className="dr-group sticky top-[var(--dr-header-h)] z-10 bg-[var(--color-paper)]/95 backdrop-blur-sm md:bg-[var(--color-panel)]/95">
+                  <span>{formatDateHeader(date)}</span>
+                  <span className="text-[var(--color-faint)] tabular-nums">{activities.length}</span>
+                </h2>
+                <ul>
+                  {activities.map((day) => (
+                    <ActivityRow
                       key={day.id}
-                      className={`dr-stagger dr-press flex items-stretch dr-card overflow-hidden min-h-[64px] ${
-                        live ? 'ring-2 ring-[var(--color-accent)]' : ''
-                      }`}
-                      style={{ ['--i' as string]: Math.min(index, 5) }}
-                    >
-                      <Link
-                        to={`/activity/${day.id}`}
-                        className="flex flex-1 items-center justify-between gap-3 p-4 min-w-0 touch-manipulation"
-                      >
-                        <div className="flex items-center gap-3 min-w-0 flex-1">
-                          <div className="flex-shrink-0 w-11 h-11 rounded-xl bg-[var(--color-accent-soft)] flex items-center justify-center">
-                            <WorkoutDayIcon iconKey={day.icon} size={20} className="text-[var(--color-ink)]/80" fallbackToFirst />
-                          </div>
-                          <div className="min-w-0">
-                            <p className="font-medium text-[var(--color-ink)] truncate">
-                              {day.title || formatDateHeader(day.date)}
-                            </p>
-                            <p className="mt-0.5 flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-xs text-[var(--color-muted)] min-w-0">
-                              <span className="truncate">{t(`activityTypes.${day.activity_type ?? 'strength'}`)}</span>
-                              {live && (
-                                <span className="text-[var(--color-accent)] font-semibold uppercase tracking-wide shrink-0">
-                                  {t('openSession')}
-                                </span>
-                              )}
-                              {day.started_at && !live && (
-                                <span className="inline-flex items-center gap-1 shrink-0 tabular-nums">
-                                  <Clock size={12} />
-                                  {formatClock(day.started_at, locale)}
-                                  {duration ? ` · ${duration}` : ''}
-                                </span>
-                              )}
-                            </p>
-                          </div>
-                        </div>
-                        <ChevronRight size={20} className="text-[var(--color-muted)] flex-shrink-0" aria-hidden />
-                      </Link>
-                      <button
-                        type="button"
-                        onClick={() => void handleDelete(day.id)}
-                        disabled={isDeleting}
-                        className="flex-shrink-0 flex items-center justify-center px-3 border-l border-[var(--color-border)] text-[var(--color-muted)] hover:text-[var(--color-error)] hover:bg-[var(--color-error-bg)] touch-manipulation min-w-[48px] disabled:opacity-50"
-                        aria-label={t('removeLog')}
-                        title={t('removeLog')}
-                      >
-                        <Trash2 size={18} aria-hidden />
-                      </button>
-                    </li>
-                  );
-                })}
-              </ul>
-            </section>
-          ))}
-        </div>
-        </div>
-      </QueryState>
+                      day={day}
+                      summary={summaries[day.id]}
+                      locale={locale}
+                      fallbackTitle={formatDateHeader(day.date)}
+                      deleting={deleteWorkoutMutation.isPending && deleteWorkoutMutation.variables === day.id}
+                      onDelete={() => void handleDelete(day.id)}
+                    />
+                  ))}
+                </ul>
+              </section>
+            ))}
+          </div>
+        </QueryState>
 
-      <p className="text-center text-xs text-[var(--color-muted)] tabular-nums">
-        {t('appVersion', { version: APP_VERSION })}
-      </p>
+        <p className="text-center text-[11px] text-[var(--color-faint)] tabular-nums">
+          {t('appVersion', { version: APP_VERSION })}
+        </p>
+      </PageBody>
 
       {confirmState && (
         <ConfirmDialog
@@ -297,6 +232,83 @@ export function HomePage() {
           onCancel={handleCancel}
         />
       )}
-    </div>
+    </>
+  );
+}
+
+function ActivityRow({
+  day,
+  summary,
+  locale,
+  fallbackTitle,
+  deleting,
+  onDelete,
+}: {
+  day: WorkoutDay;
+  summary: WorkoutSummary | undefined;
+  locale: string;
+  fallbackTitle: string;
+  deleting: boolean;
+  onDelete: () => void;
+}) {
+  const { t } = useTranslation();
+  const live = Boolean(day.started_at && !day.ended_at);
+  const duration = day.started_at && day.ended_at ? formatDuration(day.started_at, day.ended_at, t) : null;
+  const type = t(`activityTypes.${day.activity_type ?? 'strength'}`);
+  const sets = summary ? `${summary.done}/${summary.sets}` : '—';
+  const allDone = summary != null && summary.sets > 0 && summary.done === summary.sets;
+  const volume = summary && summary.volume > 0 ? t('volumeKg', { n: Math.round(summary.volume).toLocaleString(locale) }) : '—';
+
+  return (
+    <li className="group dr-row relative pr-1">
+      <Link
+        to={`/activity/${day.id}`}
+        className="flex min-w-0 flex-1 items-center gap-2 self-stretch py-1.5 touch-manipulation after:absolute after:inset-0 after:content-['']"
+      >
+        <WorkoutDayIcon
+          iconKey={day.icon}
+          size={15}
+          className={`shrink-0 ${live ? 'text-[var(--color-accent)]' : 'text-[var(--color-muted)]'}`}
+          fallbackToFirst
+        />
+        <span className="flex min-w-0 flex-1 flex-col md:flex-row md:items-center md:gap-2">
+          <span className="truncate font-medium text-[var(--color-ink)]">{day.title || fallbackTitle}</span>
+          <span className="flex min-w-0 items-center gap-1.5 text-[12px] text-[var(--color-muted)] md:contents">
+            <span className="dr-chip h-5 shrink-0 px-1.5 text-[11px] md:ml-1">{type}</span>
+            {live && (
+              <span className="shrink-0 text-[11px] font-semibold uppercase tracking-wide text-[var(--color-accent)]">
+                {t('openSession')}
+              </span>
+            )}
+            <span className="truncate tabular-nums md:hidden">
+              {summary ? `${summary.exercises} · ${sets}` : ''}
+              {day.started_at && !live ? ` · ${formatClock(day.started_at, locale)}` : ''}
+            </span>
+          </span>
+        </span>
+        <span className="hidden w-16 shrink-0 text-right tabular-nums text-[var(--color-muted)] lg:block">
+          {summary ? summary.exercises : '—'}
+        </span>
+        <span
+          className={`hidden w-14 shrink-0 text-right tabular-nums md:block ${allDone ? 'text-[var(--color-success)]' : 'text-[var(--color-muted)]'}`}
+        >
+          {sets}
+        </span>
+        <span className="hidden w-20 shrink-0 text-right tabular-nums text-[var(--color-muted)] lg:block">{volume}</span>
+        <span className="hidden w-32 shrink-0 whitespace-nowrap text-right text-[12px] tabular-nums text-[var(--color-faint)] md:block">
+          {day.started_at && !live ? `${formatClock(day.started_at, locale)}${duration ? ` · ${duration}` : ''}` : ''}
+        </span>
+      </Link>
+      <button
+        type="button"
+        onClick={onDelete}
+        disabled={deleting}
+        className="dr-btn dr-btn-ghost dr-icon-btn relative z-10 hover:!text-[var(--color-error)] shrink-0 md:opacity-0 md:focus-visible:opacity-100 md:group-hover:opacity-100"
+        aria-label={t('removeLog')}
+        title={t('removeLog')}
+      >
+        <Trash2 size={14} aria-hidden />
+      </button>
+    </li>
   );
 }

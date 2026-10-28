@@ -15,8 +15,9 @@ import {
   resolveExerciseLocale,
 } from '../utils/exerciseDisplay';
 import type { ExerciseDefinition } from '../types';
+import { PageBody, PageHeader } from '../components/Layout';
 
-const ROW_HEIGHT = 76;
+const ROW_HEIGHT = 44;
 
 export function ExercisesPage() {
   const { t, i18n } = useTranslation();
@@ -56,27 +57,22 @@ export function ExercisesPage() {
   });
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-semibold text-[var(--color-ink)] tracking-tight text-balance">
-          {t('exercises')}
-        </h1>
-        {mode === 'library' && !isLoading && !isError && exercises.length > 0 && (
-          <p className="text-sm text-[var(--color-muted)] mt-1">
-            {t('libraryCount', { count: filtered.length })}
-          </p>
-        )}
-      </div>
-
-      <div className="flex gap-2">
+    <>
+      <PageHeader
+        title={t('exercises')}
+        meta={
+          mode === 'library' && !isLoading && !isError && exercises.length > 0
+            ? t('libraryCount', { count: filtered.length })
+            : undefined
+        }
+        actions={
+      <div className="flex rounded-md border border-[var(--color-border)] p-0.5">
         <button
           type="button"
           aria-pressed={mode === 'library'}
           onClick={() => setMode('library')}
-          className={`dr-press min-h-[40px] rounded-lg px-3 text-sm font-medium ${
-            mode === 'library'
-              ? 'bg-[var(--color-accent)] text-[var(--color-on-accent)]'
-              : 'border border-[var(--color-border)] text-[var(--color-muted)]'
+          className={`dr-btn dr-btn-ghost h-6 border-0 px-2 text-[12px] max-md:h-9 ${
+            mode === 'library' ? '!bg-[var(--color-active)] !text-[var(--color-ink)]' : ''
           }`}
         >
           {t('libraryExercises')}
@@ -85,16 +81,16 @@ export function ExercisesPage() {
           type="button"
           aria-pressed={mode === 'browse'}
           onClick={() => setMode('browse')}
-          className={`dr-press min-h-[40px] rounded-lg px-3 text-sm font-medium ${
-            mode === 'browse'
-              ? 'bg-[var(--color-accent)] text-[var(--color-on-accent)]'
-              : 'border border-[var(--color-border)] text-[var(--color-muted)]'
+          className={`dr-btn dr-btn-ghost h-6 border-0 px-2 text-[12px] max-md:h-9 ${
+            mode === 'browse' ? '!bg-[var(--color-active)] !text-[var(--color-ink)]' : ''
           }`}
         >
           {t('browseExercises')}
         </button>
       </div>
-
+        }
+      />
+    <PageBody className="space-y-3">
       {mode === 'browse' ? <ExerciseBrowse /> : null}
 
       {mode === 'library' ? <QueryState
@@ -105,16 +101,16 @@ export function ExercisesPage() {
         isEmpty={!isLoading && !isError && exercises.length === 0}
         empty={<EmptyState title={t('noExercisesLibrary')} />}
       >
-        <div className="sticky top-14 z-20 -mx-4 px-4 sm:-mx-8 sm:px-8 py-3 bg-[var(--color-paper)]/95 backdrop-blur-sm">
+        <div className="sticky top-[var(--dr-header-h)] z-20 -mx-3 px-3 md:-mx-4 md:px-4 lg:-mx-6 lg:px-6 py-2 bg-[var(--color-paper)]/95 backdrop-blur-sm">
           <input
             type="search"
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
             placeholder={t('searchExercises')}
             aria-label={t('searchExercises')}
-            className="w-full px-4 py-2.5 min-h-[44px] rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]"
+            className="dr-input w-full md:max-w-sm"
           />
-          <div className="mt-2 flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <div className="mt-2 flex gap-1.5 overflow-x-auto pb-0.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             <MuscleChip
               label={t('filterAllMuscleGroups')}
               pressed={muscleGroup === ''}
@@ -136,7 +132,7 @@ export function ExercisesPage() {
         {filtered.length === 0 ? (
           <p className="text-sm text-[var(--color-muted)] py-8 text-center">{t('noExerciseMatches')}</p>
         ) : (
-          <div ref={listRef} className="mt-3 h-[min(calc(100dvh-25rem),720px)] md:h-[min(calc(100dvh-18rem),720px)] overflow-y-auto">
+          <div ref={listRef} className="mt-2 h-[calc(100dvh-16rem)] md:h-[calc(100dvh-10rem)] overflow-y-auto rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)]">
             <div className="relative w-full" style={{ height: `${virtualizer.getTotalSize()}px` }}>
             {virtualizer.getVirtualItems().map((item) => {
               const ex = filtered[item.index];
@@ -147,7 +143,7 @@ export function ExercisesPage() {
               return (
                 <div
                   key={ex.id}
-                  className="absolute left-0 top-0 w-full pb-2"
+                  className="absolute left-0 top-0 w-full"
                   style={{
                     height: `${item.size}px`,
                     transform: `translateY(${item.start}px)`,
@@ -157,26 +153,25 @@ export function ExercisesPage() {
                     type="button"
                     onClick={() => setSelectedId(active ? null : ex.id)}
                     aria-pressed={active}
-                    className={`dr-press w-full h-[68px] text-left px-4 rounded-xl bg-[var(--color-surface)] flex items-center gap-3 touch-manipulation shadow-[var(--shadow-card)] ${
-                      active ? 'ring-2 ring-[var(--color-accent)]' : ''
+                    className={`w-full h-full text-left px-3 border-b border-[var(--color-border)] flex items-center gap-3 touch-manipulation hover:bg-[var(--color-hover)] ${
+                      active ? 'bg-[var(--color-accent-soft)] hover:bg-[var(--color-accent-soft)]' : ''
                     }`}
                   >
                     {safeImage ? (
                       <img
                         src={safeImage}
                         alt=""
-                        className="w-11 h-11 rounded-xl object-cover bg-[var(--color-hover)] flex-shrink-0"
+                        className="w-7 h-7 rounded-md object-cover bg-[var(--color-hover)] flex-shrink-0"
                         loading="lazy"
                       />
                     ) : (
-                      <div className="w-11 h-11 rounded-xl bg-[var(--color-hover)] flex-shrink-0" aria-hidden />
+                      <div className="w-7 h-7 rounded-md bg-[var(--color-hover)] flex-shrink-0" aria-hidden />
                     )}
-                    <span className="min-w-0 flex-1">
-                      <span className="block font-medium text-[var(--color-ink)] truncate">{primary}</span>
-                      <span className="block text-xs text-[var(--color-muted)] truncate mt-0.5">
-                        {alt || t(`muscleGroups.${group}`)}
-                      </span>
+                    <span className="min-w-0 flex-1 flex items-baseline gap-2">
+                      <span className="font-medium text-[var(--color-ink)] truncate">{primary}</span>
+                      {alt ? <span className="hidden sm:inline text-[12px] text-[var(--color-faint)] truncate">{alt}</span> : null}
                     </span>
+                    <span className="dr-chip h-5 shrink-0 px-1.5 text-[11px]">{t(`muscleGroups.${group}`)}</span>
                   </button>
                 </div>
               );
@@ -185,7 +180,8 @@ export function ExercisesPage() {
           </div>
         )}
       </QueryState> : null}
-    </div>
+    </PageBody>
+    </>
   );
 }
 
@@ -203,11 +199,7 @@ function MuscleChip({
       type="button"
       onClick={onClick}
       aria-pressed={pressed}
-      className={`shrink-0 inline-flex items-center px-3 min-h-[40px] rounded-lg text-xs font-medium border transition-colors touch-manipulation ${
-        pressed
-          ? 'bg-[var(--color-accent)] text-[var(--color-on-accent)] border-transparent'
-          : 'border-[var(--color-border)] text-[var(--color-muted)] bg-[var(--color-surface)]'
-      }`}
+      className="dr-chip dr-chip-tap shrink-0"
     >
       {label}
     </button>
@@ -227,11 +219,11 @@ function ExerciseDetail({
   const group = exercise.muscle_group || 'other';
 
   return (
-    <article className="mt-4 dr-card p-5 flex gap-4">
+    <article className="mt-2 dr-card p-3 flex gap-3">
       {safeImage ? (
-        <img src={safeImage} alt="" className="w-20 h-20 rounded-xl object-cover bg-[var(--color-hover)] shrink-0" />
+        <img src={safeImage} alt="" className="w-16 h-16 rounded-md object-cover bg-[var(--color-hover)] shrink-0" />
       ) : (
-        <div className="w-20 h-20 rounded-xl bg-[var(--color-hover)] shrink-0" aria-hidden />
+        <div className="w-16 h-16 rounded-md bg-[var(--color-hover)] shrink-0" aria-hidden />
       )}
       <div className="min-w-0">
         <h2 className="font-medium text-[var(--color-ink)]">{primary}</h2>
@@ -240,7 +232,7 @@ function ExerciseDetail({
           {t(`muscleGroups.${group}`)}
         </p>
         {exercise.description ? (
-          <p className="text-sm text-[var(--color-muted)] mt-2 leading-relaxed">{exercise.description}</p>
+          <p className="text-[12px] text-[var(--color-muted)] mt-1.5 leading-relaxed">{exercise.description}</p>
         ) : null}
       </div>
     </article>

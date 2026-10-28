@@ -26,13 +26,13 @@ export function UnitInput({
         aria-label={label}
         aria-invalid={invalid || undefined}
         onChange={(event) => onChange(event.target.value)}
-        className={`w-full min-h-[48px] rounded-xl border bg-[var(--color-surface)] pl-3 pr-12 text-base tabular-nums text-[var(--color-ink)] placeholder:text-[var(--color-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] ${
+        className={`dr-input h-9 max-md:h-11 w-full pr-12 tabular-nums ${
           invalid ? 'border-[var(--color-error)]' : 'border-[var(--color-border)]'
         }`}
       />
       <span
         aria-hidden
-        className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-sm text-[var(--color-muted)]"
+        className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-[12px] text-[var(--color-faint)]"
       >
         {unit}
       </span>

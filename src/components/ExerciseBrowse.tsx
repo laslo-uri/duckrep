@@ -107,11 +107,11 @@ export function ExerciseBrowse() {
 
   if (!key) {
     return (
-      <section className="dr-card p-5 sm:p-6">
-        <p className="text-sm text-[var(--color-ink)]">{t('musclewikiKeyMissing')}</p>
+      <section className="dr-card p-3 sm:p-4">
+        <p className="text-[13px] text-[var(--color-ink)]">{t('musclewikiKeyMissing')}</p>
         <Link
           to="/settings"
-          className="mt-3 inline-flex min-h-[44px] items-center text-sm font-medium text-[var(--color-accent)]"
+          className="dr-btn mt-2"
         >
           {t('musclewikiOpenSettings')}
         </Link>
@@ -120,7 +120,7 @@ export function ExerciseBrowse() {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-2">
       <input
         type="search"
         value={search}
@@ -135,7 +135,7 @@ export function ExerciseBrowse() {
         }}
         placeholder={t('searchExercises')}
         aria-label={t('searchExercises')}
-        className="w-full min-h-[44px] rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]"
+        className="dr-input w-full md:max-w-sm"
       />
 
       {meta.data ? (
@@ -168,25 +168,21 @@ export function ExerciseBrowse() {
       ) : null}
 
       {detail.data ? (
-        <article className="dr-card p-5">
-          <h2 className="font-medium text-[var(--color-ink)]">{detail.data.name}</h2>
-          <p className="mt-1 text-sm text-[var(--color-muted)]">
+        <article className="dr-card p-3 sm:p-4">
+          <h2 className="text-[14px] font-semibold text-[var(--color-ink)]">{detail.data.name}</h2>
+          <p className="mt-0.5 text-[12px] text-[var(--color-muted)]">
             {[detail.data.primaryMuscles.join(', '), detail.data.difficulty, detail.data.category]
               .filter(Boolean)
               .join(' · ')}
           </p>
-          <div className="mt-3 flex gap-2">
+          <div className="mt-2 flex gap-1.5">
             {(['male', 'female'] as const).map((option) => (
               <button
                 key={option}
                 type="button"
                 aria-pressed={gender === option}
                 onClick={() => setGender(option)}
-                className={`dr-press min-h-[40px] rounded-lg px-3 text-xs font-medium ${
-                  gender === option
-                    ? 'bg-[var(--color-accent)] text-[var(--color-on-accent)]'
-                    : 'border border-[var(--color-border)] text-[var(--color-muted)]'
-                }`}
+                className="dr-chip dr-chip-tap"
               >
                 {t(option === 'male' ? 'musclewikiMale' : 'musclewikiFemale')}
               </button>
@@ -195,8 +191,8 @@ export function ExerciseBrowse() {
           {videoUrl ? <PlayVideo key={`${videoUrl}:${gender}`} apiKey={key} url={videoUrl} /> : null}
           {detail.data.steps.length > 0 ? (
             <>
-              <h3 className="mt-4 text-sm font-medium text-[var(--color-ink)]">{t('musclewikiSteps')}</h3>
-              <ol className="mt-2 list-decimal space-y-1 pl-5 text-sm text-[var(--color-muted)]">
+              <h3 className="mt-3 text-[12px] font-semibold text-[var(--color-ink)]">{t('musclewikiSteps')}</h3>
+              <ol className="mt-1 list-decimal space-y-0.5 pl-5 text-[12px] text-[var(--color-muted)]">
                 {detail.data.steps.map((step) => (
                   <li key={step}>{step}</li>
                 ))}
@@ -207,7 +203,7 @@ export function ExerciseBrowse() {
             type="button"
             disabled={saved.data || addToLibrary.isPending}
             onClick={() => addToLibrary.mutate()}
-            className="dr-press mt-4 min-h-[44px] rounded-xl bg-[var(--color-accent)] px-4 text-sm font-semibold text-[var(--color-on-accent)] disabled:opacity-50"
+            className="dr-btn dr-btn-primary mt-3"
           >
             {saved.data || addToLibrary.data === 'exists' || addToLibrary.data === 'added'
               ? t('addedToLibrary')
@@ -216,7 +212,7 @@ export function ExerciseBrowse() {
         </article>
       ) : null}
 
-      <ul className="space-y-2">
+      <ul className="overflow-hidden rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)]">
         {results.map((exercise) => {
           const active = selectedId === exercise.id;
           return (
@@ -225,8 +221,8 @@ export function ExerciseBrowse() {
                 type="button"
                 aria-pressed={active}
                 onClick={() => setSelectedId(active ? null : exercise.id)}
-                className={`dr-press w-full min-h-[52px] rounded-xl bg-[var(--color-surface)] px-4 text-left text-sm font-medium text-[var(--color-ink)] shadow-[var(--shadow-card)] ${
-                  active ? 'ring-2 ring-[var(--color-accent)]' : ''
+                className={`dr-row w-full text-left font-medium text-[var(--color-ink)] ${
+                  active ? 'bg-[var(--color-accent-soft)]' : ''
                 }`}
               >
                 {exercise.name}
@@ -247,7 +243,7 @@ export function ExerciseBrowse() {
           type="button"
           onClick={() => setPageCount((count) => count + 1)}
           disabled={listLoading}
-          className="dr-press min-h-[44px] rounded-xl border border-[var(--color-border)] px-4 text-sm font-medium disabled:opacity-50"
+          className="dr-btn"
         >
           {t('showMore')}
         </button>
@@ -268,7 +264,7 @@ function ChipRow({
   onChange: (next: string) => void;
 }) {
   return (
-    <div className="flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+    <div className="flex gap-1.5 overflow-x-auto pb-0.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
       <Chip label={allLabel} pressed={value === ''} onClick={() => onChange('')} />
       {options.map((option) => (
         <Chip
@@ -288,11 +284,7 @@ function Chip({ label, pressed, onClick }: { label: string; pressed: boolean; on
       type="button"
       onClick={onClick}
       aria-pressed={pressed}
-      className={`dr-press inline-flex min-h-[40px] shrink-0 items-center rounded-lg border px-3 text-xs font-medium ${
-        pressed
-          ? 'border-transparent bg-[var(--color-accent)] text-[var(--color-on-accent)]'
-          : 'border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-muted)]'
-      }`}
+      className="dr-chip dr-chip-tap shrink-0"
     >
       {label}
     </button>
@@ -315,7 +307,7 @@ function PlayVideo({ apiKey, url }: { apiKey: string; url: string }) {
   return (
     <div className="mt-3">
       {src ? (
-        <video src={src} controls autoPlay playsInline className="max-h-80 w-full rounded-xl bg-black" />
+        <video src={src} controls autoPlay playsInline className="max-h-80 w-full rounded-lg bg-black" />
       ) : (
         <button
           type="button"
@@ -332,7 +324,7 @@ function PlayVideo({ apiKey, url }: { apiKey: string; url: string }) {
               .catch((reason: unknown) => setError(musclewikiMessage(reason, t)))
               .finally(() => setPending(false));
           }}
-          className="dr-press min-h-[44px] rounded-xl border border-[var(--color-border)] px-4 text-sm font-medium"
+          className="dr-btn"
         >
           {t('musclewikiPlay')}
         </button>

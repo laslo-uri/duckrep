@@ -49,7 +49,7 @@ export function LockScreen({ state, onUnlocked }: { state: Exclude<VaultState, '
   };
 
   const field =
-    'dr-field mt-1 block w-full min-h-[44px] px-4 py-2.5 text-base outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]';
+    'dr-input mt-1 block w-full h-9 max-md:h-11';
 
   return (
     <div className="relative flex min-h-[100dvh] flex-col bg-[var(--color-paper)] text-[var(--color-ink)]">
@@ -57,10 +57,10 @@ export function LockScreen({ state, onUnlocked }: { state: Exclude<VaultState, '
         <button
           type="button"
           onClick={toggleTheme}
-          className="dr-press p-2.5 min-w-[44px] min-h-[44px] rounded-lg hover:bg-[var(--color-hover)] text-[var(--color-muted)] hover:text-[var(--color-ink)]"
+          className="dr-btn dr-btn-ghost dr-icon-btn"
           aria-label={theme === 'dark' ? t('lightMode') : t('darkMode')}
         >
-          {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+          {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
         </button>
         <LanguageSwitcher />
       </div>
@@ -70,12 +70,12 @@ export function LockScreen({ state, onUnlocked }: { state: Exclude<VaultState, '
         <form
           onSubmit={(e) => void submit(e)}
           aria-labelledby="lock-title"
-          className="dr-card dr-enter w-full max-w-sm p-6 sm:p-7"
+          className="dr-card dr-enter w-full max-w-sm p-5 shadow-[var(--shadow-pop)]"
         >
-          <div className="dr-lockup mb-6 flex items-center gap-4">
-            <DuckrepMark size={60} animateIn className="rounded-2xl" />
+          <div className="dr-lockup mb-5 flex items-center gap-3">
+            <DuckrepMark size={48} animateIn className="rounded-xl" />
             <div className="min-w-0 text-left">
-              <h1 id="lock-title" className="font-serif text-2xl">
+              <h1 id="lock-title" className="text-[22px]">
                 <DuckrepWordmark />
               </h1>
               <p className="text-sm text-[var(--color-muted)]">{creating ? t('lockCreateTitle') : t('lockLocked')}</p>
@@ -127,9 +127,9 @@ export function LockScreen({ state, onUnlocked }: { state: Exclude<VaultState, '
               <button
                 type="submit"
                 disabled={busy || pass.length === 0 || (creating && pass.length < MIN_PASSPHRASE)}
-                className="dr-press mt-5 flex w-full min-h-[44px] items-center justify-center gap-2 rounded-xl bg-[var(--color-accent)] px-4 py-2.5 font-medium text-[var(--color-on-accent)] disabled:opacity-50"
+                className="dr-btn dr-btn-primary mt-4 h-9 w-full max-md:h-11"
               >
-                <Lock size={16} aria-hidden />
+                <Lock size={14} aria-hidden />
                 {busy ? t('lockWorking') : creating ? t('lockCreate') : t('lockUnlock')}
               </button>
             </>

@@ -47,7 +47,7 @@ export function DuckrepLogo({ className = '', size = 36 }: DuckrepLogoProps) {
 
   return (
     <span
-      className={`dr-logo inline-flex items-center gap-2 font-serif text-[var(--color-logo)] ${className}`}
+      className={`dr-logo inline-flex items-center gap-2 text-[var(--color-logo)] ${className}`}
       style={{ fontSize: textSize }}
     >
       <DuckrepMark size={mark} />

@@ -6,13 +6,13 @@ import { appLocale } from '../lib/locale';
 function Sparkline({ counts }: { counts: number[] }) {
   const rawId = useId();
   const gradId = `mark-fill-${rawId.replace(/:/g, '')}`;
-  const width = 160;
-  const height = 64;
+  const width = 120;
+  const height = 36;
   const max = Math.max(...counts, 1);
   const step = counts.length > 1 ? width / (counts.length - 1) : width;
   const points = counts.map((count, i) => {
     const x = i * step;
-    const y = height - 8 - (count / max) * (height - 16);
+    const y = height - 4 - (count / max) * (height - 8);
     return [x, y] as const;
   });
   const line = points.map(([x, y], i) => `${i === 0 ? 'M' : 'L'}${x.toFixed(1)} ${y.toFixed(1)}`).join(' ');
@@ -20,41 +20,30 @@ function Sparkline({ counts }: { counts: number[] }) {
   const last = points[points.length - 1];
 
   return (
-    <svg viewBox={`0 0 ${width} ${height}`} className="w-full h-16" aria-hidden>
+    <svg viewBox={`0 0 ${width} ${height}`} className="h-9 w-full" preserveAspectRatio="none" aria-hidden>
       <defs>
         <linearGradient id={gradId} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="var(--color-mint)" stopOpacity="0.45" />
+          <stop offset="0%" stopColor="var(--color-mint)" stopOpacity="0.35" />
           <stop offset="100%" stopColor="var(--color-mint)" stopOpacity="0" />
         </linearGradient>
       </defs>
-      {[0.35, 0.7].map((f) => (
-        <line
-          key={f}
-          x1="0"
-          x2={width}
-          y1={height * f}
-          y2={height * f}
-          stroke="var(--color-muted)"
-          strokeWidth="0.6"
-          strokeDasharray="2 4"
-          opacity="0.35"
-        />
-      ))}
       <path d={area} fill={`url(#${gradId})`} />
       <path
         d={line}
         fill="none"
         stroke="var(--color-mint)"
-        strokeWidth="2.25"
+        strokeWidth="1.75"
         strokeLinecap="round"
         strokeLinejoin="round"
+        vectorEffect="non-scaling-stroke"
         className="dr-mark-line"
       />
-      <circle className="dr-mark-dot" cx={last[0]} cy={last[1]} r="3.2" fill="var(--color-mint)" />
+      <circle className="dr-mark-dot" cx={last[0]} cy={last[1]} r="2.6" fill="var(--color-mint)" />
     </svg>
   );
 }
 
+/** The personal mark plus lifetime totals, as one row of KPI tiles. */
 export function MarkWidget({
   sessions,
   completedSets,
@@ -77,29 +66,32 @@ export function MarkWidget({
   const gainLabel = gain.toLocaleString(locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
   return (
-    <div className="dr-card p-5 sm:p-6">
-      <div className="flex flex-col gap-4 min-[480px]:flex-row min-[480px]:items-center">
-        <div className="min-[480px]:w-44 shrink-0">
+    <dl className="grid grid-cols-3 gap-2 lg:grid-cols-4">
+      <div className="dr-kpi relative col-span-3 pr-36 lg:col-span-1 lg:pr-20 xl:pr-28">
+        <dt className="dr-label">{t('markLabel')}</dt>
+        <dd className="dr-kpi-value">{price}</dd>
+        <dd className={`mt-0.5 truncate text-[11px] font-medium ${atPeak ? 'text-[var(--color-success)]' : 'text-[var(--color-muted)]'}`}>
+          {atPeak ? '▲' : '▼'} {t('markGain', { gain: gainLabel })}
+        </dd>
+        <dd className="absolute right-3 top-1/2 w-28 -translate-y-1/2 lg:w-16 xl:w-24" aria-hidden>
           <Sparkline counts={weeklyCounts(dateKeys, todayKey)} />
-        </div>
-        <div className="min-w-0 flex-1">
-          <p className="dr-label">{t('markLabel')}</p>
-          <p className="mt-1 font-serif text-3xl sm:text-4xl font-semibold tabular-nums tracking-tight">
-            {price}
-          </p>
-          <p className={`mt-1 text-sm font-semibold tabular-nums ${atPeak ? 'text-[var(--color-mint)]' : 'text-[var(--color-muted)]'}`}>
-            {atPeak ? '▲' : '▼'} {t('markGain', { gain: gainLabel })}
-          </p>
-          <p className="mt-1.5 text-sm text-[var(--color-muted)]">
-            <span className={atPeak ? 'text-[var(--color-mint)] font-medium' : ''}>
-              {atPeak ? t('markAtPeak') : t('markOffPeak')}
-            </span>
-            {streakDays > 0 && (
-              <span className="tabular-nums"> · {t('streakCount', { count: streakDays })}</span>
-            )}
-          </p>
-        </div>
+        </dd>
       </div>
-    </div>
+      <div className="dr-kpi">
+        <dt className="dr-label">{t('sessionsTotal')}</dt>
+        <dd className="dr-kpi-value">{sessions.toLocaleString(locale)}</dd>
+      </div>
+      <div className="dr-kpi">
+        <dt className="dr-label">{t('setsDone')}</dt>
+        <dd className="dr-kpi-value">{completedSets.toLocaleString(locale)}</dd>
+      </div>
+      <div className="dr-kpi">
+        <dt className="dr-label">{t('streakLabel')}</dt>
+        <dd className="dr-kpi-value">{t('streakCount', { count: streakDays })}</dd>
+        <dd className={`mt-0.5 text-[11px] ${atPeak ? 'font-medium text-[var(--color-success)]' : 'text-[var(--color-muted)]'}`}>
+          {atPeak ? t('markAtPeak') : t('markOffPeak')}
+        </dd>
+      </div>
+    </dl>
   );
 }

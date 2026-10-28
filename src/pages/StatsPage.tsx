@@ -37,6 +37,7 @@ import { UnitInput } from '../components/UnitInput';
 import type { BodyWeightLog } from '../types';
 import { buildMondayWeeks } from '../lib/statsHelpers';
 import { appLocale } from '../lib/locale';
+import { PageBody, PageHeader } from '../components/Layout';
 
 function getDaysInPastWeeks(weeks: number): Date[] {
   const days: Date[] = [];
@@ -195,15 +196,12 @@ export function StatsPage() {
   };
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-semibold text-[var(--color-ink)] tracking-tight text-balance">
-          {t('yourStats')}
-        </h1>
-        <p className="text-sm text-[var(--color-muted)] mt-1">
-          {t('statsSubtitle')} · {new Date().toLocaleDateString(locale, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
-        </p>
-      </div>
+    <>
+      <PageHeader
+        title={t('yourStats')}
+        meta={new Date().toLocaleDateString(locale, { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })}
+      />
+    <PageBody className="space-y-4">
 
       <MutationAlert message={mutationError} onDismiss={clearError} />
 
@@ -213,25 +211,25 @@ export function StatsPage() {
         error={statsError as Error | null}
         refetch={refetchStats}
       >
-      {/* Quick stats cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+      {/* Quick stats: body */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
         <StatCard
-          icon={<Scale size={20} />}
+          icon={<Scale size={13} />}
           label={t('currentKg')}
           value={currentWeight != null ? `${currentWeight} kg` : '—'}
         />
         <StatCard
-          icon={<Activity size={20} />}
+          icon={<Activity size={13} />}
           label={t('age')}
           value={age != null ? `${age} ${t('yearsOld')}` : '—'}
         />
         <StatCard
-          icon={<Target size={20} />}
+          icon={<Target size={13} />}
           label={t('goalKg')}
           value={goal != null ? `${goal} kg` : '—'}
         />
         <StatCard
-          icon={<TrendingDown size={20} />}
+          icon={<TrendingDown size={13} />}
           label={t('bmiLabel')}
           value={
             bmi != null
@@ -242,9 +240,9 @@ export function StatsPage() {
       </div>
 
       {/* Add today's weight */}
-      <section className="dr-card p-5 sm:p-6">
-        <h2 className="font-medium text-[var(--color-ink)] mb-3 flex items-center gap-2">
-          <Scale size={18} />
+      <section className="dr-card p-3 sm:p-4">
+        <h2 className="text-[13px] font-semibold text-[var(--color-ink)] mb-3 flex items-center gap-2">
+          <Scale size={14} className="text-[var(--color-accent)]" />
           {t('logWeight')}
         </h2>
         <form
@@ -275,7 +273,7 @@ export function StatsPage() {
           <button
             type="submit"
             disabled={!todayWeight.trim() || addWeightMutation.isPending}
-            className="dr-press min-h-[48px] shrink-0 rounded-xl bg-[var(--color-accent)] px-5 text-sm font-semibold text-[var(--color-on-accent)] disabled:opacity-50 touch-manipulation"
+            className="dr-btn dr-btn-primary h-9 shrink-0 max-md:h-11"
           >
             {t('save')}
           </button>
@@ -283,19 +281,19 @@ export function StatsPage() {
       </section>
 
       {/* User stats: birth date, height, goal */}
-      <section className="dr-card p-5 sm:p-6">
-        <h2 className="font-medium text-[var(--color-ink)] mb-3 flex items-center gap-2">
-          <CalendarIcon size={18} />
+      <section className="dr-card p-3 sm:p-4">
+        <h2 className="text-[13px] font-semibold text-[var(--color-ink)] mb-3 flex items-center gap-2">
+          <CalendarIcon size={14} className="text-[var(--color-accent)]" />
           {t('profileSettings')}
         </h2>
         {editingStats ? (
           <div className="space-y-3">
             <div>
-              <p className="mb-1 text-sm text-[var(--color-muted)]">{t('birthDate')}</p>
+              <p className="mb-1 text-[12px] text-[var(--color-muted)]">{t('birthDate')}</p>
               <BirthCalendar value={birthDate} onChange={setBirthDate} />
             </div>
             <label className="block max-w-xs">
-              <span className="mb-1 block text-sm text-[var(--color-muted)]">{t('heightCm')}</span>
+              <span className="mb-1 block text-[12px] text-[var(--color-muted)]">{t('heightCm')}</span>
               <UnitInput
                 value={heightCm}
                 onChange={setHeightCm}
@@ -304,7 +302,7 @@ export function StatsPage() {
               />
             </label>
             <label className="block max-w-xs">
-              <span className="mb-1 block text-sm text-[var(--color-muted)]">{t('goalKg')}</span>
+              <span className="mb-1 block text-[12px] text-[var(--color-muted)]">{t('goalKg')}</span>
               <UnitInput
                 value={goalKg}
                 onChange={setGoalKg}
@@ -317,14 +315,14 @@ export function StatsPage() {
                 type="button"
                 onClick={saveStats}
                 disabled={updateStatsMutation.isPending}
-                className="dr-press px-5 py-2 min-h-[44px] rounded-xl bg-[var(--color-accent)] text-[var(--color-on-accent)] text-sm font-semibold touch-manipulation"
+                className="dr-btn dr-btn-primary"
               >
                 {t('save')}
               </button>
               <button
                 type="button"
                 onClick={() => setEditingStats(false)}
-                className="dr-press px-5 py-2 min-h-[44px] rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-ink)] text-sm hover:bg-[var(--color-hover)] touch-manipulation"
+                className="dr-btn"
               >
                 {t('cancel')}
               </button>
@@ -332,16 +330,16 @@ export function StatsPage() {
           </div>
         ) : (
           <div>
-          <dl className="grid gap-2.5 text-sm">
-            <div className="flex items-baseline justify-between gap-4">
+          <dl className="divide-y divide-[var(--color-border)] text-[13px]">
+            <div className="flex items-baseline justify-between gap-4 py-1.5">
               <dt className="text-[var(--color-muted)]">{t('birthDate')}</dt>
               <dd className="tabular-nums text-right">{userStats?.birth_date ? formatBirthDateDisplay(userStats.birth_date.slice(0, 10), locale) : '—'}</dd>
             </div>
-            <div className="flex items-baseline justify-between gap-4">
+            <div className="flex items-baseline justify-between gap-4 py-1.5">
               <dt className="text-[var(--color-muted)]">{t('heightCm')}</dt>
               <dd className="tabular-nums text-right">{userStats?.height_cm ? `${userStats.height_cm} cm` : '—'}</dd>
             </div>
-            <div className="flex items-baseline justify-between gap-4">
+            <div className="flex items-baseline justify-between gap-4 py-1.5">
               <dt className="text-[var(--color-muted)]">{t('goalKg')}</dt>
               <dd className="tabular-nums text-right">{userStats?.goal_weight_kg ? `${userStats.goal_weight_kg} kg` : '—'}</dd>
             </div>
@@ -349,7 +347,7 @@ export function StatsPage() {
           <button
             type="button"
             onClick={startEditingStats}
-            className="mt-3 inline-flex items-center min-h-[44px] text-[var(--color-ink)] font-medium hover:underline touch-manipulation"
+            className="dr-btn mt-3"
           >
             {t('edit')}
           </button>
@@ -359,9 +357,9 @@ export function StatsPage() {
 
       {/* Weight goal graph */}
       {(weightsForChart.length > 0 || goal != null) && (
-        <section className="dr-card p-5 sm:p-6">
-          <h2 className="font-medium text-[var(--color-ink)] mb-4 flex items-center gap-2">
-            <TrendingDown size={18} />
+        <section className="dr-card p-3 sm:p-4">
+          <h2 className="text-[13px] font-semibold text-[var(--color-ink)] mb-3 flex items-center gap-2">
+            <TrendingDown size={14} className="text-[var(--color-accent)]" />
             {t('weightGoalGraph')}
           </h2>
           <WeightChart weights={weightsForChart} goalKg={goal} />
@@ -369,9 +367,9 @@ export function StatsPage() {
       )}
 
       {/* Activity grid - GitHub style */}
-      <section className="dr-card p-5 sm:p-6">
-        <h2 className="font-medium text-[var(--color-ink)] mb-3 flex items-center gap-2">
-          <Activity size={18} />
+      <section className="dr-card p-3 sm:p-4">
+        <h2 className="text-[13px] font-semibold text-[var(--color-ink)] mb-3 flex items-center gap-2">
+          <Activity size={14} className="text-[var(--color-accent)]" />
           {t('activityDays')}
         </h2>
         <div className="flex items-center gap-4 mb-3 text-xs text-[var(--color-muted)]">
@@ -387,33 +385,34 @@ export function StatsPage() {
         <ContributionGrid days={days} workoutDaysMap={workoutDaysMap} />
       </section>
 
-      <section className="dr-card p-5 sm:p-6">
-        <h2 className="font-medium text-[var(--color-ink)] mb-1 flex items-center gap-2">
-          <Zap size={18} />
+      <section className="dr-card p-3 sm:p-4">
+        <h2 className="text-[13px] font-semibold text-[var(--color-ink)] mb-0.5 flex items-center gap-2">
+          <Zap size={14} className="text-[var(--color-accent)]" />
           {t('analyticsRollupTitle')}
         </h2>
-        <p className="text-xs text-[var(--color-muted)] mb-4">{t('analyticsRollupSubtitle')}</p>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm">
-          <div className="p-3 rounded-2xl bg-[var(--color-accent-soft)]">
-            <p className="text-[var(--color-muted)] text-xs">{t('analyticsTotalActivities')}</p>
-            <p className="font-semibold text-[var(--color-ink)] tabular-nums">{analyticsTotals.activities}</p>
+        <p className="text-[12px] text-[var(--color-muted)] mb-3">{t('analyticsRollupSubtitle')}</p>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+          <div className="rounded-md border border-[var(--color-border)] px-3 py-2">
+            <p className="text-[11px] text-[var(--color-muted)]">{t('analyticsTotalActivities')}</p>
+            <p className="text-[18px] font-semibold text-[var(--color-ink)] tabular-nums leading-tight">{analyticsTotals.activities}</p>
           </div>
-          <div className="p-3 rounded-2xl bg-[var(--color-accent-soft)]">
-            <p className="text-[var(--color-muted)] text-xs">{t('analyticsStrengthSessions')}</p>
-            <p className="font-semibold text-[var(--color-ink)] tabular-nums">{analyticsTotals.strength}</p>
+          <div className="rounded-md border border-[var(--color-border)] px-3 py-2">
+            <p className="text-[11px] text-[var(--color-muted)]">{t('analyticsStrengthSessions')}</p>
+            <p className="text-[18px] font-semibold text-[var(--color-ink)] tabular-nums leading-tight">{analyticsTotals.strength}</p>
           </div>
-          <div className="p-3 rounded-2xl bg-[var(--color-accent-soft)]">
-            <p className="text-[var(--color-muted)] text-xs">{t('analyticsCardioSessions')}</p>
-            <p className="font-semibold text-[var(--color-ink)] tabular-nums">{analyticsTotals.cardio}</p>
+          <div className="rounded-md border border-[var(--color-border)] px-3 py-2">
+            <p className="text-[11px] text-[var(--color-muted)]">{t('analyticsCardioSessions')}</p>
+            <p className="text-[18px] font-semibold text-[var(--color-ink)] tabular-nums leading-tight">{analyticsTotals.cardio}</p>
           </div>
-          <div className="p-3 rounded-2xl bg-[var(--color-accent-soft)]">
-            <p className="text-[var(--color-muted)] text-xs">{t('analyticsCompletedSets')}</p>
-            <p className="font-semibold text-[var(--color-ink)] tabular-nums">{analyticsTotals.sets}</p>
+          <div className="rounded-md border border-[var(--color-border)] px-3 py-2">
+            <p className="text-[11px] text-[var(--color-muted)]">{t('analyticsCompletedSets')}</p>
+            <p className="text-[18px] font-semibold text-[var(--color-ink)] tabular-nums leading-tight">{analyticsTotals.sets}</p>
           </div>
         </div>
       </section>
       </QueryState>
-    </div>
+    </PageBody>
+    </>
   );
 }
 
@@ -427,12 +426,12 @@ function StatCard({
   value: string;
 }) {
   return (
-    <div className="dr-card p-4 sm:p-5 min-w-0">
-      <div className="flex items-center gap-2 text-[var(--color-muted)]">
+    <div className="dr-kpi">
+      <div className="flex items-center gap-1.5 text-[var(--color-faint)]">
         {icon}
         <p className="dr-label">{label}</p>
       </div>
-      <p className="font-serif text-xl text-[var(--color-ink)] mt-2 min-w-0 break-words">{value}</p>
+      <p className="dr-kpi-value min-w-0 break-words">{value}</p>
     </div>
   );
 }
@@ -532,7 +531,7 @@ function WeightChart({ weights, goalKg }: { weights: BodyWeightLog[]; goalKg: nu
       <div className="overflow-x-auto -mx-1 px-1">
         <svg
           viewBox={`0 0 ${W} ${H}`}
-          className="w-full max-w-full h-auto min-h-[220px]"
+          className="w-full max-w-full h-auto min-h-[180px]"
           role="img"
           aria-label={
             chartSummary

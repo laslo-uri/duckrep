@@ -25,7 +25,7 @@ export function QueryState({
   if (isLoading) {
     return (
       <p
-        className="text-[var(--color-muted)] flex items-center"
+        className="flex items-center py-6 text-[13px] text-[var(--color-muted)]"
         role="status"
         aria-live="polite"
         aria-busy="true"
@@ -38,13 +38,13 @@ export function QueryState({
 
   if (isError) {
     return (
-      <div className="rounded-xl border border-[var(--color-error)]/30 bg-[var(--color-error-bg)] p-5" role="alert">
-        <p className="text-sm text-[var(--color-error)]">{toQueryErrorMessage(error?.message, t)}</p>
+      <div className="rounded-lg border border-[var(--color-error)]/30 bg-[var(--color-error-bg)] p-3" role="alert">
+        <p className="text-[13px] text-[var(--color-error)]">{toQueryErrorMessage(error?.message, t)}</p>
         {refetch && (
           <button
             type="button"
             onClick={() => refetch()}
-            className="dr-press mt-3 px-4 py-1.5 text-sm font-semibold rounded-xl bg-[var(--color-accent)] text-[var(--color-on-accent)] touch-manipulation min-h-[44px]"
+            className="dr-btn dr-btn-primary mt-2"
           >
             {t('retry')}
           </button>

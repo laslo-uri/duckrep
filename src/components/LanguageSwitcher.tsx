@@ -8,7 +8,7 @@ const LANG_LABEL: Record<(typeof LANG_CYCLE)[number], string> = {
   hu: 'HU',
 };
 
-export function LanguageSwitcher() {
+export function LanguageSwitcher({ className = '' }: { className?: string }) {
   const { i18n, t } = useTranslation();
   const current = (LANG_CYCLE.includes(i18n.language as (typeof LANG_CYCLE)[number])
     ? i18n.language
@@ -21,7 +21,7 @@ export function LanguageSwitcher() {
       type="button"
       onClick={() => i18n.changeLanguage(nextLang)}
       title={t('switchLanguage', { lang: LANG_LABEL[nextLang] })}
-      className="dr-press text-sm font-medium text-[var(--color-muted)] hover:text-[var(--color-ink)] px-2.5 py-2.5 min-h-[44px] min-w-[44px] rounded-lg hover:bg-[var(--color-hover)] uppercase tracking-wide touch-manipulation"
+      className={`dr-btn dr-btn-ghost dr-icon-btn text-[12px] font-semibold uppercase tracking-wide ${className}`}
     >
       {LANG_LABEL[current]}
       <span className="sr-only">, {t('switchLanguage', { lang: LANG_LABEL[nextLang] })}</span>

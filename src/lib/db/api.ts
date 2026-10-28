@@ -474,6 +474,36 @@ export async function getLifetimeTrainingTotals(
   };
 }
 
+export type WorkoutSummary = { exercises: number; sets: number; done: number; volume: number };
+
+/** Per-activity counts for the journal list (read-only aggregate, keyed by workout day id). */
+export async function listWorkoutSummaries(userId: string): Promise<Record<string, WorkoutSummary>> {
+  const db = await getDb();
+  const rows = await db.select(
+    `SELECT wd.id AS id,
+       COUNT(DISTINCT we.id) AS exercises,
+       COUNT(es.id) AS sets,
+       COALESCE(SUM(CASE WHEN es.completed = 1 THEN 1 ELSE 0 END), 0) AS done,
+       COALESCE(SUM(CASE WHEN es.reps IS NOT NULL AND es.weight IS NOT NULL THEN es.reps * es.weight ELSE 0 END), 0) AS volume
+     FROM workout_days wd
+     LEFT JOIN workout_exercises we ON we.workout_day_id = wd.id
+     LEFT JOIN exercise_sets es ON es.workout_exercise_id = we.id
+     WHERE wd.user_id = ? AND wd.deleted_at IS NULL
+     GROUP BY wd.id`,
+    [userId],
+  );
+  const out: Record<string, WorkoutSummary> = {};
+  for (const r of rows) {
+    out[String(r.id)] = {
+      exercises: Number(r.exercises ?? 0),
+      sets: Number(r.sets ?? 0),
+      done: Number(r.done ?? 0),
+      volume: Number(r.volume ?? 0),
+    };
+  }
+  return out;
+}
+
 export async function getDailyTrainingStats(userId: string, sinceDate: string): Promise<UserDailyTrainingStats[]> {
   const db = await getDb();
 

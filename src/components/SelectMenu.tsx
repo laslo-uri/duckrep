@@ -7,6 +7,7 @@ export function SelectMenu({
   options,
   onChange,
   disabled = false,
+  compact = false,
   className = '',
 }: {
   label: string;
@@ -14,6 +15,8 @@ export function SelectMenu({
   options: { value: string; label: string }[];
   onChange: (value: string) => void;
   disabled?: boolean;
+  /** Borderless until hovered, for use inside dense rows. */
+  compact?: boolean;
   className?: string;
 }) {
   const [open, setOpen] = useState(false);
@@ -38,6 +41,11 @@ export function SelectMenu({
     };
   }, [open]);
 
+  const tone = compact
+    ? 'border-transparent bg-transparent px-2 text-[12px] text-[var(--color-muted)] hover:border-[var(--color-border)]'
+    : '';
+  const ring = open ? '!border-[var(--color-accent)] shadow-[0_0_0_2px_var(--color-accent-soft)]' : '';
+
   return (
     <div ref={rootRef} className={`relative ${className}`}>
       <button
@@ -47,23 +55,19 @@ export function SelectMenu({
         aria-expanded={open}
         aria-label={current ? `${label}: ${current.label}` : label}
         onClick={() => setOpen((currentOpen) => !currentOpen)}
-        className={`dr-press inline-flex min-h-[44px] w-full items-center justify-between gap-2 rounded-xl border px-3 text-sm disabled:opacity-50 ${
-          open
-            ? 'border-transparent bg-[var(--color-paper)] text-[var(--color-ink)] ring-2 ring-[var(--color-accent)]'
-            : 'border-[var(--color-border)] bg-[var(--color-paper)] text-[var(--color-ink)] hover:bg-[var(--color-hover)]'
-        }`}
+        className={`dr-btn w-full justify-between font-normal disabled:opacity-50 ${tone} ${ring}`}
       >
         <span className="truncate">{current?.label ?? label}</span>
         <ChevronDown
-          size={16}
-          className={`shrink-0 text-[var(--color-muted)] transition-transform ${open ? 'rotate-180' : ''}`}
+          size={13}
+          className={`shrink-0 text-[var(--color-faint)] transition-transform ${open ? 'rotate-180' : ''}`}
         />
       </button>
       {open ? (
         <div
           role="listbox"
           aria-label={label}
-          className="absolute left-0 top-[calc(100%+6px)] z-30 max-h-52 min-w-full overflow-y-auto rounded-xl border border-[var(--color-border)] bg-[var(--color-paper)] p-1 shadow-[var(--shadow-card)]"
+          className="dr-enter absolute left-0 top-[calc(100%+4px)] z-30 max-h-60 min-w-full overflow-y-auto rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-1 shadow-[var(--shadow-pop)]"
         >
           {options.map((option) => {
             const selected = option.value === value;
@@ -77,10 +81,8 @@ export function SelectMenu({
                   onChange(option.value);
                   setOpen(false);
                 }}
-                className={`dr-press block min-h-[40px] w-full whitespace-nowrap rounded-lg px-3 text-left text-sm ${
-                  selected
-                    ? 'bg-[var(--color-accent)] font-semibold text-[var(--color-on-accent)]'
-                    : 'text-[var(--color-ink)] hover:bg-[var(--color-hover)]'
+                className={`dr-tap block w-full whitespace-nowrap rounded-md px-2 py-1 text-left text-[13px] text-[var(--color-ink)] hover:bg-[var(--color-hover)] ${
+                  selected ? 'bg-[var(--color-active)] font-medium' : ''
                 }`}
               >
                 {option.label}

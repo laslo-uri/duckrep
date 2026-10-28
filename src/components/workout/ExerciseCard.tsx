@@ -5,14 +5,15 @@ import type { WorkoutExercise, ExerciseSet } from '../../types';
 import { SelectMenu } from '../SelectMenu';
 import { SetRow } from './SetRow';
 
-function circuitAccentFromGroupId(gid: string | null): string | undefined {
+function circuitColorFromGroupId(gid: string | null): string | undefined {
   if (!gid) return undefined;
   let h = 0;
   for (let i = 0; i < gid.length; i++) h = (h * 31 + gid.charCodeAt(i)) % 360;
-  return `3px solid hsl(${h} 50% 42%)`;
+  return `hsl(${h} 50% 48%)`;
 }
 
 export function ExerciseCard({
+  index,
   exercise,
   bodyWeightKg,
   isDropSet,
@@ -29,6 +30,7 @@ export function ExerciseCard({
   onSetCompleted,
   isAddingSet,
 }: {
+  index?: number;
   exercise: WorkoutExercise & { exercise_sets?: ExerciseSet[]; sets?: ExerciseSet[] };
   bodyWeightKg: number | null;
   isDropSet: boolean;
@@ -69,15 +71,21 @@ export function ExerciseCard({
     if (trimmed !== (exercise.goals ?? '')) onUpdateGoals(trimmed || null);
   };
 
-  const accent = circuitAccentFromGroupId(exercise.circuit_group_id ?? null);
+  const circuitColor = circuitColorFromGroupId(exercise.circuit_group_id ?? null);
   const done = sets.filter((s) => s.completed).length;
+  const allDone = sets.length > 0 && done === sets.length;
 
   return (
-    <div
-      className="dr-card p-5 sm:p-6"
-      style={accent ? { borderLeft: accent } : undefined}
+    <section
+      aria-label={exercise.name}
+      className="overflow-hidden rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)]"
+      style={circuitColor ? { boxShadow: `inset 3px 0 0 ${circuitColor}` } : undefined}
     >
-      <div className="flex items-center justify-between gap-3 mb-3">
+      {/* Header row: number, name, circuit, progress, delete */}
+      <div className="flex min-h-10 items-center gap-2 border-b border-[var(--color-border)] px-3 py-1">
+        {index != null && (
+          <span className="w-4 shrink-0 text-[12px] tabular-nums text-[var(--color-faint)]">{index}</span>
+        )}
         <div className="min-w-0 flex-1">
           {editing ? (
             <input
@@ -85,46 +93,82 @@ export function ExerciseCard({
               onChange={(e) => setName(e.target.value)}
               onBlur={saveName}
               onKeyDown={(e) => e.key === 'Enter' && saveName()}
-              className="w-full font-medium text-[var(--color-ink)] bg-transparent border-b border-[var(--color-border)] focus:outline-none focus:border-[var(--color-accent)] py-0.5"
+              aria-label={t('exercises')}
+              className="dr-input w-full font-medium"
               autoFocus
             />
           ) : (
             <button
               type="button"
               onClick={startEditing}
-              className="font-medium text-[var(--color-ink)] hover:opacity-80 flex items-center gap-2 text-left"
+              className="group dr-tap flex max-w-full items-center gap-1.5 text-left font-medium text-[var(--color-ink)]"
             >
               <span className="truncate">{exercise.name}</span>
-              <Pencil size={14} className="text-[var(--color-muted)] shrink-0" aria-hidden />
+              <Pencil size={12} className="shrink-0 text-[var(--color-faint)] opacity-0 group-hover:opacity-100 max-md:opacity-60" aria-hidden />
             </button>
           )}
-          {sets.length > 0 && (
-            <p className="text-xs tabular-nums text-[var(--color-muted)] mt-0.5">
-              {t('setsProgress', { done, total: sets.length })}
-            </p>
-          )}
         </div>
-        <button
-          type="button"
-          onClick={onDelete}
-          aria-label={t('delete')}
-          className="dr-press p-2.5 min-w-[44px] min-h-[44px] rounded-lg text-[var(--color-muted)] hover:text-[var(--color-error)] hover:bg-[var(--color-error-bg)] touch-manipulation flex items-center justify-center"
-        >
-          <Trash2 size={16} />
-        </button>
-      </div>
-      <div className="mb-3 flex flex-wrap items-center gap-2 text-xs text-[var(--color-muted)]">
-        <span className="shrink-0">{t('circuitLabel')}</span>
         <SelectMenu
           label={t('circuitLabel')}
           value={exercise.circuit_group_id ?? ''}
           disabled={circuitPending}
-          className="min-w-[9rem] max-w-[14rem] flex-1"
+          compact
+          className="hidden w-32 shrink-0 lg:block"
           options={[
             { value: '', label: t('circuitNone') },
-            ...circuitGroupIds.map((group, index) => ({
+            ...circuitGroupIds.map((group, i) => ({
               value: group,
-              label: t('circuitGroupN', { n: index + 1 }),
+              label: t('circuitGroupN', { n: i + 1 }),
+            })),
+            { value: '__new__', label: t('circuitNew') },
+          ]}
+          onChange={(value) => {
+            if (value === '') onUpdateCircuit(null);
+            else if (value === '__new__') onUpdateCircuit(crypto.randomUUID());
+            else onUpdateCircuit(value);
+          }}
+        />
+        {sets.length > 0 && (
+          <span
+            className={`w-10 shrink-0 text-right text-[12px] font-medium tabular-nums ${
+              allDone ? 'text-[var(--color-success)]' : 'text-[var(--color-muted)]'
+            }`}
+          >
+            {t('setsProgress', { done, total: sets.length })}
+          </span>
+        )}
+        <button
+          type="button"
+          onClick={onDelete}
+          aria-label={t('delete')}
+          title={t('delete')}
+          className="dr-btn dr-btn-ghost dr-icon-btn shrink-0 hover:!text-[var(--color-error)]"
+        >
+          <Trash2 size={14} aria-hidden />
+        </button>
+      </div>
+
+      {/* Goal + (on phones) circuit */}
+      <div className="flex items-center gap-2 border-b border-[var(--color-border)] px-3 py-1">
+        <input
+          value={goals}
+          onChange={(e) => setGoals(e.target.value)}
+          onBlur={(e) => saveGoals(e.currentTarget.value)}
+          placeholder={t('goalsPlaceholder')}
+          aria-label={t('goals')}
+          className="dr-tap min-w-0 flex-1 bg-transparent text-[12px] text-[var(--color-ink)] placeholder:text-[var(--color-faint)] focus:outline-none"
+        />
+        <SelectMenu
+          label={t('circuitLabel')}
+          value={exercise.circuit_group_id ?? ''}
+          disabled={circuitPending}
+          compact
+          className="w-28 shrink-0 lg:hidden"
+          options={[
+            { value: '', label: t('circuitNone') },
+            ...circuitGroupIds.map((group, i) => ({
+              value: group,
+              label: t('circuitGroupN', { n: i + 1 }),
             })),
             { value: '__new__', label: t('circuitNew') },
           ]}
@@ -135,18 +179,21 @@ export function ExerciseCard({
           }}
         />
       </div>
-      <label className="block text-xs text-[var(--color-muted)] mb-3">
-        <span className="sr-only">{t('goals')}</span>
-        <input
-          value={goals}
-          onChange={(e) => setGoals(e.target.value)}
-          onBlur={(e) => saveGoals(e.currentTarget.value)}
-          placeholder={t('goalsPlaceholder')}
-          aria-label={t('goals')}
-          className="w-full text-sm rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-ink)] px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]"
-        />
-      </label>
-      <div className="space-y-2">
+
+      {sets.length > 0 && (
+        <div
+          className="flex h-7 items-center gap-2 border-b border-[var(--color-border)] px-3 text-[11px] font-medium uppercase tracking-wide text-[var(--color-faint)]"
+          aria-hidden
+        >
+          <span className="w-7 shrink-0 text-center md:w-6">✓</span>
+          <span className="w-5 shrink-0 text-center">#</span>
+          <span className="w-14 shrink-0 text-center">{t('reps')}</span>
+          <span className="w-3 shrink-0" />
+          <span className="w-16 shrink-0 text-center">{t('unitKg')}</span>
+          <span className="hidden flex-1 sm:block">{t('setNote')}</span>
+        </div>
+      )}
+      <div>
         {sets.map((s) => (
           <SetRow
             key={s.id}
@@ -161,16 +208,16 @@ export function ExerciseCard({
             onDelete={() => onDeleteSet(s.id)}
           />
         ))}
-        <button
-          type="button"
-          onClick={onAddSet}
-          disabled={isAddingSet}
-          className="dr-press flex items-center gap-2 py-3 min-h-[44px] text-sm text-[var(--color-muted)] hover:text-[var(--color-ink)] disabled:opacity-50 touch-manipulation"
-        >
-          <Plus size={16} />
-          {t('addSet')}
-        </button>
       </div>
-    </div>
+      <button
+        type="button"
+        onClick={onAddSet}
+        disabled={isAddingSet}
+        className="dr-tap flex w-full items-center gap-2 px-3 py-1 text-left text-[12px] text-[var(--color-muted)] transition-colors hover:bg-[var(--color-hover)] hover:text-[var(--color-ink)] disabled:opacity-50"
+      >
+        <Plus size={13} aria-hidden />
+        {t('addSet')}
+      </button>
+    </section>
   );
 }

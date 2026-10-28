@@ -66,7 +66,7 @@ export function BirthCalendar({
   }, [openMenu]);
 
   const triggerClass = (open: boolean) =>
-    `dr-press inline-flex min-h-[44px] w-full items-center justify-between gap-1 rounded-lg border px-2.5 text-sm font-medium text-[var(--color-ink)] ${
+    `dr-press inline-flex dr-tap w-full items-center justify-between gap-1 rounded-lg border px-2.5 text-sm font-medium text-[var(--color-ink)] ${
       open
         ? 'border-transparent bg-[var(--color-paper)] ring-2 ring-[var(--color-accent)]'
         : 'border-[var(--color-border)] bg-[var(--color-paper)] hover:bg-[var(--color-hover)]'
@@ -82,11 +82,11 @@ export function BirthCalendar({
     }`;
 
   return (
-    <div className={`rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-3 ${className}`}>
+    <div className={`rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-3 ${className}`}>
       <div ref={headerRef} className="flex items-center gap-2">
         <button
           type="button"
-          className="dr-press inline-flex min-h-[44px] min-w-[44px] shrink-0 items-center justify-center rounded-lg text-[var(--color-muted)] hover:bg-[var(--color-hover)] hover:text-[var(--color-ink)] disabled:opacity-30"
+          className="dr-press inline-flex dr-tap dr-tap-w shrink-0 items-center justify-center rounded-lg text-[var(--color-muted)] hover:bg-[var(--color-hover)] hover:text-[var(--color-ink)] disabled:opacity-30"
           onClick={() =>
             setCursor((current) =>
               current.month === 0
@@ -118,7 +118,7 @@ export function BirthCalendar({
             <div
               role="listbox"
               aria-label={t('chooseMonth')}
-              className="absolute left-0 top-[calc(100%+6px)] z-30 grid w-[15rem] max-w-[calc(100vw-2.5rem)] grid-cols-3 gap-1 rounded-xl border border-[var(--color-border)] bg-[var(--color-paper)] p-1.5 shadow-[var(--shadow-card)]"
+              className="absolute left-0 top-[calc(100%+6px)] z-30 grid w-[15rem] max-w-[calc(100vw-2.5rem)] grid-cols-3 gap-1 rounded-md border border-[var(--color-border)] bg-[var(--color-paper)] p-1.5 shadow-[var(--shadow-pop)]"
             >
               {monthNames.map((name, index) => {
                 const disabled = cursor.year === now.getFullYear() && index > now.getMonth();
@@ -162,7 +162,7 @@ export function BirthCalendar({
               ref={yearListRef}
               role="listbox"
               aria-label={t('chooseYear')}
-              className="absolute right-0 top-[calc(100%+6px)] z-30 max-h-52 w-full overflow-y-auto rounded-xl border border-[var(--color-border)] bg-[var(--color-paper)] p-1 shadow-[var(--shadow-card)]"
+              className="absolute right-0 top-[calc(100%+6px)] z-30 max-h-52 w-full overflow-y-auto rounded-md border border-[var(--color-border)] bg-[var(--color-paper)] p-1 shadow-[var(--shadow-pop)]"
             >
               {years.map((year) => (
                 <button
@@ -188,7 +188,7 @@ export function BirthCalendar({
         </div>
         <button
           type="button"
-          className="dr-press inline-flex min-h-[44px] min-w-[44px] shrink-0 items-center justify-center rounded-lg text-[var(--color-muted)] hover:bg-[var(--color-hover)] hover:text-[var(--color-ink)] disabled:opacity-30"
+          className="dr-press inline-flex dr-tap dr-tap-w shrink-0 items-center justify-center rounded-lg text-[var(--color-muted)] hover:bg-[var(--color-hover)] hover:text-[var(--color-ink)] disabled:opacity-30"
           onClick={() =>
             setCursor((current) =>
               current.month === 11

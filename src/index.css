@@ -13,10 +13,13 @@
   --color-logo: #09090b;
   --color-paper: #f4f4f5;
   --color-muted: #52525b;
-  --color-border: rgba(9, 9, 11, 0.1);
+  --color-faint: #67676f;
+  --color-border: #e4e4e7;
+  --color-line-strong: #d4d4d8;
   --color-surface: #ffffff;
-  --color-hover: rgba(194, 65, 12, 0.08);
-  --color-active: rgba(194, 65, 12, 0.06);
+  --color-panel: #fafafa;
+  --color-hover: rgba(9, 9, 11, 0.045);
+  --color-active: rgba(9, 9, 11, 0.075);
   --color-error: #dc2626;
   --color-error-bg: #fef2f2;
   --color-success: #15803d;
@@ -29,6 +32,7 @@
   --color-chart-active: #c2410c;
   --color-chart-rest: #e4e4e7;
   --shadow-card: 0 2px 24px -8px rgba(9, 9, 11, 0.14);
+  --shadow-pop: 0 8px 30px rgba(9, 9, 11, 0.14);
   --glow-accent: 0 0 14px rgba(194, 65, 12, 0.3);
   --glow-mint: 0 0 12px rgba(21, 128, 61, 0.35);
   --scrollbar-thumb: rgba(9, 9, 11, 0.28);
@@ -45,10 +49,13 @@
   --color-logo: #fafafa;
   --color-paper: #09090b;
   --color-muted: #a1a1aa;
+  --color-faint: #8b8b94;
   --color-border: #27272a;
+  --color-line-strong: #3f3f46;
   --color-surface: #18181b;
-  --color-hover: rgba(240, 106, 32, 0.1);
-  --color-active: rgba(240, 106, 32, 0.07);
+  --color-panel: #111113;
+  --color-hover: rgba(255, 255, 255, 0.05);
+  --color-active: rgba(255, 255, 255, 0.08);
   --color-error: #f87171;
   --color-error-bg: rgba(185, 28, 28, 0.22);
   --color-success: #4ade80;
@@ -61,6 +68,7 @@
   --color-chart-active: #f06a20;
   --color-chart-rest: #27272a;
   --shadow-card: 0 4px 32px -12px rgba(0, 0, 0, 0.7);
+  --shadow-pop: 0 8px 30px rgba(0, 0, 0, 0.55);
   --glow-accent: 0 0 18px rgba(240, 106, 32, 0.35);
   --glow-mint: 0 0 16px rgba(74, 222, 128, 0.4);
   --scrollbar-thumb: #3f3f46;
@@ -82,6 +90,9 @@
   }
   body {
     @apply bg-[var(--color-paper)] text-[var(--color-ink)] min-h-screen font-sans;
+    font-size: 13px;
+    line-height: 1.45;
+    font-variant-numeric: tabular-nums;
     padding-top: env(safe-area-inset-top, 0);
     padding-right: env(safe-area-inset-right, 0);
     padding-left: env(safe-area-inset-left, 0);
@@ -516,27 +527,263 @@ a:focus-visible .dr-logo .dr-logo-img,
 /* ──────────────────────────────────────────
    Shared component classes
    ────────────────────────────────────────── */
-.dr-label {
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--color-muted);
-  overflow-wrap: anywhere;
-  line-height: 1.35;
+/* Linear-like density (the Hawkdone family system): 13px rows, 28px controls,
+   1px hairlines, 6px radii. Phones and touch screens get 44px targets. */
+@layer components {
+  .dr-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-faint);
+    overflow-wrap: anywhere;
+    line-height: 1.35;
+  }
+
+  .dr-card {
+    border-radius: 0.5rem;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+  }
+
+  .dr-field {
+    border-radius: 0.375rem;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    color: var(--color-ink);
+  }
+
+  .dr-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    height: 28px;
+    padding: 0 10px;
+    border-radius: 6px;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    color: var(--color-ink);
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    user-select: none;
+    cursor: pointer;
+    touch-action: manipulation;
+    transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease, filter 120ms ease;
+  }
+  .dr-btn:hover {
+    background: var(--color-hover);
+  }
+  .dr-btn:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+  .dr-btn-primary {
+    background: var(--color-accent);
+    border-color: transparent;
+    color: var(--color-on-accent);
+    font-weight: 600;
+  }
+  .dr-btn-primary:hover {
+    background: var(--color-accent);
+    filter: brightness(1.08);
+  }
+  .dr-btn-ghost {
+    background: transparent;
+    border-color: transparent;
+    color: var(--color-muted);
+  }
+  .dr-btn-ghost:hover {
+    background: var(--color-hover);
+    color: var(--color-ink);
+  }
+  .dr-btn-danger {
+    color: var(--color-error);
+  }
+  .dr-btn-danger:hover {
+    background: var(--color-error-bg);
+    color: var(--color-error);
+  }
+  .dr-icon-btn {
+    width: 28px;
+    padding: 0;
+  }
+  .dr-input {
+    height: 28px;
+    padding: 0 8px;
+    border-radius: 6px;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    color: var(--color-ink);
+    font-size: 13px;
+    transition: border-color 120ms ease, box-shadow 120ms ease;
+  }
+  textarea.dr-input {
+    height: auto;
+    padding: 6px 8px;
+  }
+  .dr-input::placeholder {
+    color: var(--color-faint);
+  }
+  .dr-input:focus,
+  .dr-input:focus-visible {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 2px var(--color-accent-soft);
+  }
+  .dr-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    height: 22px;
+    padding: 0 8px;
+    border-radius: 999px;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    font-size: 12px;
+    color: var(--color-muted);
+    white-space: nowrap;
+  }
+  button.dr-chip {
+    cursor: pointer;
+  }
+  button.dr-chip:hover {
+    color: var(--color-ink);
+    background: var(--color-hover);
+  }
+  .dr-chip[aria-pressed='true'] {
+    border-color: var(--color-accent);
+    background: var(--color-accent-soft);
+    color: var(--color-ink);
+  }
+  .dr-kbd {
+    font-size: 11px;
+    line-height: 1;
+    padding: 2px 5px;
+    border: 1px solid var(--color-line-strong);
+    border-bottom-width: 2px;
+    border-radius: 4px;
+    background: var(--color-surface);
+    color: var(--color-muted);
+  }
+  .dr-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 36px;
+    padding: 0 12px;
+    border-bottom: 1px solid var(--color-border);
+    transition: background-color 120ms ease;
+  }
+  .dr-row:hover {
+    background: var(--color-hover);
+  }
+  .dr-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 32px;
+    padding: 0 12px;
+    border-bottom: 1px solid var(--color-border);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--color-ink);
+  }
+  .dr-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 28px;
+    padding: 0 8px;
+    border-radius: 6px;
+    font-size: 13px;
+    color: var(--color-muted);
+    transition: background-color 120ms ease, color 120ms ease;
+  }
+  .dr-nav-item:hover {
+    background: var(--color-hover);
+    color: var(--color-ink);
+  }
+  .dr-nav-item[aria-current='page'] {
+    background: var(--color-active);
+    color: var(--color-ink);
+  }
+  .dr-tap {
+    min-height: 28px;
+  }
+  .dr-tap-w {
+    min-width: 28px;
+  }
+  /* KPI tile, as on the Hawkdone insights page */
+  .dr-kpi {
+    border-radius: 0.5rem;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    padding: 10px 12px;
+    min-width: 0;
+  }
+  .dr-kpi-value {
+    margin-top: 2px;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.15;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-ink);
+  }
+
+  @media (max-width: 767px), (pointer: coarse) {
+    .dr-btn {
+      height: 44px;
+      padding: 0 14px;
+    }
+    .dr-icon-btn {
+      width: 44px;
+      padding: 0;
+    }
+    .dr-input {
+      height: 44px;
+      font-size: 16px; /* iOS zooms into smaller inputs */
+    }
+    .dr-chip-tap {
+      height: 36px;
+      padding: 0 12px;
+    }
+    .dr-row {
+      min-height: 52px;
+    }
+    .dr-nav-item {
+      height: 44px;
+    }
+    .dr-tap {
+      min-height: 44px;
+    }
+    .dr-tap-w {
+      min-width: 44px;
+    }
+  }
 }
 
-.dr-card {
-  border-radius: 0.875rem;
-  background: var(--color-surface);
-  box-shadow: var(--shadow-card);
+:root {
+  --dr-header-h: 44px;
+  --dr-tabbar-h: 56px;
+}
+@media (max-width: 767px) {
+  :root {
+    --dr-header-h: 48px;
+  }
 }
 
-.dr-field {
-  border-radius: 1rem;
-  border: 1px solid var(--color-border);
-  background: color-mix(in srgb, var(--color-paper) 70%, var(--color-surface));
-  color: var(--color-ink);
+@keyframes dr-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.55; transform: scale(1.35); }
+}
+.dr-live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--color-accent);
+  animation: dr-dot 1.6s ease-in-out infinite;
 }
 
 /* ──────────────────────────────────────────

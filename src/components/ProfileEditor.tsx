@@ -148,10 +148,10 @@ function ProfileForm({
       }}
     >
       <MutationAlert message={pendingError} onDismiss={onDismissError} />
-      <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(18rem,22rem)] lg:items-start">
-        <div className="space-y-4">
+      <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(16rem,18rem)] lg:items-start">
+        <div className="space-y-3">
           <label className="block">
-            <span className="mb-1 block text-sm text-[var(--color-muted)]">{t('lobbyName')}</span>
+            <span className="mb-1 block text-[12px] text-[var(--color-muted)]">{t('lobbyName')}</span>
             <input
               type="text"
               autoComplete="name"
@@ -160,38 +160,38 @@ function ProfileForm({
                 setName(event.target.value);
                 setNameError(false);
               }}
-              className="w-full min-h-[48px] rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] px-3 text-base text-[var(--color-ink)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]"
+              className="dr-input w-full"
             />
           </label>
-          {nameError ? <p className="text-sm text-[var(--color-error)]">{t('profileNameRequired')}</p> : null}
+          {nameError ? <p className="text-[12px] text-[var(--color-error)]">{t('profileNameRequired')}</p> : null}
           <div className="grid gap-3 sm:grid-cols-3">
             <label className="block min-w-0">
-              <span className="mb-1 block text-sm text-[var(--color-muted)]">{t('heightCm')}</span>
+              <span className="mb-1 block text-[12px] text-[var(--color-muted)]">{t('heightCm')}</span>
               <UnitInput value={height} onChange={setHeight} unit={t('unitCm')} placeholder="175" />
             </label>
             <label className="block min-w-0">
-              <span className="mb-1 block text-sm text-[var(--color-muted)]">{t('currentWeightKg')}</span>
+              <span className="mb-1 block text-[12px] text-[var(--color-muted)]">{t('currentWeightKg')}</span>
               <UnitInput value={weight} onChange={setWeight} unit={t('unitKg')} placeholder="72.5" />
             </label>
             <label className="block min-w-0">
-              <span className="mb-1 block text-sm text-[var(--color-muted)]">{t('goalWeightKg')}</span>
+              <span className="mb-1 block text-[12px] text-[var(--color-muted)]">{t('goalWeightKg')}</span>
               <UnitInput value={goal} onChange={setGoal} unit={t('unitKg')} placeholder="70" />
             </label>
           </div>
-          {measureError ? <p className="text-sm text-[var(--color-error)]">{t('lobbyMeasureInvalid')}</p> : null}
+          {measureError ? <p className="text-[12px] text-[var(--color-error)]">{t('lobbyMeasureInvalid')}</p> : null}
           <div className="flex items-center gap-3">
             <button
               type="submit"
               disabled={pending}
-              className="dr-press min-h-[48px] rounded-xl bg-[var(--color-accent)] px-5 text-sm font-semibold text-[var(--color-on-accent)] disabled:opacity-50"
+              className="dr-btn dr-btn-primary"
             >
               {t('save')}
             </button>
-            {saved ? <p className="text-sm text-[var(--color-mint)]">{t('profileSaved')}</p> : null}
+            {saved ? <p className="text-[12px] text-[var(--color-success)]">{t('profileSaved')}</p> : null}
           </div>
         </div>
         <div>
-          <p className="mb-1 text-sm text-[var(--color-muted)]">{t('birthDate')}</p>
+          <p className="mb-1 text-[12px] text-[var(--color-muted)]">{t('birthDate')}</p>
           <BirthCalendar value={birth} onChange={setBirth} />
         </div>
       </div>

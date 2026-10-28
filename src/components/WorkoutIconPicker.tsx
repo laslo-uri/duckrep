@@ -93,15 +93,15 @@ export function WorkoutIconPicker({
         aria-expanded={open}
         aria-haspopup="listbox"
         aria-controls="workout-icon-listbox"
-        className="dr-press flex items-center justify-center w-10 h-10 min-w-[44px] min-h-[44px] rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] hover:bg-[var(--color-hover)] text-[var(--color-ink)] transition-colors touch-manipulation"
+        className="dr-btn dr-icon-btn"
       >
         {value ? (
           (() => {
             const Icon = getWorkoutIcon(value);
-            return Icon ? createElement(Icon, { size: 20 }) : <Settings2 size={18} className="text-[var(--color-muted)]" />;
+            return Icon ? createElement(Icon, { size: 15 }) : <Settings2 size={15} className="text-[var(--color-muted)]" />;
           })()
         ) : (
-          <Settings2 size={18} className="text-[var(--color-muted)]" />
+          <Settings2 size={15} className="text-[var(--color-muted)]" />
         )}
       </button>
 
@@ -111,10 +111,10 @@ export function WorkoutIconPicker({
           id="workout-icon-listbox"
           role="listbox"
           aria-label={t('activityIcon')}
-          className="dr-enter absolute left-0 top-full mt-2 z-50 p-4 rounded-xl bg-[var(--color-surface)] shadow-[var(--shadow-card)] w-[min(17.5rem,calc(100vw-1rem))] max-w-[calc(100vw-1rem)]"
+          className="dr-enter absolute right-0 md:left-auto top-full mt-1 z-50 p-3 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-pop)] w-[min(17.5rem,calc(100vw-1rem))] max-w-[calc(100vw-1rem)]"
           onClick={(e) => e.stopPropagation()}
         >
-          <p className="dr-label mb-3">{t('activityIcon')}</p>
+          <p className="dr-label mb-2">{t('activityIcon')}</p>
           <div className="flex flex-wrap gap-1.5">
             <button
               type="button"
@@ -122,7 +122,7 @@ export function WorkoutIconPicker({
               aria-selected={value === null}
               onClick={() => handleSelect(null)}
               aria-label={t('noIcon')}
-              className={`flex items-center justify-center min-w-[44px] min-h-[44px] rounded-xl border-2 transition-colors touch-manipulation ${
+              className={`flex items-center justify-center dr-tap-w dr-tap rounded-md border-2 transition-colors touch-manipulation ${
                 value === null
                   ? 'border-[var(--color-accent)] bg-[var(--color-accent-soft)]'
                   : 'border-[var(--color-border)] hover:border-[var(--color-accent)]/40'
@@ -141,7 +141,7 @@ export function WorkoutIconPicker({
                   aria-selected={isSelected}
                   onClick={() => handleSelect(key)}
                   aria-label={iconLabel(key)}
-                  className={`flex items-center justify-center min-w-[44px] min-h-[44px] rounded-xl border-2 transition-colors touch-manipulation ${
+                  className={`flex items-center justify-center dr-tap-w dr-tap rounded-md border-2 transition-colors touch-manipulation ${
                     isSelected
                       ? 'border-[var(--color-accent)] bg-[var(--color-accent-soft)] text-[var(--color-accent)]'
                       : 'border-[var(--color-border)] hover:border-[var(--color-accent)]/40 text-[var(--color-muted)] hover:text-[var(--color-ink)]'

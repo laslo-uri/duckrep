@@ -41,18 +41,18 @@ export function SecuritySettings() {
   }
 
   const field =
-    'dr-field mt-1 block w-full max-w-sm min-h-[44px] px-4 py-2.5 text-base outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]';
+    'dr-input mt-1 block w-full max-w-sm';
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-5">
       <div>
-        <h2 className="font-medium text-[var(--color-ink)]">{t('securityTitle')}</h2>
-        <p className="mb-4 max-w-md text-sm text-[var(--color-muted)]">{t('securityHint')}</p>
+        <h2 className="text-[13px] font-semibold text-[var(--color-ink)]">{t('securityTitle')}</h2>
+        <p className="mb-3 max-w-md text-[12px] text-[var(--color-muted)]">{t('securityHint')}</p>
         <div className="flex flex-wrap items-end gap-4">
           <button
             type="button"
             onClick={() => void lockJournal()}
-            className="dr-press inline-flex min-h-[44px] items-center gap-2 rounded-xl bg-[var(--color-accent)] px-4 py-2.5 text-sm font-medium text-[var(--color-on-accent)]"
+            className="dr-btn dr-btn-primary"
           >
             <Lock size={16} aria-hidden />
             {t('securityLockNow')}
@@ -66,7 +66,7 @@ export function SecuritySettings() {
                 setMinutes(value);
                 void setAutoLockMinutes(value);
               }}
-              className="dr-field mt-1 block min-h-[44px] px-3 py-2 text-sm"
+              className="dr-input mt-1 block"
             >
               {AUTO_LOCK_CHOICES.map((m) => (
                 <option key={m} value={m}>
@@ -78,14 +78,14 @@ export function SecuritySettings() {
         </div>
       </div>
 
-      <form onSubmit={(e) => void submit(e)} className="border-t border-[var(--color-border)] pt-6">
-        <h2 className="font-medium text-[var(--color-ink)]">{t('securityChangeTitle')}</h2>
-        <p className="mb-4 max-w-md text-sm text-[var(--color-muted)]">{t('securityChangeHint', { min: MIN_PASSPHRASE })}</p>
+      <form onSubmit={(e) => void submit(e)} className="border-t border-[var(--color-border)] pt-5">
+        <h2 className="text-[13px] font-semibold text-[var(--color-ink)]">{t('securityChangeTitle')}</h2>
+        <p className="mb-3 max-w-md text-[12px] text-[var(--color-muted)]">{t('securityChangeHint', { min: MIN_PASSPHRASE })}</p>
         <label htmlFor="sec-current" className="dr-label">{t('securityCurrent')}</label>
         <input id="sec-current" type="password" autoComplete="current-password" value={current} onChange={(e) => setCurrent(e.target.value)} className={field} />
-        <label htmlFor="sec-next" className="dr-label mt-4 block">{t('lockNewPassphrase')}</label>
+        <label htmlFor="sec-next" className="dr-label mt-3 block">{t('lockNewPassphrase')}</label>
         <input id="sec-next" type="password" autoComplete="new-password" value={next} onChange={(e) => setNext(e.target.value)} className={field} />
-        <label htmlFor="sec-repeat" className="dr-label mt-4 block">{t('lockRepeat')}</label>
+        <label htmlFor="sec-repeat" className="dr-label mt-3 block">{t('lockRepeat')}</label>
         <input id="sec-repeat" type="password" autoComplete="new-password" value={repeat} onChange={(e) => setRepeat(e.target.value)} className={field} />
         {message && (
           <p className={`mt-3 text-sm ${message.ok ? 'text-[var(--color-success)]' : 'text-[var(--color-error)]'}`} role={message.ok ? 'status' : 'alert'}>
@@ -95,7 +95,7 @@ export function SecuritySettings() {
         <button
           type="submit"
           disabled={busy || !current || next.length < MIN_PASSPHRASE}
-          className="dr-press mt-5 inline-flex min-h-[44px] items-center gap-2 rounded-xl border border-[var(--color-border)] px-4 py-2.5 text-sm font-medium hover:bg-[var(--color-hover)] disabled:opacity-50"
+          className="dr-btn mt-4"
         >
           <KeyRound size={16} aria-hidden />
           {busy ? t('lockWorking') : t('securityChange')}
