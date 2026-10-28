@@ -1055,3 +1055,117 @@ html.is-desktop body {
 .fg-2 { --fg-i: 2; }
 .fg-3 { --fg-i: 3; }
 .fg-4 { --fg-i: 4; }
+
+/* The lock-screen card: the same measurements in all four bird apps (only the colours are the app's own).
+   Unlayered on purpose, so it wins over each app's utility classes inside the card. */
+:root {
+  --sky-muted: var(--color-muted);
+}
+.gate {
+  position: relative;
+  display: flex;
+  width: 100%;
+  max-width: 24rem;
+  margin: auto 0;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+.gate-card {
+  width: 100%;
+  padding: 1.5rem;
+  border-width: 1px;
+  border-radius: 0.75rem;
+  box-shadow: 0 18px 50px -18px rgb(0 0 0 / 0.45);
+}
+.gate-head {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+.gate-title {
+  margin: 0;
+  font-size: 1.25rem;
+  line-height: 1;
+}
+.gate-status {
+  margin: 0.35rem 0 0;
+  color: var(--sky-muted);
+  font-size: 0.75rem;
+  line-height: 1.35;
+}
+.gate-card label {
+  display: block;
+  margin: 0.875rem 0 0;
+  color: var(--sky-muted);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: normal;
+  line-height: 1.2;
+  text-transform: none;
+}
+.gate-card label:first-of-type {
+  margin-top: 0;
+}
+.gate-card input[type='password'] {
+  display: block;
+  width: 100%;
+  height: 2.25rem;
+  margin-top: 0.35rem;
+  font-size: 0.875rem;
+}
+.gate-hint {
+  display: flex;
+  gap: 0.5rem;
+  margin: 0.75rem 0 0;
+  color: var(--sky-muted);
+  font-size: 0.75rem;
+  line-height: 1.55;
+}
+.gate-hint svg {
+  flex: none;
+  margin-top: 0.15rem;
+  color: var(--sky-accent);
+}
+.gate-note {
+  margin: 0;
+  color: var(--sky-muted);
+  font-size: 0.8125rem;
+}
+.gate-error {
+  margin: 0.6rem 0 0;
+  font-size: 0.8125rem;
+}
+.gate-card button[type='submit'] {
+  display: inline-flex;
+  width: 100%;
+  height: 2.25rem;
+  margin-top: 1rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+.gate-foot {
+  display: flex;
+  min-height: 1.875rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: var(--sky-muted);
+}
+.gate-lang {
+  padding: 0 0.7rem;
+  letter-spacing: 0.04em;
+}
+@media (pointer: coarse) {
+  .gate-card input[type='password'],
+  .gate-card button[type='submit'] {
+    height: 2.75rem;
+  }
+  .gate-foot .rw-back {
+    height: 2.75rem;
+  }
+}
