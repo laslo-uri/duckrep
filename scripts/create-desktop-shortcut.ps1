@@ -1,7 +1,9 @@
 # Creates Duckrep.lnk on the Windows desktop (Tauri release exe) and removes the old YouPeak.lnk.
 
 $ErrorActionPreference = "Stop"
-$Desktop = [Environment]::GetFolderPath("Desktop")
+# Shortcuts live in the Desktop\Roots folder.
+$Desktop = Join-Path ([Environment]::GetFolderPath("Desktop")) "Roots"
+New-Item -ItemType Directory -Force $Desktop | Out-Null
 $AppRoot = Split-Path -Parent $PSScriptRoot
 $Exe = Join-Path $AppRoot "src-tauri\target\release\duckrep.exe"
 $Icon = Join-Path $AppRoot "src-tauri\icons\icon.ico"
