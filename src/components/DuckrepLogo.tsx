@@ -30,7 +30,7 @@ export function DuckrepMark({
 /** "Duck" in the text colour, "rep" in the accent orange. */
 export function DuckrepWordmark({ className = '' }: { className?: string }) {
   return (
-    <span className={`dr-wordmark font-extrabold tracking-tight ${className}`}>
+    <span className={`dr-wordmark font-bold tracking-[-0.02em] ${className}`}>
       Duck<span className="dr-wordmark-rep">rep</span>
     </span>
   );
