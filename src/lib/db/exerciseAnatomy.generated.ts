@@ -432,7 +432,6 @@ export const EXERCISE_ANATOMY: Record<string, string> = {
   "lateral-cone-hops": "adductors|other",
   "lateral-raise": "shoulders|dumbbell",
   "lateral-raise---with-bands": "shoulders|band",
-  "lateral-raise-machine": "shoulders|machine",
   "latissimus-dorsi-smr": "lats|other",
   "leg-curl": "hamstrings|machine",
   "leg-extension": "quads|machine",

@@ -95,7 +95,6 @@ export const CURATED_TWINS: Record<string, { id: string; equipment?: string }> =
   'Incline Bench Press': { id: 'Barbell_Incline_Bench_Press_-_Medium_Grip' },
   'Lat Pulldown': { id: 'Wide-Grip_Lat_Pulldown' },
   'Lateral Raise': { id: 'Side_Lateral_Raise' },
-  'Lateral Raise (Machine)': { id: 'Side_Lateral_Raise', equipment: 'machine' },
   'Leg Curl': { id: 'Lying_Leg_Curls' },
   'Leg Extension': { id: 'Leg_Extensions' },
   'Lower Back Extension': { id: 'Hyperextensions_Back_Extensions' },

@@ -7,6 +7,21 @@ import { exercisePhotos, muscleWikiSearchUrl, videoSearchUrl } from '../lib/exer
 import { exerciseDisplayNames, type resolveExerciseLocale } from '../utils/exerciseDisplay';
 import type { ExerciseDefinition } from '../types';
 
+type Steps = Record<string, string[]>;
+
+const TRANSLATED_STEPS: Record<'sr' | 'hu', () => Promise<{ default: Steps }>> = {
+  sr: () => import('../lib/db/exerciseSteps.sr.json'),
+  hu: () => import('../lib/db/exerciseSteps.hu.json'),
+};
+
+async function loadGuide(locale: ReturnType<typeof resolveExerciseLocale>): Promise<{ english: Steps; translated: Steps }> {
+  const [english, translated] = await Promise.all([
+    import('../lib/db/exerciseGuide.generated').then((m) => m.EXERCISE_GUIDE),
+    locale === 'en' ? Promise.resolve({}) : TRANSLATED_STEPS[locale]().then((m) => m.default),
+  ]);
+  return { english, translated };
+}
+
 /** Library exercise: start and end photo, every step, and where to watch it. */
 export function ExerciseDetail({
   exercise,
@@ -25,14 +40,17 @@ export function ExerciseDetail({
   const { primary, alt } = exerciseDisplayNames(exercise, locale);
   const [broken, setBroken] = useState<ReadonlySet<string>>(new Set());
   const photos = exercisePhotos(exercise.image_url).filter((url) => !broken.has(url));
-  // Every step from free-exercise-db (own lazy chunk); custom exercises keep their own description.
+  // Every step from free-exercise-db (own lazy chunk), in Serbian or Hungarian where translated;
+  // custom exercises keep their own description.
   const { data: guide } = useQuery({
-    queryKey: ['exercise-guide'],
-    queryFn: () => import('../lib/db/exerciseGuide.generated').then((m) => m.EXERCISE_GUIDE),
+    queryKey: ['exercise-guide', locale],
+    queryFn: () => loadGuide(locale),
     staleTime: Infinity,
     enabled: Boolean(exercise.source_slug && exercise.is_global),
   });
-  const steps = (exercise.source_slug && guide?.[exercise.source_slug]) || null;
+  const slug = exercise.source_slug ?? '';
+  const translated = (slug && guide?.translated[slug]) || null;
+  const steps = translated ?? ((slug && guide?.english[slug]) || null);
   const muscle = anatomy.muscle ? t(`muscles.${anatomy.muscle}`) : t(`muscleGroups.${exercise.muscle_group || 'other'}`);
 
   return (
@@ -65,8 +83,13 @@ export function ExerciseDetail({
 
       {steps ? (
         <>
-          <h3 className="mt-3 text-[12px] font-semibold text-[var(--color-ink)]">{t('musclewikiSteps')}</h3>
-          <ol className="mt-1 max-w-2xl list-decimal space-y-1 pl-5 text-[12px] leading-relaxed text-[var(--color-muted)]">
+          <h3 className="mt-3 text-[12px] font-semibold text-[var(--color-ink)]">
+            {t('musclewikiSteps')}
+            {locale !== 'en' && !translated ? (
+              <span className="ml-2 font-normal text-[var(--color-faint)]">{t('stepsInEnglish')}</span>
+            ) : null}
+          </h3>
+          <ol lang={translated ? locale : 'en'} className="mt-1 max-w-2xl list-decimal space-y-1 pl-5 text-[12px] leading-relaxed text-[var(--color-muted)]">
             {steps.map((step) => (
               <li key={step}>{step}</li>
             ))}

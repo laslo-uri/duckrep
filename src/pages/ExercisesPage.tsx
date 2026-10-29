@@ -54,7 +54,7 @@ export function ExercisesPage() {
       .map((ex) => ({ ex, anatomy: anatomyOf(ex, table), names: exerciseDisplayNames(ex, exerciseLocale) }))
       .filter(({ anatomy, names }) => {
         if (equipment && anatomy.equipment !== equipment) return false;
-        return !q || names.primary.toLowerCase().includes(q) || names.alt.toLowerCase().includes(q);
+        return !q || names.search.includes(q);
       })
       .sort((a, b) => a.ex.name.localeCompare(b.ex.name, 'en'));
   }, [exercises, anatomyTable, search, equipment, exerciseLocale]);
@@ -236,7 +236,7 @@ function LibraryList({
   adding,
   onAdd,
 }: {
-  rows: { ex: ExerciseDefinition; anatomy: ReturnType<typeof anatomyOf>; names: { primary: string; alt: string } }[];
+  rows: { ex: ExerciseDefinition; anatomy: ReturnType<typeof anatomyOf>; names: { primary: string; alt: string; search: string } }[];
   locale: ReturnType<typeof resolveExerciseLocale>;
   adding: boolean;
   onAdd: (ex: ExerciseDefinition) => void;

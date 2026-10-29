@@ -21,8 +21,11 @@ export function exerciseDisplayNames(ex: ExerciseDefinition, locale: ExerciseLoc
   else if (locale === 'hu') primary = hu || en;
   else primary = en;
 
-  const alt = [...new Set([en, sr, hu].filter((n) => n && n !== primary))].join(' · ');
-  return { primary, alt };
+  // Next to a Serbian or Hungarian name the gym's English one helps; the third language would be noise.
+  const alt = primary !== en ? en : '';
+  /** Every name, lowercased: search finds an exercise in any of the three languages. */
+  const search = [...new Set([en, sr, hu].filter(Boolean))].join(' ').toLowerCase();
+  return { primary, alt, search };
 }
 
 export function isSafeHttpsImageUrl(url: string | null | undefined): boolean {

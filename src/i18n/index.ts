@@ -181,6 +181,7 @@ const resources = {
       exerciseEndPhoto: '{{name}}, end position',
       watchVideo: 'Watch how',
       findOnMuscleWiki: 'Find on MuscleWiki',
+      stepsInEnglish: '(in English)',
       todaysActivity: "today's activity",
       muscles: {
         neck: 'Neck',
@@ -480,6 +481,7 @@ const resources = {
       exerciseEndPhoto: '{{name}}, završni položaj',
       watchVideo: 'Pogledaj kako',
       findOnMuscleWiki: 'Nađi na MuscleWiki',
+      stepsInEnglish: '(na engleskom)',
       todaysActivity: 'današnju aktivnost',
       muscles: {
         neck: 'Vrat',
@@ -782,6 +784,7 @@ const resources = {
       exerciseEndPhoto: '{{name}}, végső helyzet',
       watchVideo: 'Nézd meg, hogyan',
       findOnMuscleWiki: 'Keresés a MuscleWikin',
+      stepsInEnglish: '(angolul)',
       todaysActivity: 'mai edzés',
       muscles: {
         neck: 'Nyak',

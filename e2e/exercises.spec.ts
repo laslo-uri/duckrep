@@ -33,7 +33,7 @@ test.describe('exercise search with the body map', () => {
     await page.setViewportSize({ width: 1440, height: 900 });
     await openUnlocked(page, '/exercises');
     await page.getByRole('searchbox', { name: /search exercises/i }).fill('bench press');
-    await page.getByRole('button', { name: /^bench press bench potisak/i }).click();
+    await page.getByRole('button', { name: /^bench press barbell chest$/i }).click();
     const detail = page.getByRole('article', { name: /^bench press$/i });
     await expect(detail.getByRole('img', { name: /bench press, start position/i })).toHaveAttribute('src', /Barbell_Bench_Press_-_Medium_Grip\/0\.jpg$/);
     await expect(detail.getByRole('img', { name: /bench press, end position/i })).toHaveAttribute('src', /\/1\.jpg$/);
@@ -86,5 +86,23 @@ test.describe('exercise search with the body map', () => {
     await page.getByRole('button', { name: /^body map/i }).click();
     await page.locator('[data-side="back"] [data-muscle="glutes"] path').first().click();
     await expect(libraryRows(page).first()).toBeVisible({ timeout: 20_000 });
+  });
+});
+
+test.describe('exercise content in Hungarian and Serbian', () => {
+  test('names, search and steps follow the app language', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await openUnlocked(page, '/exercises');
+    await page.getByRole('button', { name: /switch language to sr/i }).last().click();
+    await page.getByRole('button', { name: /promeni jezik na hu/i }).last().click();
+    await page.getByRole('searchbox').fill('fekvenyomás');
+    await page.getByRole('button', { name: /^fekvenyomás bench press/i }).click();
+    const detail = page.getByRole('article', { name: /^fekvenyomás$/i });
+    await expect(detail.locator('ol[lang="hu"] li').first()).toContainText(/feküdj/i);
+
+    // Search still finds an exercise by its English name, and an untranslated one says its steps are English.
+    await page.getByRole('searchbox').fill('Anterior Tibialis-SMR');
+    await page.getByRole('button', { name: /anterior tibialis-smr/i }).first().click();
+    await expect(page.getByRole('article').getByText('(angolul)')).toBeVisible();
   });
 });

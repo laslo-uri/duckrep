@@ -40,7 +40,15 @@ describe('exerciseDisplayNames', () => {
   });
 
   it('shows Hungarian when available', () => {
-    const { primary } = exerciseDisplayNames(sample, 'hu');
+    const { primary, alt } = exerciseDisplayNames(sample, 'hu');
     expect(primary).toBe('Fekvenyomás');
+    expect(alt).toBe('Bench Press');
+  });
+
+  it('shows no second name in English and searches all three', () => {
+    const { alt, search } = exerciseDisplayNames(sample, 'en');
+    expect(alt).toBe('');
+    expect(search).toContain('fekvenyomás');
+    expect(search).toContain('bench potisak');
   });
 });

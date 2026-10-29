@@ -62,8 +62,7 @@ export function ExerciseLibraryPicker({
       .filter((ex) => {
         if (muscleGroup && (ex.muscle_group || 'other') !== muscleGroup) return false;
         if (!q) return true;
-        const { primary, alt } = exerciseDisplayNames(ex, exerciseLocale);
-        return primary.toLowerCase().includes(q) || alt.toLowerCase().includes(q);
+        return exerciseDisplayNames(ex, exerciseLocale).search.includes(q);
       })
       .sort((a, b) => a.name.localeCompare(b.name, 'en'));
   }, [exercises, filter, muscleGroup, exerciseLocale]);

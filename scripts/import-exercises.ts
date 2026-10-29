@@ -4,13 +4,15 @@
  *
  * Run: npm run import-exercises
  */
-import { writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { CURATED_EXERCISES, CURATED_TWINS } from '../src/lib/db/seedExercises.ts';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT_PATH = join(__dirname, '../src/lib/db/seedExercises.generated.ts');
+/** slug → { sr, hu } names; curated Serbian names (CURATED_EXERCISES) win over these. */
+const TRANSLATIONS_PATH = join(__dirname, '../src/lib/db/exercise-translations.json');
 
 const DATASET_URL =
   'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/dist/exercises.json';
@@ -98,7 +100,7 @@ function formatExercise(ex: SeedExercise): string {
     `source_slug: ${escapeTsString(ex.source_slug)}`,
     `name: ${escapeTsString(ex.name)}`,
     `name_sr: ${ex.name_sr ? escapeTsString(ex.name_sr) : 'null'}`,
-    `name_hu: null`,
+    `name_hu: ${ex.name_hu ? escapeTsString(ex.name_hu) : 'null'}`,
     `muscle_group: ${escapeTsString(ex.muscle_group)}`,
     `description: ${ex.description ? escapeTsString(ex.description) : 'null'}`,
     `image_url: ${ex.image_url ? escapeTsString(ex.image_url) : 'null'}`,
@@ -175,6 +177,14 @@ async function main(): Promise<void> {
         default_sets: curated.default_sets ?? null,
       });
     }
+  }
+
+  const translations = JSON.parse(readFileSync(TRANSLATIONS_PATH, 'utf8')) as Record<string, { sr?: string; hu?: string }>;
+  for (const ex of result) {
+    const names = translations[ex.source_slug];
+    if (!names) continue;
+    ex.name_sr ??= names.sr?.trim() || null;
+    ex.name_hu ??= names.hu?.trim() || null;
   }
 
   result.sort((a, b) => a.name.localeCompare(b.name, 'en'));

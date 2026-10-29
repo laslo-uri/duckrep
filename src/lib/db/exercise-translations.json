@@ -1,1 +1,3670 @@
-{}
+{
+  "3-4-sit-up": {
+    "sr": "3/4 podizanje trupa",
+    "hu": "3/4-es felülés"
+  },
+  "90-90-hamstring": {
+    "sr": "90/90 istezanje zadnje lože",
+    "hu": "90/90 combhajlító nyújtás"
+  },
+  "ab-crunch-machine": {
+    "sr": "Trbušnjaci na spravi",
+    "hu": "Hasprés gépen"
+  },
+  "ab-roller": {
+    "sr": "Ab roller",
+    "hu": "Haskerék"
+  },
+  "ab-wheel-rollout": {
+    "sr": "Ab wheel",
+    "hu": "Haskerék kigurítás"
+  },
+  "adductor": {
+    "sr": "Aduktori (istezanje)",
+    "hu": "Combközelítő nyújtás"
+  },
+  "adductor-groin": {
+    "sr": "Aduktori i prepone (istezanje)",
+    "hu": "Combközelítő és ágyék nyújtás"
+  },
+  "advanced-kettlebell-windmill": {
+    "sr": "Napredna vetrenjača sa girjom",
+    "hu": "Haladó kettlebelles szélmalom"
+  },
+  "air-bike": {
+    "sr": "Bicikl trbušnjaci",
+    "hu": "Biciklizős hasprés"
+  },
+  "all-fours-quad-stretch": {
+    "sr": "Istezanje kvadricepsa na sve četiri",
+    "hu": "Négykézláb combfeszítő nyújtás"
+  },
+  "alternate-hammer-curl": {
+    "sr": "Naizmenični hammer pregib",
+    "hu": "Váltott kalapács bicepszhajlítás"
+  },
+  "alternate-heel-touchers": {
+    "sr": "Naizmenično dodirivanje peta",
+    "hu": "Váltott sarokérintés"
+  },
+  "alternate-incline-dumbbell-curl": {
+    "sr": "Naizmenični kosi pregib sa bučicama",
+    "hu": "Váltott ferde pados kézisúlyzós bicepszhajlítás"
+  },
+  "alternate-leg-diagonal-bound": {
+    "sr": "Dijagonalni skokovi naizmeničnom nogom",
+    "hu": "Váltott lábas átlós szökdelés"
+  },
+  "alternating-cable-shoulder-press": {
+    "sr": "Naizmenični potisak za ramena na kablu",
+    "hu": "Váltott kábeles vállnyomás"
+  },
+  "alternating-deltoid-raise": {
+    "sr": "Naizmenično podizanje za deltoide",
+    "hu": "Váltott deltaemelés"
+  },
+  "alternating-floor-press": {
+    "sr": "Naizmenični potisak sa poda",
+    "hu": "Váltott nyomás a földön fekve"
+  },
+  "alternating-hang-clean": {
+    "sr": "Naizmenični nabačaj iz visa",
+    "hu": "Váltott felvétel függő helyzetből"
+  },
+  "alternating-kettlebell-press": {
+    "sr": "Naizmenični potisak sa girjama",
+    "hu": "Váltott kettlebelles nyomás"
+  },
+  "alternating-kettlebell-row": {
+    "sr": "Naizmenično veslanje sa girjama",
+    "hu": "Váltott kettlebelles evezés"
+  },
+  "alternating-renegade-row": {
+    "sr": "Naizmenično renegade veslanje",
+    "hu": "Váltott renegade evezés"
+  },
+  "ankle-circles": {
+    "sr": "Kruženje skočnim zglobom",
+    "hu": "Bokakörzés"
+  },
+  "ankle-on-the-knee": {
+    "sr": "Članak na kolenu (istezanje)",
+    "hu": "Boka a térden (nyújtás)"
+  },
+  "anterior-tibialis-smr": {
+    "sr": "Prednji tibijalni mišić (SMR)",
+    "hu": "Elülső sípcsontizom (SMR)"
+  },
+  "anti-gravity-press": {
+    "sr": "Anti-gravity potisak",
+    "hu": "Anti-gravity nyomás"
+  },
+  "arm-circles": {
+    "sr": "Kruženje rukama",
+    "hu": "Karkörzés"
+  },
+  "arnold-dumbbell-press": {
+    "sr": "Arnold potisak sa bučicama",
+    "hu": "Kézisúlyzós Arnold-nyomás"
+  },
+  "arnold-press": {
+    "sr": "Arnold potisak",
+    "hu": "Arnold-nyomás"
+  },
+  "around-the-worlds": {
+    "sr": "Kruženje bučicama (around the world)",
+    "hu": "Around the world (kézisúlyzóval)"
+  },
+  "atlas-stone-trainer": {
+    "sr": "Atlas kamen (trenažer)",
+    "hu": "Atlaszkő (edzőgép)"
+  },
+  "atlas-stones": {
+    "sr": "Atlas kamenje",
+    "hu": "Atlaszkövek"
+  },
+  "axle-deadlift": {
+    "sr": "Mrtvo dizanje sa debelom šipkom (axle)",
+    "hu": "Felhúzás vastag rúddal (axle)"
+  },
+  "back-flyes---with-bands": {
+    "sr": "Razvlačenje za leđa - sa gumom",
+    "hu": "Hátsó tárogatás - gumiszalaggal"
+  },
+  "backward-drag": {
+    "sr": "Vučenje sanki unazad",
+    "hu": "Szánhúzás hátrafelé"
+  },
+  "backward-medicine-ball-throw": {
+    "sr": "Bacanje medicinke unazad",
+    "hu": "Medicinlabda dobás hátrafelé"
+  },
+  "balance-board": {
+    "sr": "Daska za ravnotežu",
+    "hu": "Egyensúlyozó deszka"
+  },
+  "ball-leg-curl": {
+    "sr": "Pregib nogu na lopti",
+    "hu": "Lábhajlítás labdán"
+  },
+  "band-assisted-pull-up": {
+    "sr": "Zgib uz pomoć gume",
+    "hu": "Gumiszalaggal segített húzódzkodás"
+  },
+  "band-good-morning": {
+    "sr": "Good morning sa gumom",
+    "hu": "Good morning gumiszalaggal"
+  },
+  "band-good-morning-pull-through": {
+    "sr": "Good morning sa gumom (pull through)",
+    "hu": "Good morning gumiszalaggal (áthúzás)"
+  },
+  "band-hip-adductions": {
+    "sr": "Primicanje kuka sa gumom",
+    "hu": "Csípőközelítés gumiszalaggal"
+  },
+  "band-pull-apart": {
+    "sr": "Razvlačenje gume",
+    "hu": "Gumiszalag széthúzás"
+  },
+  "band-skull-crusher": {
+    "sr": "Skull crusher sa gumom",
+    "hu": "Skull crusher gumiszalaggal"
+  },
+  "barbell-ab-rollout": {
+    "sr": "Ab rollout sa šipkom",
+    "hu": "Rudas has kigurítás"
+  },
+  "barbell-ab-rollout---on-knees": {
+    "sr": "Ab rollout sa šipkom - na kolenima",
+    "hu": "Rudas has kigurítás - térdelve"
+  },
+  "barbell-bench-press---medium-grip": {
+    "sr": "Bench potisak sa šipkom - srednji hvat",
+    "hu": "Rudas fekvenyomás - közepes fogás"
+  },
+  "barbell-curl": {
+    "sr": "Pregib sa šipkom",
+    "hu": "Rudas bicepszhajlítás"
+  },
+  "barbell-curls-lying-against-an-incline": {
+    "sr": "Pregib sa šipkom na kosoj klupi",
+    "hu": "Rudas bicepszhajlítás ferde padon fekve"
+  },
+  "barbell-deadlift": {
+    "sr": "Mrtvo dizanje sa šipkom",
+    "hu": "Rudas felhúzás"
+  },
+  "barbell-full-squat": {
+    "sr": "Pun čučanj sa šipkom",
+    "hu": "Rudas mélyguggolás"
+  },
+  "barbell-glute-bridge": {
+    "sr": "Glute bridge sa šipkom",
+    "hu": "Rudas csípőemelés (glute bridge)"
+  },
+  "barbell-guillotine-bench-press": {
+    "sr": "Giljotina bench potisak sa šipkom",
+    "hu": "Rudas guillotine fekvenyomás"
+  },
+  "barbell-hack-squat": {
+    "sr": "Hack čučanj sa šipkom",
+    "hu": "Rudas hack guggolás"
+  },
+  "barbell-hip-thrust": {
+    "sr": "Hip potisak sa šipkom",
+    "hu": "Rudas hip thrust"
+  },
+  "barbell-incline-bench-press---medium-grip": {
+    "sr": "Kosi bench potisak sa šipkom - srednji hvat",
+    "hu": "Rudas ferde fekvenyomás - közepes fogás"
+  },
+  "barbell-incline-shoulder-raise": {
+    "sr": "Podizanje ramena sa šipkom na kosoj klupi",
+    "hu": "Rudas vállemelés ferde padon"
+  },
+  "barbell-lunge": {
+    "sr": "Iskorak sa šipkom",
+    "hu": "Rudas kitörés"
+  },
+  "barbell-rear-delt-row": {
+    "sr": "Veslanje sa šipkom za zadnja ramena",
+    "hu": "Rudas evezés hátsó vállra"
+  },
+  "barbell-rollout-from-bench": {
+    "sr": "Rollout sa šipkom sa klupe",
+    "hu": "Rudas kigurítás padról"
+  },
+  "barbell-row": {
+    "sr": "Veslanje sa šipkom",
+    "hu": "Rudas evezés"
+  },
+  "barbell-seated-calf-raise": {
+    "sr": "Podizanje na prste u sedu sa šipkom",
+    "hu": "Ülő vádliemelés rúddal"
+  },
+  "barbell-shoulder-press": {
+    "sr": "Potisak za ramena sa šipkom",
+    "hu": "Rudas vállnyomás"
+  },
+  "barbell-shrug": {
+    "sr": "Sleganje ramenima sa šipkom",
+    "hu": "Rudas vállvonogatás"
+  },
+  "barbell-shrug-behind-the-back": {
+    "sr": "Sleganje ramenima sa šipkom iza leđa",
+    "hu": "Rudas vállvonogatás hát mögött"
+  },
+  "barbell-side-bend": {
+    "sr": "Bočni pregib sa šipkom",
+    "hu": "Rudas oldalra hajlás"
+  },
+  "barbell-side-split-squat": {
+    "sr": "Bočni split čučanj sa šipkom",
+    "hu": "Rudas oldalsó split guggolás"
+  },
+  "barbell-squat": {
+    "sr": "Čučanj sa šipkom",
+    "hu": "Rudas guggolás"
+  },
+  "barbell-squat-to-a-bench": {
+    "sr": "Čučanj sa šipkom do klupe",
+    "hu": "Rudas guggolás padig"
+  },
+  "barbell-step-ups": {
+    "sr": "Step-up sa šipkom",
+    "hu": "Rudas fellépés"
+  },
+  "barbell-walking-lunge": {
+    "sr": "Hodajući iskoraci sa šipkom",
+    "hu": "Rudas sétáló kitörés"
+  },
+  "battling-ropes": {
+    "sr": "Battle rope (konopci)",
+    "hu": "Battle rope (kötél)"
+  },
+  "bear-crawl-sled-drags": {
+    "sr": "Medveđe puzanje sa sankama",
+    "hu": "Medvejárás szánhúzással"
+  },
+  "behind-head-chest-stretch": {
+    "sr": "Istezanje grudi, ruke iza glave",
+    "hu": "Mellnyújtás tarkóra tett kézzel"
+  },
+  "bench-dips": {
+    "sr": "Propadanja na klupi",
+    "hu": "Tolódzkodás padon"
+  },
+  "bench-jump": {
+    "sr": "Skokovi preko klupe",
+    "hu": "Padátugrás"
+  },
+  "bench-press": {
+    "sr": "Bench potisak",
+    "hu": "Fekvenyomás"
+  },
+  "bench-press---powerlifting": {
+    "sr": "Bench potisak - powerlifting",
+    "hu": "Fekvenyomás - erőemelő stílus"
+  },
+  "bench-press---with-bands": {
+    "sr": "Bench potisak - sa gumama",
+    "hu": "Fekvenyomás - gumiszalaggal"
+  },
+  "bench-press-with-chains": {
+    "sr": "Bench potisak sa lancima",
+    "hu": "Fekvenyomás láncokkal"
+  },
+  "bench-sprint": {
+    "sr": "Brza smena nogu na klupi",
+    "hu": "Gyors lábváltás padon"
+  },
+  "bent-arm-barbell-pullover": {
+    "sr": "Pullover sa šipkom savijenih ruku",
+    "hu": "Rudas pullover hajlított karral"
+  },
+  "bent-arm-dumbbell-pullover": {
+    "sr": "Pullover sa bučicom savijenih ruku",
+    "hu": "Kézisúlyzós pullover hajlított karral"
+  },
+  "bent-knee-hip-raise": {
+    "sr": "Podizanje kukova savijenih kolena",
+    "hu": "Csípőemelés hajlított térddel"
+  },
+  "bent-over-barbell-row": {
+    "sr": "Veslanje sa šipkom u pretklonu",
+    "hu": "Döntött törzsű rudas evezés"
+  },
+  "bent-over-dumbbell-rear-delt-raise-with-head-on-bench": {
+    "sr": "Podizanje za zadnja ramena sa bučicama u pretklonu, glava na klupi",
+    "hu": "Döntött törzsű kézisúlyzós hátsó vállemelés, fej a padon"
+  },
+  "bent-over-low-pulley-side-lateral": {
+    "sr": "Lateralno podizanje na donjem kablu u pretklonu",
+    "hu": "Döntött törzsű oldalemelés alsó csigán"
+  },
+  "bent-over-one-arm-long-bar-row": {
+    "sr": "Veslanje jednom rukom sa dugom šipkom u pretklonu",
+    "hu": "Döntött törzsű egykezes evezés hosszú rúddal"
+  },
+  "bent-over-two-arm-long-bar-row": {
+    "sr": "Veslanje sa dugom šipkom u pretklonu",
+    "hu": "Döntött törzsű kétkezes evezés hosszú rúddal"
+  },
+  "bent-over-two-dumbbell-row": {
+    "sr": "Veslanje sa dve bučice u pretklonu",
+    "hu": "Döntött törzsű evezés két kézisúlyzóval"
+  },
+  "bent-over-two-dumbbell-row-with-palms-in": {
+    "sr": "Veslanje sa dve bučice u pretklonu, dlanovi ka unutra",
+    "hu": "Döntött törzsű evezés két kézisúlyzóval, tenyér befelé"
+  },
+  "bent-press": {
+    "sr": "Bent press",
+    "hu": "Bent press"
+  },
+  "bicycling": {
+    "sr": "Vožnja bicikla",
+    "hu": "Kerékpározás"
+  },
+  "bicycling-stationary": {
+    "sr": "Sobni bicikl",
+    "hu": "Szobakerékpár"
+  },
+  "board-press": {
+    "sr": "Bench potisak na dasci",
+    "hu": "Deszkás fekvenyomás"
+  },
+  "body-tricep-press": {
+    "sr": "Triceps potisak težinom tela",
+    "hu": "Saját testsúlyos tricepsznyomás"
+  },
+  "body-up": {
+    "sr": "Body-up",
+    "hu": "Body-up"
+  },
+  "bodyweight-flyes": {
+    "sr": "Razvlačenje težinom tela",
+    "hu": "Saját testsúlyos tárogatás"
+  },
+  "bodyweight-mid-row": {
+    "sr": "Veslanje težinom tela",
+    "hu": "Saját testsúlyos evezés"
+  },
+  "bodyweight-squat": {
+    "sr": "Čučanj bez opterećenja",
+    "hu": "Saját testsúlyos guggolás"
+  },
+  "bodyweight-walking-lunge": {
+    "sr": "Hodajući iskoraci bez opterećenja",
+    "hu": "Saját testsúlyos sétáló kitörés"
+  },
+  "bosu-ball-cable-crunch-with-side-bends": {
+    "sr": "Trbušnjaci na kablu na bosu lopti sa bočnim pregibima",
+    "hu": "Kábeles hasprés bosu labdán oldalra hajlással"
+  },
+  "bottoms-up": {
+    "sr": "Podizanje karlice (bottoms up)",
+    "hu": "Medenceemelés (bottoms up)"
+  },
+  "bottoms-up-clean-from-the-hang-position": {
+    "sr": "Bottoms-up nabačaj iz visa",
+    "hu": "Bottoms-up felvétel függő helyzetből"
+  },
+  "box-jump-multiple-response": {
+    "sr": "Skok na kutiju (uzastopni)",
+    "hu": "Dobozra ugrás (sorozatban)"
+  },
+  "box-skip": {
+    "sr": "Poskoci na kutiju",
+    "hu": "Szökdelés dobozra"
+  },
+  "box-squat": {
+    "sr": "Čučanj na kutiju",
+    "hu": "Dobozguggolás"
+  },
+  "box-squat-with-bands": {
+    "sr": "Čučanj na kutiju sa gumama",
+    "hu": "Dobozguggolás gumiszalaggal"
+  },
+  "box-squat-with-chains": {
+    "sr": "Čučanj na kutiju sa lancima",
+    "hu": "Dobozguggolás láncokkal"
+  },
+  "brachialis-smr": {
+    "sr": "Brahijalis (SMR)",
+    "hu": "Brachialis (SMR)"
+  },
+  "bradford-rocky-presses": {
+    "sr": "Bradford/Rocky potisak",
+    "hu": "Bradford/Rocky nyomás"
+  },
+  "bulgarian-split-squat": {
+    "sr": "Bugarski split čučanj",
+    "hu": "Bolgár guggolás"
+  },
+  "butt-lift-bridge": {
+    "sr": "Podizanje karlice (most)",
+    "hu": "Farizom emelés (híd)"
+  },
+  "butt-ups": {
+    "sr": "Podizanje zadnjice iz planka",
+    "hu": "Csípőemelés plankből"
+  },
+  "butterfly": {
+    "sr": "Butterfly",
+    "hu": "Butterfly (pillangó)"
+  },
+  "cable-chest-press": {
+    "sr": "Potisak za grudi na kablu",
+    "hu": "Kábeles mellnyomás"
+  },
+  "cable-crossover": {
+    "sr": "Kablovski križ",
+    "hu": "Kábeles keresztbehúzás"
+  },
+  "cable-crunch": {
+    "sr": "Trbušnjaci na kablu",
+    "hu": "Kábeles hasprés"
+  },
+  "cable-curl": {
+    "sr": "Pregib na kablu",
+    "hu": "Kábeles bicepszhajlítás"
+  },
+  "cable-deadlifts": {
+    "sr": "Mrtvo dizanje na kablu",
+    "hu": "Kábeles felhúzás"
+  },
+  "cable-hammer-curls---rope-attachment": {
+    "sr": "Hammer pregib na kablu - konopac",
+    "hu": "Kábeles kalapács bicepszhajlítás - kötéllel"
+  },
+  "cable-hip-adduction": {
+    "sr": "Primicanje kuka na kablu",
+    "hu": "Kábeles csípőközelítés"
+  },
+  "cable-incline-pushdown": {
+    "sr": "Pushdown na kablu na kosoj klupi",
+    "hu": "Kábeles letolás ferde padon"
+  },
+  "cable-incline-triceps-extension": {
+    "sr": "Triceps ekstenzija na kablu na kosoj klupi",
+    "hu": "Kábeles tricepsznyújtás ferde padon"
+  },
+  "cable-internal-rotation": {
+    "sr": "Unutrašnja rotacija na kablu",
+    "hu": "Kábeles belső rotáció"
+  },
+  "cable-iron-cross": {
+    "sr": "Iron cross na kablu",
+    "hu": "Kábeles iron cross"
+  },
+  "cable-judo-flip": {
+    "sr": "Džudo bacanje na kablu",
+    "hu": "Kábeles dzsúdó dobás"
+  },
+  "cable-lateral-raise": {
+    "sr": "Lateralno podizanje na kablu",
+    "hu": "Kábeles oldalemelés"
+  },
+  "cable-lying-triceps-extension": {
+    "sr": "Triceps ekstenzija na kablu u ležećem",
+    "hu": "Fekvő kábeles tricepsznyújtás"
+  },
+  "cable-one-arm-tricep-extension": {
+    "sr": "Triceps ekstenzija jednom rukom na kablu",
+    "hu": "Egykezes kábeles tricepsznyújtás"
+  },
+  "cable-preacher-curl": {
+    "sr": "Preacher pregib na kablu",
+    "hu": "Kábeles Scott-pados bicepszhajlítás"
+  },
+  "cable-rear-delt-fly": {
+    "sr": "Razvlačenje za zadnja ramena na kablu",
+    "hu": "Kábeles hátsó váll tárogatás"
+  },
+  "cable-reverse-crunch": {
+    "sr": "Obrnuti trbušnjaci na kablu",
+    "hu": "Kábeles fordított hasprés"
+  },
+  "cable-rope-overhead-triceps-extension": {
+    "sr": "Triceps iznad glave na kablu sa konopcem",
+    "hu": "Kábeles tricepsznyújtás fej fölött kötéllel"
+  },
+  "cable-rope-rear-delt-rows": {
+    "sr": "Veslanje za zadnja ramena na kablu sa konopcem",
+    "hu": "Kábeles evezés hátsó vállra kötéllel"
+  },
+  "cable-russian-twists": {
+    "sr": "Ruski twist na kablu",
+    "hu": "Kábeles orosz csavarás"
+  },
+  "cable-seated-crunch": {
+    "sr": "Trbušnjaci u sedu na kablu",
+    "hu": "Ülő kábeles hasprés"
+  },
+  "cable-seated-lateral-raise": {
+    "sr": "Lateralno podizanje u sedu na kablu",
+    "hu": "Ülő kábeles oldalemelés"
+  },
+  "cable-shoulder-press": {
+    "sr": "Potisak za ramena na kablu",
+    "hu": "Kábeles vállnyomás"
+  },
+  "cable-shrugs": {
+    "sr": "Sleganje ramenima na kablu",
+    "hu": "Kábeles vállvonogatás"
+  },
+  "cable-wrist-curl": {
+    "sr": "Pregib šake na kablu",
+    "hu": "Kábeles csuklóhajlítás"
+  },
+  "calf-machine-shoulder-shrug": {
+    "sr": "Sleganje ramenima na spravi za listove",
+    "hu": "Vállvonogatás vádligépen"
+  },
+  "calf-press": {
+    "sr": "Potisak prstima (listovi)",
+    "hu": "Vádlinyomás"
+  },
+  "calf-press-on-the-leg-press-machine": {
+    "sr": "Potisak prstima na leg press spravi",
+    "hu": "Vádlinyomás lábtológépen"
+  },
+  "calf-raise": {
+    "sr": "Podizanje na prste",
+    "hu": "Vádliemelés"
+  },
+  "calf-raise-on-a-dumbbell": {
+    "sr": "Podizanje na prste na bučici",
+    "hu": "Vádliemelés kézisúlyzón állva"
+  },
+  "calf-raises---with-bands": {
+    "sr": "Podizanje na prste - sa gumom",
+    "hu": "Vádliemelés - gumiszalaggal"
+  },
+  "calf-stretch-elbows-against-wall": {
+    "sr": "Istezanje listova, laktovi na zidu",
+    "hu": "Vádlinyújtás, könyök a falon"
+  },
+  "calf-stretch-hands-against-wall": {
+    "sr": "Istezanje listova, ruke na zidu",
+    "hu": "Vádlinyújtás, kéz a falon"
+  },
+  "calves-smr": {
+    "sr": "Listovi (SMR)",
+    "hu": "Vádli (SMR)"
+  },
+  "car-deadlift": {
+    "sr": "Mrtvo dizanje automobila",
+    "hu": "Autó felhúzás"
+  },
+  "car-drivers": {
+    "sr": "Volan sa tegom",
+    "hu": "Kormányzás súlytárcsával"
+  },
+  "carioca-quick-step": {
+    "sr": "Karioka brzi korak",
+    "hu": "Carioca gyors lépés"
+  },
+  "cat-stretch": {
+    "sr": "Mačka (istezanje)",
+    "hu": "Macskanyújtás"
+  },
+  "catch-and-overhead-throw": {
+    "sr": "Hvatanje i bacanje iznad glave",
+    "hu": "Elkapás és dobás fej fölött"
+  },
+  "chain-handle-extension": {
+    "sr": "Triceps ekstenzija sa lancima",
+    "hu": "Láncos tricepsznyújtás"
+  },
+  "chain-press": {
+    "sr": "Potisak sa lancima",
+    "hu": "Láncos nyomás"
+  },
+  "chair-leg-extended-stretch": {
+    "sr": "Istezanje opružene noge na stolici",
+    "hu": "Nyújtott lábas nyújtás széken"
+  },
+  "chair-lower-back-stretch": {
+    "sr": "Istezanje donjih leđa na stolici",
+    "hu": "Deréknyújtás széken"
+  },
+  "chair-squat": {
+    "sr": "Čučanj do stolice",
+    "hu": "Guggolás székre"
+  },
+  "chair-upper-body-stretch": {
+    "sr": "Istezanje gornjeg dela tela na stolici",
+    "hu": "Felsőtest nyújtás széken"
+  },
+  "chest-and-front-of-shoulder-stretch": {
+    "sr": "Istezanje grudi i prednjih ramena",
+    "hu": "Mell és elülső váll nyújtás"
+  },
+  "chest-press-machine": {
+    "sr": "Potisak za grudi (sprava)",
+    "hu": "Mellnyomás (gép)"
+  },
+  "chest-push-from-3-point-stance": {
+    "sr": "Potisak medicinke sa grudi iz stava u 3 tačke",
+    "hu": "Medicinlabda lökés mellből 3 pontos helyzetből"
+  },
+  "chest-push-multiple-response": {
+    "sr": "Potisak medicinke sa grudi (uzastopni)",
+    "hu": "Medicinlabda lökés mellből (sorozatban)"
+  },
+  "chest-push-single-response": {
+    "sr": "Potisak medicinke sa grudi (pojedinačni)",
+    "hu": "Medicinlabda lökés mellből (egyszeri)"
+  },
+  "chest-push-with-run-release": {
+    "sr": "Potisak medicinke sa grudi sa istrčavanjem",
+    "hu": "Medicinlabda lökés mellből kifutással"
+  },
+  "chest-stretch-on-stability-ball": {
+    "sr": "Istezanje grudi na pilates lopti",
+    "hu": "Mellnyújtás fitneszlabdán"
+  },
+  "childs-pose": {
+    "sr": "Položaj deteta",
+    "hu": "Gyermekpóz"
+  },
+  "chin-to-chest-stretch": {
+    "sr": "Istezanje vrata, brada na grudi",
+    "hu": "Nyaknyújtás, áll a mellkasra"
+  },
+  "chin-up": {
+    "sr": "Zgib pothvatom",
+    "hu": "Húzódzkodás alsó fogással"
+  },
+  "chin-ups": {
+    "sr": "Zgibovi (potkvat)",
+    "hu": "Húzódzkodás (alsó fogás)"
+  },
+  "circus-bell": {
+    "sr": "Circus bell",
+    "hu": "Cirkuszi súlyzó"
+  },
+  "clean": {
+    "sr": "Nabačaj",
+    "hu": "Felvétel"
+  },
+  "clean-and-jerk": {
+    "sr": "Izbačaj",
+    "hu": "Lökés"
+  },
+  "clean-and-press": {
+    "sr": "Nabačaj i potisak",
+    "hu": "Felvétel és nyomás"
+  },
+  "clean-deadlift": {
+    "sr": "Mrtvo dizanje za nabačaj",
+    "hu": "Felvételi felhúzás"
+  },
+  "clean-from-blocks": {
+    "sr": "Nabačaj sa blokova",
+    "hu": "Felvétel blokkról"
+  },
+  "clean-pull": {
+    "sr": "Vučenje za nabačaj",
+    "hu": "Felvételi húzás"
+  },
+  "clean-shrug": {
+    "sr": "Sleganje ramenima za nabačaj",
+    "hu": "Felvételi vállvonogatás"
+  },
+  "clock-push-up": {
+    "sr": "Sklek sat",
+    "hu": "Óramutató fekvőtámasz"
+  },
+  "close-grip-barbell-bench-press": {
+    "sr": "Bench potisak sa šipkom uskim hvatom",
+    "hu": "Szűk fogású rudas fekvenyomás"
+  },
+  "close-grip-bench-press": {
+    "sr": "Uski bench potisak",
+    "hu": "Szűk fogású fekvenyomás"
+  },
+  "close-grip-dumbbell-press": {
+    "sr": "Potisak sa bučicama uskim hvatom",
+    "hu": "Szűk fogású kézisúlyzós nyomás"
+  },
+  "close-grip-ez-bar-curl": {
+    "sr": "Pregib sa EZ šipkom uskim hvatom",
+    "hu": "Szűk fogású EZ-rudas bicepszhajlítás"
+  },
+  "close-grip-ez-bar-curl-with-band": {
+    "sr": "Pregib sa EZ šipkom uskim hvatom i gumom",
+    "hu": "Szűk fogású EZ-rudas bicepszhajlítás gumiszalaggal"
+  },
+  "close-grip-ez-bar-press": {
+    "sr": "Potisak sa EZ šipkom uskim hvatom",
+    "hu": "Szűk fogású EZ-rudas nyomás"
+  },
+  "close-grip-front-lat-pulldown": {
+    "sr": "Lat pulldown uskim hvatom",
+    "hu": "Szűk fogású mellhez húzás csigán"
+  },
+  "close-grip-push-up-off-of-a-dumbbell": {
+    "sr": "Sklek uskim hvatom na bučici",
+    "hu": "Szűk fekvőtámasz kézisúlyzón"
+  },
+  "close-grip-standing-barbell-curl": {
+    "sr": "Pregib sa šipkom stojeći uskim hvatom",
+    "hu": "Szűk fogású álló rudas bicepszhajlítás"
+  },
+  "cocoons": {
+    "sr": "Čaure (trbušnjaci)",
+    "hu": "Gubó (hasprés)"
+  },
+  "conans-wheel": {
+    "sr": "Konanov točak",
+    "hu": "Conan-kerék"
+  },
+  "concentration-curl": {
+    "sr": "Koncentracioni pregib",
+    "hu": "Koncentrált bicepszhajlítás"
+  },
+  "concentration-curls": {
+    "sr": "Koncentracioni pregibi",
+    "hu": "Koncentrált hajlítás"
+  },
+  "cross-body-crunch": {
+    "sr": "Ukršteni trbušnjaci",
+    "hu": "Keresztirányú hasprés"
+  },
+  "cross-body-hammer-curl": {
+    "sr": "Hammer pregib preko tela",
+    "hu": "Test előtti kalapács bicepszhajlítás"
+  },
+  "cross-over---with-bands": {
+    "sr": "Križ - sa gumama",
+    "hu": "Keresztbehúzás - gumiszalaggal"
+  },
+  "crossover-reverse-lunge": {
+    "sr": "Ukršteni iskorak unazad",
+    "hu": "Keresztező hátra kitörés"
+  },
+  "crucifix": {
+    "sr": "Raspeće (izdržaj sa tegovima)",
+    "hu": "Feszület (súlytartás)"
+  },
+  "crunch---hands-overhead": {
+    "sr": "Trbušnjaci - ruke iznad glave",
+    "hu": "Hasprés - kar a fej fölött"
+  },
+  "crunch---legs-on-exercise-ball": {
+    "sr": "Trbušnjaci - noge na lopti",
+    "hu": "Hasprés - láb a fitneszlabdán"
+  },
+  "crunches": {
+    "sr": "Trbušnjaci",
+    "hu": "Hasprés"
+  },
+  "cuban-press": {
+    "sr": "Kubanski potisak",
+    "hu": "Kubai nyomás"
+  },
+  "dancers-stretch": {
+    "sr": "Plesačko istezanje",
+    "hu": "Táncos nyújtás"
+  },
+  "dead-bug": {
+    "sr": "Dead bug",
+    "hu": "Dead bug"
+  },
+  "deadlift": {
+    "sr": "Mrtvo dizanje",
+    "hu": "Felhúzás"
+  },
+  "deadlift-with-bands": {
+    "sr": "Mrtvo dizanje sa gumama",
+    "hu": "Felhúzás gumiszalaggal"
+  },
+  "deadlift-with-chains": {
+    "sr": "Mrtvo dizanje sa lancima",
+    "hu": "Felhúzás láncokkal"
+  },
+  "decline-barbell-bench-press": {
+    "sr": "Bench potisak sa šipkom na negativnoj klupi",
+    "hu": "Rudas fekvenyomás negatív padon"
+  },
+  "decline-close-grip-bench-to-skull-crusher": {
+    "sr": "Uski bench na negativnoj klupi u skull crusher",
+    "hu": "Szűk fogású negatív fekvenyomás és skull crusher"
+  },
+  "decline-crunch": {
+    "sr": "Trbušnjaci na negativnoj klupi",
+    "hu": "Hasprés negatív padon"
+  },
+  "decline-dumbbell-bench-press": {
+    "sr": "Potisak sa bučicama na negativnoj klupi",
+    "hu": "Kézisúlyzós nyomás negatív padon"
+  },
+  "decline-dumbbell-flyes": {
+    "sr": "Razvlačenje sa bučicama na negativnoj klupi",
+    "hu": "Kézisúlyzós tárogatás negatív padon"
+  },
+  "decline-dumbbell-triceps-extension": {
+    "sr": "Triceps ekstenzija sa bučicama na negativnoj klupi",
+    "hu": "Kézisúlyzós tricepsznyújtás negatív padon"
+  },
+  "decline-ez-bar-triceps-extension": {
+    "sr": "Triceps ekstenzija sa EZ šipkom na negativnoj klupi",
+    "hu": "EZ-rudas tricepsznyújtás negatív padon"
+  },
+  "decline-oblique-crunch": {
+    "sr": "Bočni trbušnjaci na negativnoj klupi",
+    "hu": "Oldalsó hasprés negatív padon"
+  },
+  "decline-push-up": {
+    "sr": "Negativni sklek (noge gore)",
+    "hu": "Negatív fekvőtámasz (láb megemelve)"
+  },
+  "decline-reverse-crunch": {
+    "sr": "Obrnuti trbušnjaci na negativnoj klupi",
+    "hu": "Fordított hasprés negatív padon"
+  },
+  "decline-smith-press": {
+    "sr": "Potisak na Smit mašini na negativnoj klupi",
+    "hu": "Negatív nyomás Smith-gépen"
+  },
+  "deficit-deadlift": {
+    "sr": "Mrtvo dizanje sa povišenja",
+    "hu": "Deficit felhúzás"
+  },
+  "depth-jump-leap": {
+    "sr": "Dubinski skok sa odskokom",
+    "hu": "Mélyugrás elugrással"
+  },
+  "dip-machine": {
+    "sr": "Propadanja (sprava)",
+    "hu": "Tolódzkodás (gép)"
+  },
+  "dips---chest-version": {
+    "sr": "Propadanja - za grudi",
+    "hu": "Tolódzkodás - mellre"
+  },
+  "dips---triceps-version": {
+    "sr": "Propadanja - za triceps",
+    "hu": "Tolódzkodás - tricepszre"
+  },
+  "dips-chest": {
+    "sr": "Propadanja (grudi)",
+    "hu": "Tolódzkodás (mell)"
+  },
+  "donkey-calf-raises": {
+    "sr": "Donkey podizanje na prste",
+    "hu": "Szamár vádliemelés"
+  },
+  "double-kettlebell-alternating-hang-clean": {
+    "sr": "Naizmenični nabačaj iz visa sa dve girje",
+    "hu": "Váltott felvétel függő helyzetből két kettlebellel"
+  },
+  "double-kettlebell-jerk": {
+    "sr": "Izbačaj sa dve girje",
+    "hu": "Kilökés két kettlebellel"
+  },
+  "double-kettlebell-push-press": {
+    "sr": "Push press sa dve girje",
+    "hu": "Lendítéses nyomás két kettlebellel"
+  },
+  "double-kettlebell-snatch": {
+    "sr": "Trzaj sa dve girje",
+    "hu": "Szakítás két kettlebellel"
+  },
+  "double-kettlebell-windmill": {
+    "sr": "Vetrenjača sa dve girje",
+    "hu": "Szélmalom két kettlebellel"
+  },
+  "double-leg-butt-kick": {
+    "sr": "Skok sa obe noge, pete do zadnjice",
+    "hu": "Páros lábas ugrás sarokrúgással"
+  },
+  "downward-facing-balance": {
+    "sr": "Ravnoteža licem nadole (lopta)",
+    "hu": "Egyensúly arccal lefelé (labdán)"
+  },
+  "drag-curl": {
+    "sr": "Drag pregib",
+    "hu": "Drag bicepszhajlítás"
+  },
+  "drop-push": {
+    "sr": "Drop sklek",
+    "hu": "Ejtéses fekvőtámasz"
+  },
+  "dumbbell-alternate-bicep-curl": {
+    "sr": "Naizmenični pregib sa bučicama",
+    "hu": "Váltott kézisúlyzós bicepszhajlítás"
+  },
+  "dumbbell-bench-press": {
+    "sr": "Bench sa bučicama",
+    "hu": "Kézisúlyzós fekvenyomás"
+  },
+  "dumbbell-bench-press-with-neutral-grip": {
+    "sr": "Bench sa bučicama neutralnim hvatom",
+    "hu": "Kézisúlyzós fekvenyomás semleges fogással"
+  },
+  "dumbbell-bicep-curl": {
+    "sr": "Pregib sa bučicama za biceps",
+    "hu": "Kézisúlyzós bicepszhajlítás"
+  },
+  "dumbbell-clean": {
+    "sr": "Nabačaj sa bučicama",
+    "hu": "Kézisúlyzós felvétel"
+  },
+  "dumbbell-curl": {
+    "sr": "Pregib sa bučicama",
+    "hu": "Kézisúlyzós hajlítás"
+  },
+  "dumbbell-floor-press": {
+    "sr": "Potisak sa bučicama sa poda",
+    "hu": "Kézisúlyzós nyomás a földön fekve"
+  },
+  "dumbbell-flyes": {
+    "sr": "Razvlačenje sa bučicama",
+    "hu": "Kézisúlyzós tárogatás"
+  },
+  "dumbbell-incline-row": {
+    "sr": "Veslanje sa bučicama na kosoj klupi",
+    "hu": "Kézisúlyzós evezés ferde padon"
+  },
+  "dumbbell-incline-shoulder-raise": {
+    "sr": "Podizanje ramena sa bučicama na kosoj klupi",
+    "hu": "Kézisúlyzós vállemelés ferde padon"
+  },
+  "dumbbell-lunges": {
+    "sr": "Iskoraci sa bučicama",
+    "hu": "Kézisúlyzós kitörés"
+  },
+  "dumbbell-lying-one-arm-rear-lateral-raise": {
+    "sr": "Podizanje za zadnja ramena jednom rukom u ležećem",
+    "hu": "Fekvő egykezes hátsó oldalemelés kézisúlyzóval"
+  },
+  "dumbbell-lying-pronation": {
+    "sr": "Pronacija sa bučicom u ležećem",
+    "hu": "Fekvő pronáció kézisúlyzóval"
+  },
+  "dumbbell-lying-rear-lateral-raise": {
+    "sr": "Podizanje za zadnja ramena sa bučicama u ležećem",
+    "hu": "Fekvő hátsó oldalemelés kézisúlyzóval"
+  },
+  "dumbbell-lying-supination": {
+    "sr": "Supinacija sa bučicom u ležećem",
+    "hu": "Fekvő szupináció kézisúlyzóval"
+  },
+  "dumbbell-one-arm-shoulder-press": {
+    "sr": "Potisak za ramena jednom rukom sa bučicom",
+    "hu": "Egykezes kézisúlyzós vállnyomás"
+  },
+  "dumbbell-one-arm-triceps-extension": {
+    "sr": "Triceps ekstenzija jednom rukom sa bučicom",
+    "hu": "Egykezes kézisúlyzós tricepsznyújtás"
+  },
+  "dumbbell-one-arm-upright-row": {
+    "sr": "Podizanje do brade jednom rukom sa bučicom",
+    "hu": "Egykezes kézisúlyzós állhoz húzás"
+  },
+  "dumbbell-prone-incline-curl": {
+    "sr": "Pregib sa bučicama na stomaku na kosoj klupi",
+    "hu": "Hason fekvő ferde pados kézisúlyzós bicepszhajlítás"
+  },
+  "dumbbell-raise": {
+    "sr": "Podizanje bučica",
+    "hu": "Kézisúlyzós emelés"
+  },
+  "dumbbell-rear-lunge": {
+    "sr": "Iskorak unazad sa bučicama",
+    "hu": "Kézisúlyzós hátra kitörés"
+  },
+  "dumbbell-row": {
+    "sr": "Veslanje sa bučicom",
+    "hu": "Kézisúlyzós evezés"
+  },
+  "dumbbell-scaption": {
+    "sr": "Scaption sa bučicama",
+    "hu": "Kézisúlyzós scaption emelés"
+  },
+  "dumbbell-seated-box-jump": {
+    "sr": "Skok na kutiju iz sedećeg sa bučicama",
+    "hu": "Dobozra ugrás ülésből kézisúlyzóval"
+  },
+  "dumbbell-seated-one-leg-calf-raise": {
+    "sr": "Podizanje na prste jednom nogom u sedu sa bučicom",
+    "hu": "Ülő egylábas vádliemelés kézisúlyzóval"
+  },
+  "dumbbell-shoulder-press": {
+    "sr": "Potisak sa bučicama (ramena)",
+    "hu": "Kézisúlyzós vállnyomás"
+  },
+  "dumbbell-shrug": {
+    "sr": "Sleganje ramenima sa bučicama",
+    "hu": "Kézisúlyzós vállvonogatás"
+  },
+  "dumbbell-side-bend": {
+    "sr": "Bočni pregib sa bučicom",
+    "hu": "Kézisúlyzós oldalra hajlás"
+  },
+  "dumbbell-squat": {
+    "sr": "Čučanj sa bučicama",
+    "hu": "Kézisúlyzós guggolás"
+  },
+  "dumbbell-squat-to-a-bench": {
+    "sr": "Čučanj sa bučicama do klupe",
+    "hu": "Kézisúlyzós guggolás padig"
+  },
+  "dumbbell-step-ups": {
+    "sr": "Step-up sa bučicama",
+    "hu": "Kézisúlyzós fellépés"
+  },
+  "dumbbell-tricep-extension--pronated-grip": {
+    "sr": "Triceps ekstenzija sa bučicama - nathvat",
+    "hu": "Kézisúlyzós tricepsznyújtás - felső fogás"
+  },
+  "dynamic-back-stretch": {
+    "sr": "Dinamičko istezanje leđa",
+    "hu": "Dinamikus hátnyújtás"
+  },
+  "dynamic-chest-stretch": {
+    "sr": "Dinamičko istezanje grudi",
+    "hu": "Dinamikus mellnyújtás"
+  },
+  "elbow-circles": {
+    "sr": "Kruženje laktovima",
+    "hu": "Könyökkörzés"
+  },
+  "elbow-to-knee": {
+    "sr": "Lakat do kolena",
+    "hu": "Könyök a térdhez"
+  },
+  "elbows-back": {
+    "sr": "Laktovi unazad (istezanje)",
+    "hu": "Könyök hátra (nyújtás)"
+  },
+  "elevated-back-lunge": {
+    "sr": "Iskorak unazad sa povišenja",
+    "hu": "Hátra kitörés emelvényről"
+  },
+  "elevated-cable-rows": {
+    "sr": "Veslanje na kablu sa povišenja",
+    "hu": "Kábeles evezés emelvényen ülve"
+  },
+  "elliptical-trainer": {
+    "sr": "Eliptični trenažer",
+    "hu": "Elliptikus tréner"
+  },
+  "exercise-ball-crunch": {
+    "sr": "Trbušnjaci na lopti",
+    "hu": "Hasprés fitneszlabdán"
+  },
+  "exercise-ball-pull-in": {
+    "sr": "Privlačenje kolena na lopti",
+    "hu": "Térdbehúzás fitneszlabdán"
+  },
+  "extended-range-one-arm-kettlebell-floor-press": {
+    "sr": "Potisak girjom jednom rukom sa poda, produžen opseg",
+    "hu": "Egykezes kettlebelles nyomás a földön, bővített mozgástartomány"
+  },
+  "external-rotation": {
+    "sr": "Spoljna rotacija",
+    "hu": "Külső rotáció"
+  },
+  "external-rotation-with-band": {
+    "sr": "Spoljna rotacija sa gumom",
+    "hu": "Külső rotáció gumiszalaggal"
+  },
+  "external-rotation-with-cable": {
+    "sr": "Spoljna rotacija na kablu",
+    "hu": "Külső rotáció kábellel"
+  },
+  "ez-bar-curl": {
+    "sr": "Pregib sa EZ šipkom",
+    "hu": "EZ-rudas bicepszhajlítás"
+  },
+  "ez-bar-skullcrusher": {
+    "sr": "Skull crusher sa EZ šipkom",
+    "hu": "EZ-rudas skull crusher"
+  },
+  "face-pull": {
+    "sr": "Face pull",
+    "hu": "Face pull (archoz húzás)"
+  },
+  "farmers-walk": {
+    "sr": "Farmerski hod",
+    "hu": "Farmerséta"
+  },
+  "fast-skipping": {
+    "sr": "Brzi skip",
+    "hu": "Gyors szökdelés"
+  },
+  "finger-curls": {
+    "sr": "Pregib prstiju",
+    "hu": "Ujjhajlítás"
+  },
+  "flat-bench-cable-flyes": {
+    "sr": "Razvlačenje na kablu na ravnoj klupi",
+    "hu": "Kábeles tárogatás vízszintes padon"
+  },
+  "flat-bench-leg-pull-in": {
+    "sr": "Privlačenje nogu na ravnoj klupi",
+    "hu": "Lábbehúzás vízszintes padon"
+  },
+  "flat-bench-lying-leg-raise": {
+    "sr": "Podizanje nogu u ležećem na ravnoj klupi",
+    "hu": "Fekvő lábemelés vízszintes padon"
+  },
+  "flexor-incline-dumbbell-curls": {
+    "sr": "Fleksorski kosi pregib sa bučicama",
+    "hu": "Flexor ferde pados kézisúlyzós hajlítás"
+  },
+  "floor-glute-ham-raise": {
+    "sr": "Glute-ham podizanje na podu",
+    "hu": "Glute-ham emelés a földön"
+  },
+  "floor-press": {
+    "sr": "Potisak sa poda",
+    "hu": "Nyomás a földön fekve"
+  },
+  "floor-press-with-chains": {
+    "sr": "Potisak sa poda sa lancima",
+    "hu": "Nyomás a földön fekve láncokkal"
+  },
+  "flutter-kicks": {
+    "sr": "Makaze nogama",
+    "hu": "Ollózó lábtempó"
+  },
+  "foot-smr": {
+    "sr": "Stopalo (SMR)",
+    "hu": "Talp (SMR)"
+  },
+  "forward-drag-with-press": {
+    "sr": "Vučenje sanki unapred sa potiskom",
+    "hu": "Előre szánhúzás nyomással"
+  },
+  "frankenstein-squat": {
+    "sr": "Frankenštajn čučanj",
+    "hu": "Frankenstein guggolás"
+  },
+  "freehand-jump-squat": {
+    "sr": "Čučanj sa skokom",
+    "hu": "Guggolásból felugrás"
+  },
+  "frog-hops": {
+    "sr": "Žablji skokovi",
+    "hu": "Békaugrás"
+  },
+  "frog-sit-ups": {
+    "sr": "Žablji trbušnjaci",
+    "hu": "Béka felülés"
+  },
+  "front-barbell-squat": {
+    "sr": "Prednji čučanj sa šipkom",
+    "hu": "Rudas elöl guggolás"
+  },
+  "front-barbell-squat-to-a-bench": {
+    "sr": "Prednji čučanj sa šipkom do klupe",
+    "hu": "Rudas elöl guggolás padig"
+  },
+  "front-box-jump": {
+    "sr": "Skok na kutiju napred",
+    "hu": "Dobozra ugrás előre"
+  },
+  "front-cable-raise": {
+    "sr": "Frontalno podizanje na kablu",
+    "hu": "Kábeles előreemelés"
+  },
+  "front-cone-hops-or-hurdle-hops": {
+    "sr": "Skokovi preko čunjeva napred (ili preko prepona)",
+    "hu": "Bójaugrás előre (vagy gátugrás)"
+  },
+  "front-dumbbell-raise": {
+    "sr": "Frontalno podizanje sa bučicama",
+    "hu": "Kézisúlyzós előreemelés"
+  },
+  "front-incline-dumbbell-raise": {
+    "sr": "Frontalno podizanje sa bučicama na kosoj klupi",
+    "hu": "Kézisúlyzós előreemelés ferde padon"
+  },
+  "front-leg-raises": {
+    "sr": "Zamasi nogom napred",
+    "hu": "Lábemelés előre"
+  },
+  "front-plate-raise": {
+    "sr": "Frontalno podizanje tega",
+    "hu": "Előreemelés súlytárcsával"
+  },
+  "front-raise": {
+    "sr": "Frontalna podizanja",
+    "hu": "Előreemelés"
+  },
+  "front-raise-and-pullover": {
+    "sr": "Frontalno podizanje i pullover",
+    "hu": "Előreemelés és pullover"
+  },
+  "front-squat-clean-grip": {
+    "sr": "Prednji čučanj (hvat za nabačaj)",
+    "hu": "Elöl guggolás (felvételi fogás)"
+  },
+  "front-squats-with-two-kettlebells": {
+    "sr": "Prednji čučanj sa dve girje",
+    "hu": "Elöl guggolás két kettlebellel"
+  },
+  "front-two-dumbbell-raise": {
+    "sr": "Frontalno podizanje sa dve bučice",
+    "hu": "Előreemelés két kézisúlyzóval"
+  },
+  "full-range-of-motion-lat-pulldown": {
+    "sr": "Lat pulldown punim opsegom",
+    "hu": "Lehúzás csigán teljes mozgástartománnyal"
+  },
+  "gironda-sternum-chins": {
+    "sr": "Gironda zgibovi do grudne kosti",
+    "hu": "Gironda húzódzkodás szegycsontig"
+  },
+  "glute-ham-raise": {
+    "sr": "Glute-ham podizanje",
+    "hu": "Glute-ham emelés"
+  },
+  "glute-kickback": {
+    "sr": "Glute kickback",
+    "hu": "Farizom hátrarúgás"
+  },
+  "goblet-squat": {
+    "sr": "Goblet čučanj",
+    "hu": "Goblet guggolás"
+  },
+  "good-morning": {
+    "sr": "Good morning",
+    "hu": "Good morning"
+  },
+  "good-morning-off-pins": {
+    "sr": "Good morning sa graničnika",
+    "hu": "Good morning bakról"
+  },
+  "gorilla-chin-crunch": {
+    "sr": "Gorila zgib/trbušnjak",
+    "hu": "Gorilla húzódzkodás/hasprés"
+  },
+  "groin-and-back-stretch": {
+    "sr": "Istezanje prepona i leđa",
+    "hu": "Ágyék és hát nyújtás"
+  },
+  "groiners": {
+    "sr": "Groiners (istezanje prepona)",
+    "hu": "Groiners (ágyéknyújtás)"
+  },
+  "hack-squat": {
+    "sr": "Hack čučanj",
+    "hu": "Hack guggolás"
+  },
+  "hammer-curl": {
+    "sr": "Hammer pregib",
+    "hu": "Kalapács bicepszhajlítás"
+  },
+  "hammer-curls": {
+    "sr": "Hammer pregibi",
+    "hu": "Kalapács hajlítás"
+  },
+  "hammer-grip-incline-db-bench-press": {
+    "sr": "Kosi potisak sa bučicama neutralnim hvatom",
+    "hu": "Ferde kézisúlyzós nyomás kalapácsfogással"
+  },
+  "hamstring-smr": {
+    "sr": "Zadnja loža (SMR)",
+    "hu": "Combhajlító (SMR)"
+  },
+  "hamstring-stretch": {
+    "sr": "Istezanje zadnje lože",
+    "hu": "Combhajlító nyújtás"
+  },
+  "handstand-push-ups": {
+    "sr": "Sklekovi u stoju na rukama",
+    "hu": "Kézenállásos fekvőtámasz"
+  },
+  "hang-clean": {
+    "sr": "Nabačaj iz visa",
+    "hu": "Felvétel függő helyzetből"
+  },
+  "hang-clean---below-the-knees": {
+    "sr": "Nabačaj iz visa - ispod kolena",
+    "hu": "Felvétel függő helyzetből - térd alól"
+  },
+  "hang-snatch": {
+    "sr": "Trzaj iz visa",
+    "hu": "Szakítás függő helyzetből"
+  },
+  "hang-snatch---below-knees": {
+    "sr": "Trzaj iz visa - ispod kolena",
+    "hu": "Szakítás függő helyzetből - térd alól"
+  },
+  "hanging-bar-good-morning": {
+    "sr": "Good morning sa visećom šipkom",
+    "hu": "Good morning függesztett rúddal"
+  },
+  "hanging-leg-raise": {
+    "sr": "Podizanje nogu u visu",
+    "hu": "Függő lábemelés"
+  },
+  "hanging-pike": {
+    "sr": "Pike u visu",
+    "hu": "Függő bicska"
+  },
+  "heaving-snatch-balance": {
+    "sr": "Snatch balance sa odrazom",
+    "hu": "Lendítéses szakító egyensúly"
+  },
+  "heavy-bag-thrust": {
+    "sr": "Guranje teške vreće",
+    "hu": "Bokszzsák lökés"
+  },
+  "high-cable-curls": {
+    "sr": "Pregib na gornjem kablu",
+    "hu": "Felső csigás bicepszhajlítás"
+  },
+  "hip-circles-prone": {
+    "sr": "Kruženje kukom (na stomaku)",
+    "hu": "Csípőkörzés (hason)"
+  },
+  "hip-extension-with-bands": {
+    "sr": "Opružanje kuka sa gumom",
+    "hu": "Csípőnyújtás gumiszalaggal"
+  },
+  "hip-flexion-with-band": {
+    "sr": "Pregib kuka sa gumom",
+    "hu": "Csípőhajlítás gumiszalaggal"
+  },
+  "hip-lift-with-band": {
+    "sr": "Podizanje kukova sa gumom",
+    "hu": "Csípőemelés gumiszalaggal"
+  },
+  "hip-thrust": {
+    "sr": "Hip potisak",
+    "hu": "Hip thrust (csípőtolás)"
+  },
+  "hug-a-ball": {
+    "sr": "Zagrli loptu (istezanje)",
+    "hu": "Labdaölelés (nyújtás)"
+  },
+  "hug-knees-to-chest": {
+    "sr": "Kolena do grudi",
+    "hu": "Térdek a mellkashoz"
+  },
+  "hurdle-hops": {
+    "sr": "Skokovi preko prepona",
+    "hu": "Gátugrás"
+  },
+  "hyperextensions-back-extensions": {
+    "sr": "Hiperekstenzije (opružanje leđa)",
+    "hu": "Hiperextenzió (hátnyújtás)"
+  },
+  "hyperextensions-with-no-hyperextension-bench": {
+    "sr": "Hiperekstenzije bez klupe za hiperekstenziju",
+    "hu": "Hiperextenzió hiperextenziós pad nélkül"
+  },
+  "iliotibial-tract-smr": {
+    "sr": "Iliotibijalni trakt (SMR)",
+    "hu": "Iliotibiális szalag (SMR)"
+  },
+  "inchworm": {
+    "sr": "Gusenica",
+    "hu": "Araszoló"
+  },
+  "incline-barbell-triceps-extension": {
+    "sr": "Triceps ekstenzija sa šipkom na kosoj klupi",
+    "hu": "Rudas tricepsznyújtás ferde padon"
+  },
+  "incline-bench-press": {
+    "sr": "Kosi bench potisak",
+    "hu": "Ferde fekvenyomás"
+  },
+  "incline-bench-pull": {
+    "sr": "Veslanje na kosoj klupi (na stomaku)",
+    "hu": "Ferde padon hason fekvő húzás"
+  },
+  "incline-cable-chest-press": {
+    "sr": "Kosi potisak za grudi na kablu",
+    "hu": "Ferde kábeles mellnyomás"
+  },
+  "incline-cable-flye": {
+    "sr": "Razvlačenje na kablu na kosoj klupi",
+    "hu": "Kábeles tárogatás ferde padon"
+  },
+  "incline-dumbbell-bench-with-palms-facing-in": {
+    "sr": "Kosi potisak sa bučicama, dlanovi ka unutra",
+    "hu": "Ferde kézisúlyzós nyomás, tenyér befelé"
+  },
+  "incline-dumbbell-curl": {
+    "sr": "Kosi pregib sa bučicama",
+    "hu": "Ferde pados kézisúlyzós bicepszhajlítás"
+  },
+  "incline-dumbbell-flyes": {
+    "sr": "Razvlačenje sa bučicama na kosoj klupi",
+    "hu": "Ferde kézisúlyzós tárogatás"
+  },
+  "incline-dumbbell-flyes---with-a-twist": {
+    "sr": "Razvlačenje sa bučicama na kosoj klupi - sa rotacijom",
+    "hu": "Ferde kézisúlyzós tárogatás - csavarással"
+  },
+  "incline-dumbbell-press": {
+    "sr": "Kosi potisak sa bučicama",
+    "hu": "Ferde kézisúlyzós nyomás"
+  },
+  "incline-hammer-curls": {
+    "sr": "Kosi hammer pregibi",
+    "hu": "Ferde pados kalapács hajlítás"
+  },
+  "incline-inner-biceps-curl": {
+    "sr": "Kosi pregib za unutrašnji biceps",
+    "hu": "Ferde pados belső bicepszhajlítás"
+  },
+  "incline-push-up": {
+    "sr": "Kosi sklek (ruke gore)",
+    "hu": "Ferde fekvőtámasz (kéz megemelve)"
+  },
+  "incline-push-up-close-grip": {
+    "sr": "Kosi sklek uskim hvatom",
+    "hu": "Ferde fekvőtámasz szűk fogással"
+  },
+  "incline-push-up-depth-jump": {
+    "sr": "Kosi sklek sa dubinskim skokom",
+    "hu": "Ferde fekvőtámasz mélyugrással"
+  },
+  "incline-push-up-medium": {
+    "sr": "Kosi sklek srednjim hvatom",
+    "hu": "Ferde fekvőtámasz közepes fogással"
+  },
+  "incline-push-up-reverse-grip": {
+    "sr": "Kosi sklek obrnutim hvatom",
+    "hu": "Ferde fekvőtámasz fordított fogással"
+  },
+  "incline-push-up-wide": {
+    "sr": "Kosi sklek širokim hvatom",
+    "hu": "Ferde fekvőtámasz széles fogással"
+  },
+  "intermediate-groin-stretch": {
+    "sr": "Istezanje prepona (srednji nivo)",
+    "hu": "Ágyéknyújtás (középhaladó)"
+  },
+  "intermediate-hip-flexor-and-quad-stretch": {
+    "sr": "Istezanje pregibača kuka i kvadricepsa (srednji nivo)",
+    "hu": "Csípőhajlító és combfeszítő nyújtás (középhaladó)"
+  },
+  "internal-rotation-with-band": {
+    "sr": "Unutrašnja rotacija sa gumom",
+    "hu": "Belső rotáció gumiszalaggal"
+  },
+  "inverted-row": {
+    "sr": "Obrnuto veslanje",
+    "hu": "Fordított evezés"
+  },
+  "inverted-row-with-straps": {
+    "sr": "Obrnuto veslanje sa trakama",
+    "hu": "Fordított evezés hevederekkel"
+  },
+  "iron-cross": {
+    "sr": "Iron cross",
+    "hu": "Iron cross"
+  },
+  "iron-crosses-stretch": {
+    "sr": "Iron cross (istezanje)",
+    "hu": "Iron cross (nyújtás)"
+  },
+  "isometric-chest-squeezes": {
+    "sr": "Izometrijsko stiskanje grudi",
+    "hu": "Izometrikus mellszorítás"
+  },
+  "isometric-neck-exercise---front-and-back": {
+    "sr": "Izometrijska vežba za vrat - napred i nazad",
+    "hu": "Izometrikus nyakgyakorlat - elöl és hátul"
+  },
+  "isometric-neck-exercise---sides": {
+    "sr": "Izometrijska vežba za vrat - bočno",
+    "hu": "Izometrikus nyakgyakorlat - oldalt"
+  },
+  "isometric-wipers": {
+    "sr": "Izometrijski brisači",
+    "hu": "Izometrikus ablaktörlő"
+  },
+  "it-band-and-glute-stretch": {
+    "sr": "Istezanje IT trake i gluteusa",
+    "hu": "IT-szalag és farizom nyújtás"
+  },
+  "jackknife-sit-up": {
+    "sr": "Trbušnjak nož (jackknife)",
+    "hu": "Bicska felülés"
+  },
+  "janda-sit-up": {
+    "sr": "Janda trbušnjak",
+    "hu": "Janda felülés"
+  },
+  "jefferson-squats": {
+    "sr": "Džeferson čučanj",
+    "hu": "Jefferson guggolás"
+  },
+  "jerk-balance": {
+    "sr": "Ravnoteža za izbačaj",
+    "hu": "Kilökési egyensúly"
+  },
+  "jerk-dip-squat": {
+    "sr": "Polučučanj za izbačaj",
+    "hu": "Kilökési térdhajlítás"
+  },
+  "jm-press": {
+    "sr": "JM potisak",
+    "hu": "JM nyomás"
+  },
+  "jogging-treadmill": {
+    "sr": "Džogiranje na traci",
+    "hu": "Kocogás futópadon"
+  },
+  "keg-load": {
+    "sr": "Utovar bureta",
+    "hu": "Hordó felrakás"
+  },
+  "kettlebell-arnold-press": {
+    "sr": "Arnold potisak sa girjom",
+    "hu": "Kettlebelles Arnold-nyomás"
+  },
+  "kettlebell-dead-clean": {
+    "sr": "Nabačaj girje sa poda",
+    "hu": "Kettlebelles felvétel a földről"
+  },
+  "kettlebell-figure-8": {
+    "sr": "Osmica sa girjom",
+    "hu": "Kettlebelles nyolcas"
+  },
+  "kettlebell-halo": {
+    "sr": "Halo sa girjom",
+    "hu": "Kettlebelles halo"
+  },
+  "kettlebell-halo-with-overhead-extension": {
+    "sr": "Halo sa girjom i ekstenzijom iznad glave",
+    "hu": "Kettlebelles halo fej fölötti nyújtással"
+  },
+  "kettlebell-hang-clean": {
+    "sr": "Nabačaj girje iz visa",
+    "hu": "Kettlebelles felvétel függő helyzetből"
+  },
+  "kettlebell-one-legged-deadlift": {
+    "sr": "Mrtvo dizanje na jednoj nozi sa girjom",
+    "hu": "Egylábas kettlebelles felhúzás"
+  },
+  "kettlebell-overhead-triceps-extension": {
+    "sr": "Triceps iznad glave sa girjom",
+    "hu": "Kettlebelles tricepsznyújtás fej fölött"
+  },
+  "kettlebell-pass-between-the-legs": {
+    "sr": "Dodavanje girje između nogu",
+    "hu": "Kettlebell átadás a lábak között"
+  },
+  "kettlebell-pirate-ships": {
+    "sr": "Gusarski brod sa girjom",
+    "hu": "Kettlebelles kalózhajó"
+  },
+  "kettlebell-pistol-squat": {
+    "sr": "Pištolj čučanj sa girjom",
+    "hu": "Kettlebelles pisztolyguggolás"
+  },
+  "kettlebell-seated-press": {
+    "sr": "Potisak girjom u sedu",
+    "hu": "Ülő kettlebelles nyomás"
+  },
+  "kettlebell-seesaw-press": {
+    "sr": "Klackalica potisak sa girjama",
+    "hu": "Kettlebelles libikóka nyomás"
+  },
+  "kettlebell-sumo-high-pull": {
+    "sr": "Sumo visoko vučenje sa girjom",
+    "hu": "Kettlebelles szumó állhoz húzás"
+  },
+  "kettlebell-thruster": {
+    "sr": "Thruster sa girjom",
+    "hu": "Kettlebelles thruster"
+  },
+  "kettlebell-turkish-get-up-lunge-style": {
+    "sr": "Turski ustanak sa girjom (iskorak)",
+    "hu": "Kettlebelles török felállás (kitöréssel)"
+  },
+  "kettlebell-turkish-get-up-squat-style": {
+    "sr": "Turski ustanak sa girjom (čučanj)",
+    "hu": "Kettlebelles török felállás (guggolással)"
+  },
+  "kettlebell-windmill": {
+    "sr": "Vetrenjača sa girjom",
+    "hu": "Kettlebelles szélmalom"
+  },
+  "kipping-muscle-up": {
+    "sr": "Kipping muscle-up",
+    "hu": "Lendítéses muscle-up"
+  },
+  "knee-across-the-body": {
+    "sr": "Koleno preko tela (istezanje)",
+    "hu": "Térd keresztbe a testen (nyújtás)"
+  },
+  "knee-circles": {
+    "sr": "Kruženje kolenima",
+    "hu": "Térdkörzés"
+  },
+  "knee-hip-raise-on-parallel-bars": {
+    "sr": "Podizanje kolena/kukova na razboju",
+    "hu": "Térd-/csípőemelés korláton"
+  },
+  "knee-tuck-jump": {
+    "sr": "Skok sa privlačenjem kolena",
+    "hu": "Térdfelhúzásos ugrás"
+  },
+  "kneeling-arm-drill": {
+    "sr": "Rad ruku u klečećem položaju",
+    "hu": "Térdelő karmunka gyakorlat"
+  },
+  "kneeling-cable-crunch-with-alternating-oblique-twists": {
+    "sr": "Trbušnjaci na kablu u klečećem sa naizmeničnim rotacijama",
+    "hu": "Térdelő kábeles hasprés váltott ferde csavarással"
+  },
+  "kneeling-cable-triceps-extension": {
+    "sr": "Triceps ekstenzija na kablu u klečećem",
+    "hu": "Térdelő kábeles tricepsznyújtás"
+  },
+  "kneeling-forearm-stretch": {
+    "sr": "Istezanje podlaktica u klečećem",
+    "hu": "Térdelő alkarnyújtás"
+  },
+  "kneeling-high-pulley-row": {
+    "sr": "Veslanje na gornjem kablu u klečećem",
+    "hu": "Térdelő felső csigás evezés"
+  },
+  "kneeling-hip-flexor": {
+    "sr": "Istezanje pregibača kuka u klečećem",
+    "hu": "Térdelő csípőhajlító nyújtás"
+  },
+  "kneeling-jump-squat": {
+    "sr": "Skok iz klečećeg u čučanj",
+    "hu": "Térdelésből guggolásba ugrás"
+  },
+  "kneeling-single-arm-high-pulley-row": {
+    "sr": "Veslanje jednom rukom na gornjem kablu u klečećem",
+    "hu": "Térdelő egykezes felső csigás evezés"
+  },
+  "kneeling-squat": {
+    "sr": "Čučanj iz klečećeg",
+    "hu": "Térdelő guggolás"
+  },
+  "landmine-180s": {
+    "sr": "Landmine 180",
+    "hu": "Landmine 180"
+  },
+  "landmine-linear-jammer": {
+    "sr": "Landmine linear jammer",
+    "hu": "Landmine lineáris jammer"
+  },
+  "lat-pulldown": {
+    "sr": "Lat pulldown",
+    "hu": "Lehúzás csigán"
+  },
+  "lateral-bound": {
+    "sr": "Bočni skokovi",
+    "hu": "Oldalirányú szökdelés"
+  },
+  "lateral-box-jump": {
+    "sr": "Bočni skok na kutiju",
+    "hu": "Oldalirányú dobozra ugrás"
+  },
+  "lateral-cone-hops": {
+    "sr": "Bočni skokovi preko čunjeva",
+    "hu": "Oldalirányú bójaugrás"
+  },
+  "lateral-raise": {
+    "sr": "Lateralna podizanja",
+    "hu": "Oldalemelés"
+  },
+  "lateral-raise---with-bands": {
+    "sr": "Lateralna podizanja - sa gumom",
+    "hu": "Oldalemelés - gumiszalaggal"
+  },
+  "lateral-raise-machine": {
+    "sr": "Lateralna podizanja (sprava)",
+    "hu": "Oldalemelés (gép)"
+  },
+  "latissimus-dorsi-smr": {
+    "sr": "Latisimus (SMR)",
+    "hu": "Széles hátizom (SMR)"
+  },
+  "leg-curl": {
+    "sr": "Zadnja loža",
+    "hu": "Lábhajlítás"
+  },
+  "leg-extension": {
+    "sr": "Prednja loža",
+    "hu": "Lábnyújtás"
+  },
+  "leg-extensions": {
+    "sr": "Ekstenzije nogu",
+    "hu": "Lábnyújtás gépen"
+  },
+  "leg-lift": {
+    "sr": "Podizanje noge",
+    "hu": "Lábemelés"
+  },
+  "leg-over-floor-press": {
+    "sr": "Potisak sa poda sa prebačenom nogom",
+    "hu": "Nyomás a földön átvetett lábbal"
+  },
+  "leg-press": {
+    "sr": "Leg press",
+    "hu": "Lábtolás"
+  },
+  "leg-pull-in": {
+    "sr": "Privlačenje nogu",
+    "hu": "Lábbehúzás"
+  },
+  "leg-up-hamstring-stretch": {
+    "sr": "Istezanje zadnje lože sa podignutom nogom",
+    "hu": "Combhajlító nyújtás felemelt lábbal"
+  },
+  "leverage-chest-press": {
+    "sr": "Potisak za grudi na spravi sa polugom",
+    "hu": "Karos gépes mellnyomás"
+  },
+  "leverage-deadlift": {
+    "sr": "Mrtvo dizanje na spravi sa polugom",
+    "hu": "Karos gépes felhúzás"
+  },
+  "leverage-decline-chest-press": {
+    "sr": "Negativni potisak za grudi na spravi sa polugom",
+    "hu": "Karos gépes negatív mellnyomás"
+  },
+  "leverage-high-row": {
+    "sr": "Visoko veslanje na spravi sa polugom",
+    "hu": "Karos gépes magas evezés"
+  },
+  "leverage-incline-chest-press": {
+    "sr": "Kosi potisak za grudi na spravi sa polugom",
+    "hu": "Karos gépes ferde mellnyomás"
+  },
+  "leverage-iso-row": {
+    "sr": "Izolovano veslanje na spravi sa polugom",
+    "hu": "Karos gépes izolált evezés"
+  },
+  "leverage-shoulder-press": {
+    "sr": "Potisak za ramena na spravi sa polugom",
+    "hu": "Karos gépes vállnyomás"
+  },
+  "leverage-shrug": {
+    "sr": "Sleganje ramenima na spravi sa polugom",
+    "hu": "Karos gépes vállvonogatás"
+  },
+  "linear-3-part-start-technique": {
+    "sr": "Tehnika starta u 3 dela",
+    "hu": "3 részes rajttechnika"
+  },
+  "linear-acceleration-wall-drill": {
+    "sr": "Vežba ubrzanja uz zid",
+    "hu": "Gyorsítási falgyakorlat"
+  },
+  "linear-depth-jump": {
+    "sr": "Linearni dubinski skok",
+    "hu": "Egyenes mélyugrás"
+  },
+  "log-lift": {
+    "sr": "Dizanje balvana",
+    "hu": "Rönkemelés"
+  },
+  "london-bridges": {
+    "sr": "Londonski mostovi (konopac)",
+    "hu": "London hidak (kötél)"
+  },
+  "looking-at-ceiling": {
+    "sr": "Pogled ka plafonu (istezanje vrata)",
+    "hu": "Plafonra nézés (nyaknyújtás)"
+  },
+  "low-cable-crossover": {
+    "sr": "Kablovski križ sa donjeg kabla",
+    "hu": "Alsó csigás keresztbehúzás"
+  },
+  "low-cable-triceps-extension": {
+    "sr": "Triceps ekstenzija na donjem kablu",
+    "hu": "Alsó csigás tricepsznyújtás"
+  },
+  "low-pulley-row-to-neck": {
+    "sr": "Veslanje na donjem kablu do vrata",
+    "hu": "Alsó csigás evezés nyakig"
+  },
+  "lower-back-curl": {
+    "sr": "Pregib donjih leđa",
+    "hu": "Derékhajlítás"
+  },
+  "lower-back-extension": {
+    "sr": "Hiperekstenzija",
+    "hu": "Hiperextenzió"
+  },
+  "lower-back-smr": {
+    "sr": "Donja leđa SMR (valjak)",
+    "hu": "Derék SMR (henger)"
+  },
+  "lunge-pass-through": {
+    "sr": "Iskorak sa provlačenjem girje",
+    "hu": "Kitörés kettlebell-átadással"
+  },
+  "lunge-sprint": {
+    "sr": "Iskorak u sprint",
+    "hu": "Kitörésből sprint"
+  },
+  "lunges": {
+    "sr": "Iskoraci",
+    "hu": "Kitörések"
+  },
+  "lying-bent-leg-groin": {
+    "sr": "Istezanje prepona savijenih nogu u ležećem",
+    "hu": "Fekvő ágyéknyújtás hajlított lábbal"
+  },
+  "lying-cable-curl": {
+    "sr": "Pregib na kablu u ležećem",
+    "hu": "Fekvő kábeles bicepszhajlítás"
+  },
+  "lying-cambered-barbell-row": {
+    "sr": "Veslanje sa zakrivljenom šipkom u ležećem",
+    "hu": "Fekvő evezés ívelt rúddal"
+  },
+  "lying-close-grip-bar-curl-on-high-pulley": {
+    "sr": "Pregib uskim hvatom na gornjem kablu u ležećem",
+    "hu": "Fekvő szűk fogású hajlítás felső csigán"
+  },
+  "lying-close-grip-barbell-triceps-extension-behind-the-head": {
+    "sr": "Ekstenzija za triceps iza glave uskim hvatom u ležećem",
+    "hu": "Fekvő szűk fogású rudas tricepsznyújtás fej mögé"
+  },
+  "lying-close-grip-barbell-triceps-press-to-chin": {
+    "sr": "Triceps potisak do brade uskim hvatom u ležećem",
+    "hu": "Fekvő szűk fogású rudas tricepsznyomás állig"
+  },
+  "lying-crossover": {
+    "sr": "Ukrštanje nogu u ležećem (istezanje)",
+    "hu": "Fekvő keresztezés (nyújtás)"
+  },
+  "lying-dumbbell-tricep-extension": {
+    "sr": "Ekstenzija za triceps sa bučicama u ležećem",
+    "hu": "Fekvő kézisúlyzós tricepsznyújtás"
+  },
+  "lying-face-down-plate-neck-resistance": {
+    "sr": "Vežba za vrat sa tegom licem nadole",
+    "hu": "Nyakerősítés tárcsával hason fekve"
+  },
+  "lying-face-up-plate-neck-resistance": {
+    "sr": "Vežba za vrat sa tegom licem nagore",
+    "hu": "Nyakerősítés tárcsával háton fekve"
+  },
+  "lying-glute": {
+    "sr": "Istezanje gluteusa u ležećem",
+    "hu": "Fekvő farizomnyújtás"
+  },
+  "lying-hamstring": {
+    "sr": "Istezanje zadnje lože u ležećem",
+    "hu": "Fekvő combhajlító-nyújtás"
+  },
+  "lying-high-bench-barbell-curl": {
+    "sr": "Pregib sa šipkom na visokoj klupi u ležećem",
+    "hu": "Fekvő rudas hajlítás magas padon"
+  },
+  "lying-leg-curls": {
+    "sr": "Zadnja loža u ležećem",
+    "hu": "Fekvő lábhajlítás"
+  },
+  "lying-machine-squat": {
+    "sr": "Čučanj na ležećoj spravi",
+    "hu": "Fekvő gépi guggolás"
+  },
+  "lying-one-arm-lateral-raise": {
+    "sr": "Lateralno podizanje jednom rukom u ležećem",
+    "hu": "Fekvő egykezes oldalemelés"
+  },
+  "lying-prone-quadriceps": {
+    "sr": "Istezanje kvadricepsa na stomaku",
+    "hu": "Hason fekvő négyfejű-nyújtás"
+  },
+  "lying-rear-delt-raise": {
+    "sr": "Podizanje za zadnja ramena u ležećem",
+    "hu": "Fekvő hátsóváll-emelés"
+  },
+  "lying-supine-dumbbell-curl": {
+    "sr": "Pregib sa bučicama na leđima",
+    "hu": "Háton fekvő kézisúlyzós hajlítás"
+  },
+  "lying-t-bar-row": {
+    "sr": "T-bar veslanje u ležećem",
+    "hu": "Fekvő T-rudas evezés"
+  },
+  "lying-triceps-press": {
+    "sr": "Triceps potisak u ležećem",
+    "hu": "Fekvő tricepsznyomás"
+  },
+  "machine-bench-press": {
+    "sr": "Bench potisak (sprava)",
+    "hu": "Fekvenyomás (gép)"
+  },
+  "machine-bicep-curl": {
+    "sr": "Pregib za biceps (sprava)",
+    "hu": "Bicepszhajlítás (gép)"
+  },
+  "machine-preacher-curls": {
+    "sr": "Preacher pregib (sprava)",
+    "hu": "Scott-padas hajlítás (gép)"
+  },
+  "machine-shoulder-military-press": {
+    "sr": "Vojni potisak (sprava)",
+    "hu": "Vállnyomás (gép)"
+  },
+  "machine-triceps-extension": {
+    "sr": "Ekstenzija za triceps (sprava)",
+    "hu": "Tricepsznyújtás (gép)"
+  },
+  "medicine-ball-chest-pass": {
+    "sr": "Dodavanje medicinke sa grudi",
+    "hu": "Medicinlabda-passz mellből"
+  },
+  "medicine-ball-full-twist": {
+    "sr": "Puna rotacija sa medicinkom",
+    "hu": "Teljes törzsfordítás medicinlabdával"
+  },
+  "medicine-ball-scoop-throw": {
+    "sr": "Bacanje medicinke odozdo",
+    "hu": "Alulról dobás medicinlabdával"
+  },
+  "middle-back-shrug": {
+    "sr": "Sleganje za srednja leđa",
+    "hu": "Középhát-vállvonogatás"
+  },
+  "middle-back-stretch": {
+    "sr": "Istezanje srednjih leđa",
+    "hu": "Középhát-nyújtás"
+  },
+  "mixed-grip-chin": {
+    "sr": "Zgib mešovitim hvatom",
+    "hu": "Vegyes fogású húzódzkodás"
+  },
+  "monster-walk": {
+    "sr": "Monster hod sa gumom",
+    "hu": "Monster járás gumiszalaggal"
+  },
+  "mountain-climbers": {
+    "sr": "Penjači",
+    "hu": "Hegymászó"
+  },
+  "moving-claw-series": {
+    "sr": "Serija pokretnih kandži",
+    "hu": "Mozgó karom sorozat"
+  },
+  "muscle-snatch": {
+    "sr": "Mišićni trzaj",
+    "hu": "Izomszakítás"
+  },
+  "muscle-up": {
+    "sr": "Muscle up",
+    "hu": "Muscle-up"
+  },
+  "narrow-stance-hack-squats": {
+    "sr": "Hack čučanj uskim stavom",
+    "hu": "Szűk terpeszes hack guggolás"
+  },
+  "narrow-stance-leg-press": {
+    "sr": "Leg press uskim stavom",
+    "hu": "Szűk terpeszes lábtolás"
+  },
+  "narrow-stance-squats": {
+    "sr": "Čučanj uskim stavom",
+    "hu": "Szűk terpeszes guggolás"
+  },
+  "natural-glute-ham-raise": {
+    "sr": "Prirodni glute ham raise",
+    "hu": "Természetes glute-ham emelés"
+  },
+  "neck-press": {
+    "sr": "Potisak do vrata",
+    "hu": "Nyakhoz nyomás"
+  },
+  "neck-smr": {
+    "sr": "Vrat SMR (valjak)",
+    "hu": "Nyak SMR (henger)"
+  },
+  "oblique-crunches": {
+    "sr": "Kosi trbušnjaci",
+    "hu": "Ferde hasprés"
+  },
+  "oblique-crunches---on-the-floor": {
+    "sr": "Kosi trbušnjaci na podu",
+    "hu": "Ferde hasprés a földön"
+  },
+  "olympic-squat": {
+    "sr": "Olimpijski čučanj",
+    "hu": "Olimpiai guggolás"
+  },
+  "on-your-back-quad-stretch": {
+    "sr": "Istezanje kvadricepsa na leđima",
+    "hu": "Háton fekvő négyfejű-nyújtás"
+  },
+  "on-your-side-quad-stretch": {
+    "sr": "Istezanje kvadricepsa na boku",
+    "hu": "Oldalt fekvő négyfejű-nyújtás"
+  },
+  "one-arm-against-wall": {
+    "sr": "Istezanje jedne ruke uz zid",
+    "hu": "Egykaros nyújtás a falnál"
+  },
+  "one-arm-chin-up": {
+    "sr": "Zgib jednom rukom (pothvat)",
+    "hu": "Egykezes húzódzkodás (alsó fogás)"
+  },
+  "one-arm-dumbbell-bench-press": {
+    "sr": "Bench potisak bučicom jednom rukom",
+    "hu": "Egykezes kézisúlyzós fekvenyomás"
+  },
+  "one-arm-dumbbell-preacher-curl": {
+    "sr": "Preacher pregib bučicom jednom rukom",
+    "hu": "Egykezes kézisúlyzós Scott-padas hajlítás"
+  },
+  "one-arm-dumbbell-row": {
+    "sr": "Veslanje bučicom jednom rukom",
+    "hu": "Egykezes kézisúlyzós evezés"
+  },
+  "one-arm-flat-bench-dumbbell-flye": {
+    "sr": "Razvlačenje bučicom jednom rukom na ravnoj klupi",
+    "hu": "Egykezes kézisúlyzós tárogatás vízszintes padon"
+  },
+  "one-arm-floor-press": {
+    "sr": "Potisak sa poda jednom rukom",
+    "hu": "Egykezes padlónyomás"
+  },
+  "one-arm-high-pulley-cable-side-bends": {
+    "sr": "Bočni pretkloni na gornjem kablu jednom rukom",
+    "hu": "Egykezes oldalhajlítás felső csigán"
+  },
+  "one-arm-incline-lateral-raise": {
+    "sr": "Lateralno podizanje jednom rukom na kosoj klupi",
+    "hu": "Egykezes oldalemelés ferde padon"
+  },
+  "one-arm-kettlebell-clean": {
+    "sr": "Nabačaj girje jednom rukom",
+    "hu": "Egykezes kettlebell felvétel"
+  },
+  "one-arm-kettlebell-clean-and-jerk": {
+    "sr": "Nabačaj i izbačaj girje jednom rukom",
+    "hu": "Egykezes kettlebell lökés"
+  },
+  "one-arm-kettlebell-floor-press": {
+    "sr": "Potisak girje sa poda jednom rukom",
+    "hu": "Egykezes kettlebell padlónyomás"
+  },
+  "one-arm-kettlebell-jerk": {
+    "sr": "Izbačaj girje jednom rukom",
+    "hu": "Egykezes kettlebell kilökés"
+  },
+  "one-arm-kettlebell-military-press-to-the-side": {
+    "sr": "Vojni potisak girje jednom rukom u stranu",
+    "hu": "Egykezes kettlebell katonai nyomás oldalra"
+  },
+  "one-arm-kettlebell-para-press": {
+    "sr": "Para potisak girje jednom rukom",
+    "hu": "Egykezes kettlebell para nyomás"
+  },
+  "one-arm-kettlebell-push-press": {
+    "sr": "Push press girjom jednom rukom",
+    "hu": "Egykezes kettlebell lendületes nyomás"
+  },
+  "one-arm-kettlebell-row": {
+    "sr": "Veslanje girjom jednom rukom",
+    "hu": "Egykezes kettlebell evezés"
+  },
+  "one-arm-kettlebell-snatch": {
+    "sr": "Trzaj girje jednom rukom",
+    "hu": "Egykezes kettlebell szakítás"
+  },
+  "one-arm-kettlebell-split-jerk": {
+    "sr": "Izbačaj girje u raskoraku jednom rukom",
+    "hu": "Egykezes kettlebell kilökés ollózással"
+  },
+  "one-arm-kettlebell-split-snatch": {
+    "sr": "Trzaj girje u raskoraku jednom rukom",
+    "hu": "Egykezes kettlebell szakítás ollózással"
+  },
+  "one-arm-kettlebell-swings": {
+    "sr": "Zamasi girjom jednom rukom",
+    "hu": "Egykezes kettlebell lendítés"
+  },
+  "one-arm-lat-pulldown": {
+    "sr": "Lat pulldown jednom rukom",
+    "hu": "Egykezes lehúzás"
+  },
+  "one-arm-long-bar-row": {
+    "sr": "Veslanje dugom šipkom jednom rukom",
+    "hu": "Egykezes evezés hosszú rúddal"
+  },
+  "one-arm-medicine-ball-slam": {
+    "sr": "Udarac medicinkom jednom rukom",
+    "hu": "Egykezes medicinlabda-csapás"
+  },
+  "one-arm-open-palm-kettlebell-clean": {
+    "sr": "Nabačaj girje otvorenim dlanom jednom rukom",
+    "hu": "Egykezes nyitott tenyerű kettlebell felvétel"
+  },
+  "one-arm-overhead-kettlebell-squats": {
+    "sr": "Čučanj sa girjom iznad glave jednom rukom",
+    "hu": "Egykezes fej fölötti kettlebell guggolás"
+  },
+  "one-arm-pronated-dumbbell-triceps-extension": {
+    "sr": "Ekstenzija za triceps bučicom jednom rukom (nathvat)",
+    "hu": "Egykezes kézisúlyzós tricepsznyújtás (felső fogás)"
+  },
+  "one-arm-side-deadlift": {
+    "sr": "Bočno mrtvo dizanje jednom rukom",
+    "hu": "Egykezes oldalsó felhúzás"
+  },
+  "one-arm-side-laterals": {
+    "sr": "Lateralno podizanje jednom rukom",
+    "hu": "Egykezes oldalemelés"
+  },
+  "one-arm-supinated-dumbbell-triceps-extension": {
+    "sr": "Ekstenzija za triceps bučicom jednom rukom (pothvat)",
+    "hu": "Egykezes kézisúlyzós tricepsznyújtás (alsó fogás)"
+  },
+  "one-half-locust": {
+    "sr": "Polu-skakavac",
+    "hu": "Fél sáska"
+  },
+  "one-handed-hang": {
+    "sr": "Vis na jednoj ruci",
+    "hu": "Egykezes függés"
+  },
+  "one-knee-to-chest": {
+    "sr": "Koleno na grudi",
+    "hu": "Egy térd a mellkashoz"
+  },
+  "one-leg-barbell-squat": {
+    "sr": "Čučanj sa šipkom na jednoj nozi",
+    "hu": "Egylábas rudas guggolás"
+  },
+  "one-legged-cable-kickback": {
+    "sr": "Zabacivanje noge na kablu",
+    "hu": "Egylábas kábeles hátrarúgás"
+  },
+  "open-palm-kettlebell-clean": {
+    "sr": "Nabačaj girje otvorenim dlanom",
+    "hu": "Nyitott tenyerű kettlebell felvétel"
+  },
+  "otis-up": {
+    "sr": "Otis-up",
+    "hu": "Otis-up"
+  },
+  "overhead-cable-curl": {
+    "sr": "Pregib na kablu iznad glave",
+    "hu": "Fej fölötti kábeles bicepszhajlítás"
+  },
+  "overhead-lat": {
+    "sr": "Istezanje leđa iznad glave",
+    "hu": "Fej fölötti hátizom-nyújtás"
+  },
+  "overhead-press": {
+    "sr": "Vojni potisak",
+    "hu": "Katonai nyomás"
+  },
+  "overhead-slam": {
+    "sr": "Udarac medicinkom iznad glave",
+    "hu": "Fej fölötti labdacsapás"
+  },
+  "overhead-squat": {
+    "sr": "Čučanj sa šipkom iznad glave",
+    "hu": "Fej fölötti guggolás"
+  },
+  "overhead-stretch": {
+    "sr": "Istezanje iznad glave",
+    "hu": "Fej fölötti nyújtás"
+  },
+  "overhead-triceps": {
+    "sr": "Istezanje tricepsa iznad glave",
+    "hu": "Fej fölötti tricepsznyújtás (nyújtás)"
+  },
+  "pallof-press": {
+    "sr": "Pallof potisak",
+    "hu": "Pallof nyomás"
+  },
+  "pallof-press-with-rotation": {
+    "sr": "Pallof potisak sa rotacijom",
+    "hu": "Pallof nyomás forgatással"
+  },
+  "palms-down-dumbbell-wrist-curl-over-a-bench": {
+    "sr": "Pregib šake sa bučicama preko klupe (dlanovi nadole)",
+    "hu": "Kézisúlyzós csuklóhajlítás pad fölött (tenyérrel lefelé)"
+  },
+  "palms-down-wrist-curl-over-a-bench": {
+    "sr": "Pregib šake preko klupe (dlanovi nadole)",
+    "hu": "Csuklóhajlítás pad fölött (tenyérrel lefelé)"
+  },
+  "palms-up-barbell-wrist-curl-over-a-bench": {
+    "sr": "Pregib šake sa šipkom preko klupe (dlanovi nagore)",
+    "hu": "Rudas csuklóhajlítás pad fölött (tenyérrel felfelé)"
+  },
+  "palms-up-dumbbell-wrist-curl-over-a-bench": {
+    "sr": "Pregib šake sa bučicama preko klupe (dlanovi nagore)",
+    "hu": "Kézisúlyzós csuklóhajlítás pad fölött (tenyérrel felfelé)"
+  },
+  "parallel-bar-dip": {
+    "sr": "Propadanja na razboju",
+    "hu": "Tolódzkodás korláton"
+  },
+  "pelvic-tilt-into-bridge": {
+    "sr": "Naginjanje karlice u most",
+    "hu": "Medencebillentés hídba"
+  },
+  "peroneals-smr": {
+    "sr": "Peronealni mišići SMR (valjak)",
+    "hu": "Szárkapcsi izmok SMR (henger)"
+  },
+  "peroneals-stretch": {
+    "sr": "Istezanje peronealnih mišića",
+    "hu": "Szárkapcsi izmok nyújtása"
+  },
+  "physioball-hip-bridge": {
+    "sr": "Most kukova na pilates lopti",
+    "hu": "Csípőemelés fitlabdán"
+  },
+  "pin-presses": {
+    "sr": "Potisak sa graničnika",
+    "hu": "Nyomás biztosítórúdról"
+  },
+  "piriformis-smr": {
+    "sr": "Piriformis SMR (valjak)",
+    "hu": "Körteizom SMR (henger)"
+  },
+  "plank": {
+    "sr": "Plank",
+    "hu": "Plank"
+  },
+  "plate-pinch": {
+    "sr": "Stiskanje tegova prstima",
+    "hu": "Tárcsaszorítás ujjakkal"
+  },
+  "plate-twist": {
+    "sr": "Rotacija sa tegom",
+    "hu": "Törzsforgatás tárcsával"
+  },
+  "platform-hamstring-slides": {
+    "sr": "Klizanje za zadnju ložu na platformi",
+    "hu": "Combhajlító csúsztatás platformon"
+  },
+  "plie-dumbbell-squat": {
+    "sr": "Plie čučanj sa bučicom",
+    "hu": "Plié guggolás kézisúlyzóval"
+  },
+  "plyo-kettlebell-pushups": {
+    "sr": "Pliometrijski sklekovi na girjama",
+    "hu": "Plyometrikus fekvőtámasz kettlebellen"
+  },
+  "plyo-push-up": {
+    "sr": "Pliometrijski sklek",
+    "hu": "Plyometrikus fekvőtámasz"
+  },
+  "posterior-tibialis-stretch": {
+    "sr": "Istezanje zadnjeg tibijalnog mišića",
+    "hu": "Hátsó sípcsontizom nyújtása"
+  },
+  "power-clean": {
+    "sr": "Power nabačaj",
+    "hu": "Power felvétel"
+  },
+  "power-clean-from-blocks": {
+    "sr": "Power nabačaj sa blokova",
+    "hu": "Power felvétel blokkról"
+  },
+  "power-jerk": {
+    "sr": "Power izbačaj",
+    "hu": "Power kilökés"
+  },
+  "power-partials": {
+    "sr": "Power parcijalna podizanja",
+    "hu": "Power részleges emelések"
+  },
+  "power-snatch": {
+    "sr": "Power trzaj",
+    "hu": "Power szakítás"
+  },
+  "power-snatch-from-blocks": {
+    "sr": "Power trzaj sa blokova",
+    "hu": "Power szakítás blokkról"
+  },
+  "power-stairs": {
+    "sr": "Power stepenice",
+    "hu": "Power lépcső"
+  },
+  "preacher-curl": {
+    "sr": "Preacher pregib",
+    "hu": "Scott-padas hajlítás"
+  },
+  "preacher-hammer-dumbbell-curl": {
+    "sr": "Hammer preacher pregib sa bučicom",
+    "hu": "Kalapács Scott-padas hajlítás kézisúlyzóval"
+  },
+  "press-sit-up": {
+    "sr": "Podizanje trupa sa potiskom",
+    "hu": "Felülés nyomással"
+  },
+  "prone-manual-hamstring": {
+    "sr": "Istezanje zadnje lože na stomaku uz partnera",
+    "hu": "Hason fekvő páros combhajlító-nyújtás"
+  },
+  "prowler-sprint": {
+    "sr": "Sprint sa prowlerom",
+    "hu": "Prowler sprint"
+  },
+  "pull-through": {
+    "sr": "Pull through na kablu",
+    "hu": "Kábeles áthúzás lábak között"
+  },
+  "pull-ups": {
+    "sr": "Zgibovi",
+    "hu": "Húzódzkodás"
+  },
+  "pullups": {
+    "sr": "Zgibovi",
+    "hu": "Húzódzkodás"
+  },
+  "push-press": {
+    "sr": "Push press",
+    "hu": "Lendületes nyomás"
+  },
+  "push-press---behind-the-neck": {
+    "sr": "Push press iza vrata",
+    "hu": "Lendületes nyomás tarkóról"
+  },
+  "push-up-to-side-plank": {
+    "sr": "Sklek u bočni plank",
+    "hu": "Fekvőtámasz oldalplankbe"
+  },
+  "push-up-wide": {
+    "sr": "Sklek širokim hvatom",
+    "hu": "Széles fekvőtámasz"
+  },
+  "push-ups": {
+    "sr": "Sklekovi",
+    "hu": "Fekvőtámasz"
+  },
+  "push-ups---close-triceps-position": {
+    "sr": "Sklekovi uskim hvatom (triceps)",
+    "hu": "Szűk fekvőtámasz (tricepsz)"
+  },
+  "push-ups-with-feet-elevated": {
+    "sr": "Sklekovi sa podignutim nogama",
+    "hu": "Fekvőtámasz megemelt lábbal"
+  },
+  "push-ups-with-feet-on-an-exercise-ball": {
+    "sr": "Sklekovi sa nogama na pilates lopti",
+    "hu": "Fekvőtámasz lábbal fitlabdán"
+  },
+  "pushups": {
+    "sr": "Sklekovi",
+    "hu": "Fekvőtámasz"
+  },
+  "pushups-close-and-wide-hand-positions": {
+    "sr": "Sklekovi (uski i široki hvat)",
+    "hu": "Fekvőtámasz (szűk és széles kéztartás)"
+  },
+  "pyramid": {
+    "sr": "Piramida",
+    "hu": "Piramis"
+  },
+  "quad-stretch": {
+    "sr": "Istezanje kvadricepsa",
+    "hu": "Négyfejű-nyújtás"
+  },
+  "quadriceps-smr": {
+    "sr": "Kvadriceps SMR (valjak)",
+    "hu": "Négyfejű SMR (henger)"
+  },
+  "quick-leap": {
+    "sr": "Brzi skok",
+    "hu": "Gyors szökkenés"
+  },
+  "rack-delivery": {
+    "sr": "Rack delivery",
+    "hu": "Rack delivery"
+  },
+  "rack-pull-with-bands": {
+    "sr": "Mrtvo dizanje sa stalka sa gumama",
+    "hu": "Felhúzás állványról gumiszalaggal"
+  },
+  "rack-pulls": {
+    "sr": "Mrtvo dizanje sa stalka",
+    "hu": "Felhúzás állványról"
+  },
+  "rear-delt-fly": {
+    "sr": "Zadnja ramena",
+    "hu": "Hátsóváll-tárogatás"
+  },
+  "rear-leg-raises": {
+    "sr": "Podizanje noge unazad",
+    "hu": "Hátsó lábemelés"
+  },
+  "recumbent-bike": {
+    "sr": "Ležeći bicikl",
+    "hu": "Fekvő szobakerékpár"
+  },
+  "return-push-from-stance": {
+    "sr": "Povratni odraz iz stava",
+    "hu": "Visszalökés alapállásból"
+  },
+  "reverse-band-bench-press": {
+    "sr": "Bench potisak sa obrnutim gumama",
+    "hu": "Fekvenyomás fordított gumiszalaggal"
+  },
+  "reverse-band-box-squat": {
+    "sr": "Čučanj na kutiju sa obrnutim gumama",
+    "hu": "Dobozra guggolás fordított gumiszalaggal"
+  },
+  "reverse-band-deadlift": {
+    "sr": "Mrtvo dizanje sa obrnutim gumama",
+    "hu": "Felhúzás fordított gumiszalaggal"
+  },
+  "reverse-band-power-squat": {
+    "sr": "Power čučanj sa obrnutim gumama",
+    "hu": "Power guggolás fordított gumiszalaggal"
+  },
+  "reverse-band-sumo-deadlift": {
+    "sr": "Sumo mrtvo dizanje sa obrnutim gumama",
+    "hu": "Szumó felhúzás fordított gumiszalaggal"
+  },
+  "reverse-barbell-curl": {
+    "sr": "Pregib sa šipkom nathvatom",
+    "hu": "Fordított fogású rudas hajlítás"
+  },
+  "reverse-barbell-preacher-curls": {
+    "sr": "Preacher pregib sa šipkom nathvatom",
+    "hu": "Fordított fogású rudas Scott-padas hajlítás"
+  },
+  "reverse-cable-curl": {
+    "sr": "Pregib na kablu nathvatom",
+    "hu": "Fordított fogású kábeles hajlítás"
+  },
+  "reverse-crunch": {
+    "sr": "Obrnuti trbušnjaci",
+    "hu": "Fordított hasprés"
+  },
+  "reverse-flyes": {
+    "sr": "Obrnuto razvlačenje",
+    "hu": "Fordított tárogatás"
+  },
+  "reverse-flyes-with-external-rotation": {
+    "sr": "Obrnuto razvlačenje sa spoljnom rotacijom",
+    "hu": "Fordított tárogatás kifelé forgatással"
+  },
+  "reverse-grip-bent-over-rows": {
+    "sr": "Veslanje u pretklonu pothvatom",
+    "hu": "Alsó fogású döntött törzsű evezés"
+  },
+  "reverse-grip-triceps-pushdown": {
+    "sr": "Triceps potisak na kablu pothvatom",
+    "hu": "Alsó fogású tricepsz-letolás"
+  },
+  "reverse-hyperextension": {
+    "sr": "Obrnuta hiperekstenzija",
+    "hu": "Fordított hiperextenzió"
+  },
+  "reverse-machine-flyes": {
+    "sr": "Obrnuto razvlačenje (sprava)",
+    "hu": "Fordított tárogatás (gép)"
+  },
+  "reverse-plate-curls": {
+    "sr": "Pregib sa tegom nathvatom",
+    "hu": "Fordított fogású tárcsás hajlítás"
+  },
+  "reverse-triceps-bench-press": {
+    "sr": "Bench potisak pothvatom (triceps)",
+    "hu": "Alsó fogású fekvenyomás (tricepsz)"
+  },
+  "rhomboids-smr": {
+    "sr": "Romboidni mišići SMR (valjak)",
+    "hu": "Rombuszizmok SMR (henger)"
+  },
+  "rickshaw-carry": {
+    "sr": "Nošenje rikše",
+    "hu": "Riksacipelés"
+  },
+  "rickshaw-deadlift": {
+    "sr": "Mrtvo dizanje rikše",
+    "hu": "Riksa felhúzás"
+  },
+  "ring-dips": {
+    "sr": "Propadanja na krugovima",
+    "hu": "Tolódzkodás gyűrűn"
+  },
+  "rocket-jump": {
+    "sr": "Raketni skok",
+    "hu": "Rakétaugrás"
+  },
+  "rocking-standing-calf-raise": {
+    "sr": "Ljuljajuće podizanje na prste u stojećem",
+    "hu": "Billegő álló vádliemelés"
+  },
+  "rocky-pull-ups-pulldowns": {
+    "sr": "Rocky zgibovi / pulldown",
+    "hu": "Rocky húzódzkodás / lehúzás"
+  },
+  "romanian-deadlift": {
+    "sr": "Rumunsko mrtvo dizanje",
+    "hu": "Román felhúzás"
+  },
+  "romanian-deadlift-from-deficit": {
+    "sr": "Rumunsko mrtvo dizanje sa povišenja",
+    "hu": "Román felhúzás emelvényről"
+  },
+  "rope-climb": {
+    "sr": "Penjanje uz konopac",
+    "hu": "Kötélmászás"
+  },
+  "rope-crunch": {
+    "sr": "Trbušnjaci sa konopcem na kablu",
+    "hu": "Kötélhúzásos hasprés kábelen"
+  },
+  "rope-jumping": {
+    "sr": "Preskakanje vijače",
+    "hu": "Ugrókötelezés"
+  },
+  "rope-straight-arm-pulldown": {
+    "sr": "Pulldown opruženim rukama sa konopcem",
+    "hu": "Nyújtott karos lehúzás kötéllel"
+  },
+  "round-the-world-shoulder-stretch": {
+    "sr": "Istezanje ramena u krug",
+    "hu": "Körkörös vállnyújtás"
+  },
+  "rowing-stationary": {
+    "sr": "Veslanje (trenažer)",
+    "hu": "Evezés (gép)"
+  },
+  "runners-stretch": {
+    "sr": "Istezanje za trkače",
+    "hu": "Futónyújtás"
+  },
+  "running-treadmill": {
+    "sr": "Trčanje (traka)",
+    "hu": "Futás (futópad)"
+  },
+  "russian-twist": {
+    "sr": "Ruski twist",
+    "hu": "Orosz csavarás"
+  },
+  "sandbag-load": {
+    "sr": "Utovar vreće sa peskom",
+    "hu": "Homokzsák-pakolás"
+  },
+  "scapular-pull-up": {
+    "sr": "Skapularni zgib",
+    "hu": "Lapockás húzódzkodás"
+  },
+  "scissor-kick": {
+    "sr": "Makaze",
+    "hu": "Ollózás"
+  },
+  "scissors-jump": {
+    "sr": "Skok makaze",
+    "hu": "Ollóugrás"
+  },
+  "seated-band-hamstring-curl": {
+    "sr": "Pregib za zadnju ložu sa gumom u sedu",
+    "hu": "Ülő lábhajlítás gumiszalaggal"
+  },
+  "seated-barbell-military-press": {
+    "sr": "Vojni potisak sa šipkom u sedu",
+    "hu": "Ülő rudas katonai nyomás"
+  },
+  "seated-barbell-twist": {
+    "sr": "Rotacija trupa sa šipkom u sedu",
+    "hu": "Ülő törzsforgatás rúddal"
+  },
+  "seated-bent-over-one-arm-dumbbell-triceps-extension": {
+    "sr": "Ekstenzija za triceps bučicom jednom rukom u pretklonu u sedu",
+    "hu": "Ülő döntött törzsű egykezes kézisúlyzós tricepsznyújtás"
+  },
+  "seated-bent-over-rear-delt-raise": {
+    "sr": "Podizanje za zadnja ramena u pretklonu u sedu",
+    "hu": "Ülő döntött törzsű hátsóváll-emelés"
+  },
+  "seated-bent-over-two-arm-dumbbell-triceps-extension": {
+    "sr": "Ekstenzija za triceps bučicama obema rukama u pretklonu u sedu",
+    "hu": "Ülő döntött törzsű kétkezes kézisúlyzós tricepsznyújtás"
+  },
+  "seated-biceps": {
+    "sr": "Istezanje bicepsa u sedu",
+    "hu": "Ülő bicepsznyújtás"
+  },
+  "seated-cable-rows": {
+    "sr": "Veslanje u sedu (kabl)",
+    "hu": "Ülő evezés (kábel)"
+  },
+  "seated-cable-shoulder-press": {
+    "sr": "Potisak za ramena na kablu u sedu",
+    "hu": "Ülő kábeles vállnyomás"
+  },
+  "seated-calf-raise": {
+    "sr": "Podizanje na prste u sedu",
+    "hu": "Ülő vádliemelés"
+  },
+  "seated-calf-stretch": {
+    "sr": "Istezanje lista u sedu",
+    "hu": "Ülő vádlinyújtás"
+  },
+  "seated-close-grip-concentration-barbell-curl": {
+    "sr": "Koncentracioni pregib sa šipkom uskim hvatom u sedu",
+    "hu": "Ülő szűk fogású koncentrált rudas hajlítás"
+  },
+  "seated-dumbbell-curl": {
+    "sr": "Pregib sa bučicama u sedu",
+    "hu": "Ülő kézisúlyzós bicepszhajlítás"
+  },
+  "seated-dumbbell-inner-biceps-curl": {
+    "sr": "Pregib za unutrašnji biceps sa bučicama u sedu",
+    "hu": "Ülő kézisúlyzós belső bicepszhajlítás"
+  },
+  "seated-dumbbell-palms-down-wrist-curl": {
+    "sr": "Pregib šake sa bučicama u sedu (dlanovi nadole)",
+    "hu": "Ülő kézisúlyzós csuklóhajlítás (tenyérrel lefelé)"
+  },
+  "seated-dumbbell-palms-up-wrist-curl": {
+    "sr": "Pregib šake sa bučicama u sedu (dlanovi nagore)",
+    "hu": "Ülő kézisúlyzós csuklóhajlítás (tenyérrel felfelé)"
+  },
+  "seated-dumbbell-press": {
+    "sr": "Potisak sa bučicama u sedu",
+    "hu": "Ülő kézisúlyzós nyomás"
+  },
+  "seated-flat-bench-leg-pull-in": {
+    "sr": "Privlačenje nogu na ravnoj klupi u sedu",
+    "hu": "Ülő lábfelhúzás vízszintes padon"
+  },
+  "seated-floor-hamstring-stretch": {
+    "sr": "Istezanje zadnje lože u sedu na podu",
+    "hu": "Ülő combhajlító-nyújtás a földön"
+  },
+  "seated-front-deltoid": {
+    "sr": "Istezanje prednjeg ramena u sedu",
+    "hu": "Ülő elülsőváll-nyújtás"
+  },
+  "seated-glute": {
+    "sr": "Istezanje gluteusa u sedu",
+    "hu": "Ülő farizomnyújtás"
+  },
+  "seated-good-mornings": {
+    "sr": "Good morning u sedu",
+    "hu": "Ülő good morning"
+  },
+  "seated-hamstring": {
+    "sr": "Istezanje zadnje lože u sedu",
+    "hu": "Ülő combhajlító-nyújtás"
+  },
+  "seated-hamstring-and-calf-stretch": {
+    "sr": "Istezanje zadnje lože i lista u sedu",
+    "hu": "Ülő combhajlító- és vádlinyújtás"
+  },
+  "seated-head-harness-neck-resistance": {
+    "sr": "Vežba za vrat sa kaišem za glavu u sedu",
+    "hu": "Ülő nyakerősítés fejhámmal"
+  },
+  "seated-leg-curl": {
+    "sr": "Zadnja loža u sedu",
+    "hu": "Ülő lábhajlítás"
+  },
+  "seated-leg-tucks": {
+    "sr": "Privlačenje nogu u sedu",
+    "hu": "Ülő lábfelhúzás"
+  },
+  "seated-one-arm-cable-pulley-rows": {
+    "sr": "Veslanje na kablu jednom rukom u sedu",
+    "hu": "Ülő egykezes kábeles evezés"
+  },
+  "seated-one-arm-dumbbell-palms-down-wrist-curl": {
+    "sr": "Pregib šake bučicom jednom rukom u sedu (dlan nadole)",
+    "hu": "Ülő egykezes kézisúlyzós csuklóhajlítás (tenyérrel lefelé)"
+  },
+  "seated-one-arm-dumbbell-palms-up-wrist-curl": {
+    "sr": "Pregib šake bučicom jednom rukom u sedu (dlan nagore)",
+    "hu": "Ülő egykezes kézisúlyzós csuklóhajlítás (tenyérrel felfelé)"
+  },
+  "seated-overhead-stretch": {
+    "sr": "Istezanje iznad glave u sedu",
+    "hu": "Ülő fej fölötti nyújtás"
+  },
+  "seated-palm-up-barbell-wrist-curl": {
+    "sr": "Pregib šake sa šipkom u sedu (dlanovi nagore)",
+    "hu": "Ülő rudas csuklóhajlítás (tenyérrel felfelé)"
+  },
+  "seated-palms-down-barbell-wrist-curl": {
+    "sr": "Pregib šake sa šipkom u sedu (dlanovi nadole)",
+    "hu": "Ülő rudas csuklóhajlítás (tenyérrel lefelé)"
+  },
+  "seated-row-cable": {
+    "sr": "Veslanje u sedu (kabl)",
+    "hu": "Ülő evezés (kábel)"
+  },
+  "seated-row-machine": {
+    "sr": "Veslanje u sedu (sprava)",
+    "hu": "Ülő evezés (gép)"
+  },
+  "seated-side-lateral-raise": {
+    "sr": "Lateralno podizanje u sedu",
+    "hu": "Ülő oldalemelés"
+  },
+  "seated-triceps-press": {
+    "sr": "Triceps potisak u sedu (sprava)",
+    "hu": "Ülő tricepsznyomás (gép)"
+  },
+  "seated-two-arm-palms-up-low-pulley-wrist-curl": {
+    "sr": "Pregib šake na donjem kablu obema rukama u sedu (dlanovi nagore)",
+    "hu": "Ülő kétkezes csuklóhajlítás alsó csigán (tenyérrel felfelé)"
+  },
+  "see-saw-press-alternating-side-press": {
+    "sr": "Klackalica potisak (naizmenični potisak)",
+    "hu": "Mérleghinta nyomás (váltott nyomás)"
+  },
+  "shotgun-row": {
+    "sr": "Shotgun veslanje",
+    "hu": "Shotgun evezés"
+  },
+  "shoulder-circles": {
+    "sr": "Kruženje ramenima",
+    "hu": "Vállkörzés"
+  },
+  "shoulder-press---with-bands": {
+    "sr": "Potisak za ramena sa gumama",
+    "hu": "Vállnyomás gumiszalaggal"
+  },
+  "shoulder-press-machine": {
+    "sr": "Potisak za ramena (sprava)",
+    "hu": "Vállnyomás (gép)"
+  },
+  "shoulder-raise": {
+    "sr": "Podizanje ramena",
+    "hu": "Vállemelés"
+  },
+  "shoulder-stretch": {
+    "sr": "Istezanje ramena",
+    "hu": "Vállnyújtás"
+  },
+  "shrugs": {
+    "sr": "Sleganje ramenima",
+    "hu": "Vállvonogatás"
+  },
+  "side-bridge": {
+    "sr": "Bočni plank",
+    "hu": "Oldalplank"
+  },
+  "side-hop-sprint": {
+    "sr": "Bočni poskok u sprint",
+    "hu": "Oldalszökdelés sprinttel"
+  },
+  "side-jackknife": {
+    "sr": "Bočni jackknife",
+    "hu": "Oldalsó bicska"
+  },
+  "side-lateral-raise": {
+    "sr": "Lateralno podizanje",
+    "hu": "Oldalemelés"
+  },
+  "side-laterals-to-front-raise": {
+    "sr": "Lateralno pa frontalno podizanje",
+    "hu": "Oldalemelésből előreemelés"
+  },
+  "side-leg-raises": {
+    "sr": "Bočno podizanje nogu",
+    "hu": "Oldalsó lábemelés"
+  },
+  "side-lying-floor-stretch": {
+    "sr": "Istezanje na boku na podu",
+    "hu": "Oldalt fekvő nyújtás a földön"
+  },
+  "side-lying-groin-stretch": {
+    "sr": "Istezanje prepona na boku",
+    "hu": "Oldalt fekvő ágyéknyújtás"
+  },
+  "side-neck-stretch": {
+    "sr": "Bočno istezanje vrata",
+    "hu": "Oldalsó nyaknyújtás"
+  },
+  "side-standing-long-jump": {
+    "sr": "Bočni skok udalj iz mesta",
+    "hu": "Oldalirányú helyből távolugrás"
+  },
+  "side-to-side-box-shuffle": {
+    "sr": "Bočno prebacivanje preko kutije",
+    "hu": "Oldalazás a doboz felett"
+  },
+  "side-to-side-chins": {
+    "sr": "Zgibovi s jedne na drugu stranu",
+    "hu": "Oldalról oldalra húzódzkodás"
+  },
+  "side-wrist-pull": {
+    "sr": "Bočno povlačenje zgloba šake",
+    "hu": "Oldalsó csuklóhúzás"
+  },
+  "single-arm-cable-crossover": {
+    "sr": "Kablovski križ jednom rukom",
+    "hu": "Egykezes kábeles keresztezés"
+  },
+  "single-arm-linear-jammer": {
+    "sr": "Linear jammer jednom rukom",
+    "hu": "Egykezes linear jammer"
+  },
+  "single-arm-push-up": {
+    "sr": "Sklek na jednoj ruci",
+    "hu": "Egykezes fekvőtámasz"
+  },
+  "single-cone-sprint-drill": {
+    "sr": "Sprint vežba oko čunja",
+    "hu": "Egybójás sprintgyakorlat"
+  },
+  "single-dumbbell-raise": {
+    "sr": "Podizanje jedne bučice",
+    "hu": "Emelés egy kézisúlyzóval"
+  },
+  "single-leg-butt-kick": {
+    "sr": "Zabacivanje pete jednom nogom",
+    "hu": "Egylábas sarokrúgás"
+  },
+  "single-leg-glute-bridge": {
+    "sr": "Most za gluteuse na jednoj nozi",
+    "hu": "Egylábas csípőemelés"
+  },
+  "single-leg-high-box-squat": {
+    "sr": "Čučanj na visoku kutiju na jednoj nozi",
+    "hu": "Egylábas guggolás magas dobozra"
+  },
+  "single-leg-hop-progression": {
+    "sr": "Progresija poskoka na jednoj nozi",
+    "hu": "Egylábas szökdelés-progresszió"
+  },
+  "single-leg-lateral-hop": {
+    "sr": "Bočni poskok na jednoj nozi",
+    "hu": "Egylábas oldalszökdelés"
+  },
+  "single-leg-leg-extension": {
+    "sr": "Prednja loža jednom nogom",
+    "hu": "Egylábas lábnyújtás"
+  },
+  "single-leg-push-off": {
+    "sr": "Odraz jednom nogom",
+    "hu": "Egylábas elrugaszkodás"
+  },
+  "single-leg-stride-jump": {
+    "sr": "Skok iz iskoraka na jednoj nozi",
+    "hu": "Egylábas lépőugrás"
+  },
+  "sit-squats": {
+    "sr": "Čučanj do sedenja",
+    "hu": "Ülő guggolás"
+  },
+  "sit-up": {
+    "sr": "Podizanje trupa",
+    "hu": "Felülés"
+  },
+  "skating": {
+    "sr": "Klizački skokovi",
+    "hu": "Korcsolyázó ugrások"
+  },
+  "skull-crushers": {
+    "sr": "Skull crushers",
+    "hu": "Homlokra engedés"
+  },
+  "sled-drag---harness": {
+    "sr": "Vučenje sanki (pojas)",
+    "hu": "Szánhúzás (hám)"
+  },
+  "sled-overhead-backward-walk": {
+    "sr": "Hod unazad sa sankama iznad glave",
+    "hu": "Hátrafelé séta szánnal fej fölött"
+  },
+  "sled-overhead-triceps-extension": {
+    "sr": "Ekstenzija za triceps iznad glave sa sankama",
+    "hu": "Fej fölötti tricepsznyújtás szánnal"
+  },
+  "sled-push": {
+    "sr": "Guranje sanki",
+    "hu": "Szántolás"
+  },
+  "sled-reverse-flye": {
+    "sr": "Obrnuto razvlačenje sa sankama",
+    "hu": "Fordított tárogatás szánnal"
+  },
+  "sled-row": {
+    "sr": "Veslanje sa sankama",
+    "hu": "Evezés szánnal"
+  },
+  "sledgehammer-swings": {
+    "sr": "Udarci maljem",
+    "hu": "Ütések nagykalapáccsal"
+  },
+  "smith-incline-shoulder-raise": {
+    "sr": "Podizanje ramena na kosoj klupi na Smit mašini",
+    "hu": "Vállemelés ferde padon Smith-gépen"
+  },
+  "smith-machine-behind-the-back-shrug": {
+    "sr": "Sleganje ramenima iza leđa na Smit mašini",
+    "hu": "Vállvonogatás hát mögött Smith-gépen"
+  },
+  "smith-machine-bench-press": {
+    "sr": "Bench potisak na Smit mašini",
+    "hu": "Fekvenyomás Smith-gépen"
+  },
+  "smith-machine-bent-over-row": {
+    "sr": "Veslanje u pretklonu na Smit mašini",
+    "hu": "Döntött törzsű evezés Smith-gépen"
+  },
+  "smith-machine-calf-raise": {
+    "sr": "Podizanje na prste na Smit mašini",
+    "hu": "Vádliemelés Smith-gépen"
+  },
+  "smith-machine-close-grip-bench-press": {
+    "sr": "Uski bench potisak na Smit mašini",
+    "hu": "Szűk fogású fekvenyomás Smith-gépen"
+  },
+  "smith-machine-decline-press": {
+    "sr": "Negativni potisak na Smit mašini",
+    "hu": "Negatív nyomás Smith-gépen"
+  },
+  "smith-machine-hang-power-clean": {
+    "sr": "Power nabačaj iz visa na Smit mašini",
+    "hu": "Power felvétel függésből Smith-gépen"
+  },
+  "smith-machine-hip-raise": {
+    "sr": "Podizanje kukova na Smit mašini",
+    "hu": "Csípőemelés Smith-gépen"
+  },
+  "smith-machine-incline-bench-press": {
+    "sr": "Kosi bench potisak na Smit mašini",
+    "hu": "Ferde fekvenyomás Smith-gépen"
+  },
+  "smith-machine-leg-press": {
+    "sr": "Leg press na Smit mašini",
+    "hu": "Lábtolás Smith-gépen"
+  },
+  "smith-machine-one-arm-upright-row": {
+    "sr": "Veslanje do brade jednom rukom na Smit mašini",
+    "hu": "Egykezes állig húzás Smith-gépen"
+  },
+  "smith-machine-overhead-shoulder-press": {
+    "sr": "Potisak za ramena iznad glave na Smit mašini",
+    "hu": "Fej fölötti vállnyomás Smith-gépen"
+  },
+  "smith-machine-pistol-squat": {
+    "sr": "Pištolj čučanj na Smit mašini",
+    "hu": "Pisztolyguggolás Smith-gépen"
+  },
+  "smith-machine-reverse-calf-raises": {
+    "sr": "Obrnuto podizanje na prste na Smit mašini",
+    "hu": "Fordított vádliemelés Smith-gépen"
+  },
+  "smith-machine-squat": {
+    "sr": "Čučanj na Smit mašini",
+    "hu": "Guggolás Smith-gépen"
+  },
+  "smith-machine-stiff-legged-deadlift": {
+    "sr": "Mrtvo dizanje opruženih nogu na Smit mašini",
+    "hu": "Nyújtott lábas felhúzás Smith-gépen"
+  },
+  "smith-machine-upright-row": {
+    "sr": "Veslanje do brade na Smit mašini",
+    "hu": "Állig húzás Smith-gépen"
+  },
+  "smith-single-leg-split-squat": {
+    "sr": "Split čučanj na jednoj nozi na Smit mašini",
+    "hu": "Egylábas kitöréses guggolás Smith-gépen"
+  },
+  "snatch": {
+    "sr": "Trzaj",
+    "hu": "Szakítás"
+  },
+  "snatch-balance": {
+    "sr": "Trzaj balans",
+    "hu": "Szakítás-egyensúly"
+  },
+  "snatch-deadlift": {
+    "sr": "Mrtvo dizanje trzajnim hvatom",
+    "hu": "Szakítófogású felhúzás"
+  },
+  "snatch-from-blocks": {
+    "sr": "Trzaj sa blokova",
+    "hu": "Szakítás blokkról"
+  },
+  "snatch-pull": {
+    "sr": "Trzajno povlačenje",
+    "hu": "Szakító húzás"
+  },
+  "snatch-shrug": {
+    "sr": "Sleganje ramenima trzajnim hvatom",
+    "hu": "Szakítófogású vállvonogatás"
+  },
+  "speed-band-overhead-triceps": {
+    "sr": "Brza ekstenzija za triceps iznad glave sa gumom",
+    "hu": "Gyors fej fölötti tricepsznyújtás gumiszalaggal"
+  },
+  "speed-box-squat": {
+    "sr": "Brzi čučanj na kutiju",
+    "hu": "Gyors dobozra guggolás"
+  },
+  "speed-squats": {
+    "sr": "Brzi čučnjevi",
+    "hu": "Gyors guggolás"
+  },
+  "spell-caster": {
+    "sr": "Spell caster",
+    "hu": "Spell caster"
+  },
+  "spider-crawl": {
+    "sr": "Paukov hod",
+    "hu": "Pókmászás"
+  },
+  "spider-curl": {
+    "sr": "Spider pregib",
+    "hu": "Pók bicepszhajlítás"
+  },
+  "spinal-stretch": {
+    "sr": "Istezanje kičme",
+    "hu": "Gerincnyújtás"
+  },
+  "split-clean": {
+    "sr": "Nabačaj u raskoraku",
+    "hu": "Ollózó felvétel"
+  },
+  "split-jerk": {
+    "sr": "Izbačaj u raskoraku",
+    "hu": "Ollózó kilökés"
+  },
+  "split-jump": {
+    "sr": "Skok iz iskoraka",
+    "hu": "Kitöréses ugrás"
+  },
+  "split-snatch": {
+    "sr": "Trzaj u raskoraku",
+    "hu": "Ollózó szakítás"
+  },
+  "split-squat-with-dumbbells": {
+    "sr": "Split čučanj sa bučicama",
+    "hu": "Kitöréses guggolás kézisúlyzókkal"
+  },
+  "split-squats": {
+    "sr": "Split čučnjevi",
+    "hu": "Kitöréses guggolás"
+  },
+  "squat": {
+    "sr": "Čučanj",
+    "hu": "Guggolás"
+  },
+  "squat-jerk": {
+    "sr": "Izbačaj u čučanj",
+    "hu": "Guggoló kilökés"
+  },
+  "squat-with-bands": {
+    "sr": "Čučanj sa gumama",
+    "hu": "Guggolás gumiszalaggal"
+  },
+  "squat-with-chains": {
+    "sr": "Čučanj sa lancima",
+    "hu": "Guggolás láncokkal"
+  },
+  "squat-with-plate-movers": {
+    "sr": "Čučanj sa premeštanjem tegova",
+    "hu": "Guggolás tárcsaáthelyezéssel"
+  },
+  "squats---with-bands": {
+    "sr": "Čučnjevi sa gumama",
+    "hu": "Guggolás gumiszalaggal"
+  },
+  "stairmaster": {
+    "sr": "Stairmaster",
+    "hu": "Lépcsőzőgép"
+  },
+  "standing-alternating-dumbbell-press": {
+    "sr": "Naizmenični potisak sa bučicama u stojećem",
+    "hu": "Álló váltott kézisúlyzós nyomás"
+  },
+  "standing-barbell-calf-raise": {
+    "sr": "Podizanje na prste sa šipkom u stojećem",
+    "hu": "Álló rudas vádliemelés"
+  },
+  "standing-barbell-press-behind-neck": {
+    "sr": "Potisak sa šipkom iza vrata u stojećem",
+    "hu": "Álló rudas nyomás tarkóról"
+  },
+  "standing-bent-over-one-arm-dumbbell-triceps-extension": {
+    "sr": "Ekstenzija za triceps bučicom jednom rukom u pretklonu",
+    "hu": "Álló döntött törzsű egykezes kézisúlyzós tricepsznyújtás"
+  },
+  "standing-bent-over-two-arm-dumbbell-triceps-extension": {
+    "sr": "Ekstenzija za triceps bučicama obema rukama u pretklonu",
+    "hu": "Álló döntött törzsű kétkezes kézisúlyzós tricepsznyújtás"
+  },
+  "standing-biceps-cable-curl": {
+    "sr": "Pregib na kablu u stojećem",
+    "hu": "Álló kábeles bicepszhajlítás"
+  },
+  "standing-biceps-stretch": {
+    "sr": "Istezanje bicepsa u stojećem",
+    "hu": "Álló bicepsznyújtás"
+  },
+  "standing-bradford-press": {
+    "sr": "Bradford potisak u stojećem",
+    "hu": "Álló Bradford-nyomás"
+  },
+  "standing-cable-chest-press": {
+    "sr": "Potisak za grudi na kablu u stojećem",
+    "hu": "Álló kábeles mellnyomás"
+  },
+  "standing-cable-lift": {
+    "sr": "Dizanje na kablu u stojećem",
+    "hu": "Álló kábeles emelés"
+  },
+  "standing-cable-wood-chop": {
+    "sr": "Drvoseča na kablu u stojećem",
+    "hu": "Álló kábeles favágás"
+  },
+  "standing-calf-raises": {
+    "sr": "Podizanje na prste u stojećem",
+    "hu": "Álló vádliemelés"
+  },
+  "standing-concentration-curl": {
+    "sr": "Koncentracioni pregib u stojećem",
+    "hu": "Álló koncentrált bicepszhajlítás"
+  },
+  "standing-dumbbell-calf-raise": {
+    "sr": "Podizanje na prste sa bučicama u stojećem",
+    "hu": "Álló kézisúlyzós vádliemelés"
+  },
+  "standing-dumbbell-press": {
+    "sr": "Potisak sa bučicama u stojećem",
+    "hu": "Álló kézisúlyzós nyomás"
+  },
+  "standing-dumbbell-reverse-curl": {
+    "sr": "Pregib sa bučicama nathvatom u stojećem",
+    "hu": "Álló fordított fogású kézisúlyzós hajlítás"
+  },
+  "standing-dumbbell-straight-arm-front-delt-raise-above-head": {
+    "sr": "Frontalno podizanje bučica opruženim rukama iznad glave",
+    "hu": "Álló nyújtott karos kézisúlyzós előreemelés fej fölé"
+  },
+  "standing-dumbbell-triceps-extension": {
+    "sr": "Ekstenzija za triceps sa bučicom u stojećem",
+    "hu": "Álló kézisúlyzós tricepsznyújtás"
+  },
+  "standing-dumbbell-upright-row": {
+    "sr": "Veslanje do brade sa bučicama u stojećem",
+    "hu": "Álló kézisúlyzós állig húzás"
+  },
+  "standing-elevated-quad-stretch": {
+    "sr": "Istezanje kvadricepsa sa podignutom nogom u stojećem",
+    "hu": "Álló négyfejű-nyújtás megemelt lábbal"
+  },
+  "standing-front-barbell-raise-over-head": {
+    "sr": "Frontalno podizanje šipke iznad glave u stojećem",
+    "hu": "Álló rudas előreemelés fej fölé"
+  },
+  "standing-gastrocnemius-calf-stretch": {
+    "sr": "Istezanje lista (gastroknemius) u stojećem",
+    "hu": "Álló vádlinyújtás (kétfejű lábikraizom)"
+  },
+  "standing-hamstring-and-calf-stretch": {
+    "sr": "Istezanje zadnje lože i lista u stojećem",
+    "hu": "Álló combhajlító- és vádlinyújtás"
+  },
+  "standing-hip-circles": {
+    "sr": "Kruženje kukovima u stojećem",
+    "hu": "Álló csípőkörzés"
+  },
+  "standing-hip-flexors": {
+    "sr": "Istezanje pregibača kuka u stojećem",
+    "hu": "Álló csípőhajlító-nyújtás"
+  },
+  "standing-inner-biceps-curl": {
+    "sr": "Pregib za unutrašnji biceps u stojećem",
+    "hu": "Álló belső bicepszhajlítás"
+  },
+  "standing-lateral-stretch": {
+    "sr": "Bočno istezanje u stojećem",
+    "hu": "Álló oldalnyújtás"
+  },
+  "standing-leg-curl": {
+    "sr": "Zadnja loža u stojećem",
+    "hu": "Álló lábhajlítás"
+  },
+  "standing-long-jump": {
+    "sr": "Skok udalj iz mesta",
+    "hu": "Helyből távolugrás"
+  },
+  "standing-low-pulley-deltoid-raise": {
+    "sr": "Podizanje za ramena na donjem kablu u stojećem",
+    "hu": "Álló vállemelés alsó csigán"
+  },
+  "standing-low-pulley-one-arm-triceps-extension": {
+    "sr": "Ekstenzija za triceps jednom rukom na donjem kablu u stojećem",
+    "hu": "Álló egykezes tricepsznyújtás alsó csigán"
+  },
+  "standing-military-press": {
+    "sr": "Vojni potisak u stojećem",
+    "hu": "Álló katonai nyomás"
+  },
+  "standing-olympic-plate-hand-squeeze": {
+    "sr": "Stiskanje olimpijskog tega u stojećem",
+    "hu": "Álló olimpiai tárcsa szorítása"
+  },
+  "standing-one-arm-cable-curl": {
+    "sr": "Pregib na kablu jednom rukom u stojećem",
+    "hu": "Álló egykezes kábeles bicepszhajlítás"
+  },
+  "standing-one-arm-dumbbell-curl-over-incline-bench": {
+    "sr": "Pregib bučicom jednom rukom preko kose klupe",
+    "hu": "Álló egykezes kézisúlyzós hajlítás ferde pad fölött"
+  },
+  "standing-one-arm-dumbbell-triceps-extension": {
+    "sr": "Ekstenzija za triceps bučicom jednom rukom u stojećem",
+    "hu": "Álló egykezes kézisúlyzós tricepsznyújtás"
+  },
+  "standing-overhead-barbell-triceps-extension": {
+    "sr": "Ekstenzija za triceps sa šipkom iznad glave u stojećem",
+    "hu": "Álló fej fölötti rudas tricepsznyújtás"
+  },
+  "standing-palm-in-one-arm-dumbbell-press": {
+    "sr": "Potisak bučicom jednom rukom, dlan ka unutra, u stojećem",
+    "hu": "Álló egykezes kézisúlyzós nyomás befelé néző tenyérrel"
+  },
+  "standing-palms-in-dumbbell-press": {
+    "sr": "Potisak sa bučicama, dlanovi ka unutra, u stojećem",
+    "hu": "Álló kézisúlyzós nyomás befelé néző tenyérrel"
+  },
+  "standing-palms-up-barbell-behind-the-back-wrist-curl": {
+    "sr": "Pregib šake sa šipkom iza leđa u stojećem (dlanovi nagore)",
+    "hu": "Álló rudas csuklóhajlítás hát mögött (tenyérrel felfelé)"
+  },
+  "standing-pelvic-tilt": {
+    "sr": "Naginjanje karlice u stojećem",
+    "hu": "Álló medencebillentés"
+  },
+  "standing-rope-crunch": {
+    "sr": "Trbušnjaci sa konopcem u stojećem",
+    "hu": "Álló kötélhúzásos hasprés"
+  },
+  "standing-soleus-and-achilles-stretch": {
+    "sr": "Istezanje soleusa i Ahilove tetive u stojećem",
+    "hu": "Álló gázlóizom- és Achilles-ín-nyújtás"
+  },
+  "standing-toe-touches": {
+    "sr": "Dodirivanje prstiju u stojećem",
+    "hu": "Álló lábujjérintés"
+  },
+  "standing-towel-triceps-extension": {
+    "sr": "Ekstenzija za triceps sa peškirom u stojećem",
+    "hu": "Álló tricepsznyújtás törölközővel"
+  },
+  "standing-two-arm-overhead-throw": {
+    "sr": "Bacanje iznad glave obema rukama u stojećem",
+    "hu": "Álló kétkezes fej fölötti dobás"
+  },
+  "star-jump": {
+    "sr": "Skok zvezda",
+    "hu": "Csillagugrás"
+  },
+  "step-mill": {
+    "sr": "Step mill (stepenice)",
+    "hu": "Lépcsőgép"
+  },
+  "step-up-with-knee-raise": {
+    "sr": "Penjanje na klupu sa podizanjem kolena",
+    "hu": "Fellépés térdemeléssel"
+  },
+  "stiff-leg-barbell-good-morning": {
+    "sr": "Good morning sa šipkom opruženih nogu",
+    "hu": "Nyújtott lábas rudas good morning"
+  },
+  "stiff-legged-barbell-deadlift": {
+    "sr": "Mrtvo dizanje opruženih nogu sa šipkom",
+    "hu": "Nyújtott lábas rudas felhúzás"
+  },
+  "stiff-legged-dumbbell-deadlift": {
+    "sr": "Mrtvo dizanje opruženih nogu sa bučicama",
+    "hu": "Nyújtott lábas kézisúlyzós felhúzás"
+  },
+  "stomach-vacuum": {
+    "sr": "Vakuum stomaka",
+    "hu": "Hasvákuum"
+  },
+  "straight-arm-dumbbell-pullover": {
+    "sr": "Pullover sa bučicom opruženim rukama",
+    "hu": "Nyújtott karos kézisúlyzós áthúzás"
+  },
+  "straight-arm-pulldown": {
+    "sr": "Pulldown opruženim rukama",
+    "hu": "Nyújtott karos lehúzás"
+  },
+  "straight-bar-bench-mid-rows": {
+    "sr": "Veslanje ravnom šipkom na klupi",
+    "hu": "Evezés egyenes rúddal padon"
+  },
+  "straight-raises-on-incline-bench": {
+    "sr": "Podizanje opruženih ruku na kosoj klupi",
+    "hu": "Nyújtott karos emelés ferde padon"
+  },
+  "stride-jump-crossover": {
+    "sr": "Skok sa prekoračenjem",
+    "hu": "Keresztező lépőugrás"
+  },
+  "sumo-deadlift": {
+    "sr": "Sumo mrtvo dizanje",
+    "hu": "Szumó felhúzás"
+  },
+  "sumo-deadlift-with-bands": {
+    "sr": "Sumo mrtvo dizanje sa gumama",
+    "hu": "Szumó felhúzás gumiszalaggal"
+  },
+  "sumo-deadlift-with-chains": {
+    "sr": "Sumo mrtvo dizanje sa lancima",
+    "hu": "Szumó felhúzás láncokkal"
+  },
+  "superman": {
+    "sr": "Superman",
+    "hu": "Superman"
+  },
+  "supine-chest-throw": {
+    "sr": "Bacanje sa grudi u ležećem",
+    "hu": "Háton fekvő mellső dobás"
+  },
+  "supine-one-arm-overhead-throw": {
+    "sr": "Bacanje iznad glave jednom rukom u ležećem",
+    "hu": "Háton fekvő egykezes fej fölötti dobás"
+  },
+  "supine-two-arm-overhead-throw": {
+    "sr": "Bacanje iznad glave obema rukama u ležećem",
+    "hu": "Háton fekvő kétkezes fej fölötti dobás"
+  },
+  "suspended-fallout": {
+    "sr": "TRX fallout",
+    "hu": "TRX kiengedés"
+  },
+  "suspended-push-up": {
+    "sr": "TRX sklek",
+    "hu": "TRX fekvőtámasz"
+  },
+  "suspended-reverse-crunch": {
+    "sr": "TRX obrnuti trbušnjaci",
+    "hu": "TRX fordított hasprés"
+  },
+  "suspended-row": {
+    "sr": "TRX veslanje",
+    "hu": "TRX evezés"
+  },
+  "suspended-split-squat": {
+    "sr": "TRX split čučanj",
+    "hu": "TRX kitöréses guggolás"
+  },
+  "svend-press": {
+    "sr": "Svend potisak",
+    "hu": "Svend-nyomás"
+  },
+  "t-bar-row": {
+    "sr": "T-bar veslanje",
+    "hu": "T-rudas evezés"
+  },
+  "t-bar-row-with-handle": {
+    "sr": "T-bar veslanje sa ručkom",
+    "hu": "T-rudas evezés fogantyúval"
+  },
+  "tate-press": {
+    "sr": "Tate potisak",
+    "hu": "Tate-nyomás"
+  },
+  "the-straddle": {
+    "sr": "Istezanje u raznoženju",
+    "hu": "Terpesznyújtás"
+  },
+  "thigh-abductor": {
+    "sr": "Abduktor (sprava)",
+    "hu": "Combtávolító (gép)"
+  },
+  "thigh-adductor": {
+    "sr": "Aduktor (sprava)",
+    "hu": "Combközelítő (gép)"
+  },
+  "tire-flip": {
+    "sr": "Prevrtanje gume",
+    "hu": "Gumiborítás"
+  },
+  "toe-touchers": {
+    "sr": "Dodirivanje prstiju",
+    "hu": "Lábujjérintés"
+  },
+  "torso-rotation": {
+    "sr": "Rotacija trupa",
+    "hu": "Törzsforgatás"
+  },
+  "trail-running-walking": {
+    "sr": "Trčanje / hodanje po stazi",
+    "hu": "Terepfutás / terepgyaloglás"
+  },
+  "trap-bar-deadlift": {
+    "sr": "Mrtvo dizanje sa trap šipkom",
+    "hu": "Trap bar felhúzás"
+  },
+  "tricep-dumbbell-kickback": {
+    "sr": "Triceps kickback sa bučicom",
+    "hu": "Kézisúlyzós tricepsz-hátranyújtás"
+  },
+  "tricep-side-stretch": {
+    "sr": "Bočno istezanje tricepsa",
+    "hu": "Oldalsó tricepsznyújtás (nyújtás)"
+  },
+  "triceps-dips": {
+    "sr": "Propadanja (triceps)",
+    "hu": "Tolódzkodás (tricepsz)"
+  },
+  "triceps-kickback": {
+    "sr": "Triceps kickback",
+    "hu": "Tricepsz-hátranyújtás"
+  },
+  "triceps-overhead-extension": {
+    "sr": "Triceps iznad glave",
+    "hu": "Fej fölötti tricepsznyújtás"
+  },
+  "triceps-overhead-extension-with-rope": {
+    "sr": "Triceps iznad glave sa konopcem",
+    "hu": "Fej fölötti tricepsznyújtás kötéllel"
+  },
+  "triceps-pushdown": {
+    "sr": "Triceps potisak na kablu",
+    "hu": "Tricepsz-letolás"
+  },
+  "triceps-pushdown---rope-attachment": {
+    "sr": "Triceps potisak na kablu (konopac)",
+    "hu": "Tricepsz-letolás (kötél)"
+  },
+  "triceps-pushdown---v-bar-attachment": {
+    "sr": "Triceps potisak na kablu (V-ručka)",
+    "hu": "Tricepsz-letolás (V-markolat)"
+  },
+  "triceps-stretch": {
+    "sr": "Istezanje tricepsa",
+    "hu": "Tricepsznyújtás (nyújtás)"
+  },
+  "tuck-crunch": {
+    "sr": "Trbušnjaci sa zgrčenim nogama",
+    "hu": "Felhúzott lábas hasprés"
+  },
+  "two-arm-dumbbell-preacher-curl": {
+    "sr": "Preacher pregib sa bučicama obema rukama",
+    "hu": "Kétkezes kézisúlyzós Scott-padas hajlítás"
+  },
+  "two-arm-kettlebell-clean": {
+    "sr": "Nabačaj dve girje",
+    "hu": "Kétkezes kettlebell felvétel"
+  },
+  "two-arm-kettlebell-jerk": {
+    "sr": "Izbačaj dve girje",
+    "hu": "Kétkezes kettlebell kilökés"
+  },
+  "two-arm-kettlebell-military-press": {
+    "sr": "Vojni potisak sa dve girje",
+    "hu": "Kétkezes kettlebell katonai nyomás"
+  },
+  "two-arm-kettlebell-row": {
+    "sr": "Veslanje sa dve girje",
+    "hu": "Kétkezes kettlebell evezés"
+  },
+  "underhand-cable-pulldowns": {
+    "sr": "Lat pulldown pothvatom",
+    "hu": "Alsó fogású kábeles lehúzás"
+  },
+  "upper-back-leg-grab": {
+    "sr": "Istezanje gornjih leđa hvatom za noge",
+    "hu": "Felsőhát-nyújtás lábfogással"
+  },
+  "upper-back-stretch": {
+    "sr": "Istezanje gornjih leđa",
+    "hu": "Felsőhát-nyújtás"
+  },
+  "upright-barbell-row": {
+    "sr": "Veslanje do brade sa šipkom",
+    "hu": "Rudas állig húzás"
+  },
+  "upright-cable-row": {
+    "sr": "Veslanje do brade na kablu",
+    "hu": "Kábeles állig húzás"
+  },
+  "upright-row---with-bands": {
+    "sr": "Veslanje do brade sa gumama",
+    "hu": "Állig húzás gumiszalaggal"
+  },
+  "upward-stretch": {
+    "sr": "Istezanje nagore",
+    "hu": "Felfelé nyújtás"
+  },
+  "v-bar-pulldown": {
+    "sr": "Pulldown sa V-ručkom",
+    "hu": "Lehúzás V-markolattal"
+  },
+  "v-bar-pullup": {
+    "sr": "Zgib sa V-ručkom",
+    "hu": "Húzódzkodás V-markolattal"
+  },
+  "vertical-swing": {
+    "sr": "Vertikalni zamah",
+    "hu": "Függőleges lendítés"
+  },
+  "walking-treadmill": {
+    "sr": "Hodanje (traka)",
+    "hu": "Gyaloglás (futópad)"
+  },
+  "weighted-ball-hyperextension": {
+    "sr": "Hiperekstenzija na lopti sa opterećenjem",
+    "hu": "Súlyozott hiperextenzió labdán"
+  },
+  "weighted-ball-side-bend": {
+    "sr": "Bočni pretklon na lopti sa opterećenjem",
+    "hu": "Súlyozott oldalhajlítás labdán"
+  },
+  "weighted-bench-dip": {
+    "sr": "Propadanja sa klupe sa opterećenjem",
+    "hu": "Súlyozott tolódzkodás padon"
+  },
+  "weighted-crunches": {
+    "sr": "Trbušnjaci sa opterećenjem",
+    "hu": "Súlyozott hasprés"
+  },
+  "weighted-jump-squat": {
+    "sr": "Čučanj sa skokom sa opterećenjem",
+    "hu": "Súlyozott felugrásos guggolás"
+  },
+  "weighted-pull-ups": {
+    "sr": "Zgibovi sa opterećenjem",
+    "hu": "Súlyozott húzódzkodás"
+  },
+  "weighted-sissy-squat": {
+    "sr": "Sissy čučanj sa opterećenjem",
+    "hu": "Súlyozott sissy guggolás"
+  },
+  "weighted-sit-ups---with-bands": {
+    "sr": "Podizanje trupa sa opterećenjem (gume)",
+    "hu": "Súlyozott felülés (gumiszalag)"
+  },
+  "weighted-squat": {
+    "sr": "Čučanj sa opterećenjem",
+    "hu": "Súlyozott guggolás"
+  },
+  "wide-grip-barbell-bench-press": {
+    "sr": "Bench potisak širokim hvatom",
+    "hu": "Széles fogású fekvenyomás"
+  },
+  "wide-grip-decline-barbell-bench-press": {
+    "sr": "Negativni bench potisak širokim hvatom",
+    "hu": "Széles fogású negatív fekvenyomás"
+  },
+  "wide-grip-decline-barbell-pullover": {
+    "sr": "Pullover sa šipkom širokim hvatom na negativnoj klupi",
+    "hu": "Széles fogású rudas áthúzás negatív padon"
+  },
+  "wide-grip-lat-pulldown": {
+    "sr": "Lat pulldown širokim hvatom",
+    "hu": "Széles fogású lehúzás"
+  },
+  "wide-grip-pulldown-behind-the-neck": {
+    "sr": "Pulldown iza vrata širokim hvatom",
+    "hu": "Széles fogású lehúzás tarkóra"
+  },
+  "wide-grip-rear-pull-up": {
+    "sr": "Zgib iza vrata širokim hvatom",
+    "hu": "Széles fogású tarkós húzódzkodás"
+  },
+  "wide-grip-standing-barbell-curl": {
+    "sr": "Pregib sa šipkom širokim hvatom u stojećem",
+    "hu": "Álló széles fogású rudas bicepszhajlítás"
+  },
+  "wide-stance-barbell-squat": {
+    "sr": "Čučanj sa šipkom širokim stavom",
+    "hu": "Széles terpeszes rudas guggolás"
+  },
+  "wide-stance-stiff-legs": {
+    "sr": "Mrtvo dizanje opruženih nogu širokim stavom",
+    "hu": "Széles terpeszes nyújtott lábas felhúzás"
+  },
+  "wind-sprints": {
+    "sr": "Ponavljajući sprintevi",
+    "hu": "Ismételt sprintek"
+  },
+  "windmills": {
+    "sr": "Vetrenjače",
+    "hu": "Szélmalom"
+  },
+  "worlds-greatest-stretch": {
+    "sr": "Najbolje istezanje na svetu",
+    "hu": "A világ legjobb nyújtása"
+  },
+  "wrist-circles": {
+    "sr": "Kruženje zglobovima šake",
+    "hu": "Csuklókörzés"
+  },
+  "wrist-roller": {
+    "sr": "Valjak za podlaktice",
+    "hu": "Csuklóhenger"
+  },
+  "wrist-rotations-with-straight-bar": {
+    "sr": "Rotacija zglobova šake sa ravnom šipkom",
+    "hu": "Csuklóforgatás egyenes rúddal"
+  },
+  "yoke-walk": {
+    "sr": "Hod sa jarmom",
+    "hu": "Igás séta"
+  },
+  "zercher-squats": {
+    "sr": "Zercher čučanj",
+    "hu": "Zercher guggolás"
+  },
+  "zottman-curl": {
+    "sr": "Zottman pregib",
+    "hu": "Zottman-hajlítás"
+  },
+  "zottman-preacher-curl": {
+    "sr": "Zottman preacher pregib",
+    "hu": "Zottman Scott-padas hajlítás"
+  }
+}

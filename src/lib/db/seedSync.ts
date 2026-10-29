@@ -25,6 +25,7 @@ function yieldToMain(): Promise<void> {
 interface ExistingGlobalRow {
   source_slug: string | null;
   name_sr: string | null;
+  name_hu: string | null;
   description: string | null;
   image_url: string | null;
   default_sets: string | null;
@@ -34,6 +35,7 @@ interface ExistingGlobalRow {
 function canBackfill(row: ExistingGlobalRow, ex: GlobalSeedExercise): boolean {
   return (
     (row.name_sr == null && ex.name_sr != null) ||
+    (row.name_hu == null && ex.name_hu != null) ||
     (row.description == null && ex.description != null) ||
     (row.image_url == null && ex.image_url != null) ||
     (row.default_sets == null && ex.default_sets != null)
@@ -83,16 +85,17 @@ async function backfillMetadata(client: DbClient, ex: GlobalSeedExercise): Promi
   await client.execute(
     `UPDATE exercise_definitions SET
       name_sr = COALESCE(name_sr, ?),
+      name_hu = COALESCE(name_hu, ?),
       description = COALESCE(description, ?),
       image_url = COALESCE(image_url, ?),
       default_sets = COALESCE(default_sets, ?),
       source_slug = COALESCE(source_slug, ?)
      WHERE is_global = 1 AND source_slug = ?
        AND (
-         name_sr IS NULL OR description IS NULL OR image_url IS NULL
+         name_sr IS NULL OR name_hu IS NULL OR description IS NULL OR image_url IS NULL
          OR default_sets IS NULL OR source_slug IS NULL
        )`,
-    [ex.name_sr, ex.description, ex.image_url, ex.default_sets, ex.source_slug, ex.source_slug],
+    [ex.name_sr, ex.name_hu, ex.description, ex.image_url, ex.default_sets, ex.source_slug, ex.source_slug],
   );
 }
 
@@ -102,7 +105,7 @@ export async function syncGlobalExercises(client: DbClient): Promise<void> {
   await backfillSourceSlugs(client, GLOBAL_EXERCISES);
 
   const existing = await client.select<ExistingGlobalRow>(
-    `SELECT source_slug, name_sr, description, image_url, default_sets
+    `SELECT source_slug, name_sr, name_hu, description, image_url, default_sets
      FROM exercise_definitions WHERE is_global = 1 AND source_slug IS NOT NULL`,
   );
   const knownSlugs = new Set<string>();

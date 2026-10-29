@@ -1,0 +1,637 @@
+{
+ "ab-wheel-rollout": [
+  "Fogd meg a haskereket két kézzel, és térdelj le a földre.",
+  "Most tedd a haskereket magad elé a földre úgy, hogy a kezeden és a térdeden támaszkodj (mint térdelő fekvőtámasz helyzetben). Ez a kiinduló helyzet.",
+  "Lassan gördítsd a kereket egyenesen előre, és nyújtsd ki a tested egyenesre. Tipp: Menj le, amennyire csak tudsz, de a tested ne érjen a földhöz. Ennél a résznél lélegezz be.",
+  "A nyújtott helyzetben tarts egy rövid szünetet, majd kilégzés közben kezdd visszahúzni magad a kiinduló helyzetbe. Tipp: Lassan csináld, és a hasizmod végig legyen feszes."
+ ],
+ "air-bike": [
+  "Feküdj hanyatt a földön, a derekadat nyomd a talajhoz. Ehhez a gyakorlathoz tedd a kezedet a fejed mellé. Vigyázz, hogy közben ne erőltesd a nyakadat. Most emeld fel a válladat hasprés helyzetbe.",
+  "Húzd fel a térdedet úgy, hogy merőleges legyen a padlóra, a lábszárad pedig párhuzamos vele. Ez a kiinduló helyzet.",
+  "Most egyszerre, lassan végezz bicikliző mozdulatot: a jobb lábadat rúgd előre, a bal térdedet húzd be. Kilégzés közben oldalra csavarodva közelítsd a jobb könyöködet a bal térdedhez.",
+  "Belégzés közben térj vissza a kiinduló helyzetbe.",
+  "Csavarodj a másik oldalra, miközben tovább biciklizel a lábaddal, közelítsd a bal könyöködet a jobb térdedhez, és fújd ki a levegőt.",
+  "Folytasd így váltakozva, amíg mindkét oldalon meg nem csinálod az előírt ismétlésszámot."
+ ],
+ "arnold-press": [
+  "Ülj le egy háttámlás padra, és tarts magad előtt két kézisúlyzót nagyjából a mellkasod felső részének magasságában, tenyérrel a tested felé, hajlított könyökkel. Tipp: a karod legyen a törzsed mellett. A kiinduló helyzet olyan, mint a kézisúlyzós bicepszhajlítás felső helyzete.",
+  "A mozdulathoz emeld a súlyzókat, és közben fordítsd el a tenyered, amíg előre nem néz.",
+  "Emeld tovább a súlyzókat, amíg a karod teljesen ki nem nyúlik a fejed fölött. A mozgás e része alatt fújd ki a levegőt.",
+  "Fent egy másodperc szünet után kezdd leengedni a súlyzókat a kiinduló helyzetbe, a tenyered magad felé fordítva. Tipp: a bal karod az óramutató járásával ellentétesen, a jobb az óramutató járásával megegyezően fordul. A mozgás e része alatt vegyél levegőt.",
+  "Ismételd az ajánlott ismétlésszámig."
+ ],
+ "barbell-curl": [
+  "Állj egyenes törzzsel, és fogd a rudat vállszélességű fogással. A tenyered előre nézzen, a könyököd legyen a törzsed mellett. Ez a kiinduló helyzet.",
+  "A felkarod tartsd mozdulatlanul, és kilégzéssel hajlítsd előre a súlyt a bicepszed megfeszítésével. Tipp: csak az alkarod mozogjon.",
+  "Folytasd, amíg a bicepszed teljesen össze nem húzódik, és a rúd vállmagasságba nem ér. Tartsd meg egy másodpercig, és erősen szorítsd meg a bicepszed.",
+  "Belégzéssel lassan kezdd visszaengedni a rudat a kiinduló helyzetbe.",
+  "Ismételd az ajánlott ismétlésszámig."
+ ],
+ "barbell-glute-bridge": [
+  "Kezdj ülve a földön, a megpakolt rúddal a lábad fölött. Vastag rúd vagy a rúdra tett párna sokat csökkenthet a kellemetlenségen. Gördítsd a rudat közvetlenül a csípőd fölé, és feküdj le a földre.",
+  "Kezdd a mozdulatot a sarkadon át tolva, a csípődet függőlegesen felfelé nyomva a rúddal együtt. A súlyt a hátad felső része és a sarkad tartja.",
+  "Nyújtózz ki, amennyire csak tudsz, majd fordítsd meg a mozdulatot, és térj vissza a kiinduló helyzetbe."
+ ],
+ "barbell-row": [
+  "Fogd a rudat felső fogással (tenyér lefelé), hajlítsd enyhén a térded, és dőlj előre csípőből egyenes háttal, amíg a törzsed majdnem párhuzamos nem lesz a padlóval. Tipp: a fejed tartsd fent. A rúd közvetlenül előtted lóg, a karod merőlegesen lóg a padlóra és a törzsedre. Ez a kiinduló helyzet.",
+  "A törzsed tartsd mozdulatlanul, fújd ki a levegőt, és húzd magadhoz a rudat. A könyököd tartsd a tested mellett, az alkaroddal csak tartsd a súlyt. A felső ponton feszítsd meg a hátizmaidat, és tarts egy rövid szünetet.",
+  "Ezután lélegezz be, és lassan engedd vissza a rudat a kiinduló helyzetbe.",
+  "Ismételd az ajánlott ismétlésszámig."
+ ],
+ "bench-dips": [
+  "Ehhez a gyakorlathoz tegyél egy padot a hátad mögé. A pad legyen merőleges a testedre, háttal neki fogd meg a szélét teljesen nyújtott karral, vállszélességben. A lábad előre nyújtva, a derekadnál behajolva, a lábad merőleges a törzsedre. Ez a kiinduló helyzet.",
+  "Belégzés közben lassan engedd le a tested a könyököd hajlításával, amíg a felkarod és az alkarod közti szög kicsit 90 fok alá nem csökken. Tipp: a könyöködet végig tartsd minél közelebb egymáshoz. Az alkarod mindig lefelé nézzen.",
+  "A tricepszeddel told fel újra a törzsedet, és térj vissza a kiinduló helyzetbe.",
+  "Ismételd az előírt ismétlésszámig."
+ ],
+ "bench-press": [
+  "Feküdj hanyatt egy vízszintes padon. Közepes szélességű fogással (amelynél a mozgás közepén az alkar és a felkar 90 fokos szöget zár be) vedd le a rudat az állványról, és tartsd egyenesen magad fölött nyújtott karral. Ez a kiinduló helyzet.",
+  "A kiinduló helyzetből vegyél levegőt, és lassan engedd le a rudat, amíg hozzá nem ér a mellkasod közepéhez.",
+  "Rövid szünet után kifújva told vissza a rudat a kiinduló helyzetbe. Arra figyelj, hogy a mellizmaiddal nyomd. A mozgás tetején nyújtsd ki a karod és feszítsd meg a mellkasod, tartsd meg egy másodpercig, majd kezdd újra lassan leengedni. Tipp: ideális esetben a leengedés nagyjából kétszer annyi ideig tart, mint az emelés.",
+  "Ismételd a mozdulatot az előírt ismétlésszámig.",
+  "Ha végeztél, tedd vissza a rudat az állványra."
+ ],
+ "bent-over-two-dumbbell-row": [
+  "Egy-egy kézisúlyzóval a kezedben (tenyér a törzsed felé) hajlítsd be enyhén a térdedet, és dönts előre a felsőtestedet a derekadnál. Hajlás közben tartsd egyenesen a hátadat, amíg majdnem párhuzamos nem lesz a padlóval. Tipp: tartsd fent a fejedet. A súlyok közvetlenül előtted lógjanak, a karod merőleges a padlóra és a törzsedre. Ez a kiinduló helyzet.",
+  "Mozdulatlan felsőtesttel, kilégzés közben húzd fel a súlyzókat a tested mellé, a könyöködet a testedhez közel tartva (az alkaroddal csak tartsd a súlyt, ne húzz vele). Fent szorítsd meg a hátizmaidat, és tartsd meg egy másodpercig.",
+  "Belégzés közben lassan engedd vissza a súlyt a kiinduló helyzetbe.",
+  "Ismételd az előírt ismétlésszámig."
+ ],
+ "bicycling-stationary": [
+  "Először ülj fel a kerékpárra, és állítsd be a nyerget a magasságodhoz.",
+  "Válaszd ki a kívánt opciót a menüből. Lehet, hogy tekerni kell kezdened, hogy bekapcsoljon. Használhatod a kézi módot, vagy választhatsz programot. Általában megadhatod az életkorod és a testsúlyod, hogy a gép megbecsülje az edzés közben elégetett kalóriát. Az ellenállást edzés közben változtathatod. A fogantyúkkal mérheted a pulzusod, hogy megfelelő intenzitáson maradj."
+ ],
+ "bodyweight-squat": [
+  "Állj vállszélességű terpeszbe. A kezedet a tarkódra teheted. Ez a kiinduló helyzet.",
+  "Kezdd a mozdulatot a térd és a csípő hajlításával, a csípődet hátrafelé tolva, mintha leülnél.",
+  "Menj le teljes mélységig, ha bírod, majd gyorsan fordítsd meg a mozdulatot, amíg vissza nem érsz a kiinduló helyzetbe. Guggolás közben tartsd fent a fejedet és a mellkasodat, a térdedet pedig told kifelé."
+ ],
+ "bulgarian-split-squat": [
+  "Állj lépőállásba, a hátsó lábfejed megemelve, az elsőt előre téve.",
+  "Tarts egy-egy kézisúlyzót a kezedben, lazán lógatva az oldaladon. Ez a kiinduló helyzet.",
+  "Kezdj leereszkedni a térded és a csípőd hajlításával. Tarts jó testtartást a mozdulat során végig. Az első térded maradjon egy vonalban a lábfejeddel a gyakorlat közben.",
+  "A mozdulat alján told el magad a sarkaddal, nyújtsd ki a térded és a csípőd, és térj vissza a kiinduló helyzetbe."
+ ],
+ "butterfly": [
+  "Ülj le a gépre, a hátad simán a háttámlához.",
+  "Fogd meg a fogantyúkat. Tipp: a felkarod legyen párhuzamos a padlóval, ehhez igazítsd a gépet. Ez a kiinduló helyzet.",
+  "Lassan zárd össze a fogantyúkat, és középen feszítsd meg a mellkasod. A mozgás e része alatt fújd ki a levegőt, és tartsd meg az összehúzódást egy másodpercig.",
+  "Belégzés közben lassan térj vissza a kiinduló helyzetbe, amíg a mellizmaid teljesen meg nem nyúlnak.",
+  "Ismételd az ajánlott ismétlésszámig."
+ ],
+ "cable-crossover": [
+  "A kiinduló helyzethez állítsd a csigákat magasra (a fejed fölé), válaszd ki a súlyt, és fogd meg mindkét kezeddel a kábeleket.",
+  "Lépj előre a két csiga közötti képzeletbeli egyenes elé, és közben húzd össze a karod magad előtt. A törzsed derékból enyhén dőljön előre. Ez a kiinduló helyzet.",
+  "Enyhén hajlított könyökkel, hogy ne terheld a bicepsz ínját, tárd szét a karod oldalra (egyenesen mindkét irányba) egy széles ívben, amíg nyújtást nem érzel a mellkasodban. A mozgás e része alatt vegyél levegőt. Tipp: a mozgás során végig a karod és a törzsed maradjon mozdulatlan, csak a vállízület mozogjon.",
+  "Kifújva vidd vissza a karod a kiinduló helyzetbe. Ugyanazt az ívet használd, mint a súly leengedésekor.",
+  "Tartsd meg egy másodpercig a kiinduló helyzetben, és ismételd a mozdulatot az előírt ismétlésszámig."
+ ],
+ "cable-crunch": [
+  "Térdelj le egy felső csiga alá, amelyen kötélfogantyú van.",
+  "Fogd meg a kötelet, és húzd le, amíg a kezed az arcod mellé nem kerül.",
+  "Hajlítsd be kicsit a csípőd, és hagyd, hogy a súly megnyújtsa a derekad. Ez a kiinduló helyzet.",
+  "A csípőd maradjon a helyén, és hajolj előre a derekadnál a hasizmod megfeszítésével úgy, hogy a könyököd a combod közepe felé haladjon. Ennél a résznél lélegezz ki, és tartsd a feszítést egy másodpercig.",
+  "Belégzés közben lassan térj vissza a kiinduló helyzetbe. Tipp: A hasizmod végig maradjon feszes a mozdulat alatt. Ne válassz olyan nehéz súlyt, hogy a munka nagyját a derekad végezze.",
+  "Ismételd az ajánlott ismétlésszámig."
+ ],
+ "cable-curl": [
+  "Állj egyenes törzzsel, és fogd az alsó csigára akasztott kábeles rudat. Fogd vállszélességben, a könyököd tartsd a törzsed mellett. A tenyered felfelé nézzen (alsó fogás). Ez a kiinduló helyzet.",
+  "A felkarod tartsd mozdulatlanul, és kilégzéssel hajlítsd fel a súlyt a bicepszed megfeszítésével. Csak az alkarod mozogjon. Folytasd, amíg a bicepszed teljesen össze nem húzódik és a rúd vállmagasságba nem ér. Tartsd meg egy másodpercig, és szorítsd meg az izmot.",
+  "Belégzéssel lassan kezdd visszaengedni a rudat a kiinduló helyzetbe.",
+  "Ismételd az ajánlott ismétlésszámig."
+ ],
+ "cable-lateral-raise": [
+  "Állj két egymással szemben lévő alsó csiga közé, és tegyél magad mögé egy vízszintes padot (keresztben hozzád képest, úgy, hogy a pad keskeny vége legyen mögötted). Válaszd ki a súlyt mindkét csigán.",
+  "Most ülj le a mögötted lévő pad szélére, a lábfejed a térded előtt legyen.",
+  "Dőlj előre egyenes háttal, és támaszd a törzsed a combodra.",
+  "Kérj meg valakit, hogy adja oda a csigákra akasztott egykezes fogantyúkat. A súly kiválasztása után a bal oldali kábelt a jobb kezeddel, a jobb oldalit a bal kezeddel fogd meg. A kábelek a térded alatt fussanak, a karod legyen kinyújtva, tenyérrel egymás felé, enyhén hajlított könyökkel. Ez a kiinduló helyzet.",
+  "A karod tartását megtartva emeld oldalra a felkarod, amíg párhuzamos nem lesz a padlóval, vállmagasságban. A mozdulat közben fújd ki a levegőt, és tartsd meg az összehúzódást egy másodpercig.",
+  "Belégzés közben lassan engedd le a karod a kiinduló helyzetbe.",
+  "Ismételd az ajánlott ismétlésszámig. Tipp: a gyakorlat során végig tartsd a felkarod merőlegesen a törzsedre, a könyököd pedig rögzített helyzetben (10-30 fokos szögben)."
+ ],
+ "cable-rope-overhead-triceps-extension": [
+  "Akassz kötelet a csigagép alsó csigájára.",
+  "Fogd meg a kötelet mindkét kezeddel, és nyújtsd ki a karodat úgy, hogy a kezed közvetlenül a fejed fölött legyen, semleges fogással (tenyerek egymás felé). A könyököd legyen közel a fejedhez, a karod merőleges a padlóra, az ujjperceid a plafon felé nézzenek. Ez a kiinduló helyzet.",
+  "Mozdulatlan felkarral lassan engedd le a kötelet a fejed mögé. Közben vegyél levegőt, és állj meg, amikor a tricepszed teljesen megnyúlt.",
+  "Kilégzés közben a tricepszed megfeszítésével térj vissza a kiinduló helyzetbe.",
+  "Ismételd az előírt ismétlésszámig."
+ ],
+ "calf-raise": [
+  "Állítsd be a vádligép párnázott karját a magasságodhoz.",
+  "Helyezd a vállad a párnák alá, a lábujjaid nézzenek előre (vagy használd a fejezet elején leírt másik két állás valamelyikét). A talpad elülső része legyen stabilan a blokkon, a sarkad lógjon le róla. Nyomd fel a kart a csípőd és a térded kinyújtásával, amíg a törzsed teljesen fel nem egyenesedik. A térded maradjon enyhén hajlítva, soha ne zárd. A lábujjaid nézhetnek előre, kifelé vagy befelé, ahogy a fejezet elején le van írva. Ez a kiinduló helyzet.",
+  "Kilégzés közben emeld a sarkad a lehető legmagasabbra a bokád nyújtásával és a vádlid megfeszítésével. A térded végig maradjon mozdulatlan, ne hajlítsd be. Tartsd meg a feszített helyzetet egy másodpercig, mielőtt visszaengedsz.",
+  "Belégzés közben lassan térj vissza a kiinduló helyzetbe: engedd le a sarkad, és hajlítsd a bokád, amíg a vádlid meg nem nyúlik.",
+  "Ismételd az ajánlott ismétlésszámig."
+ ],
+ "chest-press-machine": [
+  "Állíts be megfelelő súlyt, és igazítsd az ülést a magasságodhoz. A mozgás elején a fogantyúk a mellizmod alsó vagy középső részénél legyenek.",
+  "A mellkasod és a fejed legyen felemelve, a lapockáid hátrahúzva. Ez a kiinduló helyzet.",
+  "Nyomd előre a fogantyúkat a könyököd kinyújtásával.",
+  "Fent tarts egy rövid szünetet, majd engedd vissza a súlyt a kiinduló helyzet fölé. Tartsd feszülésben az izmokat: ne engedd le teljesen a súlyt, amíg be nem fejezted a sorozatot."
+ ],
+ "chin-ups": [
+  "Fogd meg a húzódzkodó rudat alsó fogással (tenyér a törzsed felé), vállszélességnél szűkebben.",
+  "Miközben nyújtott karral tartod a rudat a választott fogásszélességgel, tartsd a törzsed a lehető legegyenesebben, homorítsd enyhén a derekad, és told ki a mellkasod. Ez a kiinduló helyzet. Tipp: minél egyenesebb a törzsed, annál jobban dolgozik a bicepsz és annál kevésbé a hát.",
+  "Kilégzéssel húzd fel magad, amíg a fejed nagyjából a rúd magasságába nem ér. Koncentrálj arra, hogy a bicepszeddel végezd a mozdulatot. A könyököd tartsd a tested mellett. Tipp: a felsőtest mozgás közben is maradjon stabil, csak a karod dolgozzon. Az alkar csak tartsa a rudat.",
+  "Egy másodpercig feszítsd a bicepszed az összehúzott helyzetben, majd lassan engedd vissza magad a kiinduló helyzetbe, amíg a karod teljesen ki nem nyúlik. Ennél a résznél lélegezz be.",
+  "Ismételd a mozdulatot az előírt ismétlésszámig."
+ ],
+ "close-grip-bench-press": [
+  "Feküdj hanyatt egy vízszintes padon. Szűk fogással (nagyjából vállszélességben) vedd le a rudat az állványról, és tartsd egyenesen magad fölött nyújtott karral. Ez a kiinduló helyzet.",
+  "Belégzés közben lassan engedd le a rudat, amíg a mellkasod közepén nem érzed. Tipp: a sima fekvenyomással ellentétben a könyököd végig tartsd a törzsed mellett, hogy a tricepszed minél jobban dolgozzon.",
+  "Egy másodperc szünet után kifújva vidd vissza a rudat a kiinduló helyzetbe, a tricepszeddel nyomva. Fent nyújtsd ki a karod, tartsd meg egy másodpercig, majd kezdd újra lassan leengedni. Tipp: a leengedés legalább kétszer annyi ideig tartson, mint az emelés.",
+  "Ismételd a mozdulatot az előírt ismétlésszámig.",
+  "Ha végeztél, tedd vissza a rudat az állványra."
+ ],
+ "close-grip-front-lat-pulldown": [
+  "Ülj le a lehúzógépre, a felső csigára széles rúd legyen akasztva. Állítsd be a térdpárnát a magasságodhoz. Ez megakadályozza, hogy a súly felemeljen.",
+  "Fogd meg a rudat előre néző tenyérrel, az előírt fogásszélességgel. A fogásról: széles fogásnál a kezed vállszélességnél szélesebben van, közepesnél vállszélességben, szűk fogásnál pedig annál keskenyebben.",
+  "Mindkét karod legyen kinyújtva magad előtt, a rudat a választott fogással tartva. Dőlj hátra kb. 30 fokot, homorítsd a derekadat és told ki a mellkasodat. Ez a kiinduló helyzet.",
+  "Kilégzés közben húzd le a rudat, amíg a mellkasod felső részéhez nem ér, a vállad és a felkarod lefelé és hátra húzva. Tipp: a teljes összehúzódásnál koncentrálj a hátizmok megfeszítésére. A felsőtested maradjon mozdulatlan (csak a karod mozog). Az alkarod csak tartsa a rudat, ne vele húzd le.",
+  "Egy másodperc összehúzódás után, a lapockáidat összeszorítva, lassan engedd vissza a rudat a kiinduló helyzetbe, amíg a karod teljesen ki nem nyúlik és a széles hátizmod teljesen meg nem nyúlik. Közben vegyél levegőt.",
+  "Ismételd a mozdulatot az előírt ismétlésszámig."
+ ],
+ "concentration-curl": [
+  "Ülj le egy egyenes padra, egy kézisúlyzóval magad előtt a lábad között. A lábad legyen terpeszben, a térded hajlítva, a talpad a padlón.",
+  "A jobb kezeddel vedd fel a súlyzót. A jobb felkarod hátsó részét támaszd a jobb combod belső oldalára. Fordítsd a tenyered előre, a combodtól elfelé. Tipp: a karod legyen nyújtva, a súlyzó a padló fölött. Ez a kiinduló helyzet.",
+  "A felkarod tartsd mozdulatlanul, és kilégzéssel hajlítsd előre a súlyt a bicepszed megfeszítésével. Csak az alkarod mozogjon. Folytasd, amíg a bicepszed teljesen össze nem húzódik és a súlyzó vállmagasságba nem ér. Tipp: a mozdulat tetején a kisujjad legyen magasabban, mint a hüvelykujjad. Így jó lesz az összehúzódás. Tartsd meg egy másodpercig, és szorítsd meg a bicepszed.",
+  "Belégzéssel lassan kezdd visszaengedni a súlyzót a kiinduló helyzetbe. Vigyázat: soha ne lendíts.",
+  "Ismételd az ajánlott ismétlésszámig. Utána ismételd a bal karoddal."
+ ],
+ "crunches": [
+  "Feküdj hanyatt, a talpad legyen a földön, vagy pihenjen egy padon, a térded 90 fokos szögben hajlítva. Ha a lábad a padon van, tedd őket 7-10 cm-re egymástól, és fordítsd befelé a lábujjaidat, hogy összeérjenek.",
+  "Most tedd a kezed lazán a fejed két oldalára, a könyököd legyen behúzva. Tipp: Ne kulcsold össze az ujjaidat a fejed mögött.",
+  "Nyomd a derekadat a földbe, hogy jobban elszigeteld a hasizmaidat, és kezdd el felgördíteni a vállad a földről.",
+  "Továbbra is nyomd le a derekadat, amennyire csak tudod, miközben megfeszíted a hasizmod és kilélegzel. A vállad csak kb. 10 cm-re emelkedjen fel, a derekad maradjon a földön. A mozdulat tetején feszítsd meg erősen a hasizmod, és tartsd egy másodpercig. Tipp: Lassú, kontrollált mozdulatra figyelj, ne csalj lendülettel.",
+  "Az egy másodperces feszítés után belégzés közben lassan engedj vissza a kiinduló helyzetbe.",
+  "Ismételd az ajánlott ismétlésszámig."
+ ],
+ "deadlift": [
+  "Állj egy megpakolt rúd elé.",
+  "A hátad a lehető legegyenesebben tartva hajlítsd be a térded, hajolj előre, és fogd meg a rudat közepes (vállszélességű) felső fogással. Ez a gyakorlat kiinduló helyzete. Tipp: ha nehéz így tartani a rudat, használj vegyes fogást vagy csuklóhevedert.",
+  "A rudat tartva kezdd az emelést a lábaddal tolva, miközben a törzsed egyenes helyzetbe emeled, kilégzéssel. Felső helyzetben told ki a mellkasod, és feszítsd meg a hátad, a lapockáidat hátrahúzva. Gondolj arra, hogyan állnak a katonák vigyázzban.",
+  "Térj vissza a kiinduló helyzetbe: hajlítsd a térded, és közben dőlj előre csípőből, egyenes háttal. Amikor a rúdon lévő tárcsák a padlóhoz érnek, a kiinduló helyzetben vagy, és jöhet a következő ismétlés.",
+  "Végezd el a programban előírt ismétlésszámot."
+ ],
+ "decline-barbell-bench-press": [
+  "Rögzítsd a lábad a negatív pad végén, és lassan feküdj le a padra.",
+  "Közepes fogással (amelynél a mozdulat közepén az alkarod és a felkarod 90 fokos szöget zár be) emeld le a rudat az állványról, és tartsd egyenesen magad fölött zárt karral. A karod merőleges a talajra. Ez a kiinduló helyzet. Tipp: A rotátorköpeny védelmében jobb, ha egy segítő segít leemelni a rudat az állványról.",
+  "Belégzés közben lassan engedd le a rudat, amíg az alsó mellkasodon nem érzed.",
+  "Egy másodperc szünet után kilégzés közben told vissza a rudat a kiinduló helyzetbe a mellizmoddal. Zárd a karod, és szorítsd meg a mellkasod a feszített helyzetben, tartsd egy másodpercig, majd kezdd újra lassan leengedni. Tipp: A leengedés tartson legalább kétszer annyi ideig, mint a felnyomás.",
+  "Ismételd a mozdulatot az előírt ismétlésszámig.",
+  "Ha végeztél, tedd vissza a rudat az állványra."
+ ],
+ "decline-crunch": [
+  "Rögzítsd a lábadat a negatív pad végén, és feküdj le.",
+  "Most tedd a kezedet lazán a fejed két oldalára, a könyököd befelé nézzen. Tipp: ne kulcsold össze az ujjaidat a tarkódon.",
+  "A derekadat a padba nyomva, hogy jobban izoláld a hasizmokat, kezdd el felgördíteni a válladat a padról.",
+  "Nyomd a derekadat a padba, amilyen erősen csak tudod, közben húzd össze a hasizmodat és fújd ki a levegőt. A vállad csak kb. 10 cm-re emelkedjen fel a padról, a derekad maradjon a padon. A mozdulat tetején erősen feszítsd meg a hasizmodat, és tartsd meg egy másodpercig. Tipp: lassan és kontrolláltan dolgozz, ne csalj lendülettel.",
+  "Az egy másodperces összehúzódás után belégzés közben lassan engedd vissza magad a kiinduló helyzetbe.",
+  "Ismételd az előírt ismétlésszámig."
+ ],
+ "dips-chest": [
+  "Ehhez a gyakorlathoz párhuzamos korlátra lesz szükséged. A kiinduló helyzethez tartsd meg magad a korlát fölött nyújtott karral (zárt könyökkel).",
+  "Belégzés közben lassan engedd le magad úgy, hogy a törzsed kb. 30 fokban előredől, a könyököd pedig kissé kifelé áll, amíg enyhe nyújtást nem érzel a mellkasodban.",
+  "Amikor érzed a nyújtást, kifújva told vissza magad a mellizmaiddal a kiinduló helyzetbe. Tipp: a mozgás tetején egy másodpercre feszítsd meg a mellkasod.",
+  "Ismételd a mozdulatot az előírt ismétlésszámig."
+ ],
+ "dumbbell-bench-press": [
+  "Feküdj le egy vízszintes padra, mindkét kezedben egy-egy kézisúlyzóval, amelyek a combodon pihennek. A tenyereid egymás felé néznek.",
+  "Ezután a combod segítségével emeld fel a súlyzókat egyenként, hogy vállszélességben tarthasd őket magad előtt.",
+  "Vállszélességben fordítsd előre a csuklód, hogy a tenyered tőled elfelé nézzen. A súlyzók közvetlenül a mellkasod mellett legyenek, a felkarod és az alkarod 90 fokos szöget zárjon be. Mindig tartsd teljes kontroll alatt a súlyzókat. Ez a kiinduló helyzet.",
+  "Ezután kifújva nyomd fel a súlyzókat a mellizmaiddal. Fent nyújtsd ki a karod és feszítsd meg a mellkasod, tartsd meg egy másodpercig, majd kezdd lassan leengedni. Tipp: ideális esetben a leengedés nagyjából kétszer annyi ideig tart, mint az emelés.",
+  "Ismételd a mozdulatot annyiszor, ahányat az edzéstervednek megfelelő ismétlésszám előír."
+ ],
+ "dumbbell-curl": [
+  "Állj egyenesen, egy-egy kézisúlyzóval a kezedben, nyújtott karral. A könyököd tartsd a törzsed mellett, és fordítsd a tenyered előre. Ez a kiinduló helyzet.",
+  "A felkarod tartsd mozdulatlanul, fújd ki a levegőt, és hajlítsd fel a súlyokat a bicepszed megfeszítésével. Emeld addig, amíg a bicepszed teljesen össze nem húzódik, és a súlyzók vállmagasságba nem érnek. Tartsd meg röviden, és szorítsd meg a bicepszed.",
+  "Ezután lélegezz be, és lassan kezdd visszaengedni a súlyzókat a kiinduló helyzetbe.",
+  "Ismételd az ajánlott ismétlésszámig."
+ ],
+ "dumbbell-flyes": [
+  "Feküdj le egy vízszintes padra, mindkét kezedben egy-egy kézisúlyzóval, amelyek a combodon pihennek. A tenyered egymás felé néz.",
+  "Ezután a combod segítségével emeld fel a súlyzókat egyenként, és tartsd őket magad előtt vállszélességben, egymás felé néző tenyérrel. Nyomd fel a súlyzókat, mintha nyomnád őket, de állj meg közvetlenül a karod zárása előtt. Ez a kiinduló helyzet.",
+  "Kicsit hajlított könyökkel, hogy ne terheld a bicepsz inát, engedd le a karod oldalra egy széles ívben, amíg nyújtást nem érzel a mellkasodban. Ennél a résznél lélegezz be. Tipp: A mozdulat alatt a karod maradjon rögzített, a mozgás csak a vállízületben történjen.",
+  "Vidd vissza a karod a kiinduló helyzetbe a mellizmod megszorításával, kilégzés közben. Tipp: Ugyanazt az ívet használd, mint leengedéskor.",
+  "Tartsd egy másodpercig a feszített helyzetben, és ismételd az előírt ismétlésszámig."
+ ],
+ "dumbbell-row": [
+  "Válassz egy egyenes padot, és tegyél egy-egy kézisúlyzót mindkét oldalára.",
+  "Tedd a jobb lábad a pad végére, dőlj előre csípőből, amíg a felsőtested párhuzamos nem lesz a padlóval, és a jobb kezeddel támaszkodj a pad másik végére.",
+  "A bal kezeddel vedd fel a súlyzót a padlóról, és tartsd, a derekad egyenesen tartva. A tenyered a törzsed felé nézzen. Ez a kiinduló helyzet.",
+  "Húzd a súlyt egyenesen felfelé a mellkasod oldalához, a felkarod a tested mellett, a törzsed mozdulatlanul tartva. Ennél a lépésnél fújd ki a levegőt. Tipp: a teljes összehúzódásnál koncentrálj a hátizmok megfeszítésére. Figyelj, hogy a hátizmok dolgozzanak, ne a karod. A felsőtest maradjon mozdulatlan, csak a karod mozogjon. Az alkar csak tartsa a súlyzót, ne vele próbáld felhúzni.",
+  "Engedd le a súlyt egyenesen a kiinduló helyzetbe. Ennél a lépésnél lélegezz be.",
+  "Ismételd a mozdulatot az előírt ismétlésszámig.",
+  "Válts oldalt, és ismételd a másik karoddal."
+ ],
+ "dumbbell-shoulder-press": [
+  "Mindkét kezedben egy-egy kézisúlyzóval ülj le egy katonai nyomáshoz való vagy állítható, háttámlás padra. Állítsd a súlyzókat függőlegesen a combodra.",
+  "Most emeld a súlyzókat egyenként vállmagasságba, a combod segítségével lendítve őket a helyükre.",
+  "Fordítsd el a csuklód úgy, hogy a tenyered előre nézzen. Ez a kiinduló helyzet.",
+  "Most fújd ki a levegőt, és nyomd felfelé a súlyzókat, amíg fent össze nem érnek.",
+  "Ezután fent egy rövid szünet után belégzés közben lassan engedd vissza a súlyt a kiinduló helyzetbe.",
+  "Ismételd az ajánlott ismétlésszámig."
+ ],
+ "dumbbell-shrug": [
+  "Állj egyenesen, egy-egy kézisúlyzóval a kezedben (tenyér a törzsed felé), a karod oldalt kinyújtva.",
+  "Kilégzés közben emeld meg a súlyzókat a vállad lehető legmagasabbra húzásával. Fent tartsd meg egy másodpercig. Tipp: a karod végig maradjon nyújtva. Ne segíts a bicepszeddel. Csak a vállad mozogjon fel-le.",
+  "Engedd vissza a súlyzókat a kiinduló helyzetbe.",
+  "Ismételd az előírt ismétlésszámig."
+ ],
+ "dumbbell-step-ups": [
+  "Állj egyenesen, egy-egy kézisúlyzóval a kezedben (tenyér a lábad felé).",
+  "Tedd a jobb lábadat a megemelt felületre. Lépj fel a jobb csípőd és térded nyújtásával. Főleg a sarkaddal told fel a tested, majd a bal lábadat is tedd fel. Fújd ki a levegőt, miközben kifejted az erőt a fellépéshez.",
+  "Belégzés közben lépj le a bal lábaddal, a jobb csípődet és térdedet hajlítva. Térj vissza az eredeti álló helyzetbe úgy, hogy a jobb lábadat a bal mellé teszed.",
+  "Ismételd a jobb lábaddal az előírt ismétlésszámig, majd csináld meg a bal lábaddal is."
+ ],
+ "ez-bar-curl": [
+  "Állj egyenesen, és fogd az EZ rudat a széles külső fogásnál. A tenyered előre néz, a rúd alakja miatt enyhén befelé fordulva. A könyöködet tartsd a törzsed mellett. Ez a kiinduló helyzet.",
+  "Mozdulatlan felkarral fújd ki a levegőt, és hajlítsd fel a súlyt a bicepszed összehúzásával. Csak az alkarod mozogjon.",
+  "Emeld tovább, amíg a bicepszed teljesen össze nem húzódik és a rúd vállmagasságba nem ér. Fent tartsd meg egy pillanatra, és szorítsd meg a bicepszedet.",
+  "Ezután vegyél levegőt, és lassan engedd vissza a rudat a kiinduló helyzetbe.",
+  "Ismételd az előírt ismétlésszámig."
+ ],
+ "face-pull": [
+  "Állj szemben egy felső csigával, amelyre kötél vagy dupla fogantyú van akasztva, és húzd a súlyt egyenesen az arcod felé, közben széthúzva a kezed. A felkarod maradjon párhuzamos a talajjal."
+ ],
+ "farmers-walk": [
+  "A farmersétához többféle eszközt használhatsz. Ha ezek nincsenek, nehéz kézisúlyzókkal vagy rövid rudakkal is végezheted. Kezdd úgy, hogy az eszközök közé állsz.",
+  "Miután megfogtad a fogantyúkat, emeld fel őket a sarkadon keresztül nyomva, egyenes háttal és fent tartott fejjel.",
+  "Sétálj rövid, gyors lépésekkel, és ne felejts el lélegezni. Tedd meg a kijelölt távot, általában 50-100 lábat (kb. 15-30 m), amilyen gyorsan csak tudod."
+ ],
+ "flat-bench-lying-leg-raise": [
+  "Feküdj hanyatt egy vízszintes padon, a lábadat nyújtsd ki előre a pad végén túl.",
+  "Tedd a kezedet a farizmod alá tenyérrel lefelé, vagy oldalt kapaszkodj a padba. Ez a kiinduló helyzet.",
+  "Nyújtott, lehetőleg egyenes lábbal, enyhén hajlított, de rögzített térddel emeld a lábadat, amíg 90 fokos szöget nem zár be a padlóval. Közben fújd ki a levegőt, és fent tartsd meg egy másodpercig.",
+  "Most belégzés közben lassan engedd vissza a lábadat a kiinduló helyzetbe."
+ ],
+ "front-barbell-squat": [
+  "Ezt a gyakorlatot biztonsági okokból legjobb guggolóállványban végezni. Először tedd a rudat az állványra a magasságodnak legjobban megfelelő szintre. Ha megvan a magasság és megpakoltad a rudat, vidd a karod a rúd alá, a könyököd legyen magasan, a felkarod kicsit a talajjal párhuzamos fölött. Fektesd a rudat a vállad elejére, és keresztbe tett karral fogd meg a rudat a teljes kontrollért.",
+  "Emeld le a rudat az állványról úgy, hogy először a lábaddal nyomsz, és közben kiegyenesíted a törzsed.",
+  "Lépj hátra az állványtól, és állj közepes, vállszélességű állásba, a lábujjaid kicsit kifelé nézzenek. A fejed végig legyen fent, mert ha lenézel, elveszítheted az egyensúlyod, és a hátad maradjon egyenes. Ez a kiinduló helyzet. (Megjegyzés: Itt a fent leírt közepes állást használjuk, ami az általános fejlődést célozza; de választhatod a lábhelyzetről szóló részben leírt három állás bármelyikét.)",
+  "Kezdd el lassan leengedni a rudat a térded hajlításával, egyenes testtartással és fent tartott fejjel. Menj le addig, amíg a comb és a vádli közti szög kicsit 90 fok alá nem csökken (ekkor a combod a talajjal párhuzamos alatt van). Ennél a résznél lélegezz be. Tipp: Ha helyesen végzed, a térded eleje egy képzeletbeli egyenest alkot a lábujjaiddal, amely merőleges a talajra. Ha a térded túlmegy ezen a vonalon (túl a lábujjaidon), akkor feleslegesen terheled a térded, és helytelenül végzed a gyakorlatot.",
+  "Kilégzés közben kezdd felemelni a rudat úgy, hogy főleg a talpad közepével tolod el a talajt, miközben újra kinyújtod a lábad, és visszatérsz a kiinduló helyzetbe.",
+  "Ismételd az ajánlott ismétlésszámig."
+ ],
+ "front-raise": [
+  "Fogj két kézisúlyzót, és állj egyenes törzzsel, a súlyzókat nyújtott karral a combod előtt tartva, tenyérrel a combod felé. Ez a kiinduló helyzet.",
+  "A törzsed mozdulatlanul tartva (lendítés nélkül) emeld előre a bal súlyzót enyhén hajlított könyökkel, a tenyered végig lefelé nézzen. Emeld, amíg a karod kicsit a vízszintes fölé nem ér. A mozgás e része alatt fújd ki a levegőt, és fent tarts egy másodperc szünetet. A szünet után vegyél levegőt.",
+  "Most lassan engedd vissza a súlyzót a kiinduló helyzetbe, és közben emeld fel a jobb súlyzót.",
+  "Folytasd felváltva, amíg mindkét karral meg nem csináltad az ajánlott ismétlésszámot."
+ ],
+ "glute-ham-raise": [
+  "Először állítsd be a gépet a testedhez. Feküdj hasra, és támaszd a talpad a lábtartó lapnak a hengerek között. A térded közvetlenül a párna mögött legyen.",
+  "Kezdd a mozdulat alsó pontjáról. Tartsd a hátad homorítva, és indítsd a mozdulatot a térded hajlításával, közben nyomd a lábujjaidat a lábtartó lapba. A felsőtested maradjon egyenes, és folytasd, amíg függőleges nem leszel.",
+  "Térj vissza a kiinduló helyzetbe, kontrolláltan ereszkedve."
+ ],
+ "goblet-squat": [
+  "Állj egyenesen, és tarts egy könnyű kettlebellt a fogantyújánál fogva a mellkasod közelében. Ez a kiinduló helyzet.",
+  "Guggolj le a lábad közé, amíg a combhajlítóid a vádlidra nem érnek. A mellkasod és a fejed legyen fent, a hátad egyenes.",
+  "Az alsó helyzetben állj meg egy pillanatra, és a könyököddel told kifelé a térded. Térj vissza a kiinduló helyzetbe, és ismételd 10-20-szor."
+ ],
+ "good-morning": [
+  "Kezdd egy vállmagasságban állványra tett rúddal. Fektesd a rudat a vállad hátsó részére, mint power guggolásnál, ne a vállad tetejére. A hátad legyen feszes, a lapockáid összehúzva, a térded kicsit hajlítva. Lépj hátra az állványtól.",
+  "Kezdj el a csípődnél hajolni, told hátra a csípőd, miközben majdnem vízszintesig előrehajolsz. Tartsd a hátad homorítva, a nyaki gerinced pedig megfelelő helyzetben.",
+  "Fordítsd meg a mozdulatot a csípőd kinyújtásával a farizmod és a combhajlítóid segítségével. Folytasd, amíg vissza nem érsz a kiinduló helyzetbe."
+ ],
+ "hack-squat": [
+  "Támaszd a hátad a gép háttámlájához, és akaszd be a vállad a vállpárnák alá.",
+  "Helyezd a lábad a platformra közepes, vállszélességű állásban, a lábujjaid kicsit kifelé nézzenek. Tipp: A fejed végig legyen fent, a hátad végig a támlán.",
+  "Fogd meg a gép oldalsó fogantyúit, és oldd ki a biztonsági karokat (a legtöbb gépen ezt úgy teszed, hogy az oldalsó fogantyúkat előre néző helyzetből átlós helyzetbe fordítod).",
+  "Most nyújtsd ki a lábad, de ne zárd a térded. Ez a kiinduló helyzet. (Megjegyzés: Itt a fent leírt közepes állást használjuk, ami az általános fejlődést célozza; de választhatod a lábhelyzetről szóló részben leírt három állás bármelyikét.)",
+  "Kezdd el lassan leengedni a terhet a térded hajlításával, egyenes testtartással és fent tartott fejjel (a hátad végig a támlán). Menj le addig, amíg a comb és a vádli közti szög kicsit 90 fok alá nem csökken (ekkor a combod a talajjal párhuzamos alatt van). Ennél a résznél lélegezz be. Tipp: Ha helyesen végzed, a térded eleje egy képzeletbeli egyenest alkot a lábujjaiddal, amely merőleges a talajra. Ha a térded túlmegy ezen a vonalon (túl a lábujjaidon), akkor feleslegesen terheled a térded, és helytelenül végzed a gyakorlatot.",
+  "Kilégzés közben kezdd felemelni a terhet úgy, hogy főleg a sarkaddal tolod el a talajt, miközben újra kinyújtod a lábad, és visszatérsz a kiinduló helyzetbe.",
+  "Ismételd az ajánlott ismétlésszámig."
+ ],
+ "hammer-curl": [
+  "Állj egyenes törzzsel, egy-egy kézisúlyzóval a kezedben, nyújtott karral. A könyököd legyen a törzsed mellett.",
+  "A tenyered a törzsed felé nézzen. Ez a kiinduló helyzet.",
+  "A felkarod tartsd mozdulatlanul, fújd ki a levegőt, és hajlítsd előre a súlyt a bicepszed megfeszítésével. Emeld addig, amíg a bicepszed teljesen össze nem húzódik, és a súlyzó vállmagasságba nem ér. Tartsd meg egy pillanatra, és szorítsd meg a bicepszed. Tipp: a könyököd maradjon mozdulatlan, csak az alkarod mozogjon.",
+  "A rövid szünet után lélegezz be, és lassan kezdd visszaengedni a súlyzókat a kiinduló helyzetbe.",
+  "Ismételd az ajánlott ismétlésszámig."
+ ],
+ "hanging-leg-raise": [
+  "Lógj a húzódzkodórúdon kinyújtott karral magad fölött, széles vagy közepes fogással. A lábad egyenesen lóg lefelé, a medencéd kicsit hátrabillentve. Ez a kiinduló helyzet.",
+  "Emeld a lábad, amíg a törzsed és a lábad 90 fokos szöget nem zár be. A mozdulat közben lélegezz ki, és tartsd a feszítést kb. egy másodpercig.",
+  "Belégzés közben lassan térj vissza a kiinduló helyzetbe.",
+  "Ismételd az ajánlott ismétlésszámig."
+ ],
+ "hip-thrust": [
+  "Ülj le a földre úgy, hogy közvetlenül mögötted legyen egy pad. A megpakolt rúd legyen a lábadon. Vastag rúd vagy párna a rúdon sokat csökkenthet a gyakorlat okozta kellemetlenségen.",
+  "Gördítsd a rudat közvetlenül a csípőd fölé, és dőlj hátra a padnak úgy, hogy a lapockáid a pad széle közelében legyenek.",
+  "Kezdd a mozdulatot a talpadon keresztül nyomva, és told a csípőd függőlegesen felfelé a rúddal együtt. A súlyt a lapockáid és a talpad tartják. Nyújtózz ki, amennyire csak tudsz, majd fordítsd meg a mozdulatot, és térj vissza a kiinduló helyzetbe."
+ ],
+ "incline-bench-press": [
+  "Feküdj hanyatt egy ferde padon. Közepes szélességű fogással (amelynél a mozgás közepén az alkar és a felkar 90 fokos szöget zár be) vedd le a rudat az állványról, és tartsd egyenesen magad fölött nyújtott karral. Ez a kiinduló helyzet.",
+  "Belégzés közben lassan engedd le a rudat, amíg a mellkasod felső részén nem érzed.",
+  "Egy másodperc szünet után kifújva vidd vissza a rudat a kiinduló helyzetbe, a mellizmaiddal nyomva. Fent nyújtsd ki a karod, feszítsd meg a mellkasod, tartsd meg egy másodpercig, majd kezdd újra lassan leengedni. Tipp: a leengedés legalább kétszer annyi ideig tartson, mint az emelés.",
+  "Ismételd a mozdulatot az előírt ismétlésszámig.",
+  "Ha végeztél, tedd vissza a rudat az állványra."
+ ],
+ "incline-dumbbell-curl": [
+  "Ülj le, és dőlj hátra egy ferde padon, egy-egy kézisúlyzóval a kezedben, nyújtott karral. A könyököd tartsd a törzsed mellett, és fordítsd a tenyered előre. Ez a kiinduló helyzet.",
+  "A felkarod tartsd mozdulatlanul, és kilégzéssel hajlítsd előre a súlyokat a bicepszed megfeszítésével. Csak az alkarod mozogjon. Folytasd, amíg a bicepszed teljesen össze nem húzódik és a súlyzók vállmagasságba nem érnek. Tartsd meg egy másodpercig.",
+  "Belégzéssel lassan kezdd visszaengedni a súlyzókat a kiinduló helyzetbe.",
+  "Ismételd az ajánlott ismétlésszámig."
+ ],
+ "incline-dumbbell-flyes": [
+  "Fogj egy-egy kézisúlyzót mindkét kezedbe, és feküdj egy legfeljebb 30 fokos ferde padra.",
+  "Nyújtsd ki a karodat magad fölé enyhén hajlított könyökkel.",
+  "Most fordítsd el a csuklódat úgy, hogy a tenyered feléd nézzen. Tipp: a kisujjaid legyenek egymás mellett. Ez a kiinduló helyzet.",
+  "Belégzés közben lassan engedd oldalra a karodat, nyújtva tartva, és közben fordítsd a csuklódat, amíg a tenyereid egymás felé nem néznek. Tipp: a mozdulat végén a karod oldalt van, a tenyered a plafon felé néz.",
+  "Kilégzés közben hozd vissza a súlyzókat a kiinduló helyzetbe fordított mozdulattal, a kezedet úgy fordítva, hogy a kisujjaid újra egymás mellett legyenek. Tipp: a mozgás csak a vállízületben és a csuklóban történik. A könyök nem mozog.",
+  "Ismételd az előírt ismétlésszámig."
+ ],
+ "incline-dumbbell-press": [
+  "Feküdj hanyatt egy ferde padon, mindkét kezedben egy-egy kézisúlyzóval a combodon. A tenyereid egymás felé néznek.",
+  "Ezután a combod segítségével emeld fel a súlyzókat egyenként, hogy vállszélességben tarthasd őket.",
+  "Amikor vállszélességbe emelted a súlyzókat, fordítsd előre a csuklód, hogy a tenyered tőled elfelé nézzen. Ez a kiinduló helyzet.",
+  "Mindig tartsd teljes kontroll alatt a súlyzókat. Ezután fújd ki a levegőt, és nyomd fel a súlyzókat a mellizmaiddal.",
+  "Fent nyújtsd ki a karod, tartsd meg egy másodpercig, majd kezdd lassan leengedni a súlyt. Tipp: ideális esetben a leengedés nagyjából kétszer annyi ideig tart, mint az emelés.",
+  "Ismételd a mozdulatot az előírt ismétlésszámig.",
+  "Ha végeztél, engedd vissza a súlyzókat a combodra, majd a földre. Így a legbiztonságosabb letenni őket."
+ ],
+ "inverted-row": [
+  "Tegyél egy rudat az állványba kb. derékmagasságban. Smith-gépet is használhatsz.",
+  "Fogd meg a rudat vállszélességnél szélesebben, és helyezkedj el alatta függve. A tested legyen egyenes, a sarkad a földön, a karod teljesen kinyújtva. Ez a kiinduló helyzet.",
+  "Hajlítsd be a könyöködet, és húzd a mellkasodat a rúd felé. Közben húzd hátra a lapockáidat.",
+  "A mozdulat tetején állj meg egy pillanatra, majd térj vissza a kiinduló helyzetbe.",
+  "Ismételd a kívánt ismétlésszámig."
+ ],
+ "lat-pulldown": [
+  "Ülj le a lehúzógépre, amelynek felső csigájára széles rúd van akasztva. Állítsd be a combtámaszt a magasságodhoz. Ez megakadályozza, hogy a súly felemeljen az ülésből.",
+  "Fogd meg a rudat az előírt fogással, tenyérrel előre. Megjegyzés a fogásokról: széles fogásnál a kezeid vállszélességnél szélesebben vannak, közepesnél vállszélességben, szűk fogásnál pedig vállszélességnél szűkebben.",
+  "Miközben mindkét karod nyújtva tartja előtted a rudat a választott fogásszélességgel, dönts hátra a törzsed nagyjából 30 fokkal, homorítsd enyhén a derekad, és told ki a mellkasod. Ez a kiinduló helyzet.",
+  "Kilégzéssel húzd le a rudat, amíg hozzá nem ér a mellkasod felső részéhez, a vállad és a felkarod lefelé és hátra húzva. Tipp: a teljes összehúzódásnál koncentrálj a hátizmok megfeszítésére. A felsőtest maradjon mozdulatlan, csak a karod mozogjon. Az alkar csak tartsa a rudat, ne vele próbáld lehúzni.",
+  "Tarts egy másodpercig az összehúzott helyzetben, összeszorítva a lapockáidat, majd lassan engedd vissza a rudat a kiinduló helyzetbe, amíg a karod teljesen ki nem nyúlik és a széles hátizmod teljesen meg nem nyúlik. Ennél a résznél lélegezz be.",
+  "Ismételd a mozdulatot az előírt ismétlésszámig."
+ ],
+ "lateral-raise": [
+  "Fogj két kézisúlyzót, és állj egyenes törzzsel, a súlyzókat nyújtott karral a tested mellett tartva, tenyérrel befelé. Ez a kiinduló helyzet.",
+  "A törzsed mozdulatlanul tartva (lendítés nélkül) emeld oldalra a súlyzókat enyhén hajlított könyökkel, a kezed kissé előre döntve, mintha vizet töltenél egy pohárba. Emeld, amíg a karod párhuzamos nem lesz a padlóval. A mozdulat közben fújd ki a levegőt, és fent tarts egy másodperc szünetet.",
+  "Belégzés közben lassan engedd vissza a súlyzókat a kiinduló helyzetbe.",
+  "Ismételd az ajánlott ismétlésszámig."
+ ],
+ "leg-curl": [
+  "Állítsd be a gép karját a magasságodhoz, és feküdj hasra a lábhajlító gépen úgy, hogy a kar párnája a lábad hátsó részén legyen (néhány centivel a vádlid alatt). Tipp: lehetőleg ferde lábhajlító gépet használj egyenes helyett, mert a ferde helyzet jobban bevonja a combhajlítókat.",
+  "A törzsed tartsd laposan a padon, figyelj, hogy a lábad teljesen nyújtva legyen, és fogd meg a gép oldalsó fogantyúit. A lábujjaid nézzenek egyenesen (vagy használd a lábhelyzetekről szóló részben leírt másik két tartás egyikét). Ez a kiinduló helyzet.",
+  "Kilégzéssel hajlítsd fel a lábad, amennyire tudod, anélkül hogy a combod felemelnéd a párnáról. Ha elérted a teljes összehúzódást, tartsd meg egy másodpercig.",
+  "Belégzéssel engedd vissza a lábad a kiinduló helyzetbe. Ismételd az ajánlott ismétlésszámig."
+ ],
+ "leg-extension": [
+  "Ehhez a gyakorlathoz lábnyújtó gép kell. Válaszd ki a súlyt, és ülj le a gépre úgy, hogy a lábad a párna alatt legyen (lábfej előre), a kezeddel pedig fogd az oldalsó fogantyúkat. Ez a kiinduló helyzet. Tipp: állítsd be a párnát úgy, hogy a lábszárad alsó részén feküdjön (kicsivel a lábfejed fölött). Figyelj arra is, hogy a lábszárad és a combod 90 fokos szöget zárjon be. Ha a szög 90 foknál kisebb, a térded a lábujjaid előtt van, ami túlterheli a térdízületet. Ha a gép így van kialakítva, keress másikat, vagy figyelj, hogy végrehajtás közben megállj, amikor eléred a 90 fokot.",
+  "A négyfejű combizommal nyújtsd ki a lábad teljesen, kilégzéssel. A tested többi része maradjon mozdulatlanul az ülésen. Tartsd meg egy másodpercig az összehúzott helyzetben.",
+  "Belégzéssel lassan engedd vissza a súlyt a kiinduló helyzetbe, és ne menj túl a 90 fokos határon.",
+  "Ismételd az ajánlott ismétlésszámig."
+ ],
+ "leg-press": [
+  "Ülj le a lábtológépre, és tedd a lábad a közvetlenül előtted lévő platformra közepes (vállszélességű) terpeszben. (Megjegyzés: itt a fent leírt közepes terpeszt használjuk, amely az általános fejlődést célozza, de a lábhelyzetekről szóló részben leírt három terpesz bármelyikét választhatod.)",
+  "Old ki a platformot tartó biztonsági karokat, és told fel a platformot teljesen, amíg a lábad ki nem nyúlik előtted. Tipp: ne zárd be a térded. A törzsed és a lábad pontosan 90 fokos szöget zárjon be. Ez a kiinduló helyzet.",
+  "Belégzéssel lassan engedd le a platformot, amíg a combod és a lábszárad 90 fokos szöget nem zár be.",
+  "Főleg a sarkaddal tolva, a négyfejű combizommal térj vissza a kiinduló helyzetbe, kilégzéssel.",
+  "Ismételd az ajánlott ismétlésszámig, és ha végeztél, rendesen zárd vissza a biztonsági karokat. Nem akarod, hogy a teljesen megpakolt platform rád essen."
+ ],
+ "lower-back-extension": [
+  "Feküdj hasra egy hiperextenziós padon, és a bokádat biztosan akaszd be a lábtámasz alá.",
+  "Ha lehet, állítsd be a felső párnát úgy, hogy a combod felső része laposan feküdjön a széles párnán, és elég helyed legyen akadály nélkül előrehajolni csípőből.",
+  "Egyenes testtel tedd keresztbe a karod magad előtt vagy a fejed mögött. Ez a kiinduló helyzet. Tipp: extra ellenállásért tarthatsz egy súlytárcsát magad előtt a keresztbe tett karod alatt.",
+  "Lassan hajolj előre csípőből, ameddig tudsz, a hátad egyenesen tartva. Közben lélegezz be. Hajolj addig, amíg kellemes nyújtást nem érzel a combhajlítókban, és már nem tudsz továbbmenni a hátad görbítése nélkül. Tipp: ennél a gyakorlatnál soha ne görbítsd a hátad. Van, aki mélyebbre tud menni, mint más. A lényeg, hogy addig menj, ameddig a tested engedi a hát görbítése nélkül.",
+  "Belégzéssel lassan emeld vissza a törzsed a kiinduló helyzetbe. Tipp: ne homoríts túl az egyenes vonalon. A hátad védelmében soha ne lendítsd a törzsed.",
+  "Ismételd az ajánlott ismétlésszámig."
+ ],
+ "lunges": [
+  "Állj egyenes törzzsel, egy-egy kézisúlyzóval a kezedben, a tested mellett. Ez a kiinduló helyzet.",
+  "Lépj előre a jobb lábaddal nagyjából 2 lábnyit (60 cm) a hátul helyben maradó lábadtól, és engedd le a tested, egyenes törzzsel, egyensúlyban. Lefelé lélegezz be. Megjegyzés: ahogy más gyakorlatoknál, itt se engedd, hogy a térded lefelé menet túlmenjen a lábujjaidon, mert az túlterheli a térdízületet. Figyelj, hogy az elöl lévő lábszárad merőleges legyen a padlóra.",
+  "Főleg a sarkaddal told el magad, és kilégzéssel térj vissza a kiinduló helyzetbe.",
+  "Ismételd a mozdulatot az ajánlott ismétlésszámig, majd csináld a bal lábaddal."
+ ],
+ "mountain-climbers": [
+  "Kezdd fekvőtámasz helyzetben, a súlyodat a kezed és a lábujjaid tartják. A térded és a csípőd hajlításával húzd előre az egyik lábad, amíg a térded nagyjából a csípőd alá nem kerül. Ez a kiinduló helyzet.",
+  "Robbanékonyan cseréld meg a lábaid helyzetét: nyújtsd ki a hajlított lábad, amíg egyenes nem lesz és a lábujjadon nem támaszkodik, a másikat pedig húzd előre hajlított csípővel és térddel. Ismételd váltakozva 20-30 másodpercig."
+ ],
+ "overhead-press": [
+  "Ülj le egy háttámlás padra egy guggolóállványban. Állítsd a rudat épp a fejed fölötti magasságba. Fogd meg a rudat felső fogással (tenyér előre néz).",
+  "Ha megvan a megfelelő fogásszélesség, emeld a rudat a fejed fölé nyújtott karral. Tartsd nagyjából vállmagasságban, kicsit a fejed előtt. Ez a kiinduló helyzet.",
+  "Belégzés közben lassan engedd le a rudat a válladig.",
+  "Kifújva emeld vissza a rudat a kiinduló helyzetbe.",
+  "Ismételd az ajánlott ismétlésszámig."
+ ],
+ "plank": [
+  "Helyezkedj hasra a földön, a súlyodat a lábujjaid és az alkarod tartsa. A karod hajlítva van, közvetlenül a vállad alatt.",
+  "A tested végig legyen egyenes, és tartsd ezt a helyzetet, ameddig csak bírod. Nehezítésként felemelheted az egyik karod vagy lábad."
+ ],
+ "preacher-curl": [
+  "Ehhez a gyakorlathoz Scott-pad és EZ-rúd kell. Fogd meg az EZ-rudat a szűkebb belső részén (jobb, ha valaki odaadja, vagy vedd le a legtöbb Scott-padon lévő elülső tartóról). A tenyered előre nézzen, a rúd alakja miatt enyhén befelé döntve.",
+  "A felkarod és a mellkasod támaszd a Scott-pad párnájára, és tartsd az EZ-rudat vállmagasságban. Ez a kiinduló helyzet.",
+  "Belégzéssel lassan engedd le a rudat, amíg a karod ki nem nyúlik és a bicepszed teljesen meg nem nyúlik.",
+  "Kilégzéssel a bicepszeddel hajlítsd fel a súlyt, amíg a bicepszed teljesen össze nem húzódik és a rúd vállmagasságba nem ér. Szorítsd meg erősen a bicepszed, és tartsd meg egy másodpercig.",
+  "Ismételd az ajánlott ismétlésszámig."
+ ],
+ "pull-ups": [
+  "Fogd meg a húzódzkodó rudat az előírt fogással, tenyérrel előre. Megjegyzés a fogásokról: széles fogásnál a kezeid vállszélességnél szélesebben vannak, közepesnél vállszélességben, szűk fogásnál pedig vállszélességnél szűkebben.",
+  "Miközben nyújtott karral tartod a rudat a választott fogásszélességgel, dönts hátra a törzsed nagyjából 30 fokkal, homorítsd enyhén a derekad, és told ki a mellkasod. Ez a kiinduló helyzet.",
+  "Húzd fel magad, amíg a rúd hozzá nem ér a mellkasod felső részéhez, a vállad és a felkarod lefelé és hátra húzva. Ennél a résznél fújd ki a levegőt. Tipp: a teljes összehúzódásnál koncentrálj a hátizmok megfeszítésére. A felsőtest mozgás közben is maradjon stabil, csak a karod dolgozzon. Az alkar csak tartsa a rudat.",
+  "Egy másodperc után az összehúzott helyzetben kezdj belélegezni, és lassan engedd vissza magad a kiinduló helyzetbe, amíg a karod teljesen ki nem nyúlik és a széles hátizmod teljesen meg nem nyúlik.",
+  "Ismételd a mozdulatot az előírt ismétlésszámig."
+ ],
+ "push-ups": [
+  "Feküdj hasra a földön, és tedd le a kezed kb. 36 hüvelyk (kb. 90 cm) távolságra egymástól, a törzsed nyújtott karral tartva.",
+  "Ezután belégzés közben engedd le magad, amíg a mellkasod majdnem hozzá nem ér a földhöz.",
+  "Most fújd ki a levegőt, és told vissza a felsőtested a kiinduló helyzetbe, a mellkasod megfeszítve.",
+  "Fent egy rövid szünet után kezdheted újra leengedni magad, annyi ismétlésen át, amennyi kell."
+ ],
+ "rear-delt-fly": [
+  "Kezdésként feküdj hasra egy ferde padon, a mellkasod és a hasad a padnak nyomva. Mindkét kezedben tarts egy kézisúlyzót, tenyérrel egymás felé (semleges fogás).",
+  "Nyújtsd ki a karod magad előtt úgy, hogy merőleges legyen a pad dőlésére. A lábad maradjon mozdulatlan, a lábujjpárnáiddal nyomd a talajt. Ez a kiinduló helyzet.",
+  "Az enyhén hajlított könyököt megtartva, kifújva tárd szét a súlyokat egymástól (oldalra) ívben. Tipp: próbáld összehúzni a lapockáidat, így hozod ki a legtöbbet a gyakorlatból.",
+  "Emeld a karod, amíg párhuzamos nem lesz a padlóval.",
+  "Érezd az összehúzódást, majd belégzés közben lassan engedd vissza a súlyokat a kiinduló helyzetbe.",
+  "Ismételd az ajánlott ismétlésszámig."
+ ],
+ "reverse-crunch": [
+  "Feküdj hanyatt a földön teljesen nyújtott lábbal, a karod a törzsed mellett, tenyérrel a földön. A karod a gyakorlat alatt végig mozdulatlan.",
+  "Emeld fel a lábadat úgy, hogy a combod merőleges legyen a padlóra, a lábfejeid egymás mellett, párhuzamosan a padlóval. Ez a kiinduló helyzet.",
+  "Belégzés közben húzd a lábadat a törzsed felé, a medencédet hátragördítve és a csípődet a földről felemelve. A mozdulat végén a térded a mellkasodhoz ér.",
+  "Tartsd meg egy másodpercig, majd kilégzés közben vidd vissza a lábadat a kiinduló helyzetbe.",
+  "Ismételd az előírt ismétlésszámig."
+ ],
+ "romanian-deadlift": [
+  "Tedd a rudat magad elé a földre, és fogd meg felső fogással (tenyér lefelé), kicsit vállszélességnél szélesebben. Tipp: A súlytól függően csuklószorítóra és megemelt platformra is szükséged lehet a nagyobb mozgástartományhoz.",
+  "Hajlítsd be kicsit a térded, a sípcsontod legyen függőleges, a csípőd hátra, a hátad egyenes. Ez a kiinduló helyzet.",
+  "A hátad és a karod végig maradjon teljesen egyenes, és a csípőddel emeld fel a rudat kilégzés közben. Tipp: A mozdulat ne legyen gyors, hanem egyenletes és kontrollált.",
+  "Amikor teljesen kiegyenesedtél, engedd le a rudat úgy, hogy a csípődet hátratolod, a térded pedig csak kicsit hajlítod, nem úgy, mint guggolásnál. Tipp: A mozdulat elején vegyél mély levegőt, és tartsd fent a mellkasod. Leengedéskor tartsd bent a levegőt, a mozdulat végén fújd ki.",
+  "Ismételd az ajánlott ismétlésszámig."
+ ],
+ "rope-jumping": [
+  "Fogd a kötél egyik végét az egyik, a másik végét a másik kezedben. Tedd a kötelet magad mögé a földre. Emeld fel a karod, és lendítsd át a kötelet a fejed fölött, magad elé. Amikor a földhöz ér, ugord át. Találj egy tartható forgatási tempót. A változatosságért különböző sebességeket és technikákat használhatsz.",
+  "Az ugrókötelezés izgalmas, próbára teszi a koordinációd, és sok energiát igényel. Egy 150 font (kb. 68 kg) súlyú ember kb. 350 kalóriát éget el 30 perc kötelezéssel, szemben a futással elégetett több mint 450 kalóriával."
+ ],
+ "rowing-stationary": [
+  "Ülj fel az evezőgépre. A sarkad kényelmesen támaszkodjon a lábtartók alján, a pántok legyenek rögzítve. Ha van, válaszd ki a kívánt programot. Ülj egyenesen, és dőlj előre a csípődnél.",
+  "Az evezőgépen a mozgásnak három fázisa van. Az első fázisban előrecsúszol. A térded hajlítva van, a mellkasodhoz közel. A felsőtested enyhén előredől, de a tartásod jó marad. Ezután told el magad a lábtartóktól, és nyújtsd ki a lábadat, miközben a kezedet a hasad felső részéhez húzod, a válladat hátrafeszítve. A hátad kímélése érdekében főleg a láb- és csípőizmaidat használd.",
+  "A visszatérő fázisban egyszerűen kinyújtod a karodat, behajlítod a térdedet, és újra előrehozod a tested, ahogy visszatérsz az első fázisba."
+ ],
+ "running-treadmill": [
+  "Először állj fel a futópadra, és válaszd ki a kívánt opciót a menüből. A legtöbb futópadon van kézi mód, de választhatsz programot is. Általában megadhatod az életkorod és a testsúlyod, hogy a gép megbecsülje az edzés közben elégetett kalóriát. A dőlésszöget állítva változtathatod az edzés intenzitását.",
+  "A futópad kényelmes, jót tesz a szív- és érrendszernek, és általában kisebb terhelést jelent, mint a szabadban futás. Egy 150 font (kb. 68 kg) súlyú ember több mint 450 kalóriát éget el, ha 30 percig fut 8 mérföld/órás (kb. 13 km/h) sebességgel. Futás közben tartsd a helyes testtartást, és csak akkor kapaszkodj a fogantyúkba, ha szükséges, például leszálláskor vagy pulzusméréskor."
+ ],
+ "russian-twist": [
+  "Feküdj le a földre, és akaszd be a lábfejed valami mozdíthatatlan alá, vagy tartsa egy partner. A lábad legyen térdben hajlítva.",
+  "Emeld meg a felsőtested úgy, hogy a combjaiddal egy képzeletbeli V alakot formázzon. A karod legyen teljesen kinyújtva magad előtt, merőlegesen a törzsedre, összekulcsolt kézzel. Ez a kiinduló helyzet.",
+  "Kilégzés közben fordítsd a törzsed jobbra, amíg a karod párhuzamos nem lesz a talajjal.",
+  "Tartsd a feszítést egy másodpercig, és kilégzés közben térj vissza a kiinduló helyzetbe. Ezután ugyanígy csináld a másik oldalra is.",
+  "Ismételd az ajánlott ismétlésszámig."
+ ],
+ "seated-calf-raise": [
+  "Ülj le a gépre, és tedd a lábujjaidat a platform alsó részére úgy, hogy a sarkad lelógjon. Válaszd ki a lábujjak állását (előre, befelé vagy kifelé) a fejezet elején leírtak szerint.",
+  "Tedd a combod alsó részét a kar párnája alá, amit a combod magasságához kell állítanod. A kezedet tedd a párna tetejére, hogy ne csússzon előre.",
+  "Emeld meg kicsit a kart a sarkad felfelé tolásával, és engedd ki a biztonsági kart. Ez a kiinduló helyzet.",
+  "Lassan engedd le a sarkadat a bokádat hajlítva, amíg a vádlid teljesen meg nem nyúlik. Közben vegyél levegőt.",
+  "Emeld a sarkadat a lehető legmagasabbra a bokád nyújtásával, feszítsd meg a vádlidat és fújd ki a levegőt. Fent tartsd meg egy másodpercig.",
+  "Ismételd az előírt ismétlésszámig."
+ ],
+ "seated-dumbbell-press": [
+  "Fogj két kézisúlyzót, és ülj le egy vállnyomó padra vagy háttámlás állítható padra, a súlyzókat állítsd fel a combodra.",
+  "Emeld fel a súlyzókat egyenként a combod segítségével vállmagasságba, mindkét oldalon.",
+  "Fordítsd el a csuklód úgy, hogy a tenyered előre nézzen. Ez a kiinduló helyzet.",
+  "Kilégzés közben nyomd fel a súlyzókat, amíg fent össze nem érnek.",
+  "Egy másodperc szünet után belégzés közben lassan térj vissza a kiinduló helyzetbe.",
+  "Ismételd az ajánlott ismétlésszámig."
+ ],
+ "seated-row-cable": [
+  "Ehhez a gyakorlathoz alsó csigás evezőgép és V-fogantyú kell. Megjegyzés: a V-fogantyúval semleges fogást használsz, a tenyereid egymás felé néznek. A kiinduló helyzethez ülj le a gépre, és tedd a lábad az elülső talpra vagy keresztrúdra úgy, hogy a térded enyhén hajlított legyen, ne zárt.",
+  "Dőlj előre a hátad természetes ívét megtartva, és fogd meg a V-fogantyút.",
+  "Nyújtott karral húzódj hátra, amíg a törzsed 90 fokos szöget nem zár be a lábaddal. A hátad legyen enyhén homorú, a mellkasod kitolva. Ahogy magad előtt tartod a fogantyút, érezned kell a széles hátizom kellemes nyújtását. Ez a gyakorlat kiinduló helyzete.",
+  "A törzsed tartsd mozdulatlanul, és húzd a fogantyút a törzsed felé, a karodat a testedhez közel tartva, amíg hozzá nem ér a hasadhoz. Közben fújd ki a levegőt. Ekkor erősen feszítsd meg a hátizmaidat. Tartsd meg egy másodpercig, majd belégzéssel lassan térj vissza a kiinduló helyzetbe.",
+  "Ismételd az ajánlott ismétlésszámig."
+ ],
+ "seated-row-machine": [
+  "Állíts be megfelelő súlyt, és az ülés magasságát úgy, hogy a fogantyúk mellmagasságban legyenek. Fogd meg a fogantyúkat semleges vagy felső fogással. Ez a kiinduló helyzet.",
+  "Húzd a fogantyúkat a törzsed felé, a lapockáidat összehúzva, miközben behajlítod a könyököd.",
+  "A mozdulat végén tarts egy kis szünetet, majd lassan engedd vissza a fogantyúkat a kiinduló helyzetbe. Több ismétlésnél ne engedd le teljesen a súlyt, hogy a dolgozó izmokon maradjon a feszülés."
+ ],
+ "seated-triceps-press": [
+  "Ülj le egy háttámlás padra, fogj meg egy kézisúlyzót két kézzel, és tartsd a fejed fölött nyújtott karral. Tipp: jobb, ha valaki odaadja, főleg ha nagyon nehéz. A súly a tenyeredben nyugodjon, a hüvelykujjaid fogják körbe. A tenyered befelé nézzen. Ez a kiinduló helyzet.",
+  "A felkarod tartsd a fejed mellett (könyök befelé) és merőlegesen a padlóra, majd félkörívben engedd le a súlyt a fejed mögé, amíg az alkarod hozzá nem ér a bicepszedhez. Tipp: a felkar maradjon mozdulatlan, csak az alkar mozogjon. Ennél a lépésnél lélegezz be.",
+  "A tricepszeddel emeld fel a súlyzót, és térj vissza a kiinduló helyzetbe. Ennél a lépésnél fújd ki a levegőt.",
+  "Ismételd az ajánlott ismétlésszámig."
+ ],
+ "shoulder-press-machine": [
+  "Ülj le a vállnyomó gépre, és válaszd ki a súlyt.",
+  "Fogd meg az oldalt lévő fogantyúkat, a könyököd hajlítva, a törzseddel egy vonalban. Ez a kiinduló helyzet.",
+  "Kifújva nyomd fel a fogantyúkat, és nyújtsd ki teljesen a karod. Fent tartsd meg az összehúzódást egy másodpercig.",
+  "Belégzés közben lassan engedd vissza a fogantyúkat a kiinduló helyzetbe.",
+  "Ismételd az ajánlott ismétlésszámig."
+ ],
+ "shrugs": [
+  "Állj egyenesen, vállszélességű terpeszben, és tarts magad előtt egy rudat két kézzel, felső fogással (tenyér a combod felé). Tipp: a kezed kicsit szélesebben legyen, mint a vállad. A jobb fogásért használhatsz csuklóhevedert. Ez a kiinduló helyzet.",
+  "Kifújva húzd fel a vállad, amennyire csak tudod, és tartsd meg az összehúzódást egy másodpercig. Tipp: ne próbáld a bicepszeddel emelni a rudat.",
+  "Belégzés közben lassan térj vissza a kiinduló helyzetbe.",
+  "Ismételd az ajánlott ismétlésszámig."
+ ],
+ "skull-crushers": [
+  "Szűk fogással emeld fel az EZ rudat, és tartsd behúzott könyökkel, miközben a padon fekszel. A karod legyen merőleges a padlóra. Ez a kiinduló helyzet.",
+  "A felkarod mozdulatlanul tartva engedd le a rudat a könyököd behajlításával. A mozgás e része alatt vegyél levegőt. Állj meg, amikor a rúd pont a homlokod fölött van.",
+  "Kifújva emeld vissza a rudat a kiinduló helyzetbe a könyököd kinyújtásával.",
+  "Ismételd."
+ ],
+ "smith-machine-squat": [
+  "Először állítsd a rudat a magasságodnak legjobban megfelelő szintre. Ha megvan a jó magasság és felraktad a súlyt, állj a rúd alá, és fektesd a vállad hátsó részére (kicsit a nyakad alá).",
+  "Fogd meg a rudat mindkét kezeddel oldalt (tenyér előre), oldd ki, és emeld le a tartóról úgy, hogy a lábaddal tolsz, és közben kiegyenesíted a felsőtestedet.",
+  "Állj közepes, vállszélességű terpeszbe, a lábujjaid enyhén kifelé nézzenek. Végig tartsd fent a fejedet és egyenesen a hátadat. Ez a kiinduló helyzet. (Megjegyzés: itt a közepes terpeszt használjuk, ami az egész lábat fejleszti, de a lábtartásokról szóló részben leírt három terpesz bármelyikét választhatod.)",
+  "Lassan engedd le a rudat a térded hajlításával, egyenes testtartással és felemelt fejjel. Menj le addig, amíg a combod és a vádlid közti szög kicsit 90 fok alá nem csökken (ekkor a combod a padlóval párhuzamos alatt van). Közben vegyél levegőt. Tipp: helyes kivitelezésnél a térded eleje egy képzeletbeli egyenes vonalban van a lábujjaiddal. Ha a térded túlmegy ezen a vonalon (a lábujjaid elé), feleslegesen terheled a térdet, és a gyakorlat helytelen.",
+  "Kilégzés közben emeld a rudat úgy, hogy a sarkaddal a padlót tolod, nyújtsd ki újra a lábadat, és térj vissza a kiinduló helyzetbe.",
+  "Ismételd az előírt ismétlésszámig."
+ ],
+ "squat": [
+  "A biztonság kedvéért ezt a gyakorlatot legjobb guggolóállványban végezni. Először tedd a rudat az állványra kicsivel vállmagasság alá. Ha megvan a jó magasság és felpakoltad a rudat, állj be alá, és tedd a vállad hátsó részére (kicsivel a nyakad alá).",
+  "Fogd a rudat két kézzel két oldalt, és emeld le az állványról úgy, hogy a lábaddal tolsz, és közben kiegyenesíted a törzsed.",
+  "Lépj el az állványtól, és állj közepes, vállszélességű terpeszbe, a lábujjaid enyhén kifelé fordítva. A fejed végig tartsd fent, a hátad egyenesen. Ez a kiinduló helyzet. (Megjegyzés: itt a fent leírt közepes terpeszt használjuk, amely az általános fejlődést célozza, de a lábtartásokról szóló részben leírt három terpesz bármelyikét választhatod.)",
+  "Lassan engedd le a rudat a térded és a csípőd hajlításával, egyenes testtartással, fejjel fent. Menj le addig, amíg a combod és a vádlid közötti szög kicsit 90 fok alá nem megy. Ennél a résznél lélegezz be. Tipp: helyes kivitelezésnél a térded eleje és a lábujjaid egy képzeletbeli, a padlóra merőleges egyenest alkotnak. Ha a térded túlmegy ezen a vonalon (túl a lábujjaidon), túlterheled a térdet, és a gyakorlat hibás.",
+  "Kilégzéssel emeld a rudat: told a padlót a sarkaddal, nyújtsd ki újra a lábad, és térj vissza a kiinduló helyzetbe.",
+  "Ismételd az ajánlott ismétlésszámig."
+ ],
+ "stiff-legged-barbell-deadlift": [
+  "Fogd meg a rudat felső fogással (tenyér lefelé). Nagyobb súlynál csuklószorítóra lehet szükséged.",
+  "Állj egyenes felsőtesttel, a lábad vállszélességben vagy keskenyebben. A térded enyhén hajlítva. Ez a kiinduló helyzet.",
+  "Mozdulatlan térddel engedd le a rudat a lábfejed fölé a csípődnél hajolva, egyenes háttal. Hajolj tovább előre, mintha fel akarnál venni valamit a földről, amíg nyúlást nem érzel a combhajlítóidban. Közben vegyél levegőt.",
+  "Kezdd újra kiegyenesíteni a felsőtestedet a csípőd nyújtásával, amíg vissza nem érsz a kiinduló helyzetbe. Közben fújd ki a levegőt.",
+  "Ismételd az előírt ismétlésszámig."
+ ],
+ "straight-arm-pulldown": [
+  "Fogd meg a lehúzógép felső csigájára akasztott széles rudat felső fogással (tenyér lefelé), vállszélességnél szélesebben. Lépj hátra kb. két lépést.",
+  "Döntsd előre a felsőtestedet a derekadnál kb. 30 fokban, a karod legyen teljesen kinyújtva magad előtt, a könyököd enyhén hajlítva. Ha a karod nincs teljesen kinyújtva, lépj még kicsit hátrébb. Ha a karod nyújtva van és a felsőtested enyhén előredől, feszítsd meg a széles hátizmot, és kezdheted.",
+  "Nyújtott karral húzd le a rudat a széles hátizom összehúzásával, amíg a kezed a combod mellé nem ér. Közben fújd ki a levegőt.",
+  "Nyújtott karral, belégzés közben térj vissza a kiinduló helyzetbe.",
+  "Ismételd az előírt ismétlésszámig."
+ ],
+ "sumo-deadlift": [
+  "Kezdd a földön lévő megpakolt rúddal. Állj a rúdhoz úgy, hogy a talpad közepe fölött legyen. A lábad legyen nagyon széles terpeszben, a súlyzózárak közelében. Hajolj a csípődnél, és fogd meg a rudat. A karod közvetlenül a vállad alatt, a lábad között legyen; használhatsz felső fogást, vegyes fogást vagy horogfogást. Lazítsd el a vállad, ezzel gyakorlatilag meghosszabbítod a karod.",
+  "Vegyél levegőt, majd engedd le a csípőd, nézz előre, a mellkasod legyen fent. Nyomd el a talajt, mintha szétfeszítenéd a lábad, a súly a talpad hátsó felén legyen. Nyújtsd ki a csípőd és a térded.",
+  "Amikor a rúd elhalad a térded mellett, dőlj hátra, és told a csípőd a rúdhoz, miközben összehúzod a lapockáidat.",
+  "Engedd vissza a súlyt a földre a csípődnél hajolva, kontrolláltan."
+ ],
+ "superman": [
+  "Feküdj hasra egyenesen a földön vagy a szőnyegen. A karjaidat nyújtsd ki teljesen magad előtt. Ez a kiinduló helyzet.",
+  "Egyszerre emeld fel a karodat, a lábadat és a mellkasodat a földről, és tartsd meg az összehúzódást 2 másodpercig. Tipp: a legjobb eredményért feszítsd meg a derekadat. Közben fújd ki a levegőt. Megjegyzés: a megtartott helyzetben úgy kell kinézned, mint Superman repülés közben.",
+  "Belégzés közben lassan engedd vissza a karodat, a lábadat és a mellkasodat a kiinduló helyzetbe.",
+  "Ismételd annyiszor, ahányat az edzésterved előír."
+ ],
+ "t-bar-row": [
+  "Tedd a rudat landmine tartóba vagy egy sarokba, hogy ne mozduljon el. A saját végére tegyél megfelelő súlyt.",
+  "Állj a rúd fölé, és helyezz egy dupla D evezőfogantyút a rúd köré a rögzítő mellé. Csípőből és lábbal emelkedj fel álló helyzetbe.",
+  "Állj széles terpeszbe, csípő hátra, mellkas fel. A karod legyen nyújtva. Ez a kiinduló helyzet.",
+  "Húzd a súlyt a hasad felső részéhez, a lapockáidat összehúzva és a könyököd hajlítva. Ne rántsd a súlyt, és ne csalj mozdulat közben.",
+  "Egy rövid szünet után térj vissza a kiinduló helyzetbe."
+ ],
+ "thigh-abductor": [
+  "Ülj le a combtávolító gépre, és válassz kényelmes súlyt. Ha a lábad jól van elhelyezve, fogd meg a két oldalt lévő fogantyút. Az egész felsőtested (deréktól felfelé) maradjon mozdulatlan. Ez a kiinduló helyzet.",
+  "Kilégzés közben lassan told a gépet a lábaddal, egymástól távolítva őket.",
+  "Érezd az összehúzódást egy másodpercig, majd belégzés közben kezdd visszavinni a lábadat a kiinduló helyzetbe. Megjegyzés: a sérülések elkerülése érdekében tartsd mozdulatlanul a felsőtestedet.",
+  "Ismételd az előírt ismétlésszámig."
+ ],
+ "thigh-adductor": [
+  "Ülj le a combközelítő gépre, és válassz kényelmes súlyt. Ha a lábad jól van elhelyezve a gép lábpárnáin, fogd meg a két oldalt lévő fogantyút. Az egész felsőtested (deréktól felfelé) maradjon mozdulatlan. Ez a kiinduló helyzet.",
+  "Kilégzés közben lassan told a gépet a lábaddal, egymás felé közelítve őket.",
+  "Érezd az összehúzódást egy másodpercig, majd belégzés közben kezdd visszavinni a lábadat a kiinduló helyzetbe. Megjegyzés: a sérülések elkerülése érdekében tartsd mozdulatlanul a felsőtestedet, és kerüld a gyors, rántó mozdulatokat.",
+  "Ismételd az előírt ismétlésszámig."
+ ],
+ "triceps-dips": [
+  "A kiinduló helyzethez tartsd meg magad a korlát fölött majdnem teljesen nyújtott karral.",
+  "Most vegyél levegőt, és lassan engedd le magad. A törzsed maradjon egyenes, a könyököd a tested közelében. Így jobban a tricepszedre tudsz koncentrálni. Engedd le magad, amíg a felkarod és az alkarod 90 fokos szöget nem zár be.",
+  "Ezután fújd ki a levegőt, és told vissza magad a tricepszeddel a kiinduló helyzetbe.",
+  "Ismételd a mozdulatot az előírt ismétlésszámig."
+ ],
+ "triceps-kickback": [
+  "Fogj egy-egy kézisúlyzót mindkét kezedbe, tenyérrel a törzsed felé. Tartsd egyenesen a hátad, a térded enyhén hajlítsd, és dőlj előre csípőből, amíg a törzsed majdnem párhuzamos nem lesz a padlóval. A fejed tartsd fent. A felkarod legyen a törzsed mellett és párhuzamos a padlóval, az alkarod pedig mutasson a padló felé, ahogy a súlyokat tartod. Az alkar és a felkar között 90 fokos szög legyen. Ez a kiinduló helyzet.",
+  "Tartsd mozdulatlanul a felkarod, fújd ki a levegőt, és a tricepszeddel emeld a súlyokat, amíg a karod teljesen ki nem nyújtod. Az alkar mozgására figyelj.",
+  "A csúcsponton tarts egy rövid szünetet, majd lélegezz be, és lassan engedd vissza a súlyzókat a kiinduló helyzetbe.",
+  "Ismételd a mozdulatot az előírt ismétlésszámig."
+ ],
+ "triceps-overhead-extension": [
+  "Kezdésként állj fel, és tarts egy kézisúlyzót két kézzel. A lábad nagyjából vállszélességben legyen. Lassan fogd meg a súlyzót két kézzel, és emeld a fejed fölé, amíg mindkét karod teljesen ki nem nyúlik.",
+  "A súly a tenyeredben nyugodjon, a hüvelykujjad körülötte. A tenyered felfelé, a mennyezet felé nézzen. Ez a kiinduló helyzet.",
+  "A felkarod a fejed mellett tartva, a könyököd behúzva és merőlegesen a padlóra, engedd le a súlyt félkörívben a fejed mögé, amíg az alkarod hozzá nem ér a bicepszedhez. Tipp: a felkarod maradjon mozdulatlan, csak az alkarod mozogjon. Ennél a lépésnél vegyél levegőt.",
+  "Térj vissza a kiinduló helyzetbe úgy, hogy a tricepszeddel emeled fel a súlyzót. Ennél a lépésnél fújd ki a levegőt.",
+  "Ismételd az ajánlott ismétlésszámig."
+ ],
+ "triceps-pushdown": [
+  "Akassz egy egyenes vagy hajlított rudat a felső csigára, és fogd meg felső fogással (tenyér lefelé) vállszélességben.",
+  "Állj egyenesen, a törzsed egyenes és csak nagyon kicsit dőljön előre, a felkarod húzd a testedhez, merőlegesen a padlóra. Az alkarod a rudat tartva felfelé, a csiga felé mutasson. Ez a kiinduló helyzet.",
+  "A tricepszeddel nyomd le a rudat, amíg hozzá nem ér a combod elejéhez, és a karod teljesen ki nem nyúlik, merőlegesen a padlóra. A felkarod végig maradjon mozdulatlanul a törzsed mellett, csak az alkarod mozogjon. A mozdulat közben fújd ki a levegőt.",
+  "Az összehúzott helyzetben egy másodperc kitartás után lassan engedd vissza a rudat a kiinduló helyzetbe. Ennél a lépésnél vegyél levegőt.",
+  "Ismételd az ajánlott ismétlésszámig."
+ ],
+ "upright-barbell-row": [
+  "Fogd meg a rudat felső fogással, kicsit vállszélességnél szűkebben. A rúd a combod tetején pihen, a karod nyújtva, a könyököd kicsit hajlítva. A hátad egyenes. Ez a kiinduló helyzet.",
+  "Most lélegezz ki, és a vállad oldalsó részével emeld fel a rudat, a könyöködet felfelé és oldalra víve. Emelés közben tartsd a rudat a tested közelében. Emeld, amíg majdnem eléri az álladat. Tipp: A mozdulatot a könyököd vezesse, és mindig legyen magasabban az alkarodnál. A törzsed maradjon mozdulatlan, és a mozdulat tetején állj meg egy másodpercre.",
+  "Lassan engedd vissza a rudat a kiinduló helyzetbe. Ennél a résznél lélegezz be.",
+  "Ismételd az ajánlott ismétlésszámig."
+ ],
+ "wide-grip-barbell-bench-press": [
+  "Feküdj hanyatt egy vízszintes padon, a talpad stabilan a földön. Széles felső fogással (tenyér előre), kezenként kb. 7-8 cm-rel vállszélességen kívül, emeld le a rudat az állványról, és tartsd egyenesen magad fölött zárt karral. A rúd merőleges a törzsedre és a talajra. Ez a kiinduló helyzet.",
+  "Belégzés közben lassan engedd le a rudat, amíg a mellkasod közepén nem érzed.",
+  "Egy másodperc szünet után kilégzés közben told vissza a rudat a kiinduló helyzetbe a mellizmoddal. Zárd a karod, és szorítsd meg a mellkasod a feszített helyzetben, tartsd egy másodpercig, majd kezdd újra lassan leengedni. Tipp: A leengedés tartson legalább kétszer annyi ideig, mint a felnyomás.",
+  "Ismételd a mozdulatot az előírt ismétlésszámig."
+ ]
+}
