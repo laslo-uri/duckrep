@@ -93,7 +93,7 @@ export function ExerciseList({
                 style={style}
               >
                 <Heading className="text-[12px] font-medium text-[var(--color-ink)]">{sectionLabel(item.section, t)}</Heading>
-                <span className="text-[11px] tabular-nums text-[var(--color-faint)]">{item.count}</span>
+                <span className="text-[11px] tabular-nums text-[var(--color-muted)]">{item.count}</span>
               </div>
             );
           }

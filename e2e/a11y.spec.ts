@@ -6,6 +6,15 @@ const WIDTHS = [375, 768, 1440];
 const THEMES = ['light', 'dark'] as const;
 
 async function axe(page: Page, label: string) {
+  // Let entry animations (dialogs fade in) finish: axe measures contrast as painted.
+  await page.evaluate(() =>
+    Promise.all(
+      document
+        .getAnimations()
+        .filter((animation) => animation.effect?.getTiming().iterations !== Infinity)
+        .map((animation) => animation.finished.catch(() => null)),
+    ),
+  );
   const { violations } = await new AxeBuilder({ page })
     .withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'best-practice'])
     .analyze();
@@ -61,6 +70,11 @@ for (const theme of THEMES) {
         await expect(page.getByRole('dialog').getByRole('heading', { name: /your exercises|essentials|chest/i }).first()).toBeVisible({ timeout: 15_000 });
         await axe(page, `picker@${width}`);
         await page.getByRole('dialog').getByRole('button', { name: /^done$/i }).click();
+        await page.getByRole('button', { name: /search and commands/i }).first().click();
+        await page.getByRole('dialog').getByRole('combobox').fill('squat');
+        await expect(page.getByRole('option').first()).toBeVisible();
+        await axe(page, `palette@${width}`);
+        await page.keyboard.press('Escape');
         expect(consoleErrors).toEqual([]);
       });
     }

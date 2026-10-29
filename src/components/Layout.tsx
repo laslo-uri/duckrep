@@ -1,8 +1,8 @@
-import { useCallback, type ReactNode } from 'react';
+import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@tanstack/react-query';
-import { Calendar, Dumbbell, Activity, Sun, Moon, Settings, Plus } from 'lucide-react';
+import { Calendar, Dumbbell, Activity, Sun, Moon, Settings, Plus, Search } from 'lucide-react';
 import { useLocalUser } from '../contexts/LocalUserContext';
 import { useTheme } from '../contexts/ThemeContext';
 import { LanguageSwitcher } from './LanguageSwitcher';
@@ -10,6 +10,7 @@ import { DuckrepMark, DuckrepWordmark } from './DuckrepLogo';
 import { CookieSettingsLink } from './CookieConsent';
 import { BackToRootsware } from './BackToRootsware';
 import { MutationAlert } from './MutationAlert';
+import { CommandPalette } from './CommandPalette';
 import { WorkoutDayIcon } from './WorkoutIconPicker';
 import { getProfileDisplayName, listWorkoutDays } from '../lib/db';
 import { APP_VERSION } from '../lib/appVersion';
@@ -17,6 +18,9 @@ import { appLocale } from '../lib/locale';
 import { useStartActivity } from '../hooks/useStartActivity';
 import { useGlobalShortcuts } from '../hooks/useGlobalShortcuts';
 import { useMutationError } from '../hooks/useMutationError';
+
+/** Opens the Ctrl+K palette from anywhere inside the shell (sidebar, phone header). */
+const PaletteContext = createContext<() => void>(() => {});
 
 function isNavActive(to: string, pathname: string) {
   if (to === '/journal') return pathname === '/journal' || pathname.startsWith('/activity');
@@ -61,7 +65,18 @@ export function PageHeader({
         )}
       </div>
       {actions ? <div className="flex shrink-0 items-center gap-1">{actions}</div> : null}
+      <PhoneSearchButton />
     </div>
+  );
+}
+
+function PhoneSearchButton() {
+  const { t } = useTranslation();
+  const openPalette = useContext(PaletteContext);
+  return (
+    <button type="button" onClick={openPalette} className="dr-btn dr-btn-ghost dr-icon-btn dr-tap dr-tap-w -mr-1 shrink-0 md:hidden" aria-label={t('paletteOpen')}>
+      <Search size={17} aria-hidden />
+    </button>
   );
 }
 
@@ -76,6 +91,7 @@ function Sidebar({ onNew, newPending }: { onNew: () => void; newPending: boolean
   const { theme, toggleTheme } = useTheme();
   const location = useLocation();
   const nav = useNav();
+  const openPalette = useContext(PaletteContext);
 
   const { data: displayName } = useQuery({
     queryKey: ['profile', user.id],
@@ -108,6 +124,17 @@ function Sidebar({ onNew, newPending }: { onNew: () => void; newPending: boolean
           <Plus size={14} aria-hidden />
           <span className="hidden lg:inline">{t('newWorkout')}</span>
           <kbd className="dr-kbd ml-auto hidden border-black/25 bg-black/10 text-current lg:inline">C</kbd>
+        </button>
+        <button
+          type="button"
+          onClick={openPalette}
+          className="dr-btn dr-btn-ghost mt-1 w-full justify-center px-0 text-[var(--color-muted)] lg:justify-start lg:px-2.5"
+          title={`${t('paletteOpen')} (Ctrl K)`}
+          aria-label={t('paletteOpen')}
+        >
+          <Search size={14} aria-hidden />
+          <span className="hidden lg:inline">{t('paletteSearch')}</span>
+          <kbd className="dr-kbd ml-auto hidden lg:inline">Ctrl K</kbd>
         </button>
       </div>
 
@@ -248,8 +275,22 @@ export function Layout() {
     mutate();
   }, [isPending, mutate, clearError]);
   useGlobalShortcuts(startNew);
+  const [paletteOpen, setPaletteOpen] = useState(false);
+  const openPalette = useCallback(() => setPaletteOpen(true), []);
+  const closePalette = useCallback(() => setPaletteOpen(false), []);
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
+        event.preventDefault();
+        setPaletteOpen((open) => !open);
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
 
   return (
+    <PaletteContext.Provider value={openPalette}>
     <div className="flex min-h-[var(--app-dvh)] w-full min-w-0">
       <Sidebar onNew={startNew} newPending={isPending} />
       <main
@@ -266,7 +307,9 @@ export function Layout() {
         </div>
       </main>
       <TabBar />
+      {paletteOpen ? <CommandPalette onClose={closePalette} onNew={startNew} /> : null}
     </div>
+    </PaletteContext.Provider>
   );
 }
 
