@@ -1,3 +1,4 @@
+mod external;
 mod rootsware;
 #[path = "../../user-store/user_store.rs"]
 mod user_store;
@@ -151,6 +152,7 @@ pub fn run() {
     tauri::Builder::default()
         .manage(user_store::new_state(&identifier, None))
         .invoke_handler(tauri::generate_handler![
+            external::open_external,
             rootsware::open_rootsware,
             rootsware::rootsware_available,
             user_store::user_store_load,

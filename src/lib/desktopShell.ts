@@ -5,7 +5,15 @@ export const inDesktopShell = () => typeof window !== 'undefined' && '__TAURI_IN
 
 /** Marks <html> so the page leaves room for the caption (DesktopTitlebar). Call once before the first render. */
 export function prepareDesktopShell() {
-  if (inDesktopShell()) document.documentElement.classList.add('is-desktop')
+  if (!inDesktopShell()) return
+  document.documentElement.classList.add('is-desktop')
+  // The webview has no tabs: links that would open a new tab go to the system browser.
+  document.addEventListener('click', (event) => {
+    const link = (event.target as Element | null)?.closest?.('a[target="_blank"]') as HTMLAnchorElement | null
+    if (!link || !link.href.startsWith('https://')) return
+    event.preventDefault()
+    void invoke('open_external', { url: link.href })
+  })
 }
 
 let available: Promise<boolean> | undefined

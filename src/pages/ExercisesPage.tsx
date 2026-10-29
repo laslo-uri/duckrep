@@ -11,6 +11,7 @@ import { useLocalUser } from '../contexts/LocalUserContext';
 import { ExerciseBrowse } from '../components/ExerciseBrowse';
 import { useMuscleWikiMeta } from '../hooks/useMuscleWikiMeta';
 import { BodyMap } from '../components/BodyMap';
+import { ExerciseDetail } from '../components/ExerciseDetail';
 import { QueryState } from '../components/QueryState';
 import { EmptyState } from '../components/EmptyState';
 import { BODY_MUSCLES, EQUIPMENT, anatomyOf, matchesMuscles, type BodyMuscle } from '../lib/bodyMap';
@@ -243,7 +244,7 @@ function LibraryList({
   const { t } = useTranslation();
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const listRef = useRef<HTMLDivElement>(null);
-  const selected = rows.find((row) => row.ex.id === selectedId)?.ex ?? null;
+  const selected = rows.find((row) => row.ex.id === selectedId) ?? null;
 
   const virtualizer = useVirtualizer({
     count: rows.length,
@@ -258,7 +259,15 @@ function LibraryList({
 
   return (
     <>
-      {selected ? <ExerciseDetail exercise={selected} locale={locale} adding={adding} onAdd={() => onAdd(selected)} /> : null}
+      {selected ? (
+        <ExerciseDetail
+          exercise={selected.ex}
+          anatomy={selected.anatomy}
+          locale={locale}
+          adding={adding}
+          onAdd={() => onAdd(selected.ex)}
+        />
+      ) : null}
       <div
         ref={listRef}
         className="mt-2 h-[calc(var(--app-dvh)-14rem)] overflow-y-auto rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] lg:h-[calc(var(--app-dvh)-9rem)]"
@@ -327,44 +336,5 @@ function Chip({ label, pressed, onClick }: { label: string; pressed: boolean; on
     <button type="button" onClick={onClick} aria-pressed={pressed} className="dr-chip dr-chip-tap shrink-0">
       {label}
     </button>
-  );
-}
-
-function ExerciseDetail({
-  exercise,
-  locale,
-  adding,
-  onAdd,
-}: {
-  exercise: ExerciseDefinition;
-  locale: ReturnType<typeof resolveExerciseLocale>;
-  adding: boolean;
-  onAdd: () => void;
-}) {
-  const { t } = useTranslation();
-  const { primary, alt } = exerciseDisplayNames(exercise, locale);
-  const safeImage = isSafeHttpsImageUrl(exercise.image_url) ? exercise.image_url!.trim() : null;
-  const group = exercise.muscle_group || 'other';
-
-  return (
-    <article className="dr-card mt-2 flex gap-3 p-3">
-      {safeImage ? (
-        <img src={safeImage} alt="" className="h-16 w-16 shrink-0 rounded-md bg-[var(--color-hover)] object-cover" />
-      ) : (
-        <div className="h-16 w-16 shrink-0 rounded-md bg-[var(--color-hover)]" aria-hidden />
-      )}
-      <div className="min-w-0 flex-1">
-        <h2 className="font-medium text-[var(--color-ink)]">{primary}</h2>
-        {alt ? <p className="text-sm text-[var(--color-muted)]">{alt}</p> : null}
-        <p className="dr-label mt-1">{t(`muscleGroups.${group}`)}</p>
-        {exercise.description ? (
-          <p className="mt-1.5 text-[12px] leading-relaxed text-[var(--color-muted)]">{exercise.description}</p>
-        ) : null}
-        <button type="button" onClick={onAdd} disabled={adding} className="dr-btn dr-btn-primary mt-2">
-          <Plus size={14} aria-hidden />
-          {t('addToToday')}
-        </button>
-      </div>
-    </article>
   );
 }

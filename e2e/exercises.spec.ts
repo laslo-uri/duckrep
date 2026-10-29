@@ -29,6 +29,19 @@ test.describe('exercise search with the body map', () => {
     await expect(page.getByText(/hammer curls/i).first()).toBeVisible({ timeout: 15_000 });
   });
 
+  test('a curated exercise shows both photos, every step and where to watch it', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await openUnlocked(page, '/exercises');
+    await page.getByRole('searchbox', { name: /search exercises/i }).fill('bench press');
+    await page.getByRole('button', { name: /^bench press bench potisak/i }).click();
+    const detail = page.getByRole('article', { name: /^bench press$/i });
+    await expect(detail.getByRole('img', { name: /bench press, start position/i })).toHaveAttribute('src', /Barbell_Bench_Press_-_Medium_Grip\/0\.jpg$/);
+    await expect(detail.getByRole('img', { name: /bench press, end position/i })).toHaveAttribute('src', /\/1\.jpg$/);
+    await expect(detail.getByRole('listitem').nth(3)).toBeVisible();
+    await expect(detail.getByRole('link', { name: /watch how/i })).toHaveAttribute('href', /youtube\.com\/results\?search_query=Bench%20Press/);
+    await expect(detail.getByText(/^barbell$/i)).toBeVisible();
+  });
+
   test('MuscleWiki results come through the proxy and file under the library', async ({ page }) => {
     await page.route('**/api/musclewiki?**', async (route) => {
       const path = new URL(route.request().url()).searchParams.get('path') ?? '';

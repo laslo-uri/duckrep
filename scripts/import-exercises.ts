@@ -7,7 +7,7 @@
 import { writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { CURATED_EXERCISES } from '../src/lib/db/seedExercises.ts';
+import { CURATED_EXERCISES, CURATED_TWINS } from '../src/lib/db/seedExercises.ts';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT_PATH = join(__dirname, '../src/lib/db/seedExercises.generated.ts');
@@ -157,18 +157,21 @@ async function main(): Promise<void> {
     });
   }
 
+  const byId = new Map(source.map((row) => [row.id, row]));
   for (const curated of CURATED_EXERCISES) {
     const slug = slugifyName(curated.name);
     if (curatedSlugs.has(slug) && !usedSlugs.has(slug)) {
       usedSlugs.add(slug);
+      // Keeps its own slug (journals already reference it) but borrows the twin's photos and steps.
+      const twin = byId.get(CURATED_TWINS[curated.name]?.id ?? '');
       result.unshift({
         source_slug: slug,
         name: curated.name,
         name_sr: curated.name_sr,
         name_hu: null,
         muscle_group: curated.muscle_group,
-        description: null,
-        image_url: null,
+        description: buildDescription(twin?.instructions),
+        image_url: buildImageUrl(twin?.images),
         default_sets: curated.default_sets ?? null,
       });
     }
