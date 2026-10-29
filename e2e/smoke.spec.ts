@@ -34,3 +34,19 @@ test.describe('local app shell', () => {
     });
   });
 });
+
+test.describe('journal and stats open on this week', () => {
+  test('journal leads with this week, stats with this week against last week', async ({ page }) => {
+    await openUnlocked(page, '/activity/new');
+    await page.locator('#main-content').getByRole('button', { name: /new activity/i }).click();
+    await expect(page).toHaveURL(/\/activity\/[0-9a-f-]{36}$/i, { timeout: 20_000 });
+    await page.getByRole('link', { name: /^my journal$/i }).first().click();
+    await expect(page.getByRole('heading', { level: 2, name: /^this week/i })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 3, name: /^today/i })).toBeVisible();
+
+    await page.getByRole('link', { name: /^stats$/i }).first().click();
+    await expect(page.getByRole('heading', { level: 2, name: /^this week$/i })).toBeVisible();
+    await expect(page.getByText(/vs last week|same as last week/i).first()).toBeVisible();
+    await expect(page.getByRole('link', { name: /settings → profile/i })).toHaveAttribute('href', '/settings#profile');
+  });
+});

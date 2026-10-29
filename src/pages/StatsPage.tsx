@@ -2,9 +2,9 @@ import { useId, useState } from 'react';
 import { usePageTitle } from '../hooks/usePageTitle';
 import { useTranslation } from 'react-i18next';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { Link } from 'react-router-dom';
 import {
   Activity,
-  Calendar as CalendarIcon,
   Scale,
   Target,
   Zap,
@@ -13,8 +13,9 @@ import {
 } from 'lucide-react';
 import {
   getUserStats,
-  upsertUserStats,
   listBodyWeightLogs,
+  listWorkoutDays,
+  listWorkoutSummaries,
   upsertBodyWeightLog,
   listWorkoutDaysForStats,
   getDailyTrainingStats,
@@ -26,11 +27,10 @@ import {
   calculateBMI,
   bmiCategory,
   ageFromBirthDate,
-  formatBirthDateDisplay,
 } from '../lib/statsHelpers';
+import { compareWeeks } from '../lib/journalPeriods';
 import { parseOptionalFloat } from '../utils/numbers';
 import { useMutationError } from '../hooks/useMutationError';
-import { BirthCalendar } from '../components/BirthCalendar';
 import { MutationAlert } from '../components/MutationAlert';
 import { QueryState } from '../components/QueryState';
 import { UnitInput } from '../components/UnitInput';
@@ -58,10 +58,6 @@ export function StatsPage() {
   const { user } = useLocalUser();
   const queryClient = useQueryClient();
   const { mutationError, clearError, onMutationError } = useMutationError();
-  const [editingStats, setEditingStats] = useState(false);
-  const [birthDate, setBirthDate] = useState<string>('');
-  const [heightCm, setHeightCm] = useState<string>('');
-  const [goalKg, setGoalKg] = useState<string>('');
   const [todayWeight, setTodayWeight] = useState<string>('');
   const [weightError, setWeightError] = useState(false);
 
@@ -69,24 +65,12 @@ export function StatsPage() {
     queryKey: ['user-stats', user.id],
     queryFn: () => getUserStats(user.id),
   });
-
-  // Sync form state when entering edit mode (avoid setState in effect)
-  const startEditingStats = () => {
-    if (userStats) {
-      setBirthDate(userStats.birth_date ? userStats.birth_date.slice(0, 10) : '');
-      setHeightCm(String(userStats.height_cm ?? ''));
-      setGoalKg(String(userStats.goal_weight_kg ?? ''));
-    }
-    setEditingStats(true);
-  };
-
   const userStats = userStatsQuery.data;
 
   const weightLogsQuery = useQuery({
     queryKey: ['body-weight-logs', user.id],
     queryFn: () => listBodyWeightLogs(user.id, 90),
   });
-
   const weightLogs = weightLogsQuery.data ?? [];
 
   const workoutDaysQuery = useQuery({
@@ -97,9 +81,7 @@ export function StatsPage() {
       return listWorkoutDaysForStats(user.id, localDateKey(start));
     },
   });
-
-  const workoutDays = workoutDaysQuery.data ?? [];
-  const workoutDaysMap = new Map(workoutDays.map((d) => [d.date, d.icon]));
+  const workoutDaysMap = new Map((workoutDaysQuery.data ?? []).map((d) => [d.date, d.icon]));
 
   const dailyStatsQuery = useQuery({
     queryKey: ['user-daily-training-stats', user.id],
@@ -109,29 +91,26 @@ export function StatsPage() {
       return getDailyTrainingStats(user.id, localDateKey(start));
     },
   });
-
   const dailyStatsRows = dailyStatsQuery.data ?? [];
 
-  const statsLoading =
-    userStatsQuery.isLoading ||
-    weightLogsQuery.isLoading ||
-    workoutDaysQuery.isLoading ||
-    dailyStatsQuery.isLoading;
-  const statsError =
-    userStatsQuery.error ??
-    weightLogsQuery.error ??
-    workoutDaysQuery.error ??
-    dailyStatsQuery.error;
-  const statsIsError =
-    userStatsQuery.isError ||
-    weightLogsQuery.isError ||
-    workoutDaysQuery.isError ||
-    dailyStatsQuery.isError;
+  // Same caches as the journal: activities and their set / volume summaries.
+  const daysQuery = useQuery({
+    queryKey: ['workout-days', user.id],
+    queryFn: () => listWorkoutDays(user.id),
+  });
+  const { data: summaries = {} } = useQuery({
+    queryKey: ['workout-days', user.id, 'summaries'],
+    queryFn: () => listWorkoutSummaries(user.id),
+    staleTime: 0,
+  });
+  const week = compareWeeks(daysQuery.data ?? [], summaries, todayIso());
+
+  const queries = [userStatsQuery, weightLogsQuery, workoutDaysQuery, dailyStatsQuery, daysQuery];
+  const statsLoading = queries.some((query) => query.isLoading);
+  const statsIsError = queries.some((query) => query.isError);
+  const statsError = queries.find((query) => query.error)?.error ?? null;
   const refetchStats = () => {
-    void userStatsQuery.refetch();
-    void weightLogsQuery.refetch();
-    void workoutDaysQuery.refetch();
-    void dailyStatsQuery.refetch();
+    for (const query of queries) void query.refetch();
   };
 
   const analyticsTotals = dailyStatsRows.reduce(
@@ -144,23 +123,8 @@ export function StatsPage() {
     { activities: 0, strength: 0, cardio: 0, sets: 0 },
   );
 
-  const updateStatsMutation = useMutation({
-    mutationFn: (updates: {
-      birth_date?: string | null;
-      height_cm?: number | null;
-      goal_weight_kg?: number | null;
-    }) => upsertUserStats(user.id, updates),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['user-stats', user.id] });
-      setEditingStats(false);
-    },
-    onError: onMutationError,
-  });
-
   const addWeightMutation = useMutation({
-    mutationFn: (weight: number) => {
-      return upsertBodyWeightLog(user.id, todayIso(), weight);
-    },
+    mutationFn: (weight: number) => upsertBodyWeightLog(user.id, todayIso(), weight),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['body-weight-logs', user.id] });
       setTodayWeight('');
@@ -177,14 +141,6 @@ export function StatsPage() {
   const days = getDaysInPastWeeks(12);
   const weightsForChart = [...weightLogs].reverse();
 
-  const saveStats = () => {
-    updateStatsMutation.mutate({
-      birth_date: birthDate.trim() ? birthDate.trim() : null,
-      height_cm: parseOptionalFloat(heightCm.replace(',', '.')),
-      goal_weight_kg: parseOptionalFloat(goalKg.replace(',', '.')),
-    });
-  };
-
   const addTodayWeight = () => {
     const w = parseOptionalFloat(todayWeight.replace(',', '.'));
     if (w == null || w <= 0 || w > 500) {
@@ -195,224 +151,129 @@ export function StatsPage() {
     addWeightMutation.mutate(w);
   };
 
+  const kg = (n: number) => t('volumeKg', { n: Math.round(n).toLocaleString(locale) });
+  const delta = (now: number, before: number, format: (n: number) => string) => {
+    const diff = now - before;
+    if (diff === 0) return t('weekSame');
+    return t('weekVsLast', { delta: (diff > 0 ? '+' : '−') + format(Math.abs(diff)) });
+  };
+
   return (
     <>
       <PageHeader
         title={t('yourStats')}
         meta={new Date().toLocaleDateString(locale, { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })}
       />
-    <PageBody className="space-y-4">
+      <PageBody className="space-y-4">
+        <MutationAlert message={mutationError} onDismiss={clearError} />
 
-      <MutationAlert message={mutationError} onDismiss={clearError} />
+        <QueryState isLoading={statsLoading} isError={statsIsError} error={statsError as Error | null} refetch={refetchStats}>
+          {/* Training first: this week against last week, then the 12-week grid. */}
+          <section aria-labelledby="stats-week">
+            <h2 id="stats-week" className="mb-2 text-[13px] font-semibold text-[var(--color-ink)]">
+              {t('periodThisWeek')}
+            </h2>
+            <div className="grid grid-cols-3 gap-2">
+              <WeekCard label={t('sessionsTotal')} value={String(week.thisWeek.sessions)} delta={delta(week.thisWeek.sessions, week.lastWeek.sessions, String)} />
+              <WeekCard label={t('statSets')} value={String(week.thisWeek.sets)} delta={delta(week.thisWeek.sets, week.lastWeek.sets, String)} />
+              <WeekCard label={t('statVolume')} value={kg(week.thisWeek.volume)} delta={delta(week.thisWeek.volume, week.lastWeek.volume, kg)} />
+            </div>
+          </section>
 
-      <QueryState
-        isLoading={statsLoading}
-        isError={statsIsError}
-        error={statsError as Error | null}
-        refetch={refetchStats}
-      >
-      {/* Quick stats: body */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-        <StatCard
-          icon={<Scale size={13} />}
-          label={t('currentKg')}
-          value={currentWeight != null ? `${currentWeight} kg` : '—'}
-        />
-        <StatCard
-          icon={<Activity size={13} />}
-          label={t('age')}
-          value={age != null ? `${age} ${t('yearsOld')}` : '—'}
-        />
-        <StatCard
-          icon={<Target size={13} />}
-          label={t('goalKg')}
-          value={goal != null ? `${goal} kg` : '—'}
-        />
-        <StatCard
-          icon={<TrendingDown size={13} />}
-          label={t('bmiLabel')}
-          value={
-            bmi != null
-              ? `${bmi} (${t(bmiCategory(bmi))})`
-              : '—'
-          }
-        />
-      </div>
-
-      {/* Add today's weight */}
-      <section className="dr-card p-3 sm:p-4">
-        <h2 className="text-[13px] font-semibold text-[var(--color-ink)] mb-3 flex items-center gap-2">
-          <Scale size={14} className="text-[var(--color-accent)]" />
-          {t('logWeight')}
-        </h2>
-        <form
-          className="flex flex-wrap items-start gap-2"
-          onSubmit={(event) => {
-            event.preventDefault();
-            addTodayWeight();
-          }}
-        >
-          <div className="min-w-0 max-w-xs flex-1">
-            <UnitInput
-              value={todayWeight}
-              onChange={(value) => {
-                setTodayWeight(value);
-                setWeightError(false);
-              }}
-              unit={t('unitKg')}
-              label={t('logWeight')}
-              placeholder="72.5"
-              invalid={weightError}
-            />
-            {weightError ? (
-              <p role="alert" className="mt-2 text-sm text-[var(--color-error)]">
-                {t('weightInvalid')}
+          <section className="dr-card p-3 sm:p-4" aria-labelledby="stats-grid">
+            <div className="mb-3 flex flex-wrap items-center gap-x-4 gap-y-1">
+              <h2 id="stats-grid" className="flex items-center gap-2 text-[13px] font-semibold text-[var(--color-ink)]">
+                <Activity size={14} className="text-[var(--color-accent)]" aria-hidden />
+                {t('last12Weeks')}
+              </h2>
+              <p className="text-[12px] tabular-nums text-[var(--color-muted)]">
+                {[
+                  analyticsTotals.activities + ' ' + t('analyticsTotalActivities').toLowerCase(),
+                  analyticsTotals.strength + ' ' + t('analyticsStrengthSessions').toLowerCase(),
+                  analyticsTotals.cardio + ' ' + t('analyticsCardioSessions').toLowerCase(),
+                  analyticsTotals.sets + ' ' + t('analyticsCompletedSets').toLowerCase(),
+                ].join(' · ')}
               </p>
+              <span className="ml-auto flex items-center gap-3 text-xs text-[var(--color-muted)]">
+                <span className="flex items-center gap-1">
+                  <Zap size={14} style={{ color: 'var(--color-chart-active)' }} aria-hidden />
+                  {t('activeDays')}
+                </span>
+                <span className="flex items-center gap-1">
+                  <Moon size={14} style={{ color: 'var(--color-chart-rest)' }} aria-hidden />
+                  {t('restDays')}
+                </span>
+              </span>
+            </div>
+            <ContributionGrid days={days} workoutDaysMap={workoutDaysMap} />
+          </section>
+
+          {/* Body: the numbers, today's weight, the trend. Profile fields live in Settings. */}
+          <section className="dr-card p-3 sm:p-4" aria-labelledby="stats-body">
+            <h2 id="stats-body" className="mb-3 flex items-center gap-2 text-[13px] font-semibold text-[var(--color-ink)]">
+              <Scale size={14} className="text-[var(--color-accent)]" aria-hidden />
+              {t('bodySection')}
+            </h2>
+            <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+              <StatCard icon={<Scale size={13} />} label={t('currentKg')} value={currentWeight != null ? currentWeight + ' kg' : '—'} />
+              <StatCard icon={<Target size={13} />} label={t('goalKg')} value={goal != null ? goal + ' kg' : '—'} />
+              <StatCard icon={<TrendingDown size={13} />} label={t('bmiLabel')} value={bmi != null ? bmi + ' (' + t(bmiCategory(bmi)) + ')' : '—'} />
+              <StatCard icon={<Activity size={13} />} label={t('age')} value={age != null ? age + ' ' + t('yearsOld') : '—'} />
+            </div>
+            <form
+              className="mt-3 flex flex-wrap items-start gap-2"
+              onSubmit={(event) => {
+                event.preventDefault();
+                addTodayWeight();
+              }}
+            >
+              <div className="min-w-0 max-w-xs flex-1">
+                <UnitInput
+                  value={todayWeight}
+                  onChange={(value) => {
+                    setTodayWeight(value);
+                    setWeightError(false);
+                  }}
+                  unit={t('unitKg')}
+                  label={t('logWeight')}
+                  placeholder="72.5"
+                  invalid={weightError}
+                />
+                {weightError ? (
+                  <p role="alert" className="mt-2 text-sm text-[var(--color-error)]">
+                    {t('weightInvalid')}
+                  </p>
+                ) : null}
+              </div>
+              <button type="submit" disabled={!todayWeight.trim() || addWeightMutation.isPending} className="dr-btn dr-btn-primary h-9 shrink-0 max-md:h-11">
+                {t('logWeight')}
+              </button>
+            </form>
+            {weightsForChart.length > 0 || goal != null ? (
+              <div className="mt-4">
+                <h3 className="mb-2 text-[12px] font-medium text-[var(--color-muted)]">{t('weightGoalGraph')}</h3>
+                <WeightChart weights={weightsForChart} goalKg={goal} />
+              </div>
             ) : null}
-          </div>
-          <button
-            type="submit"
-            disabled={!todayWeight.trim() || addWeightMutation.isPending}
-            className="dr-btn dr-btn-primary h-9 shrink-0 max-md:h-11"
-          >
-            {t('save')}
-          </button>
-        </form>
-      </section>
-
-      {/* User stats: birth date, height, goal */}
-      <section className="dr-card p-3 sm:p-4">
-        <h2 className="text-[13px] font-semibold text-[var(--color-ink)] mb-3 flex items-center gap-2">
-          <CalendarIcon size={14} className="text-[var(--color-accent)]" />
-          {t('profileSettings')}
-        </h2>
-        {editingStats ? (
-          <div className="space-y-3">
-            <div>
-              <p className="mb-1 text-[12px] text-[var(--color-muted)]">{t('birthDate')}</p>
-              <BirthCalendar value={birthDate} onChange={setBirthDate} />
-            </div>
-            <label className="block max-w-xs">
-              <span className="mb-1 block text-[12px] text-[var(--color-muted)]">{t('heightCm')}</span>
-              <UnitInput
-                value={heightCm}
-                onChange={setHeightCm}
-                unit={t('unitCm')}
-                placeholder="175"
-              />
-            </label>
-            <label className="block max-w-xs">
-              <span className="mb-1 block text-[12px] text-[var(--color-muted)]">{t('goalKg')}</span>
-              <UnitInput
-                value={goalKg}
-                onChange={setGoalKg}
-                unit={t('unitKg')}
-                placeholder="75"
-              />
-            </label>
-            <div className="flex gap-2">
-              <button
-                type="button"
-                onClick={saveStats}
-                disabled={updateStatsMutation.isPending}
-                className="dr-btn dr-btn-primary"
-              >
-                {t('save')}
-              </button>
-              <button
-                type="button"
-                onClick={() => setEditingStats(false)}
-                className="dr-btn"
-              >
-                {t('cancel')}
-              </button>
-            </div>
-          </div>
-        ) : (
-          <div>
-          <dl className="divide-y divide-[var(--color-border)] text-[13px]">
-            <div className="flex items-baseline justify-between gap-4 py-1.5">
-              <dt className="text-[var(--color-muted)]">{t('birthDate')}</dt>
-              <dd className="tabular-nums text-right">{userStats?.birth_date ? formatBirthDateDisplay(userStats.birth_date.slice(0, 10), locale) : '—'}</dd>
-            </div>
-            <div className="flex items-baseline justify-between gap-4 py-1.5">
-              <dt className="text-[var(--color-muted)]">{t('heightCm')}</dt>
-              <dd className="tabular-nums text-right">{userStats?.height_cm ? `${userStats.height_cm} cm` : '—'}</dd>
-            </div>
-            <div className="flex items-baseline justify-between gap-4 py-1.5">
-              <dt className="text-[var(--color-muted)]">{t('goalKg')}</dt>
-              <dd className="tabular-nums text-right">{userStats?.goal_weight_kg ? `${userStats.goal_weight_kg} kg` : '—'}</dd>
-            </div>
-          </dl>
-          <button
-            type="button"
-            onClick={startEditingStats}
-            className="dr-btn mt-3"
-          >
-            {t('edit')}
-          </button>
-          </div>
-        )}
-      </section>
-
-      {/* Weight goal graph */}
-      {(weightsForChart.length > 0 || goal != null) && (
-        <section className="dr-card p-3 sm:p-4">
-          <h2 className="text-[13px] font-semibold text-[var(--color-ink)] mb-3 flex items-center gap-2">
-            <TrendingDown size={14} className="text-[var(--color-accent)]" />
-            {t('weightGoalGraph')}
-          </h2>
-          <WeightChart weights={weightsForChart} goalKg={goal} />
-        </section>
-      )}
-
-      {/* Activity grid - GitHub style */}
-      <section className="dr-card p-3 sm:p-4">
-        <h2 className="text-[13px] font-semibold text-[var(--color-ink)] mb-3 flex items-center gap-2">
-          <Activity size={14} className="text-[var(--color-accent)]" />
-          {t('activityDays')}
-        </h2>
-        <div className="flex items-center gap-4 mb-3 text-xs text-[var(--color-muted)]">
-          <span className="flex items-center gap-1">
-            <Zap size={14} style={{ color: 'var(--color-chart-active)' }} />
-            {t('activeDays')}
-          </span>
-          <span className="flex items-center gap-1">
-            <Moon size={14} style={{ color: 'var(--color-chart-rest)' }} />
-            {t('restDays')}
-          </span>
-        </div>
-        <ContributionGrid days={days} workoutDaysMap={workoutDaysMap} />
-      </section>
-
-      <section className="dr-card p-3 sm:p-4">
-        <h2 className="text-[13px] font-semibold text-[var(--color-ink)] mb-0.5 flex items-center gap-2">
-          <Zap size={14} className="text-[var(--color-accent)]" />
-          {t('analyticsRollupTitle')}
-        </h2>
-        <p className="text-[12px] text-[var(--color-muted)] mb-3">{t('analyticsRollupSubtitle')}</p>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-          <div className="rounded-md border border-[var(--color-border)] px-3 py-2">
-            <p className="text-[11px] text-[var(--color-muted)]">{t('analyticsTotalActivities')}</p>
-            <p className="text-[18px] font-semibold text-[var(--color-ink)] tabular-nums leading-tight">{analyticsTotals.activities}</p>
-          </div>
-          <div className="rounded-md border border-[var(--color-border)] px-3 py-2">
-            <p className="text-[11px] text-[var(--color-muted)]">{t('analyticsStrengthSessions')}</p>
-            <p className="text-[18px] font-semibold text-[var(--color-ink)] tabular-nums leading-tight">{analyticsTotals.strength}</p>
-          </div>
-          <div className="rounded-md border border-[var(--color-border)] px-3 py-2">
-            <p className="text-[11px] text-[var(--color-muted)]">{t('analyticsCardioSessions')}</p>
-            <p className="text-[18px] font-semibold text-[var(--color-ink)] tabular-nums leading-tight">{analyticsTotals.cardio}</p>
-          </div>
-          <div className="rounded-md border border-[var(--color-border)] px-3 py-2">
-            <p className="text-[11px] text-[var(--color-muted)]">{t('analyticsCompletedSets')}</p>
-            <p className="text-[18px] font-semibold text-[var(--color-ink)] tabular-nums leading-tight">{analyticsTotals.sets}</p>
-          </div>
-        </div>
-      </section>
-      </QueryState>
-    </PageBody>
+            <p className="mt-3 text-[12px] text-[var(--color-muted)]">
+              <Link to="/settings#profile" className="underline underline-offset-2 hover:text-[var(--color-ink)]">
+                {t('editProfileInSettings')}
+              </Link>
+            </p>
+          </section>
+        </QueryState>
+      </PageBody>
     </>
+  );
+}
+
+function WeekCard({ label, value, delta }: { label: string; value: string; delta: string }) {
+  return (
+    <div className="dr-kpi">
+      <p className="dr-label">{label}</p>
+      <p className="dr-kpi-value tabular-nums">{value}</p>
+      <p className="truncate text-[11px] tabular-nums text-[var(--color-muted)]">{delta}</p>
+    </div>
   );
 }
 
@@ -728,7 +589,6 @@ function ContributionGrid({
           })}
         </div>
       </div>
-      <p className="text-xs text-[var(--color-muted)] mt-3">{t('last12Weeks')}</p>
     </div>
   );
 }

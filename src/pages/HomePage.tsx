@@ -2,7 +2,8 @@ import { Link, useOutletContext } from 'react-router-dom';
 import { usePageTitle } from '../hooks/usePageTitle';
 import { useTranslation } from 'react-i18next';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Plus, Trash2 } from 'lucide-react';
+import { useState } from 'react';
+import { ChevronRight, Plus, Trash2 } from 'lucide-react';
 import { WorkoutDayIcon } from '../components/WorkoutIconPicker';
 import { APP_VERSION } from '../lib/appVersion';
 import {
@@ -23,6 +24,7 @@ import { EmptyState } from '../components/EmptyState';
 import { MarkWidget } from '../components/MarkWidget';
 import { PageBody, PageHeader } from '../components/Layout';
 import { activityStreak } from '../lib/statsHelpers';
+import { groupJournal, type JournalPeriod, type PeriodTotals } from '../lib/journalPeriods';
 import { appLocale } from '../lib/locale';
 import type { WorkoutDay } from '../types';
 
@@ -97,18 +99,54 @@ export function HomePage() {
     return date.toLocaleDateString(locale, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
   };
 
-  const grouped = days.reduce<{ date: string; activities: WorkoutDay[] }[]>((acc, day) => {
-    const last = acc[acc.length - 1];
-    if (last && last.date === day.date) {
-      last.activities.push(day);
-    } else {
-      acc.push({ date: day.date, activities: [day] });
-    }
-    return acc;
-  }, []);
-
   const todayKey = todayIso();
   const dateKeys = days.map((day) => day.date);
+  // This week and last week open by day; each older month folds into one row with its totals.
+  const periods = groupJournal(days, summaries, todayKey);
+  const [openMonths, setOpenMonths] = useState<ReadonlySet<string>>(new Set());
+  const toggleMonth = (key: string) =>
+    setOpenMonths((current) => {
+      const next = new Set(current);
+      if (next.has(key)) next.delete(key);
+      else next.add(key);
+      return next;
+    });
+  const periodTitle = (period: JournalPeriod) =>
+    period.kind === 'thisWeek'
+      ? t('periodThisWeek')
+      : period.kind === 'lastWeek'
+        ? t('periodLastWeek')
+        : new Date(`${period.start}T00:00:00`).toLocaleDateString(locale, { month: 'long', year: 'numeric' });
+  const totalsLabel = (totals: PeriodTotals) =>
+    [
+      t('activityCount', { count: totals.sessions }),
+      t('periodSets', { count: totals.sets }),
+      totals.volume > 0 ? t('volumeKg', { n: Math.round(totals.volume).toLocaleString(locale) }) : '',
+    ]
+      .filter(Boolean)
+      .join(' · ');
+  const renderDates = (period: JournalPeriod) =>
+    period.dates.map(({ date, activities }) => (
+      <section key={date} aria-label={formatDateHeader(date)}>
+        <h3 className="dr-group sticky top-[var(--dr-header-h)] z-10 bg-[var(--color-paper)]/95 backdrop-blur-sm md:bg-[var(--color-panel)]/95">
+          <span>{formatDateHeader(date)}</span>
+          <span className="text-[var(--color-faint)] tabular-nums">{activities.length}</span>
+        </h3>
+        <ul>
+          {activities.map((day) => (
+            <ActivityRow
+              key={day.id}
+              day={day}
+              summary={summaries[day.id]}
+              locale={locale}
+              fallbackTitle={formatDateHeader(day.date)}
+              deleting={deleteWorkoutMutation.isPending && deleteWorkoutMutation.variables === day.id}
+              onDelete={() => void handleDelete(day.id)}
+            />
+          ))}
+        </ul>
+      </section>
+    ));
   const openSession = days.find((day) => day.started_at && !day.ended_at);
 
   async function handleDelete(dayId: string) {
@@ -191,27 +229,40 @@ export function HomePage() {
               <span className="w-32 text-right">{t('sessionTime')}</span>
               <span className="w-7" aria-hidden />
             </div>
-            {grouped.map(({ date, activities }) => (
-              <section key={date} aria-label={formatDateHeader(date)}>
-                <h2 className="dr-group sticky top-[var(--dr-header-h)] z-10 bg-[var(--color-paper)]/95 backdrop-blur-sm md:bg-[var(--color-panel)]/95">
-                  <span>{formatDateHeader(date)}</span>
-                  <span className="text-[var(--color-faint)] tabular-nums">{activities.length}</span>
-                </h2>
-                <ul>
-                  {activities.map((day) => (
-                    <ActivityRow
-                      key={day.id}
-                      day={day}
-                      summary={summaries[day.id]}
-                      locale={locale}
-                      fallbackTitle={formatDateHeader(day.date)}
-                      deleting={deleteWorkoutMutation.isPending && deleteWorkoutMutation.variables === day.id}
-                      onDelete={() => void handleDelete(day.id)}
-                    />
-                  ))}
-                </ul>
-              </section>
-            ))}
+            {periods.map((period) => {
+              if (period.kind !== 'month') {
+                return (
+                  <section key={period.key} aria-labelledby={`period-${period.key}`}>
+                    <h2 id={`period-${period.key}`} className="flex h-9 items-center gap-2 border-b border-[var(--color-border)] px-3 text-[13px] font-semibold text-[var(--color-ink)]">
+                      {periodTitle(period)}
+                      <span className="text-[12px] font-normal tabular-nums text-[var(--color-muted)]">
+                        {period.totals.sessions > 0 ? totalsLabel(period.totals) : t('periodEmptyWeek')}
+                      </span>
+                    </h2>
+                    {renderDates(period)}
+                  </section>
+                );
+              }
+              const open = openMonths.has(period.key);
+              return (
+                <section key={period.key} aria-labelledby={`period-${period.key}`}>
+                  <h2 className="border-b border-[var(--color-border)]">
+                    <button
+                      type="button"
+                      id={`period-${period.key}`}
+                      aria-expanded={open}
+                      onClick={() => toggleMonth(period.key)}
+                      className="dr-tap flex h-9 w-full items-center gap-2 px-3 text-left text-[13px] font-semibold capitalize text-[var(--color-ink)] hover:bg-[var(--color-hover)]"
+                    >
+                      <ChevronRight size={14} aria-hidden className={`shrink-0 text-[var(--color-muted)] transition-transform ${open ? 'rotate-90' : ''}`} />
+                      {periodTitle(period)}
+                      <span className="text-[12px] font-normal normal-case tabular-nums text-[var(--color-muted)]">{totalsLabel(period.totals)}</span>
+                    </button>
+                  </h2>
+                  {open ? renderDates(period) : null}
+                </section>
+              );
+            })}
           </div>
         </QueryState>
 
