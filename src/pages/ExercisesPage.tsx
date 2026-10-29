@@ -1,84 +1,81 @@
-import { useMemo, useRef, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useQuery } from '@tanstack/react-query';
-import { useVirtualizer } from '@tanstack/react-virtual';
-import { ChevronDown, Plus, X } from 'lucide-react';
+import { ChevronDown, X } from 'lucide-react';
 import { usePageTitle } from '../hooks/usePageTitle';
 import { useAddToToday } from '../hooks/useAddToToday';
-import { listExercises } from '../lib/db';
+import { useExerciseCatalog } from '../hooks/useExerciseCatalog';
 import { useLocalUser } from '../contexts/LocalUserContext';
 import { ExerciseBrowse } from '../components/ExerciseBrowse';
 import { useMuscleWikiMeta } from '../hooks/useMuscleWikiMeta';
 import { BodyMap } from '../components/BodyMap';
 import { ExerciseDetail } from '../components/ExerciseDetail';
+import { ExerciseList } from '../components/ExerciseList';
 import { QueryState } from '../components/QueryState';
 import { EmptyState } from '../components/EmptyState';
-import { BODY_MUSCLES, EQUIPMENT, anatomyOf, matchesMuscles, type BodyMuscle } from '../lib/bodyMap';
-import { exerciseDisplayNames, isSafeHttpsImageUrl, resolveExerciseLocale } from '../utils/exerciseDisplay';
-import type { ExerciseDefinition } from '../types';
+import { BODY_MUSCLES, EQUIPMENT, EXERCISE_TYPES, type BodyMuscle, type ExerciseType } from '../lib/bodyMap';
+import { GYM_ORDER, YOURS_LIMIT, buildCatalog, catalogRows, isBrowsing, type CatalogFilters } from '../lib/exerciseCatalog';
 import { PageBody, PageHeader } from '../components/Layout';
-
-const ROW_HEIGHT = 44;
 
 type Source = 'library' | 'musclewiki';
 
+const DEFAULT_TYPES: ReadonlySet<ExerciseType> = new Set(['strength']);
+
+function toggle<T>(set: ReadonlySet<T>, value: T): ReadonlySet<T> {
+  const next = new Set(set);
+  if (next.has(value)) next.delete(value);
+  else next.add(value);
+  return next;
+}
+
 export function ExercisesPage() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   usePageTitle(t('exercises'));
-  const exerciseLocale = resolveExerciseLocale(i18n.resolvedLanguage ?? i18n.language);
   const { user } = useLocalUser();
   const [source, setSource] = useState<Source>('library');
   const [search, setSearch] = useState('');
   const [muscles, setMuscles] = useState<ReadonlySet<BodyMuscle>>(new Set());
   const [equipment, setEquipment] = useState('');
+  const [types, setTypes] = useState<ReadonlySet<ExerciseType>>(DEFAULT_TYPES);
+  const [all, setAll] = useState(false);
+  const [yoursExpanded, setYoursExpanded] = useState(false);
   const [mapOpen, setMapOpen] = useState(false);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
   const addToToday = useAddToToday(user.id);
-
-  const { data: exercises = [], isLoading, isError, error, refetch } = useQuery({
-    queryKey: ['exercises', user.id],
-    queryFn: () => listExercises(user.id),
-  });
-  // Muscle + equipment per seeded exercise (public-domain free-exercise-db), its own small chunk.
-  const { data: anatomyTable } = useQuery({
-    queryKey: ['exercise-anatomy'],
-    queryFn: () => import('../lib/db/exerciseAnatomy.generated').then((m) => m.EXERCISE_ANATOMY),
-    staleTime: Infinity,
-  });
+  const catalog = useExerciseCatalog(user.id);
   const meta = useMuscleWikiMeta(source === 'musclewiki');
 
-  const rows = useMemo(() => {
-    const table = anatomyTable ?? {};
-    const q = search.trim().toLowerCase();
-    return exercises
-      .map((ex) => ({ ex, anatomy: anatomyOf(ex, table), names: exerciseDisplayNames(ex, exerciseLocale) }))
-      .filter(({ anatomy, names }) => {
-        if (equipment && anatomy.equipment !== equipment) return false;
-        return !q || names.search.includes(q);
-      })
-      .sort((a, b) => a.ex.name.localeCompare(b.ex.name, 'en'));
-  }, [exercises, anatomyTable, search, equipment, exerciseLocale]);
-
-  const filtered = useMemo(
-    () => rows.filter(({ ex, anatomy }) => matchesMuscles(anatomy, ex.muscle_group, muscles)),
-    [rows, muscles],
+  const filters: CatalogFilters = { search, muscles, equipment, types, all };
+  const browsing = isBrowsing(filters);
+  const items = useMemo(
+    () => buildCatalog(catalog.entries, { search, muscles, equipment, types, all }, yoursExpanded),
+    [catalog.entries, search, muscles, equipment, types, all, yoursExpanded],
   );
+  const shown = catalogRows(items).length;
+  const yoursTotal = catalog.entries.filter((entry) => entry.usage).length;
+  const selected = catalog.entries.find((entry) => entry.ex.id === selectedId) ?? null;
 
   // How many exercises each region would show with the other filters applied.
   const counts = useMemo(() => {
     if (source !== 'library') return undefined;
+    const term = search.trim().toLowerCase();
     const out: Partial<Record<BodyMuscle, number>> = {};
-    for (const { anatomy } of rows) if (anatomy.muscle) out[anatomy.muscle] = (out[anatomy.muscle] ?? 0) + 1;
+    for (const { anatomy, names } of catalog.entries) {
+      if (!anatomy.muscle) continue;
+      if (term ? !names.search.includes(term) : types.size > 0 && !types.has(anatomy.type)) continue;
+      if (equipment && anatomy.equipment !== equipment) continue;
+      out[anatomy.muscle] = (out[anatomy.muscle] ?? 0) + 1;
+    }
     return out;
-  }, [rows, source]);
+  }, [catalog.entries, source, search, types, equipment]);
 
-  const toggleMuscle = (muscle: BodyMuscle) =>
-    setMuscles((current) => {
-      const next = new Set(current);
-      if (next.has(muscle)) next.delete(muscle);
-      else next.add(muscle);
-      return next;
-    });
+  const toggleMuscle = (muscle: BodyMuscle) => setMuscles((current) => toggle(current, muscle));
+  const reset = () => {
+    setSearch('');
+    setMuscles(new Set());
+    setEquipment('');
+    setAll(false);
+  };
 
   const equipmentOptions =
     source === 'library'
@@ -95,8 +92,8 @@ export function ExercisesPage() {
       <PageHeader
         title={t('exercises')}
         meta={
-          source === 'library' && !isLoading && !isError && exercises.length > 0
-            ? t('libraryCount', { count: filtered.length })
+          source === 'library' && catalog.total > 0
+            ? t('libraryCount', { count: browsing ? shown : catalog.total })
             : undefined
         }
         actions={
@@ -130,20 +127,31 @@ export function ExercisesPage() {
             {muscles.size > 0 ? <span className="text-[var(--color-accent)]">· {muscles.size}</span> : null}
           </button>
           <div className={`${mapOpen ? 'block' : 'hidden'} mt-2 lg:mt-0 lg:block`}>
-            <div className="dr-card p-2 max-w-[340px] mx-auto lg:max-w-none">
+            <div className="dr-card mx-auto max-w-[340px] p-2 lg:max-w-none">
               <BodyMap selected={muscles} counts={counts} onToggle={toggleMuscle} />
             </div>
           </div>
-          {muscles.size > 0 ? (
-            <div className="mt-2 flex flex-wrap items-center gap-1.5">
-              {BODY_MUSCLES.filter((muscle) => muscles.has(muscle)).map((muscle) => (
-                <button
+          {/* Narrow screens with the map folded: every muscle one tap away. */}
+          {!mapOpen ? (
+            <div
+              className="mt-1 flex gap-1.5 overflow-x-auto pb-0.5 lg:hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              role="group"
+              aria-label={t('bodyMap')}
+            >
+              {GYM_ORDER.map((muscle) => (
+                <Chip
                   key={muscle}
-                  type="button"
+                  label={counts?.[muscle] != null ? `${t(`muscles.${muscle}`)} ${counts[muscle]}` : t(`muscles.${muscle}`)}
+                  pressed={muscles.has(muscle)}
                   onClick={() => toggleMuscle(muscle)}
-                  aria-pressed
-                  className="dr-chip dr-chip-tap gap-1"
-                >
+                />
+              ))}
+            </div>
+          ) : null}
+          {muscles.size > 0 ? (
+            <div className="mt-2 hidden flex-wrap items-center gap-1.5 lg:flex">
+              {BODY_MUSCLES.filter((muscle) => muscles.has(muscle)).map((muscle) => (
+                <button key={muscle} type="button" onClick={() => toggleMuscle(muscle)} aria-pressed className="dr-chip dr-chip-tap gap-1">
                   {t(`muscles.${muscle}`)}
                   <X size={12} aria-hidden />
                 </button>
@@ -154,36 +162,49 @@ export function ExercisesPage() {
             </div>
           ) : null}
           {equipmentOptions.length > 0 ? (
-            <div className="mt-3">
-              <p className="dr-label" id="equipment-label">{t('equipmentLabel')}</p>
-              <div
-                className="mt-1.5 flex gap-1.5 overflow-x-auto pb-0.5 lg:flex-wrap [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-                role="group"
-                aria-labelledby="equipment-label"
-              >
-                <Chip label={t('allEquipment')} pressed={equipment === ''} onClick={() => setEquipment('')} />
-                {equipmentOptions.map((option) => (
-                  <Chip
-                    key={option.name}
-                    label={option.label}
-                    pressed={equipment === option.name}
-                    onClick={() => setEquipment(equipment === option.name ? '' : option.name)}
-                  />
-                ))}
-              </div>
-            </div>
+            <ChipGroup label={t('equipmentLabel')} id="equipment-label">
+              <Chip label={t('allEquipment')} pressed={equipment === ''} onClick={() => setEquipment('')} />
+              {equipmentOptions.map((option) => (
+                <Chip
+                  key={option.name}
+                  label={option.label}
+                  pressed={equipment === option.name}
+                  onClick={() => setEquipment(equipment === option.name ? '' : option.name)}
+                />
+              ))}
+            </ChipGroup>
+          ) : null}
+          {source === 'library' ? (
+            <ChipGroup label={t('typeLabel')} id="type-label">
+              {EXERCISE_TYPES.map((type) => (
+                <Chip key={type} label={t(`exerciseTypes.${type}`)} pressed={types.has(type)} onClick={() => setTypes((current) => toggle(current, type))} />
+              ))}
+            </ChipGroup>
           ) : null}
         </aside>
 
         <section className="mt-3 min-w-0 lg:mt-0" aria-label={t(source === 'library' ? 'sourceLibrary' : 'sourceMuscleWiki')}>
-          <input
-            type="search"
-            value={search}
-            onChange={(event) => setSearch(event.target.value)}
-            placeholder={t('searchExercises')}
-            aria-label={t('searchExercises')}
-            className="dr-input w-full md:max-w-sm"
-          />
+          <div className="flex items-center gap-2">
+            <input
+              type="search"
+              value={search}
+              onChange={(event) => setSearch(event.target.value)}
+              placeholder={t('searchExercises')}
+              aria-label={t('searchExercises')}
+              className="dr-input min-w-0 flex-1 md:max-w-sm"
+            />
+            {source === 'library' ? (
+              browsing ? (
+                <button type="button" onClick={reset} className="dr-btn dr-btn-ghost shrink-0">
+                  {t('clearFilters')}
+                </button>
+              ) : (
+                <button type="button" onClick={() => setAll(true)} className="dr-btn dr-btn-ghost shrink-0">
+                  {t('allExercises', { count: catalog.total })}
+                </button>
+              )
+            ) : null}
+          </div>
 
           {addToToday.data ? (
             <p role="status" className="mt-2 flex items-center gap-2 text-[12px] text-[var(--color-muted)]">
@@ -201,27 +222,52 @@ export function ExercisesPage() {
           ) : null}
 
           {source === 'musclewiki' ? (
-            <ExerciseBrowse
-              meta={meta}
-              search={search}
-              muscles={muscles}
-              category={equipment}
-            />
+            <ExerciseBrowse meta={meta} search={search} muscles={muscles} category={equipment} />
           ) : (
             <QueryState
-              isLoading={isLoading}
-              isError={isError}
-              error={error}
-              refetch={() => void refetch()}
-              isEmpty={!isLoading && !isError && exercises.length === 0}
+              isLoading={catalog.isLoading}
+              isError={catalog.isError}
+              error={catalog.error}
+              refetch={() => void catalog.refetch()}
+              isEmpty={!catalog.isLoading && !catalog.isError && catalog.total === 0}
               empty={<EmptyState title={t('noExercisesLibrary')} />}
             >
-              <LibraryList
-                rows={filtered}
-                locale={exerciseLocale}
-                adding={addToToday.isPending}
-                onAdd={(ex) => addToToday.mutate(ex)}
-              />
+              {selected ? (
+                <ExerciseDetail
+                  exercise={selected.ex}
+                  anatomy={selected.anatomy}
+                  locale={catalog.locale}
+                  adding={addToToday.isPending}
+                  onAdd={() => addToToday.mutate(selected.ex)}
+                />
+              ) : null}
+              {!browsing && yoursTotal === 0 ? (
+                <p className="mt-2 text-[12px] text-[var(--color-muted)]">{t('essentialsHint')}</p>
+              ) : null}
+              {shown === 0 ? (
+                <p className="py-8 text-center text-sm text-[var(--color-muted)]">{t('noExerciseMatches')}</p>
+              ) : (
+                <ExerciseList
+                  items={items}
+                  mode="page"
+                  selectedId={selectedId}
+                  adding={addToToday.isPending}
+                  onSelect={(entry) => setSelectedId(entry.ex.id === selectedId ? null : entry.ex.id)}
+                  onAdd={(entry) => addToToday.mutate(entry.ex)}
+                  className="mt-2 h-[calc(var(--app-dvh)-15rem)] rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] lg:h-[calc(var(--app-dvh)-9rem)]"
+                  footer={
+                    !browsing && yoursTotal > YOURS_LIMIT ? (
+                      <button
+                        type="button"
+                        onClick={() => setYoursExpanded((open) => !open)}
+                        className="dr-btn dr-btn-ghost m-2"
+                      >
+                        {yoursExpanded ? t('showFewerYours') : t('showAllYours', { count: yoursTotal })}
+                      </button>
+                    ) : null
+                  }
+                />
+              )}
             </QueryState>
           )}
         </section>
@@ -230,104 +276,18 @@ export function ExercisesPage() {
   );
 }
 
-function LibraryList({
-  rows,
-  locale,
-  adding,
-  onAdd,
-}: {
-  rows: { ex: ExerciseDefinition; anatomy: ReturnType<typeof anatomyOf>; names: { primary: string; alt: string; search: string } }[];
-  locale: ReturnType<typeof resolveExerciseLocale>;
-  adding: boolean;
-  onAdd: (ex: ExerciseDefinition) => void;
-}) {
-  const { t } = useTranslation();
-  const [selectedId, setSelectedId] = useState<string | null>(null);
-  const listRef = useRef<HTMLDivElement>(null);
-  const selected = rows.find((row) => row.ex.id === selectedId) ?? null;
-
-  const virtualizer = useVirtualizer({
-    count: rows.length,
-    getScrollElement: () => listRef.current,
-    estimateSize: () => ROW_HEIGHT,
-    overscan: 8,
-  });
-
-  if (rows.length === 0) {
-    return <p className="py-8 text-center text-sm text-[var(--color-muted)]">{t('noExerciseMatches')}</p>;
-  }
-
+function ChipGroup({ label, id, children }: { label: string; id: string; children: React.ReactNode }) {
   return (
-    <>
-      {selected ? (
-        <ExerciseDetail
-          exercise={selected.ex}
-          anatomy={selected.anatomy}
-          locale={locale}
-          adding={adding}
-          onAdd={() => onAdd(selected.ex)}
-        />
-      ) : null}
+    <div className="mt-3">
+      <p className="dr-label" id={id}>{label}</p>
       <div
-        ref={listRef}
-        className="mt-2 h-[calc(var(--app-dvh)-14rem)] overflow-y-auto rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] lg:h-[calc(var(--app-dvh)-9rem)]"
+        className="mt-1.5 flex gap-1.5 overflow-x-auto pb-0.5 lg:flex-wrap [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        role="group"
+        aria-labelledby={id}
       >
-        <div className="relative w-full" style={{ height: `${virtualizer.getTotalSize()}px` }}>
-          {virtualizer.getVirtualItems().map((item) => {
-            const { ex, anatomy, names } = rows[item.index];
-            const safeImage = isSafeHttpsImageUrl(ex.image_url) ? ex.image_url!.trim() : null;
-            const active = selectedId === ex.id;
-            return (
-              <div
-                key={ex.id}
-                className={`absolute left-0 top-0 flex w-full items-center border-b border-[var(--color-border)] hover:bg-[var(--color-hover)] ${
-                  active ? 'bg-[var(--color-accent-soft)] hover:bg-[var(--color-accent-soft)]' : ''
-                }`}
-                style={{ height: `${item.size}px`, transform: `translateY(${item.start}px)` }}
-              >
-                <button
-                  type="button"
-                  onClick={() => setSelectedId(active ? null : ex.id)}
-                  aria-pressed={active}
-                  className="flex h-full min-w-0 flex-1 items-center gap-3 pl-3 text-left touch-manipulation"
-                >
-                  {safeImage ? (
-                    <img
-                      src={safeImage}
-                      alt=""
-                      className="h-7 w-7 flex-shrink-0 rounded-md bg-[var(--color-hover)] object-cover"
-                      loading="lazy"
-                    />
-                  ) : (
-                    <div className="h-7 w-7 flex-shrink-0 rounded-md bg-[var(--color-hover)]" aria-hidden />
-                  )}
-                  <span className="flex min-w-0 flex-1 items-baseline gap-2">
-                    <span className="truncate font-medium text-[var(--color-ink)]">{names.primary}</span>
-                    {names.alt ? <span className="hidden truncate text-[12px] text-[var(--color-faint)] sm:inline">{names.alt}</span> : null}
-                  </span>
-                  {anatomy.equipment ? (
-                    <span className="hidden shrink-0 text-[12px] text-[var(--color-faint)] md:inline">{t(`equipment.${anatomy.equipment}`)}</span>
-                  ) : null}
-                  <span className="dr-chip h-5 shrink-0 px-1.5 text-[11px]">
-                    {anatomy.muscle ? t(`muscles.${anatomy.muscle}`) : t(`muscleGroups.${ex.muscle_group || 'other'}`)}
-                  </span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => onAdd(ex)}
-                  disabled={adding}
-                  className="dr-icon-btn dr-tap dr-tap-w mx-1 shrink-0"
-                  aria-label={`${t('addToToday')}: ${names.primary}`}
-                  title={t('addToToday')}
-                >
-                  <Plus size={15} aria-hidden />
-                </button>
-              </div>
-            );
-          })}
-        </div>
+        {children}
       </div>
-    </>
+    </div>
   );
 }
 

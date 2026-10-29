@@ -12,6 +12,7 @@ import type {
   WorkoutExercise,
 } from '../../types';
 import { importJournalWorkouts, parseJournalImport } from '../journalImport';
+import { summarizeUsage, type ExerciseUsage, type UsageRow } from '../exerciseUsage';
 import { getDb, newId, nowIso, todayIso } from './client';
 import type { DbClient } from './dbClient';
 import {
@@ -187,10 +188,16 @@ export async function addWorkoutExercise(
   const db = await getDb();
   const id = newId();
   const ts = nowIso();
+  // Several quick adds (the picker stays open) must not share a position the cache has not seen yet.
+  const last = await db.select<{ n: number | null }>(
+    'SELECT MAX(order_index) AS n FROM workout_exercises WHERE workout_day_id = ?',
+    [workoutDayId],
+  );
+  const orderIndex = Math.max(data.order_index, last[0]?.n == null ? 0 : Number(last[0].n) + 1);
   await db.execute(
     `INSERT INTO workout_exercises (id, workout_day_id, name, exercise_definition_id, order_index, created_at, updated_at)
      VALUES (?, ?, ?, ?, ?, ?, ?)`,
-    [id, workoutDayId, data.name, data.exercise_definition_id ?? null, data.order_index, ts, ts],
+    [id, workoutDayId, data.name, data.exercise_definition_id ?? null, orderIndex, ts, ts],
   );
   const rows = await db.select('SELECT * FROM workout_exercises WHERE id = ?', [id]);
   return rows[0] as unknown as WorkoutExercise;
@@ -279,6 +286,21 @@ export async function addExerciseSet(workoutExerciseId: string, setNumber: numbe
 }
 
 // ── Exercise library ─────────────────────────────────────────────────────────
+
+/** Every library exercise you have logged: sessions, last day and that day's best set. */
+export async function listExerciseUsage(userId: string): Promise<Record<string, ExerciseUsage>> {
+  const db = await getDb();
+  const rows = await db.select<UsageRow>(
+    `SELECT we.exercise_definition_id AS definition_id, wd.id AS workout_id, wd.date AS date,
+            s.weight AS weight, s.reps AS reps, COALESCE(s.completed, 0) AS completed
+     FROM workout_exercises we
+     JOIN workout_days wd ON wd.id = we.workout_day_id
+     LEFT JOIN exercise_sets s ON s.workout_exercise_id = we.id
+     WHERE wd.user_id = ? AND wd.deleted_at IS NULL AND we.exercise_definition_id IS NOT NULL`,
+    [userId],
+  );
+  return summarizeUsage(rows);
+}
 
 export async function listExercises(userId: string): Promise<ExerciseDefinition[]> {
   const db = await getDb();

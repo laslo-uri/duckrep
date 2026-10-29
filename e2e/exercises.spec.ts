@@ -106,3 +106,29 @@ test.describe('exercise content in Hungarian and Serbian', () => {
     await expect(page.getByRole('article').getByText('(angolul)')).toBeVisible();
   });
 });
+
+test.describe('exercises open on what matters, not the whole library', () => {
+  test('home shows yours and the essentials; the picker stays open for several adds', async ({ page }) => {
+    await page.setViewportSize({ width: 945, height: 1000 });
+    await openUnlocked(page, '/exercises');
+    await expect(page.getByRole('heading', { level: 2, name: /^chest$/i })).toBeVisible({ timeout: 20_000 });
+    await expect(page.getByRole('button', { name: /^add to today's activity: 3\/4 sit-up$/i })).toHaveCount(0);
+    await expect(page.getByRole('button', { name: /^all 917$/i })).toBeVisible();
+
+    await page.getByRole('searchbox').fill('bench press');
+    await page.getByRole('button', { name: /^add to today's activity: bench press$/i }).click();
+    await page.getByRole('button', { name: /^clear$/i }).click();
+    await expect(page.getByRole('heading', { level: 2, name: /^your exercises$/i })).toBeVisible();
+
+    await page.getByRole('status').getByRole('link', { name: /^open$/i }).click();
+    await page.getByRole('button', { name: /from library/i }).click();
+    const dialog = page.getByRole('dialog');
+    await dialog.getByRole('searchbox').fill('squat');
+    await dialog.getByRole('button', { name: /^add exercise: squat$/i }).click();
+    await dialog.getByRole('searchbox').fill('lat pulldown');
+    await dialog.getByRole('button', { name: /^add exercise: lat pulldown$/i }).click();
+    await expect(dialog.getByRole('status')).toHaveText(/2 added/i);
+    await dialog.getByRole('button', { name: /^done$/i }).click();
+    await expect(page.getByText(/^exercises\s*3$/i).first()).toBeVisible();
+  });
+});

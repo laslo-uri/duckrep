@@ -115,6 +115,7 @@ export function useWorkoutMutations({
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['workout', workoutId] });
+      queryClient.invalidateQueries({ queryKey: ['exercise-usage'] });
       optimistic.onSettledStats();
     },
     onError,

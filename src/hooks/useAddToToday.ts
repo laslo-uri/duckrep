@@ -16,7 +16,7 @@ export function useAddToToday<T = Def>(userId: string, resolve: (input: T) => Pr
       return { ...(await addExerciseToToday(userId, def)), name: def.name };
     },
     onSuccess: ({ workoutId }) => {
-      for (const key of ['workout-days', 'workout-days-stats', 'lifetime-training-totals', 'user-daily-training-stats', 'exercises']) {
+      for (const key of ['workout-days', 'workout-days-stats', 'lifetime-training-totals', 'user-daily-training-stats', 'exercises', 'exercise-usage']) {
         void queryClient.invalidateQueries({ queryKey: [key] });
       }
       void queryClient.invalidateQueries({ queryKey: ['workout', workoutId] });

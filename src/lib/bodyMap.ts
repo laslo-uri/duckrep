@@ -37,6 +37,13 @@ export const EQUIPMENT = [
 
 export type Equipment = (typeof EQUIPMENT)[number];
 
+/** free-exercise-db categories (powerlifting folded into strength). */
+export const EXERCISE_TYPES = ['strength', 'stretching', 'plyometrics', 'cardio', 'olympic', 'strongman'] as const;
+
+export type ExerciseType = (typeof EXERCISE_TYPES)[number];
+
+export type ExerciseLevel = 'beginner' | 'intermediate' | 'expert';
+
 /** The coarse muscle_group each muscle belongs to (what the library and stats use). */
 export const MUSCLE_GROUP_OF: Record<BodyMuscle, string> = {
   neck: 'shoulders',
@@ -79,7 +86,15 @@ const MUSCLEWIKI_NAMES: Record<BodyMuscle, string[]> = {
   calves: ['calves'],
 };
 
-export type ExerciseAnatomy = { muscle: BodyMuscle | null; equipment: Equipment | null };
+export type ExerciseAnatomy = {
+  muscle: BodyMuscle | null;
+  equipment: Equipment | null;
+  /** Custom exercises count as strength. */
+  type: ExerciseType;
+  level: ExerciseLevel | null;
+  /** One of the ~100 the page and the picker open on. */
+  essential: boolean;
+};
 
 /** Fallback for exercises the dataset does not know (custom and curated ones): the group's main muscle. */
 const GROUP_MAIN_MUSCLE: Record<string, BodyMuscle> = {
@@ -100,15 +115,22 @@ function isEquipment(value: string): value is Equipment {
   return (EQUIPMENT as readonly string[]).includes(value);
 }
 
+function isType(value: string): value is ExerciseType {
+  return (EXERCISE_TYPES as readonly string[]).includes(value);
+}
+
 export function anatomyOf(
   exercise: Pick<ExerciseDefinition, 'source_slug' | 'muscle_group'>,
   table: Record<string, string>,
 ): ExerciseAnatomy {
   const raw = exercise.source_slug ? table[exercise.source_slug] : undefined;
-  const [muscle = '', equipment = ''] = raw ? raw.split('|') : [];
+  const [muscle = '', equipment = '', level = '', type = '', essential = ''] = raw ? raw.split('|') : [];
   return {
     muscle: isMuscle(muscle) ? muscle : GROUP_MAIN_MUSCLE[exercise.muscle_group ?? ''] ?? null,
     equipment: isEquipment(equipment) ? equipment : null,
+    type: isType(type) ? type : 'strength',
+    level: level === 'beginner' || level === 'intermediate' || level === 'expert' ? level : null,
+    essential: essential === 'e',
   };
 }
 

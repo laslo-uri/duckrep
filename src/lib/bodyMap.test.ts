@@ -1,16 +1,28 @@
 import { describe, expect, it } from 'vitest';
 import { anatomyOf, matchesMuscles, muscleFromMuscleWiki, muscleWikiMuscles, type BodyMuscle } from './bodyMap';
 
-const table = { 'barbell-curl': 'biceps|barbell', 'plank': 'abs|bodyweight', 'odd': 'wings|spaceship' };
+const table = {
+  'barbell-curl': 'biceps|barbell|beginner|strength|e',
+  'hamstring-stretch': 'hamstrings|bodyweight|beginner|stretching|',
+  'odd': 'wings|spaceship|godlike|juggling|',
+};
 
 describe('body map', () => {
   it('reads muscle and equipment from the offline table', () => {
-    expect(anatomyOf({ source_slug: 'barbell-curl', muscle_group: 'biceps' }, table)).toEqual({ muscle: 'biceps', equipment: 'barbell' });
+    expect(anatomyOf({ source_slug: 'barbell-curl', muscle_group: 'biceps' }, table)).toEqual({
+      muscle: 'biceps',
+      equipment: 'barbell',
+      type: 'strength',
+      level: 'beginner',
+      essential: true,
+    });
+    expect(anatomyOf({ source_slug: 'hamstring-stretch', muscle_group: 'legs' }, table).type).toBe('stretching');
   });
 
   it('falls back to the group for custom exercises and unknown values', () => {
-    expect(anatomyOf({ source_slug: null, muscle_group: 'back' }, table)).toEqual({ muscle: 'lats', equipment: null });
-    expect(anatomyOf({ source_slug: 'odd', muscle_group: 'other' }, table)).toEqual({ muscle: null, equipment: null });
+    const none = { equipment: null, type: 'strength', level: null, essential: false };
+    expect(anatomyOf({ source_slug: null, muscle_group: 'back' }, table)).toEqual({ muscle: 'lats', ...none });
+    expect(anatomyOf({ source_slug: 'odd', muscle_group: 'other' }, table)).toEqual({ muscle: null, ...none });
   });
 
   it('filters by any selected muscle', () => {

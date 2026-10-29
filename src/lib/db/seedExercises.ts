@@ -114,3 +114,15 @@ export const CURATED_TWINS: Record<string, { id: string; equipment?: string }> =
   'Triceps Kickback': { id: 'Tricep_Dumbbell_Kickback' },
   'Triceps Overhead Extension': { id: 'Standing_Dumbbell_Triceps_Extension' },
 };
+
+/** With CURATED_EXERCISES, the "Essentials" the Exercises page and the activity picker open on. */
+export const ESSENTIAL_EXTRAS: string[] = [
+  'Front Barbell Squat', 'Sumo Deadlift', 'Dumbbell Flyes', 'Decline Barbell Bench Press', 'Wide-Grip Barbell Bench Press',
+  'Upright Barbell Row', 'Seated Dumbbell Press', 'Glute Ham Raise', 'Good Morning', 'Mountain Climbers', 'Rope Jumping',
+  'Bicycling, Stationary', 'Running, Treadmill', 'One-Arm Kettlebell Swings', "Farmer's Walk", 'Side Bridge', 'Superman',
+  'Bodyweight Squat', 'Straight-Arm Pulldown', 'Close-Grip Front Lat Pulldown', 'Inverted Row', 'Smith Machine Squat',
+  'Seated Calf Raise', 'Cable Rope Overhead Triceps Extension', 'EZ-Bar Curl', 'Incline Dumbbell Flyes', 'Decline Crunch',
+  'Flat Bench Lying Leg Raise', 'Dumbbell Step Ups', 'Barbell Glute Bridge', 'Thigh Abductor', 'Thigh Adductor',
+  'Dumbbell Shrug', 'Stiff-Legged Barbell Deadlift', 'Bent Over Two-Dumbbell Row', 'Rowing, Stationary', 'Air Bike',
+  'Bench Dips', 'Reverse Crunch',
+];

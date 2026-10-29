@@ -57,6 +57,10 @@ for (const theme of THEMES) {
         await expect(page).toHaveURL(/\/activity\/[0-9a-f-]{36}$/i, { timeout: 20_000 });
         await expect(page.getByRole('textbox', { name: /name this activity/i })).toBeVisible({ timeout: 15_000 });
         await axe(page, `activity@${width}`);
+        await page.getByRole('button', { name: /from library/i }).first().click();
+        await expect(page.getByRole('dialog').getByRole('heading', { name: /your exercises|essentials|chest/i }).first()).toBeVisible({ timeout: 15_000 });
+        await axe(page, `picker@${width}`);
+        await page.getByRole('dialog').getByRole('button', { name: /^done$/i }).click();
         expect(consoleErrors).toEqual([]);
       });
     }
