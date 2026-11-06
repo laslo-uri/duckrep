@@ -12,6 +12,12 @@ import { handleMuscleWiki } from './api/musclewiki.ts'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const pkg = JSON.parse(readFileSync(resolve(__dirname, 'package.json'), 'utf-8')) as { version: string }
+const vercel = JSON.parse(readFileSync(resolve(__dirname, 'vercel.json'), 'utf-8')) as {
+  headers: { source: string; headers: { key: string; value: string }[] }[]
+}
+const productionHeaders = Object.fromEntries(
+  (vercel.headers.find((rule) => rule.source === '/(.*)')?.headers ?? []).map(({ key, value }) => [key, value]),
+)
 
 const appVersionDefine = {
   __APP_VERSION__: JSON.stringify(pkg.version),
@@ -51,6 +57,7 @@ export default defineConfig(({ mode }) => ({
     tailwindcss(),
   ],
   define: appVersionDefine,
+  preview: { headers: productionHeaders },
   build: {
     rollupOptions: {
       output: {

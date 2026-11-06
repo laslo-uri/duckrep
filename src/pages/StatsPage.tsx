@@ -173,7 +173,7 @@ export function StatsPage() {
             <h2 id="stats-week" className="mb-2 text-[13px] font-semibold text-[var(--color-ink)]">
               {t('periodThisWeek')}
             </h2>
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-3 gap-2 max-[359px]:grid-cols-2">
               <WeekCard label={t('sessionsTotal')} value={String(week.thisWeek.sessions)} delta={delta(week.thisWeek.sessions, week.lastWeek.sessions, String)} />
               <WeekCard label={t('statSets')} value={String(week.thisWeek.sets)} delta={delta(week.thisWeek.sets, week.lastWeek.sets, String)} />
               <WeekCard label={t('statVolume')} value={kg(week.thisWeek.volume)} delta={delta(week.thisWeek.volume, week.lastWeek.volume, kg)} />

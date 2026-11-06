@@ -128,7 +128,7 @@ export function HomePage() {
   const renderDates = (period: JournalPeriod) =>
     period.dates.map(({ date, activities }) => (
       <section key={date} aria-label={formatDateHeader(date)}>
-        <h3 className="dr-group sticky top-[var(--dr-header-h)] z-10 bg-[var(--color-paper)]/95 backdrop-blur-sm md:bg-[var(--color-panel)]/95">
+        <h3 className="dr-group dr-sticky-bar sticky top-[calc(var(--dr-safe-top)+var(--dr-header-h))] z-10 bg-[var(--color-paper)]/95 backdrop-blur-sm md:bg-[var(--color-panel)]/95">
           <span>{formatDateHeader(date)}</span>
           <span className="text-[var(--color-faint)] tabular-nums">{activities.length}</span>
         </h3>
@@ -209,7 +209,7 @@ export function HomePage() {
               className="flex items-center gap-3 rounded-lg border border-[var(--color-accent)]/40 bg-[var(--color-accent-soft)] px-3 py-2 dr-tap touch-manipulation hover:border-[var(--color-accent)]"
             >
               <span className="dr-live-dot shrink-0" aria-hidden />
-              <span className="text-[11px] font-semibold uppercase tracking-wide text-[var(--color-accent)]">
+              <span className="text-[11px] font-semibold uppercase tracking-wide text-[var(--color-accent-on-soft)]">
                 {t('sessionLive')}
               </span>
               <span className="min-w-0 flex-1 truncate font-medium">
@@ -233,7 +233,7 @@ export function HomePage() {
               if (period.kind !== 'month') {
                 return (
                   <section key={period.key} aria-labelledby={`period-${period.key}`}>
-                    <h2 id={`period-${period.key}`} className="flex h-9 items-center gap-2 border-b border-[var(--color-border)] px-3 text-[13px] font-semibold text-[var(--color-ink)]">
+                    <h2 id={`period-${period.key}`} className="flex min-h-9 flex-wrap items-center gap-x-2 border-b border-[var(--color-border)] px-3 py-1 text-[13px] font-semibold text-[var(--color-ink)]">
                       {periodTitle(period)}
                       <span className="text-[12px] font-normal tabular-nums text-[var(--color-muted)]">
                         {period.totals.sessions > 0 ? totalsLabel(period.totals) : t('periodEmptyWeek')}
@@ -252,7 +252,7 @@ export function HomePage() {
                       id={`period-${period.key}`}
                       aria-expanded={open}
                       onClick={() => toggleMonth(period.key)}
-                      className="dr-tap flex h-9 w-full items-center gap-2 px-3 text-left text-[13px] font-semibold capitalize text-[var(--color-ink)] hover:bg-[var(--color-hover)]"
+                      className="dr-tap flex min-h-9 w-full flex-wrap items-center gap-x-2 px-3 py-1 text-left text-[13px] font-semibold capitalize text-[var(--color-ink)] hover:bg-[var(--color-hover)]"
                     >
                       <ChevronRight size={14} aria-hidden className={`shrink-0 text-[var(--color-muted)] transition-transform ${open ? 'rotate-90' : ''}`} />
                       {periodTitle(period)}
@@ -354,7 +354,7 @@ function ActivityRow({
         type="button"
         onClick={onDelete}
         disabled={deleting}
-        className="dr-btn dr-btn-ghost dr-icon-btn relative z-10 hover:!text-[var(--color-error)] shrink-0 md:opacity-0 md:focus-visible:opacity-100 md:group-hover:opacity-100"
+        className="dr-btn dr-btn-ghost dr-icon-btn relative z-10 hover:!text-[var(--color-error)] shrink-0 desk:opacity-0 desk:focus-visible:opacity-100 desk:group-hover:opacity-100"
         aria-label={t('removeLog')}
         title={t('removeLog')}
       >

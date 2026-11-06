@@ -2,8 +2,13 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 
+const MAX_BODY_BYTES = 1_000_000;
+
 /**
  * Vite dev/preview middleware — reads/writes the same user-store.json as Tauri desktop.
+ * Only pages served by this dev server may use it: any website open in the same browser could
+ * otherwise read the preferences or switch off the auto-lock. USER_STORE_DIR replaces the app data
+ * folder, so test runs leave the real desktop preferences alone.
  *
  * @param {{ appId: string }} options Tauri bundle identifier (e.g. com.lectory.app)
  */
@@ -11,7 +16,7 @@ export function userStorePlugin({ appId }) {
   if (!appId) throw new Error('userStorePlugin requires appId');
 
   function storePath() {
-    const base = process.env.APPDATA || path.join(os.homedir(), '.config');
+    const base = process.env.USER_STORE_DIR || process.env.APPDATA || path.join(os.homedir(), '.config');
     return path.join(base, appId, 'user-store.json');
   }
 
@@ -43,20 +48,27 @@ export function userStorePlugin({ appId }) {
     const body = JSON.stringify(data);
     res.statusCode = code;
     res.setHeader('Content-Type', 'application/json; charset=utf-8');
-    res.setHeader('Access-Control-Allow-Origin', '*');
     res.end(body);
+  }
+
+  /** @param {import('connect').IncomingMessage} req */
+  function fromThisServer(req) {
+    if (req.headers['sec-fetch-site'] === 'cross-site') return false;
+    const origin = req.headers.origin;
+    if (!origin) return true;
+    try {
+      return new URL(origin).host === req.headers.host;
+    } catch {
+      return false;
+    }
   }
 
   function middleware(req, res, next) {
     const url = (req.url || '').split('?')[0];
     if (url !== '/api/user-store') return next();
 
-    if (req.method === 'OPTIONS') {
-      res.statusCode = 204;
-      res.setHeader('Access-Control-Allow-Origin', '*');
-      res.setHeader('Access-Control-Allow-Methods', 'GET, PUT, OPTIONS');
-      res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-      res.end();
+    if (!fromThisServer(req)) {
+      sendJson(res, 403, { error: 'origin' });
       return;
     }
 
@@ -67,8 +79,18 @@ export function userStorePlugin({ appId }) {
 
     if (req.method === 'PUT') {
       const chunks = [];
-      req.on('data', (c) => chunks.push(c));
+      let size = 0;
+      let tooLarge = false;
+      req.on('data', (c) => {
+        size += c.length;
+        if (size > MAX_BODY_BYTES) tooLarge = true;
+        else chunks.push(c);
+      });
       req.on('end', () => {
+        if (tooLarge) {
+          sendJson(res, 413, { error: 'too large' });
+          return;
+        }
         try {
           const raw = Buffer.concat(chunks).toString('utf8') || '{}';
           const data = JSON.parse(raw);

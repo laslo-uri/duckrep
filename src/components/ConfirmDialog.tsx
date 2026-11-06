@@ -36,7 +36,7 @@ export function ConfirmDialog({
 
   const confirmClass =
     variant === 'danger'
-      ? '!bg-[var(--color-error)] !text-white border-transparent hover:opacity-90'
+      ? '!bg-[var(--color-error)] !text-[var(--color-on-error)] border-transparent hover:opacity-90'
       : 'dr-btn-primary';
 
   return (
@@ -48,7 +48,7 @@ export function ConfirmDialog({
         aria-modal="true"
         aria-labelledby="confirm-dialog-title"
         aria-describedby="confirm-dialog-message"
-        className="dr-enter relative w-full sm:max-w-sm rounded-t-xl sm:rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-4 pb-[max(1rem,env(safe-area-inset-bottom))] shadow-[var(--shadow-pop)]"
+        className="dr-enter relative max-h-full w-full overflow-y-auto sm:max-w-sm rounded-t-xl sm:rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-4 pb-[max(1rem,env(safe-area-inset-bottom))] shadow-[var(--shadow-pop)]"
       >
         <h2 id="confirm-dialog-title" className="text-[15px] font-semibold text-[var(--color-ink)]">
           {title}

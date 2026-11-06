@@ -66,7 +66,7 @@ export function BirthCalendar({
   }, [openMenu]);
 
   const triggerClass = (open: boolean) =>
-    `dr-press inline-flex dr-tap w-full items-center justify-between gap-1 rounded-lg border px-2.5 text-sm font-medium text-[var(--color-ink)] ${
+    `dr-press inline-flex dr-tap w-full items-center justify-between gap-1 rounded-lg border px-2.5 text-sm font-medium text-[var(--color-ink)] max-[359px]:justify-center max-[359px]:px-1 ${
       open
         ? 'border-transparent bg-[var(--color-paper)] ring-2 ring-[var(--color-accent)]'
         : 'border-[var(--color-border)] bg-[var(--color-paper)] hover:bg-[var(--color-hover)]'
@@ -83,7 +83,7 @@ export function BirthCalendar({
 
   return (
     <div className={`rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-3 ${className}`}>
-      <div ref={headerRef} className="flex items-center gap-2">
+      <div ref={headerRef} className="relative flex items-center gap-1 sm:gap-2">
         <button
           type="button"
           className="dr-press inline-flex dr-tap dr-tap-w shrink-0 items-center justify-center rounded-lg text-[var(--color-muted)] hover:bg-[var(--color-hover)] hover:text-[var(--color-ink)] disabled:opacity-30"
@@ -99,7 +99,7 @@ export function BirthCalendar({
         >
           <ChevronLeft size={18} />
         </button>
-        <div className="relative min-w-0 flex-1">
+        <div className="min-w-0 flex-1">
           <button
             type="button"
             aria-haspopup="listbox"
@@ -111,14 +111,14 @@ export function BirthCalendar({
             <span className="sr-only">, {t('chooseMonth')}</span>
             <ChevronDown
               size={16}
-              className={`shrink-0 text-[var(--color-muted)] transition-transform ${openMenu === 'month' ? 'rotate-180' : ''}`}
+              className={`shrink-0 text-[var(--color-muted)] transition-transform max-[359px]:hidden ${openMenu === 'month' ? 'rotate-180' : ''}`}
             />
           </button>
           {openMenu === 'month' ? (
             <div
               role="listbox"
               aria-label={t('chooseMonth')}
-              className="absolute left-0 top-[calc(100%+6px)] z-30 grid w-[15rem] max-w-[calc(100vw-2.5rem)] grid-cols-3 gap-1 rounded-md border border-[var(--color-border)] bg-[var(--color-paper)] p-1.5 shadow-[var(--shadow-pop)]"
+              className="absolute left-0 top-[calc(100%+6px)] z-30 grid w-full max-w-[15rem] grid-cols-3 gap-1 rounded-md border border-[var(--color-border)] bg-[var(--color-paper)] p-1.5 shadow-[var(--shadow-pop)]"
             >
               {monthNames.map((name, index) => {
                 const disabled = cursor.year === now.getFullYear() && index > now.getMonth();
@@ -142,7 +142,7 @@ export function BirthCalendar({
             </div>
           ) : null}
         </div>
-        <div className="relative w-[6.25rem] shrink-0">
+        <div className="relative w-[3.25rem] shrink-0 min-[360px]:w-[5.25rem] sm:w-[6.25rem]">
           <button
             type="button"
             aria-haspopup="listbox"
@@ -154,7 +154,7 @@ export function BirthCalendar({
             <span className="sr-only">, {t('chooseYear')}</span>
             <ChevronDown
               size={16}
-              className={`shrink-0 text-[var(--color-muted)] transition-transform ${openMenu === 'year' ? 'rotate-180' : ''}`}
+              className={`shrink-0 text-[var(--color-muted)] transition-transform max-[359px]:hidden ${openMenu === 'year' ? 'rotate-180' : ''}`}
             />
           </button>
           {openMenu === 'year' ? (
@@ -220,6 +220,7 @@ export function BirthCalendar({
               key={iso}
               type="button"
               disabled={future}
+              aria-pressed={selected}
               onClick={() => onChange(selected ? '' : iso)}
               className={`dr-press min-h-[36px] rounded-lg text-sm disabled:opacity-30 ${
                 selected

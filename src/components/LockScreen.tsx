@@ -48,7 +48,8 @@ export function LockScreen({ state, onUnlocked }: { state: Exclude<VaultState, '
   };
 
   const langs = ['en', 'sr', 'hu'] as const;
-  const nextLang = langs[(langs.indexOf(i18n.language.slice(0, 2) as (typeof langs)[number]) + 1) % langs.length];
+  const language = (i18n.resolvedLanguage ?? i18n.language).slice(0, 2);
+  const nextLang = langs[(langs.indexOf(language as (typeof langs)[number]) + 1) % langs.length];
 
   return (
     <div className="relative flex min-h-[var(--app-dvh)] flex-col bg-[var(--color-paper)] text-[var(--color-ink)]">
@@ -103,7 +104,7 @@ export function LockScreen({ state, onUnlocked }: { state: Exclude<VaultState, '
           <div className="gate-foot fg-enter fg-3">
             <BackToRootsware />
             <button type="button" className="rw-back gate-lang" onClick={() => void i18n.changeLanguage(nextLang)} aria-label={t('switchLanguage', { lang: nextLang.toUpperCase() })} title={t('switchLanguage', { lang: nextLang.toUpperCase() })}>
-              {i18n.language.slice(0, 2).toUpperCase()}
+              {language.toUpperCase()}
             </button>
           </div>
         </div>

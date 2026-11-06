@@ -10,8 +10,10 @@ const LANG_LABEL: Record<(typeof LANG_CYCLE)[number], string> = {
 
 export function LanguageSwitcher({ className = '' }: { className?: string }) {
   const { i18n, t } = useTranslation();
-  const current = (LANG_CYCLE.includes(i18n.language as (typeof LANG_CYCLE)[number])
-    ? i18n.language
+  // resolvedLanguage: a browser on sr-RS or hu-HU reports the regional tag in i18n.language
+  const language = i18n.resolvedLanguage ?? i18n.language;
+  const current = (LANG_CYCLE.includes(language as (typeof LANG_CYCLE)[number])
+    ? language
     : 'en') as (typeof LANG_CYCLE)[number];
   const idx = LANG_CYCLE.indexOf(current);
   const nextLang = LANG_CYCLE[(idx + 1) % LANG_CYCLE.length];

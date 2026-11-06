@@ -30,6 +30,43 @@ describe('MuscleWiki proxy', () => {
     expect(tauri.headers.get('access-control-allow-origin')).toBe('http://tauri.localhost');
   });
 
+  it('refuses a cross-site <video> or <img>, which sends no Origin', async () => {
+    const fetchMock = vi.fn(async () => new Response('bytes', { headers: { 'content-type': 'video/mp4' } }));
+    vi.stubGlobal('fetch', fetchMock);
+    const path = '/stream/videos/branded/male-curl.mp4';
+    const embed = await handleMuscleWiki(call(path, { headers: { 'sec-fetch-site': 'cross-site' } }), 'mw_key');
+    expect(embed.status).toBe(403);
+    const other = await handleMuscleWiki(call(path, { headers: { 'sec-fetch-site': 'cross-site', referer: 'https://evil.example/' } }), 'mw_key');
+    expect(other.status).toBe(403);
+    expect(fetchMock).not.toHaveBeenCalled();
+
+    const shell = await handleMuscleWiki(call(path, { headers: { 'sec-fetch-site': 'cross-site', referer: 'http://tauri.localhost/' } }), 'mw_key');
+    expect(shell.status).toBe(200);
+    const own = await handleMuscleWiki(call(path, { headers: { 'sec-fetch-site': 'same-origin' } }), 'mw_key');
+    expect(own.status).toBe(200);
+  });
+
+  it('refuses an oversized path', async () => {
+    const response = await handleMuscleWiki(call(`/search?q=${'a'.repeat(600)}`), 'mw_key');
+    expect(response.status).toBe(400);
+  });
+
+  it('limits one address per minute and spends no upstream call over it', async () => {
+    const fetchMock = vi.fn(async () => new Response('[]', { headers: { 'content-type': 'application/json' } }));
+    vi.stubGlobal('fetch', fetchMock);
+    const headers = { 'x-forwarded-for': '203.0.113.7, 10.0.0.1' };
+    for (let i = 0; i < 120; i += 1) {
+      expect((await handleMuscleWiki(call('/muscles', { headers }), 'mw_key')).status).toBe(200);
+    }
+    const blocked = await handleMuscleWiki(call('/muscles', { headers }), 'mw_key');
+    expect(blocked.status).toBe(429);
+    expect(blocked.headers.get('retry-after')).toBe('60');
+    expect(fetchMock).toHaveBeenCalledTimes(120);
+
+    const next = await handleMuscleWiki(call('/muscles', { headers: { 'x-forwarded-for': '203.0.113.8' } }), 'mw_key');
+    expect(next.status).toBe(200);
+  });
+
   it('adds the key server-side and passes the video headers through', async () => {
     const fetchMock = vi.fn<(url: URL, init?: RequestInit) => Promise<Response>>(async () =>
       new Response('bytes', {

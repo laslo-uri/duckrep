@@ -78,7 +78,7 @@ export function ExerciseCard({
   return (
     <section
       aria-label={exercise.name}
-      className="overflow-hidden rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)]"
+      className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)]"
       style={circuitColor ? { boxShadow: `inset 3px 0 0 ${circuitColor}` } : undefined}
     >
       {/* Header row: number, name, circuit, progress, delete */}
@@ -156,7 +156,7 @@ export function ExerciseCard({
           onBlur={(e) => saveGoals(e.currentTarget.value)}
           placeholder={t('goalsPlaceholder')}
           aria-label={t('goals')}
-          className="dr-tap min-w-0 flex-1 bg-transparent text-[12px] text-[var(--color-ink)] placeholder:text-[var(--color-faint)] focus:outline-none"
+          className="dr-tap min-w-0 flex-1 bg-transparent text-[16px] text-[var(--color-ink)] placeholder:text-[var(--color-faint)] desk:text-[12px]"
         />
         <SelectMenu
           label={t('circuitLabel')}
@@ -182,14 +182,14 @@ export function ExerciseCard({
 
       {sets.length > 0 && (
         <div
-          className="flex h-7 items-center gap-2 border-b border-[var(--color-border)] px-3 text-[11px] font-medium uppercase tracking-wide text-[var(--color-faint)]"
+          className="flex h-7 items-center gap-2 border-b border-[var(--color-border)] px-3 text-[11px] font-medium uppercase tracking-wide text-[var(--color-faint)] max-sm:gap-1 max-sm:px-2"
           aria-hidden
         >
           <span className="w-7 shrink-0 text-center md:w-6">✓</span>
-          <span className="w-5 shrink-0 text-center">#</span>
-          <span className="w-14 shrink-0 text-center">{t('reps')}</span>
-          <span className="w-3 shrink-0" />
-          <span className="w-16 shrink-0 text-center">{t('unitKg')}</span>
+          <span className="w-5 shrink-0 text-center max-sm:w-4">#</span>
+          <span className="w-14 shrink-0 text-center max-sm:w-12">{t('reps')}</span>
+          <span className="w-3 shrink-0 max-sm:w-2" />
+          <span className="w-16 shrink-0 text-center max-sm:w-14">{t('unitKg')}</span>
           <span className="hidden flex-1 sm:block">{t('setNote')}</span>
         </div>
       )}
@@ -213,7 +213,7 @@ export function ExerciseCard({
         type="button"
         onClick={onAddSet}
         disabled={isAddingSet}
-        className="dr-tap flex w-full items-center gap-2 px-3 py-1 text-left text-[12px] text-[var(--color-muted)] transition-colors hover:bg-[var(--color-hover)] hover:text-[var(--color-ink)] disabled:opacity-50"
+        className="dr-tap flex w-full items-center gap-2 rounded-b-lg px-3 py-1 text-left text-[12px] text-[var(--color-muted)] transition-colors hover:bg-[var(--color-hover)] hover:text-[var(--color-ink)] disabled:opacity-50"
       >
         <Plus size={13} aria-hidden />
         {t('addSet')}

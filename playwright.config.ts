@@ -1,4 +1,5 @@
 import { readFileSync, existsSync } from 'node:fs'
+import { tmpdir } from 'node:os'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { defineConfig, devices } from '@playwright/test'
@@ -42,8 +43,12 @@ export default defineConfig({
     reuseExistingServer: !process.env.CI,
     stdout: 'pipe',
     stderr: 'pipe',
-    env: Object.fromEntries(
-      Object.entries(process.env).filter((entry): entry is [string, string] => entry[1] != null),
-    ),
+    env: {
+      ...Object.fromEntries(
+        Object.entries(process.env).filter((entry): entry is [string, string] => entry[1] != null),
+      ),
+      // The dev server keeps preferences in user-store.json; never the desktop app's real one.
+      USER_STORE_DIR: resolve(tmpdir(), 'duckrep-e2e-user-store'),
+    },
   },
 })

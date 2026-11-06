@@ -36,13 +36,12 @@ export function RestTimer({
     <div
       className="fixed z-40 inset-x-3 md:inset-x-auto md:right-6 bottom-[calc(var(--dr-tabbar-h)+0.75rem+env(safe-area-inset-bottom))] md:bottom-6 md:w-72"
       role="timer"
-      aria-live="polite"
-      aria-atomic="true"
+      aria-label={t('restTitle')}
     >
       <div className="rounded-lg bg-[var(--color-accent)] text-[var(--color-on-accent)] shadow-[var(--shadow-pop)] px-3 py-2.5">
-        <div className="flex items-center justify-between gap-3">
+        <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <p className="dr-label !text-[var(--color-on-accent)] opacity-70">{t('restTitle')}</p>
+            <p className="dr-label !text-[var(--color-on-accent)]">{t('restTitle')}</p>
             <p className="text-[24px] font-semibold tabular-nums leading-none mt-0.5">{label}</p>
           </div>
           <div className="flex items-center gap-2">

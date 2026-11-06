@@ -122,7 +122,7 @@ function ConsentBanner({ ids }: { ids: AnalyticsIds }) {
       role="dialog"
       aria-labelledby="cookie-consent-title"
       aria-describedby="cookie-consent-text"
-      className="fixed inset-x-0 bottom-0 z-[60] p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:p-4"
+      className="fixed inset-x-0 bottom-0 z-[60] max-h-dvh overflow-y-auto p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:p-4"
     >
       <div className="mx-auto flex max-w-screen-md flex-col gap-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-4 text-[var(--color-ink)] shadow-[var(--shadow-card)] sm:flex-row sm:items-center sm:gap-5">
         <div className="flex-1 text-sm">

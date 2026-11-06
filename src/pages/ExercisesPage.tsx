@@ -115,7 +115,7 @@ export function ExercisesPage() {
         }
       />
       <PageBody className="lg:grid lg:grid-cols-[272px_minmax(0,1fr)] lg:items-start lg:gap-6">
-        <aside className="lg:sticky lg:top-[calc(var(--dr-header-h)+1rem)]" aria-label={t('bodyMap')}>
+        <aside className="dr-sticky-bar lg:sticky lg:top-[calc(var(--dr-header-h)+1rem)]" aria-label={t('bodyMap')}>
           <button
             type="button"
             aria-expanded={mapOpen}
@@ -254,7 +254,7 @@ export function ExercisesPage() {
                   adding={addToToday.isPending}
                   onSelect={(entry) => setSelectedId(entry.ex.id === selectedId ? null : entry.ex.id)}
                   onAdd={(entry) => addToToday.mutate(entry.ex)}
-                  className="mt-2 h-[calc(var(--app-dvh)-15rem)] rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] lg:h-[calc(var(--app-dvh)-9rem)]"
+                  className="mt-2 h-[calc(var(--app-dvh)-15rem)] min-h-64 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] lg:h-[calc(var(--app-dvh)-9rem)]"
                   footer={
                     !browsing && yoursTotal > YOURS_LIMIT ? (
                       <button

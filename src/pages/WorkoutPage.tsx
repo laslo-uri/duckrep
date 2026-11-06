@@ -19,7 +19,7 @@ function BackToJournal() {
     <Link
       to="/journal"
       aria-label={t('backToJournal')}
-      className="dr-tap -ml-1 inline-flex shrink-0 items-center gap-1 rounded-md px-1 text-[13px] text-[var(--color-muted)] hover:text-[var(--color-ink)]"
+      className="dr-tap dr-tap-w -ml-1 inline-flex shrink-0 items-center justify-center gap-1 rounded-md px-1 text-[13px] text-[var(--color-muted)] hover:text-[var(--color-ink)]"
     >
       <ChevronLeft size={15} aria-hidden />
       {t('myJournal')}
@@ -107,7 +107,7 @@ export function WorkoutPage() {
             error={error}
             refetch={() => void refetch()}
             isEmpty={isFetched}
-            empty={<EmptyState title={t('notFound')} />}
+            empty={<EmptyState headingLevel="h1" title={t('notFound')} />}
           >
             {null}
           </QueryState>

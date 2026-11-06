@@ -1,4 +1,4 @@
-import { ACTIVITY_TYPES, type ActivityMediaItem, type ActivityType } from '../types';
+import { ACTIVITY_TYPES, WORKOUT_DAY_ICONS, type ActivityMediaItem, type ActivityType } from '../types';
 import type { DbClient } from './db/dbClient';
 import { newId, nowIso } from './db/utils';
 
@@ -47,6 +47,9 @@ export type JournalImportResult = {
 
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 
+/** Larger than any real journal; a bigger file is refused before it is read into memory. */
+export const MAX_IMPORT_BYTES = 50 * 1024 * 1024;
+
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value);
 }
@@ -55,6 +58,16 @@ function asNullableString(value: unknown): string | null {
   if (typeof value !== 'string') return null;
   const trimmed = value.trim();
   return trimmed ? trimmed : null;
+}
+
+function asTimestamp(value: unknown): string | null {
+  const text = asNullableString(value);
+  return text && Number.isFinite(Date.parse(text)) ? text : null;
+}
+
+function asIconKey(value: unknown): string | null {
+  const key = asNullableString(value);
+  return key && (WORKOUT_DAY_ICONS as readonly string[]).includes(key) ? key : null;
 }
 
 function asActivityType(value: unknown): ActivityType {
@@ -133,7 +146,7 @@ export function parseJournalImport(raw: unknown): JournalImportFile | null {
   const workouts: JournalImportWorkout[] = [];
   for (const entry of raw.workouts) {
     if (!isRecord(entry) || typeof entry.id !== 'string' || !entry.id.trim()) return null;
-    if (typeof entry.date !== 'string' || !DATE_RE.test(entry.date)) return null;
+    if (typeof entry.date !== 'string' || !DATE_RE.test(entry.date) || !Number.isFinite(Date.parse(entry.date))) return null;
     const exercises = asExercises(entry);
     if (!exercises) return null;
     workouts.push({
@@ -141,9 +154,9 @@ export function parseJournalImport(raw: unknown): JournalImportFile | null {
       date: entry.date,
       title: asNullableString(entry.title),
       notes: asNullableString(entry.notes),
-      icon: asNullableString(entry.icon),
-      started_at: asNullableString(entry.started_at),
-      ended_at: asNullableString(entry.ended_at),
+      icon: asIconKey(entry.icon),
+      started_at: asTimestamp(entry.started_at),
+      ended_at: asTimestamp(entry.ended_at),
       activity_type: asActivityType(entry.activity_type),
       media: asMedia(entry.media),
       exercises,

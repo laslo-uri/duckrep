@@ -27,7 +27,7 @@ export function UnitInput({
         aria-invalid={invalid || undefined}
         onChange={(event) => onChange(event.target.value)}
         className={`dr-input h-9 max-md:h-11 w-full pr-12 tabular-nums ${
-          invalid ? 'border-[var(--color-error)]' : 'border-[var(--color-border)]'
+          invalid ? 'border-[var(--color-error)]' : 'border-[var(--color-border)] focus:border-[var(--color-accent)]'
         }`}
       />
       <span

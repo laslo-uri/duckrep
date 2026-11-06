@@ -52,15 +52,15 @@ export function PageHeader({
   children?: ReactNode;
 }) {
   return (
-    <div className="sticky top-0 z-30 flex h-[var(--dr-header-h)] shrink-0 items-center gap-2 border-b border-[var(--color-border)] bg-[var(--color-paper)]/90 px-3 backdrop-blur-md md:px-4">
-      <Link to="/journal" className="dr-tap dr-tap-w -ml-1 flex items-center justify-center md:hidden" aria-label="Duckrep">
+    <div className="dr-sticky-bar sticky top-[var(--dr-safe-top)] z-30 flex h-[var(--dr-header-h)] shrink-0 items-center gap-2 border-b border-[var(--color-border)] bg-[var(--color-paper)]/90 px-3 backdrop-blur-md md:px-4">
+      <Link to="/journal" className="dr-tap dr-tap-w -ml-1 flex items-center justify-center max-[359px]:hidden md:hidden" aria-label="Duckrep">
         <DuckrepMark size={24} className="rounded-md" />
       </Link>
       <div className="flex min-w-0 flex-1 items-center gap-2 overflow-hidden whitespace-nowrap">
         {children ?? (
           <>
             <h1 className="truncate text-[14px] font-semibold text-[var(--color-ink)] md:text-[13px]">{title}</h1>
-            {meta ? <span className="truncate text-[12px] text-[var(--color-faint)]">{meta}</span> : null}
+            {meta ? <span className="truncate text-[12px] text-[var(--color-faint)] max-[359px]:hidden">{meta}</span> : null}
           </>
         )}
       </div>
@@ -106,7 +106,7 @@ function Sidebar({ onNew, newPending }: { onNew: () => void; newPending: boolean
   return (
     <aside className="sticky top-0 hidden h-[var(--app-dvh)] w-14 shrink-0 flex-col border-r border-[var(--color-border)] bg-[var(--color-panel)] md:flex lg:w-56">
       <div className="flex h-11 shrink-0 items-center gap-2 px-3.5 lg:px-3">
-        <Link to="/journal" className="dr-logo flex min-w-0 items-center gap-2 text-[14px] text-[var(--color-logo)]" title="Duckrep">
+        <Link to="/journal" className="dr-logo dr-tap dr-tap-w flex items-center justify-center gap-2 text-[14px] text-[var(--color-logo)] lg:justify-start" title="Duckrep" aria-label="Duckrep">
           <DuckrepMark size={22} className="rounded-md" />
           <DuckrepWordmark className="hidden lg:inline" />
         </Link>

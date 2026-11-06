@@ -67,9 +67,9 @@ function PickerDialog({
         role="dialog"
         aria-modal="true"
         aria-labelledby="library-picker-title"
-        className="dr-enter relative flex h-[85dvh] w-full flex-col rounded-t-xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-pop)] sm:h-[min(85dvh,720px)] sm:max-w-xl sm:rounded-xl"
+        className="dr-enter relative flex h-[85dvh] w-full flex-col overflow-y-auto rounded-t-xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-pop)] sm:h-[min(85dvh,720px)] sm:max-w-xl sm:rounded-xl"
       >
-        <div className="flex h-11 items-center justify-between gap-3 border-b border-[var(--color-border)] px-3 max-md:h-12">
+        <div className="flex h-11 shrink-0 items-center justify-between gap-3 border-b border-[var(--color-border)] px-3 max-md:h-12">
           <h2 id="library-picker-title" className="text-[13px] font-semibold text-[var(--color-ink)]">
             {t('addFromLibrary')}
           </h2>
@@ -84,7 +84,7 @@ function PickerDialog({
             </button>
           </div>
         </div>
-        <div className="space-y-2 border-b border-[var(--color-border)] p-2">
+        <div className="shrink-0 space-y-2 border-b border-[var(--color-border)] p-2">
           <input
             ref={searchRef}
             type="search"
@@ -124,11 +124,11 @@ function PickerDialog({
                 onPick(ex);
                 setAdded((current) => new Set(current).add(ex.id));
               }}
-              className="min-h-0 flex-1"
+              className="min-h-40 flex-1"
             />
           )}
         </QueryState>
-        <div className="flex justify-end gap-2 border-t border-[var(--color-border)] p-2 pb-[max(0.5rem,env(safe-area-inset-bottom))]">
+        <div className="flex shrink-0 justify-end gap-2 border-t border-[var(--color-border)] p-2 pb-[max(0.5rem,env(safe-area-inset-bottom))]">
           <button type="button" onClick={onClose} className="dr-btn dr-btn-primary">
             {t('done')}
           </button>

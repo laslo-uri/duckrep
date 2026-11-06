@@ -136,7 +136,7 @@ export function CommandPalette({ onClose, onNew }: { onClose: () => void; onNew:
   };
 
   return (
-    <div className="fixed inset-0 z-[110] flex items-start justify-center p-3 pt-[12vh] max-md:pt-3">
+    <div className="fixed inset-0 z-[110] flex items-start justify-center p-3 pt-[12vh] max-md:pt-[calc(0.75rem+var(--dr-safe-top))]">
       <div className="absolute inset-0 bg-black/50" aria-hidden onClick={onClose} />
       <div
         ref={dialogRef}

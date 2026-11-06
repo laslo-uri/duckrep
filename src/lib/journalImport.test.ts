@@ -59,6 +59,22 @@ function recordingDb(): { db: DbClient; calls: { sql: string; params: unknown[] 
 }
 
 describe('parseJournalImport', () => {
+  it('drops timestamps and icon keys the app could not render', () => {
+    const file = parseJournalImport({
+      version: 1,
+      workouts: [
+        { id: 'w1', date: '2026-01-05', icon: 'constructor', started_at: 'not a date', ended_at: '2026-01-05T10:00:00.000Z' },
+        { id: 'w2', date: '2026-01-06', icon: 'dumbbell' },
+      ],
+    });
+    expect(file?.workouts[0]).toMatchObject({ icon: null, started_at: null, ended_at: '2026-01-05T10:00:00.000Z' });
+    expect(file?.workouts[1].icon).toBe('dumbbell');
+  });
+
+  it('refuses a date that does not exist', () => {
+    expect(parseJournalImport({ version: 1, workouts: [{ id: 'w1', date: '2026-13-45' }] })).toBeNull();
+  });
+
   it('rejects a file that is not a version 1 journal', () => {
     expect(parseJournalImport(null)).toBeNull();
     expect(parseJournalImport({ version: 2, workouts: [] })).toBeNull();

@@ -148,8 +148,8 @@ function ProfileForm({
       }}
     >
       <MutationAlert message={pendingError} onDismiss={onDismissError} />
-      <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(16rem,18rem)] lg:items-start">
-        <div className="space-y-3">
+      <div className="flex flex-wrap items-start gap-5">
+        <div className="min-w-0 flex-[1_1_20rem] space-y-3">
           <label className="block">
             <span className="mb-1 block text-[12px] text-[var(--color-muted)]">{t('lobbyName')}</span>
             <input
@@ -164,7 +164,7 @@ function ProfileForm({
             />
           </label>
           {nameError ? <p className="text-[12px] text-[var(--color-error)]">{t('profileNameRequired')}</p> : null}
-          <div className="grid gap-3 sm:grid-cols-3">
+          <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,7rem),1fr))] gap-3">
             <label className="block min-w-0">
               <span className="mb-1 block text-[12px] text-[var(--color-muted)]">{t('heightCm')}</span>
               <UnitInput value={height} onChange={setHeight} unit={t('unitCm')} placeholder="175" />
@@ -190,7 +190,7 @@ function ProfileForm({
             {saved ? <p className="text-[12px] text-[var(--color-success)]">{t('profileSaved')}</p> : null}
           </div>
         </div>
-        <div>
+        <div className="min-w-0 flex-[1_1_16rem] lg:max-w-[18rem]">
           <p className="mb-1 text-[12px] text-[var(--color-muted)]">{t('birthDate')}</p>
           <BirthCalendar value={birth} onChange={setBirth} />
         </div>

@@ -25,6 +25,7 @@ import { LanguageSwitcher } from '../components/LanguageSwitcher';
 import { CookieSettingsLink } from '../components/CookieConsent';
 import { useTheme } from '../contexts/ThemeContext';
 import { APP_VERSION } from '../lib/appVersion';
+import { MAX_IMPORT_BYTES } from '../lib/journalImport';
 
 type SettingsTab = 'profile' | 'security' | 'data' | 'trash';
 
@@ -165,6 +166,7 @@ export function SettingsPage() {
     setImportMessage(null);
     setExporting(true);
     try {
+      if (file.size > MAX_IMPORT_BYTES) throw new Error('file too large');
       const raw: unknown = JSON.parse(await file.text());
       const result = await importWorkoutJournalJson(user.id, raw);
       setImportMessage(t('importResult', { imported: result.imported, skipped: result.skipped }));
@@ -202,7 +204,7 @@ export function SettingsPage() {
   return (
     <>
       <PageHeader title={t('settings')} meta={<span className="hidden sm:inline">{t('localAppHint')}</span>} />
-      <div className="sticky top-[var(--dr-header-h)] z-20 border-b border-[var(--color-border)] bg-[var(--color-paper)]/95 px-3 backdrop-blur-sm md:px-4">
+      <div className="dr-sticky-bar sticky top-[calc(var(--dr-safe-top)+var(--dr-header-h))] z-20 border-b border-[var(--color-border)] bg-[var(--color-paper)]/95 px-3 backdrop-blur-sm md:px-4">
         <div
           role="tablist"
           aria-label={t('settings')}
@@ -254,7 +256,7 @@ export function SettingsPage() {
       >
         <div className="dr-card p-3 sm:p-4">
           <h2 className="text-[13px] font-semibold text-[var(--color-ink)]">{t('appearance')}</h2>
-          <div className="mt-2 flex items-center gap-2">
+          <div className="mt-2 flex flex-wrap items-center gap-2">
             <button type="button" onClick={toggleTheme} className="dr-btn">
               {theme === 'dark' ? <Sun size={14} aria-hidden /> : <Moon size={14} aria-hidden />}
               {theme === 'dark' ? t('lightMode') : t('darkMode')}
@@ -381,7 +383,7 @@ export function SettingsPage() {
                     </p>
                     <p className="text-[11px] text-[var(--color-faint)] tabular-nums">{row.date}</p>
                   </div>
-                  <div className="flex items-center gap-1 shrink-0">
+                  <div className="flex flex-wrap items-center gap-1">
                     <Link
                       to={`/activity/${row.id}`}
                       className="dr-btn dr-btn-ghost"

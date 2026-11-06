@@ -157,7 +157,7 @@ export function WorkoutDetail({
   const saveTitle = () => {
     const trimmed = titleInput.trim();
     if (trimmed !== (workout.title ?? '')) {
-      updateWorkoutMutation.mutate({ title: trimmed || undefined });
+      updateWorkoutMutation.mutate({ title: trimmed });
     }
     setEditingTitle(false);
   };
@@ -225,7 +225,7 @@ export function WorkoutDetail({
         <Link
           to="/journal"
           aria-label={t('backToJournal')}
-          className="dr-tap -ml-1 inline-flex shrink-0 items-center gap-1 rounded-md px-1 text-[13px] text-[var(--color-muted)] hover:text-[var(--color-ink)]"
+          className="dr-tap dr-tap-w -ml-1 inline-flex shrink-0 items-center justify-center gap-1 rounded-md px-1 text-[13px] text-[var(--color-muted)] hover:text-[var(--color-ink)]"
         >
           <ChevronLeft size={15} aria-hidden />
           <span className="hidden sm:inline">{t('myJournal')}</span>
@@ -289,7 +289,7 @@ export function WorkoutDetail({
                 {live ? (
                   <>
                     <span className="dr-live-dot shrink-0" aria-hidden />
-                    <span className="text-[11px] font-semibold uppercase tracking-wide text-[var(--color-accent)]">
+                    <span className="text-[11px] font-semibold uppercase tracking-wide text-[var(--color-accent-on-soft)]">
                       {t('sessionLive')}
                     </span>
                     <span className="text-[18px] font-semibold tabular-nums leading-none">{elapsed}</span>
@@ -309,7 +309,7 @@ export function WorkoutDetail({
                 )}
               </div>
 
-              <dl className="flex items-center gap-4 text-[12px]">
+              <dl className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[12px]">
                 <div className="flex items-baseline gap-1.5">
                   <dt className="text-[var(--color-muted)]">{t('statExercises')}</dt>
                   <dd className="font-semibold tabular-nums">{exercises.length}</dd>
@@ -364,12 +364,12 @@ export function WorkoutDetail({
             </section>
 
             {/* Exercises */}
-            <div className="mt-5 flex items-center gap-2">
+            <div className="mt-5 flex flex-wrap items-center gap-2">
               <h2 className="text-[12px] font-medium text-[var(--color-ink)]">
                 {t('exercises')}
                 <span className="ml-1.5 text-[var(--color-faint)] tabular-nums">{exercises.length}</span>
               </h2>
-              <div className="ml-auto flex items-center gap-1">
+              <div className="ml-auto flex flex-wrap items-center justify-end gap-1">
                 <button
                   type="button"
                   onClick={() => addExerciseMutation.mutate()}
@@ -508,7 +508,7 @@ export function WorkoutDetail({
                       href={m.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="min-w-0 flex-1 break-all text-[var(--color-ink)] underline decoration-[var(--color-line-strong)] underline-offset-2 hover:decoration-[var(--color-accent)]"
+                      className="dr-tap min-w-0 flex-1 break-all text-[var(--color-ink)] underline decoration-[var(--color-line-strong)] underline-offset-2 hover:decoration-[var(--color-accent)]"
                     >
                       {m.caption || m.url}
                     </a>

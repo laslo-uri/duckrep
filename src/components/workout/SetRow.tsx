@@ -55,7 +55,7 @@ export function SetRow({
   };
 
   const fieldClass =
-    'dr-input px-1 text-center tabular-nums md:h-7 bg-[var(--color-hover)] border-transparent hover:border-[var(--color-border)]';
+    'dr-input px-1 text-center tabular-nums desk:h-7 bg-[var(--color-hover)] border-transparent hover:border-[var(--color-border)] focus:border-[var(--color-accent)] placeholder:text-[12px]';
 
   const notesInput = (className: string) => (
     <input
@@ -68,7 +68,7 @@ export function SetRow({
       }}
       placeholder={t('setNotesPlaceholder')}
       aria-label={t('notes')}
-      className={`dr-input min-w-0 border-transparent bg-transparent text-[12px] hover:border-[var(--color-border)] ${className}`}
+      className={`dr-input min-w-0 border-transparent bg-transparent desk:text-[12px] hover:border-[var(--color-border)] focus:border-[var(--color-accent)] ${className}`}
     />
   );
 
@@ -78,7 +78,7 @@ export function SetRow({
         completed ? 'bg-[var(--color-mint-soft)]' : 'hover:bg-[var(--color-hover)]'
       }`}
     >
-      <div className="flex min-h-9 items-center gap-2 px-3 max-md:min-h-[52px]">
+      <div className="flex min-h-9 flex-wrap items-center gap-2 px-3 max-md:min-h-[52px] max-sm:gap-1 max-sm:px-2">
         <button
           type="button"
           onClick={() => {
@@ -100,7 +100,7 @@ export function SetRow({
           </span>
         </button>
         <span
-          className={`w-5 shrink-0 text-center text-[12px] tabular-nums ${
+          className={`w-5 shrink-0 text-center text-[12px] tabular-nums max-sm:w-4 ${
             completed ? 'font-semibold text-[var(--color-success)]' : 'text-[var(--color-faint)]'
           }`}
         >
@@ -117,9 +117,9 @@ export function SetRow({
           }}
           placeholder={t('reps')}
           aria-label={t('reps')}
-          className={`${fieldClass} w-14 shrink-0`}
+          className={`${fieldClass} w-14 shrink-0 max-sm:w-12`}
         />
-        <span className="w-3 shrink-0 text-center text-[12px] text-[var(--color-faint)]" aria-hidden>
+        <span className="w-3 shrink-0 text-center text-[12px] text-[var(--color-faint)] max-sm:w-2" aria-hidden>
           ×
         </span>
         <input
@@ -133,7 +133,7 @@ export function SetRow({
           }}
           placeholder={isDropSet && bodyWeightKg ? String(bodyWeightKg) : t('weight')}
           aria-label={t('weight')}
-          className={`${fieldClass} w-16 shrink-0`}
+          className={`${fieldClass} w-16 shrink-0 max-sm:w-14`}
         />
         {/* Notes sit inline from sm up; phones open them on demand under the row. */}
         {notesInput('hidden flex-1 sm:block')}
@@ -154,7 +154,7 @@ export function SetRow({
           onClick={onDelete}
           aria-label={t('deleteSet')}
           title={t('deleteSet')}
-          className="dr-btn dr-btn-ghost dr-icon-btn shrink-0 hover:!text-[var(--color-error)] md:h-6 md:w-6 md:opacity-0 md:focus-visible:opacity-100 md:group-hover:opacity-100"
+          className="dr-btn dr-btn-ghost dr-icon-btn ml-auto shrink-0 hover:!text-[var(--color-error)] sm:ml-0 desk:h-6 desk:w-6 desk:opacity-0 desk:focus-visible:opacity-100 desk:group-hover:opacity-100"
         >
           <Trash2 size={13} aria-hidden />
         </button>

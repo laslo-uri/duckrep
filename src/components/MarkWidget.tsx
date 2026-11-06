@@ -66,8 +66,8 @@ export function MarkWidget({
   const gainLabel = gain.toLocaleString(locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
   return (
-    <dl className="grid grid-cols-3 gap-2 lg:grid-cols-4">
-      <div className="dr-kpi relative col-span-3 pr-36 lg:col-span-1 lg:pr-20 xl:pr-28">
+    <dl className="grid grid-cols-3 gap-2 max-[359px]:grid-cols-2 lg:grid-cols-4">
+      <div className="dr-kpi relative col-span-3 pr-36 max-[359px]:col-span-2 lg:col-span-1 lg:pr-20 xl:pr-28">
         <dt className="dr-label">{t('markLabel')}</dt>
         <dd className="dr-kpi-value">{price}</dd>
         <dd className={`mt-0.5 truncate text-[11px] font-medium ${atPeak ? 'text-[var(--color-success)]' : 'text-[var(--color-muted)]'}`}>

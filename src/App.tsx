@@ -4,6 +4,7 @@ import { lazy, Suspense, type ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Layout } from './components/Layout';
 import { CookieConsent } from './components/CookieConsent';
+import { ErrorBoundary } from './components/ErrorBoundary';
 
 // Unlocking lands on the journal, like Linear opens on the inbox; pages load as their own chunks.
 const HomePage = lazy(() => import('./pages/HomePage').then((m) => ({ default: m.HomePage })));
@@ -63,7 +64,9 @@ export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <AppRouter>
-        <AppRoutes />
+        <ErrorBoundary>
+          <AppRoutes />
+        </ErrorBoundary>
       </AppRouter>
     </QueryClientProvider>
   );

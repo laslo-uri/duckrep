@@ -29,6 +29,6 @@ export const WORKOUT_ICON_MAP: Record<WorkoutDayIcon, LucideIcon> = {
 };
 
 export function getWorkoutIcon(iconKey: string | null): LucideIcon | null {
-  if (!iconKey || !(iconKey in WORKOUT_ICON_MAP)) return null;
+  if (!iconKey || !Object.hasOwn(WORKOUT_ICON_MAP, iconKey)) return null;
   return WORKOUT_ICON_MAP[iconKey as WorkoutDayIcon];
 }

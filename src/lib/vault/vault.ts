@@ -54,8 +54,7 @@ export async function vaultState(): Promise<VaultState> {
 
 /** The passphrase baked in at build time (VITE_DUCKREP_PASSWORD in .env), used only for first-time setup. */
 export function builtInPassphrase(): string {
-  const env = import.meta.env as Record<string, string | undefined>;
-  return env.VITE_DUCKREP_PASSWORD?.trim() ?? '';
+  return import.meta.env.VITE_DUCKREP_PASSWORD?.trim() ?? '';
 }
 
 let setupInFlight: Promise<void> | undefined;
